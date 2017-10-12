@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var user_service_1 = require("../../services/user-service");
 var nodemailer = require('nodemailer');
-require("rxjs/add/observable/from");
 var ResponseBody = /** @class */ (function () {
     function ResponseBody(success, data, err) {
         this.success = success;
@@ -47,6 +46,7 @@ function sendMail(data) {
             text: 'Contraseña Cambiada',
             html: bodyText
         };
+        //se cambia el password por el nuevo
         user_service_1.service.changePassword(newPass, mail)
             .subscribe();
     }

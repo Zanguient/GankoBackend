@@ -1,8 +1,7 @@
 import { service, Email } from '../../services/user-service';
 import { Response, Request } from 'express';
-const nodemailer = require('nodemailer');
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
+const nodemailer = require('nodemailer');
 
 interface RequestBody {
     email: string;
@@ -49,6 +48,7 @@ function sendMail(data: Email) {
             text: 'Contraseña Cambiada',
             html: bodyText
         };
+        //se cambia el password por el nuevo
         service.changePassword(newPass, mail)
             .subscribe();
     } else {

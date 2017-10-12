@@ -1,5 +1,5 @@
 # README
-## This the readme for your application "node-express-typescript" 
+## Ganko Backend 
 -------------------
 ### Visual Studio Code has *awesome* Markdown support!
 
