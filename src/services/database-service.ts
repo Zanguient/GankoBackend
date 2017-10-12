@@ -12,16 +12,7 @@ export class DatabaseService {
 
     private connection: IConnection;
 
-    /*openConection(): Observable<IConnection> {
-        return Observable.of(this.connection)
-            .flatMap(con => {
-                con.connect()
-                return Observable.of(con)
-                    .do(null, null, () => con.end());
-            });
-    }
-*/
-    open(): Observable<any> {
+    open(): Observable<any> { //Abre la conexion y la cierra automaticamente
         return Observable
             .fromPromise(mysql.createConnection(config.database))
             .flatMap(con => Observable.of(con)
@@ -29,8 +20,7 @@ export class DatabaseService {
             );
     }
 
-    query<T>(sql: String, params:any[] = []): Observable<T> {
-        console.log(sql)
+    query<T>(sql: String, params:any[] = []): Observable<T> {//ejecuta open y realiza la sentencia sql
         return this.open()
             .flatMap(con => con.query(sql, params))
     }

@@ -10,14 +10,6 @@ var mysql = require("promise-mysql");
 var DatabaseService = /** @class */ (function () {
     function DatabaseService() {
     }
-    DatabaseService.prototype.openConection = function () {
-        return Observable_1.Observable.of(this.connection)
-            .flatMap(function (con) {
-            con.connect();
-            return Observable_1.Observable.of(con)
-                .do(null, null, function () { return con.end(); });
-        });
-    };
     DatabaseService.prototype.open = function () {
         return Observable_1.Observable
             .fromPromise(mysql.createConnection(global_1.config.database))
@@ -26,7 +18,6 @@ var DatabaseService = /** @class */ (function () {
     };
     DatabaseService.prototype.query = function (sql, params) {
         if (params === void 0) { params = []; }
-        console.log(sql);
         return this.open()
             .flatMap(function (con) { return con.query(sql, params); });
     };

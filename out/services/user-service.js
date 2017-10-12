@@ -18,8 +18,17 @@ var UserService = /** @class */ (function (_super) {
     function UserService() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    //permite verificar si el usuario y contraseña son correctos para el login
     UserService.prototype.login = function (user, pass) {
-        return this.query("SELECT * FROM " + table + " WHERE nombre = ? AND apelido = ?", [user, pass]);
+        return this.query("SELECT * FROM " + table + " WHERE nombre = ? AND apellido = ?", [user, pass]);
+    };
+    //permite verificar si el correo existe y el envio del correo para restaurar la contraseña
+    UserService.prototype.resetPassword = function (email) {
+        return this.query("SELECT email,estado FROM " + table + " WHERE email = ? ", [email]);
+    };
+    //cambia la contraseña antigua por la nueva
+    UserService.prototype.changePassword = function (pass, email) {
+        return this.query("UPDATE " + table + " SET password = ? WHERE email = ? ", [pass, email]);
     };
     return UserService;
 }(database_service_1.DatabaseService));
@@ -32,5 +41,13 @@ var Usuario = /** @class */ (function () {
     return Usuario;
 }());
 exports.Usuario = Usuario;
+var Email = /** @class */ (function () {
+    function Email(email, estado) {
+        this.email = email;
+        this.estado = estado;
+    }
+    return Email;
+}());
+exports.Email = Email;
 exports.service = new UserService();
 //# sourceMappingURL=user-service.js.map
