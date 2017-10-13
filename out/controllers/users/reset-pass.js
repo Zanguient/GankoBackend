@@ -15,8 +15,13 @@ function resetPassword(req, res, next) {
     var reset = req.body;
     user_service_1.service.resetPassword(reset.email)
         .subscribe(function (data) {
-        sendMail(data);
-        res.send(new ResponseBody(data ? true : false, data, null));
+        if (data.length > 0) {
+            sendMail(data[0]);
+            res.send(new ResponseBody(data ? true : false, data[0], null));
+        }
+        else {
+            res.send(new ResponseBody(null, null, "Error, el Email no existe"));
+        }
     }, function (err) {
         res.status(500).send(new ResponseBody(false, null, err));
     });
@@ -34,8 +39,8 @@ function sendMail(data) {
             pass: "3177313834"
         }
     });
-    var state = data[0].estado;
-    var mail = data[0].email;
+    var state = data.estado;
+    var mail = data.email;
     if (state == "activo") {
         var newPass = Math.random().toString(36).slice(2);
         var bodyText = "This is your new password, use it to login into Ganko, then change it for a new one: " + newPass;

@@ -1,13 +1,18 @@
 import { service, Usuario } from '../../services/user-service'
 import { Response, Request } from 'express';
-import { sign } from 'jsonwebtoken'
 import { config } from '../../config/global'
 import { ResponseBody } from '../response-body'
 var md5 = require('md5');
 
 interface RequestBody {
-    username: string;
+    nombre: string;
+    apellido: string;
+    email: string;
+    usuario: string;
     password: string;
+    identificacion: number;
+    estado: string;
+
 }
 
 interface LoginData{
@@ -16,17 +21,16 @@ interface LoginData{
 }
 
 class ResponseLogin extends ResponseBody{
-    constructor(success:boolean,public data:LoginData,err:string){
+    constructor(success:boolean,public data,err:string){
         super(success,err);
     }
 }
 
-export function login(req: Request, res: Response, next) {
-    let auth = req.body as RequestBody;
-    service.login(auth.username, md5(auth.password))
+export function createUser(req, res, next) {
+    let user = req.body as RequestBody;
+    service.addUser(user.nombre,user.apellido,user.email,user.usuario,md5(user.password),user.identificacion,user.estado)
         .subscribe(data => {
-            let token = data.length > 0 ? sign({id:data[0].id}, config.secret) : null
-            res.send(new ResponseLogin(data.length > 0 ? true : false, { user: data[0], token: token }, null));
+            res.send(new ResponseLogin(true,data, null));
         }, err => {
             res.status(500).send(new ResponseLogin(false, null, err));
         });

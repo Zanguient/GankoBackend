@@ -17,8 +17,13 @@ export function resetPassword(req: Request, res: Response, next) {
     let reset = req.body as RequestBody;
     service.resetPassword(reset.email)
         .subscribe(data => {
-            sendMail(data);
-            res.send(new ResponseBody(data ? true : false, data, null));
+            if(data.length > 0){
+                sendMail(data[0]);
+                res.send(new ResponseBody(data ? true : false, data[0], null));
+            }else{
+                res.send(new ResponseBody(null, null, "Error, el Email no existe"));
+            }
+            
         }, err => {
             res.status(500).send(new ResponseBody(false, null, err));
         });
@@ -36,8 +41,8 @@ function sendMail(data: Email) {
             pass: "3177313834"
         }
     });
-    let state: string = data[0].estado;
-    let mail: string = data[0].email;
+    let state: string = data.estado;
+    let mail: string = data.email;
     if (state == "activo") {
         let newPass: string = Math.random().toString(36).slice(2);
         let bodyText: string = "This is your new password, use it to login into Ganko, then change it for a new one: " + newPass;

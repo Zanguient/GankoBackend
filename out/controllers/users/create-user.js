@@ -11,8 +11,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var user_service_1 = require("../../services/user-service");
-var jsonwebtoken_1 = require("jsonwebtoken");
-var global_1 = require("../../config/global");
 var response_body_1 = require("../response-body");
 var md5 = require('md5');
 var ResponseLogin = /** @class */ (function (_super) {
@@ -24,15 +22,14 @@ var ResponseLogin = /** @class */ (function (_super) {
     }
     return ResponseLogin;
 }(response_body_1.ResponseBody));
-function login(req, res, next) {
-    var auth = req.body;
-    user_service_1.service.login(auth.username, md5(auth.password))
+function createUser(req, res, next) {
+    var user = req.body;
+    user_service_1.service.addUser(user.nombre, user.apellido, user.email, user.usuario, md5(user.password), user.identificacion, user.estado)
         .subscribe(function (data) {
-        var token = data.length > 0 ? jsonwebtoken_1.sign({ id: data[0].id }, global_1.config.secret) : null;
-        res.send(new ResponseLogin(data.length > 0 ? true : false, { user: data[0], token: token }, null));
+        res.send(new ResponseLogin(true, data, null));
     }, function (err) {
         res.status(500).send(new ResponseLogin(false, null, err));
     });
 }
-exports.login = login;
-//# sourceMappingURL=login.js.map
+exports.createUser = createUser;
+//# sourceMappingURL=create-user.js.map
