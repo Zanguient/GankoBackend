@@ -8,4 +8,6 @@ var reset_pass_1 = require("./users/reset-pass");
 exports.resetPassword = reset_pass_1.resetPassword;
 var get_finca_1 = require("./fincas/get-finca");
 exports.getFinca = get_finca_1.getFinca;
+var get_bovinos_1 = require("./bovinos/get-bovinos");
+exports.getBovinos = get_bovinos_1.getBovinos;
 //# sourceMappingURL=index.js.map

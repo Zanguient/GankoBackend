@@ -10,7 +10,7 @@ var ResponseBody = /** @class */ (function () {
     return ResponseBody;
 }());
 function getFinca(req, res, next) {
-    finca_service_1.fincaService.findFincas(req.id)
+    finca_service_1.fincaService.findFincas(req.body.id)
         .subscribe(function (data) {
         res.send(new ResponseBody(data ? true : false, data, null));
     }, function (err) {

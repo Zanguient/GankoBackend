@@ -9,7 +9,7 @@ class ResponseBody {
         public err: string) { }
 }
 export function getFinca(req, res: Response, next) {
-    fincaService.findFincas(req.id)
+    fincaService.findFincas(req.body.id)
         .subscribe(data => {
             res.send(new ResponseBody(data ? true : false, data, null));
         }, err => {

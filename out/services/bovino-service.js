@@ -26,11 +26,26 @@ var BovinoService = /** @class */ (function (_super) {
 }(database_service_1.DatabaseService));
 exports.BovinoService = BovinoService;
 var Bovino = /** @class */ (function () {
-    function Bovino(name, location, size, user) {
+    function Bovino(idBovino, urlFoto, name, fecha, genero, proposito, peso, color, raza, idPadre, idMadre, salida, lote, salidaPor, numeroPartos, partoFallo, fechaSalida, finca, usuario) {
+        this.idBovino = idBovino;
+        this.urlFoto = urlFoto;
         this.name = name;
-        this.location = location;
-        this.size = size;
-        this.user = user;
+        this.fecha = fecha;
+        this.genero = genero;
+        this.proposito = proposito;
+        this.peso = peso;
+        this.color = color;
+        this.raza = raza;
+        this.idPadre = idPadre;
+        this.idMadre = idMadre;
+        this.salida = salida;
+        this.lote = lote;
+        this.salidaPor = salidaPor;
+        this.numeroPartos = numeroPartos;
+        this.partoFallo = partoFallo;
+        this.fechaSalida = fechaSalida;
+        this.finca = finca;
+        this.usuario = usuario;
     }
     return Bovino;
 }());
