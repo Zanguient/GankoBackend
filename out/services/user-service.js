@@ -24,8 +24,12 @@ var UserService = /** @class */ (function (_super) {
         return this.query('INSERT INTO ' + table + ' (`nombre`,`apellido`,`email`,`usuario`,`password`,`identificacion`,`estado`)VALUES(?,?,?,?,?,?,"activo");', [nombre, apellido, email, usuario, md5(password), identificacion]);
     };
     //permite verificar si el nuevo usuario ya existe con el correo suministrado
-    UserService.prototype.checkUser = function (email) {
+    UserService.prototype.checkUserByEmail = function (email) {
         return this.query("SELECT email from " + table + " where email = ?", [email]);
+    };
+    //permite verificar si el nuevo usuario ya existe con el usuario suministrado
+    UserService.prototype.checkUserByUser = function (usuario) {
+        return this.query("SELECT usuario from " + table + " where usuario = ?", [usuario]);
     };
     //permite verificar si el usuario y contraseña son correctos para el login
     UserService.prototype.login = function (user, pass) {
@@ -35,9 +39,13 @@ var UserService = /** @class */ (function (_super) {
     UserService.prototype.resetPassword = function (email) {
         return this.query("SELECT email,estado FROM " + table + " WHERE email = ? ", [email]);
     };
-    //cambia la contraseña antigua por la nueva
+    //cambia la contraseña antigua por la nueva despues de resetear
     UserService.prototype.changePassword = function (pass, email) {
         return this.query("UPDATE " + table + " SET password = ? WHERE email = ? ", [md5(pass), email]);
+    };
+    //
+    UserService.prototype.changeOldPassword = function (oldPass, newPass, id) {
+        return this.query("UPDATE " + table + " SET password = ? WHERE id = ? AND password = ?", [md5(newPass), id, md5(oldPass)]);
     };
     return UserService;
 }(database_service_1.DatabaseService));

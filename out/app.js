@@ -5,7 +5,9 @@ var logger = require("morgan");
 var bodyParser = require("body-parser");
 var path = require("path");
 var index_1 = require("./routes/index");
-var ganko_1 = require("./routes/ganko");
+var user_1 = require("./routes/user");
+var finca_1 = require("./routes/finca");
+var bovino_1 = require("./routes/bovino");
 var cookieParser = require("cookie-parser"); // this module doesn't use the ES6 default export yet
 var cors = require("cors");
 var app = express();
@@ -18,7 +20,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index_1.default);
-app.use('/ganko', ganko_1.default);
+app.use('/user', user_1.default);
+app.use('/finca', finca_1.default);
+app.use('/bovino', bovino_1.default);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

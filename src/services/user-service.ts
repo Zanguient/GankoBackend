@@ -12,8 +12,12 @@ export class UserService extends DatabaseService {
         return this.query('INSERT INTO '+ table +' (`nombre`,`apellido`,`email`,`usuario`,`password`,`identificacion`,`estado`)VALUES(?,?,?,?,?,?,"activo");', [nombre,apellido,email,usuario,md5(password),identificacion]);
     }
     //permite verificar si el nuevo usuario ya existe con el correo suministrado
-    checkUser(email: string) {
+    checkUserByEmail(email: string) {
         return this.query<Email[]>(`SELECT email from ${table} where email = ?`,[email]);
+    }
+    //permite verificar si el nuevo usuario ya existe con el usuario suministrado
+    checkUserByUser(usuario: string) {
+        return this.query<Email[]>(`SELECT usuario from ${table} where usuario = ?`,[usuario]);
     }
     //permite verificar si el usuario y contraseña son correctos para el login
     login(user: string, pass: string) {
@@ -23,9 +27,14 @@ export class UserService extends DatabaseService {
     resetPassword(email: string) {
         return this.query<Email[]>(`SELECT email,estado FROM ${table} WHERE email = ? `, [email]);
     }
-    //cambia la contraseña antigua por la nueva
+    //cambia la contraseña antigua por la nueva despues de resetear
     changePassword(pass: string, email: string) {
         return this.query(`UPDATE ${table} SET password = ? WHERE email = ? `, [md5(pass),email]);
+    }
+
+    //
+    changeOldPassword(oldPass: string, newPass: string, id:Number) {
+        return this.query(`UPDATE ${table} SET password = ? WHERE id = ? AND password = ?`, [md5(newPass),id,md5(oldPass)]);
     }
 }
 

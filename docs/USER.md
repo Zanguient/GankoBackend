@@ -34,3 +34,13 @@
 * Body Request: {
     "email" : "String"
 }
+
+## CHANGE PASSWORD
+### Se define el parametro para cambiar el password
+* Method: POST
+* Route: "reset-password"
+* Body Request: {
+    "oldPass" : "String",
+    "newPass" : "String"
+}
+* HEAD: "Authorization" : "String token"
