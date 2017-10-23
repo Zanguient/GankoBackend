@@ -20,8 +20,8 @@ var UserService = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     //permite insertar un nuevo usuario
-    UserService.prototype.addUser = function (nombre, apellido, email, usuario, password, identificacion, estado) {
-        return this.query('INSERT INTO ' + table + ' (`nombre`,`apellido`,`email`,`usuario`,`password`,`identificacion`,`estado`)VALUES(?,?,?,?,?,?,?);', [nombre, apellido, email, usuario, md5(password), identificacion, estado]);
+    UserService.prototype.addUser = function (nombre, apellido, email, usuario, password, identificacion) {
+        return this.query('INSERT INTO ' + table + ' (`nombre`,`apellido`,`email`,`usuario`,`password`,`identificacion`,`estado`)VALUES(?,?,?,?,?,?,"activo");', [nombre, apellido, email, usuario, md5(password), identificacion]);
     };
     //permite verificar si el nuevo usuario ya existe con el correo suministrado
     UserService.prototype.checkUser = function (email) {

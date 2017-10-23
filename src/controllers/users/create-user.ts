@@ -28,7 +28,7 @@ class ResponseLogin extends ResponseBody{
 
 export function createUser(req, res, next) {
     let user = req.body as RequestBody;
-    service.addUser(user.nombre,user.apellido,user.email,user.usuario,md5(user.password),user.identificacion)
+    service.addUser(user.nombre,user.apellido,user.email,user.usuario,user.password,user.identificacion)
         .subscribe(data => {
             res.send(new ResponseLogin(true,data, null));
         }, err => {

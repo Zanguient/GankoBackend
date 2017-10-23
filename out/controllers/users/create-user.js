@@ -24,7 +24,7 @@ var ResponseLogin = /** @class */ (function (_super) {
 }(response_body_1.ResponseBody));
 function createUser(req, res, next) {
     var user = req.body;
-    user_service_1.service.addUser(user.nombre, user.apellido, user.email, user.usuario, md5(user.password), user.identificacion, user.estado)
+    user_service_1.service.addUser(user.nombre, user.apellido, user.email, user.usuario, user.password, user.identificacion)
         .subscribe(function (data) {
         res.send(new ResponseLogin(true, data, null));
     }, function (err) {
