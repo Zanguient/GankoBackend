@@ -28,7 +28,7 @@
 * Route: "/get-fincas"
 * HEAD: token
 
-## GET Bovinos
+## GET BOVINOS
 ### Se define la ruta para recibir la lista de bovinos asociados a una finca
 * Method: GET
 * Route: "/get-bovinos/{id_finca}"
