@@ -27,8 +27,8 @@ export function login(req: Request, res: Response, next) {
     service.login(auth.username, md5(auth.password))
         .subscribe(data => {
             let token = data.length > 0 ? sign({id:data[0].id}, config.secret) : null
-            res.send(new ResponseLogin(data.length > 0 ? true : false, { user: data[0], token: token }, null));
+            res.send(new ResponseLogin(data.length > 0 ? true : false, { user: data[0], token: token }, "Usuario o Contraseña Incorrecto"));
         }, err => {
-            res.status(500).send(new ResponseLogin(false, null, "Usuario o Contraseña Incorrecto"));
+            res.status(500).send(new ResponseLogin(false, null, err));
         });
 }
