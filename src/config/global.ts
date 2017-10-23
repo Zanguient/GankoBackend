@@ -7,10 +7,4 @@ export const config = {
            password: 'e45e8c49',
            database: 'heroku_6de81001f978b1a'
       }
-    //    database: {
-    //        host: 'localhost',
-    //        user: 'root',
-    //        password: '12345',
-    //        database: 'prueba1'
-    //   }
 }
