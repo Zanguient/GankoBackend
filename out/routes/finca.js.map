@@ -1,1 +1,1 @@
-{"version":3,"file":"finca.js","sourceRoot":"","sources":["../../src/routes/finca.ts"],"names":[],"mappings":";;AAAA,mCAAiC;AACjC,8CAA+C;AAC/C,oEAAgE;AAEhE,IAAM,KAAK,GAAW,gBAAM,EAAE,CAAC;AAE/B,KAAK,CAAC,GAAG,CAAC,cAAc,EAAC,gCAAa,EAAC,gBAAQ,CAAC,CAAC;AAEjD,kBAAe,KAAK,CAAC"}
+{"version":3,"file":"finca.js","sourceRoot":"","sources":["../../src/routes/finca.ts"],"names":[],"mappings":";;AAAA,mCAAiC;AACjC,8CAA+C;AAC/C,oEAAgE;AAEhE,IAAM,KAAK,GAAW,gBAAM,EAAE,CAAC;AAE/B,KAAK,CAAC,GAAG,CAAC,aAAa,EAAC,gCAAa,EAAC,gBAAQ,CAAC,CAAC;AAEhD,kBAAe,KAAK,CAAC"}

@@ -6,7 +6,6 @@ function newPassword(req, res, next) {
     var oldPass = req.body.oldPass;
     var newPass = req.body.newPass;
     var id = req.id;
-    console.log(oldPass + newPass + id);
     user_service_1.service.changeOldPassword(oldPass, newPass, id)
         .subscribe(function (data) {
         res.send(new response_body_1.ResponseBody(true, null));

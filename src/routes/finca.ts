@@ -4,6 +4,6 @@ import { ValidateToken } from '../middlewares/token-validation';
 
 const finca: Router = Router();
 
-finca.get('/get-fincas/',ValidateToken,getFinca);
+finca.get('/get-fincas',ValidateToken,getFinca);
 
 export default finca;

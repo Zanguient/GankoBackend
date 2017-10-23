@@ -1,1 +1,1 @@
-{"version":3,"file":"bovino.js","sourceRoot":"","sources":["../../src/routes/bovino.ts"],"names":[],"mappings":";;AAAA,mCAAiC;AACjC,8CAAiD;AACjD,oEAAgE;AAEhE,IAAM,MAAM,GAAW,gBAAM,EAAE,CAAC;AAEhC,MAAM,CAAC,GAAG,CAAC,cAAc,EAAC,gCAAa,EAAC,kBAAU,CAAC,CAAC;AAEpD,kBAAe,MAAM,CAAC"}
+{"version":3,"file":"bovino.js","sourceRoot":"","sources":["../../src/routes/bovino.ts"],"names":[],"mappings":";;AAAA,mCAAiC;AACjC,8CAAkD;AAClD,oEAAgE;AAEhE,IAAM,MAAM,GAAW,gBAAM,EAAE,CAAC;AAEhC,MAAM,CAAC,GAAG,CAAC,uBAAuB,EAAE,gCAAa,EAAE,kBAAU,CAAC,CAAC;AAE/D,kBAAe,MAAM,CAAC"}

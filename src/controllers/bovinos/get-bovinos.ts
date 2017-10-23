@@ -9,7 +9,7 @@ class ResponseBody {
         public err: string) { }
 }
 export function getBovinos(req, res: Response, next) {
-    bovinoService.findBovinos(req.params.id_finca)
+    bovinoService.findBovinos(req.id, req.params.idfinca)
         .subscribe(data => {
             res.send(new ResponseBody(data ? true : false, data, null));
         }, err => {

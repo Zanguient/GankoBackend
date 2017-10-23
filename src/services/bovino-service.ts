@@ -8,8 +8,8 @@ const table = "bovino"
 export class BovinoService extends DatabaseService {
 
     //permite recuperar los bovinos pertenecientes a un usuario o finca
-    findBovinos(idFinca: string) {
-        return this.query<Bovino>(`SELECT * FROM ${table} WHERE finca = ?`, [idFinca]);
+    findBovinos(idUsuario: number, idFinca: number) {
+        return this.query<Bovino>(`SELECT * FROM ${table} WHERE finca = ? AND usuario = ?`, [idFinca, idUsuario]);
     }
 }
 
