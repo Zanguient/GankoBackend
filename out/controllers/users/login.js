@@ -31,7 +31,7 @@ function login(req, res, next) {
         var token = data.length > 0 ? jsonwebtoken_1.sign({ id: data[0].id }, global_1.config.secret) : null;
         res.send(new ResponseLogin(data.length > 0 ? true : false, { user: data[0], token: token }, null));
     }, function (err) {
-        res.status(500).send(new ResponseLogin(false, null, err));
+        res.status(500).send(new ResponseLogin(false, null, "Usuario o Contraseña Incorrecto"));
     });
 }
 exports.login = login;
