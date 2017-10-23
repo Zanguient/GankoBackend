@@ -4,7 +4,7 @@
 -------------------
 ## API DOCUMENTATION
 
-* BASEURL = "Server/ganko/"
+* BASEURL = "https://gankotest.herokuapp.com/bovino/"
 
 ## GET BOVINOS
 ### Se define la ruta para recibir la lista de bovinos asociados a una finca

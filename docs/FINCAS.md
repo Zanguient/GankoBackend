@@ -4,7 +4,7 @@
 -------------------
 ## API DOCUMENTATION
 
-* BASEURL = "Server/ganko/"
+* BASEURL = "https://gankotest.herokuapp.com/finca/"
 
 ## GET FINCAS
 ### Se define la ruta para recibir la lista de fincas asociadas a un usuario

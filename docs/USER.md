@@ -4,7 +4,7 @@
 -------------------
 ## API DOCUMENTATION
 
-* BASEURL = "Server/ganko/"
+* BASEURL = "https://gankotest.herokuapp.com/user/"
 
 ## LOGIN
 ### Se definen parametros de inicio de sesion
