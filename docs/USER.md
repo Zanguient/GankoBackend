@@ -10,16 +10,27 @@
 ### Se definen parametros de inicio de sesion
 * Method: POST
 * Route: "login"
-* Body Request: username,password
+* Body Request: {
+    "username" : "String",
+    "password" : "String"
+}
 
 ## CREATE USER
 ### Se definen los parametros para agregar un nuevo usuario
 * Method: POST
 * Route: "create-user"
-* Body Request: nombre,apellido,email,usuario,password,identificacion
+* Body Request: {
+    "nombre" : "String",
+    "apellido" : "String",
+    "email" : "String",
+    "usuario" : "String",
+    "password" : "String",
+    "identificacion" : "BIGINT"
 
 ## RESET PASSWORD
 ### Se define el parametro para resetear el password
 * Method: POST
 * Route: "reset-password"
-* Body Request: email
+* Body Request: {
+    "email" : "String"
+}
