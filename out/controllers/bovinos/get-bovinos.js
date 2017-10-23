@@ -10,8 +10,7 @@ var ResponseBody = /** @class */ (function () {
     return ResponseBody;
 }());
 function getBovinos(req, res, next) {
-    console.log(req.body.id);
-    bovino_service_1.bovinoService.findBovinos(req.body.id)
+    bovino_service_1.bovinoService.findBovinos(req.params.id_finca)
         .subscribe(function (data) {
         res.send(new ResponseBody(data ? true : false, data, null));
     }, function (err) {

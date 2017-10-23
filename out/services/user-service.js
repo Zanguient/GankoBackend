@@ -12,6 +12,7 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var database_service_1 = require("./database-service");
 require("rxjs/add/operator/mergeMap");
+var md5 = require("md5");
 var table = "usuario";
 var UserService = /** @class */ (function (_super) {
     __extends(UserService, _super);
@@ -20,7 +21,7 @@ var UserService = /** @class */ (function (_super) {
     }
     //permite insertar un nuevo usuario
     UserService.prototype.addUser = function (nombre, apellido, email, usuario, password, identificacion, estado) {
-        return this.query('INSERT INTO ' + table + ' (`nombre`,`apellido`,`email`,`usuario`,`password`,`identificacion`,`estado`)VALUES(?,?,?,?,?,?,?);', [nombre, apellido, email, usuario, password, identificacion, estado]);
+        return this.query('INSERT INTO ' + table + ' (`nombre`,`apellido`,`email`,`usuario`,`password`,`identificacion`,`estado`)VALUES(?,?,?,?,?,?,?);', [nombre, apellido, email, usuario, md5(password), identificacion, estado]);
     };
     //permite verificar si el nuevo usuario ya existe con el correo suministrado
     UserService.prototype.checkUser = function (email) {
@@ -28,7 +29,7 @@ var UserService = /** @class */ (function (_super) {
     };
     //permite verificar si el usuario y contraseña son correctos para el login
     UserService.prototype.login = function (user, pass) {
-        return this.query("SELECT * FROM " + table + " WHERE usuario = ? AND password = ?", [user, pass]);
+        return this.query("SELECT id,usuario,estado FROM " + table + " WHERE usuario = ? AND password = ?", [user, pass]);
     };
     //permite verificar si el correo existe y el envio del correo para restaurar la contraseña
     UserService.prototype.resetPassword = function (email) {
@@ -36,7 +37,7 @@ var UserService = /** @class */ (function (_super) {
     };
     //cambia la contraseña antigua por la nueva
     UserService.prototype.changePassword = function (pass, email) {
-        return this.query("UPDATE " + table + " SET password = ? WHERE email = ? ", [pass, email]);
+        return this.query("UPDATE " + table + " SET password = ? WHERE email = ? ", [md5(pass), email]);
     };
     return UserService;
 }(database_service_1.DatabaseService));

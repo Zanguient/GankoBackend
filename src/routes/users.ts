@@ -7,7 +7,7 @@ const users: Router = Router();
 
 users.post('/create-user', CheckUsuario ,createUser);
 users.post('/login', login);
-users.post('/reset-password/', resetPassword);
-users.post('/get-fincas',getFinca);
-users.post('/get-bovinos',getBovinos);
+users.post('/reset-password/',resetPassword);
+users.get('/get-fincas/',ValidateToken,getFinca);
+users.get('/get-bovinos/:id_finca',ValidateToken,getBovinos);
 export default users;

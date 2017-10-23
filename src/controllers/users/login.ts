@@ -23,6 +23,7 @@ class ResponseLogin extends ResponseBody{
 
 export function login(req: Request, res: Response, next) {
     let auth = req.body as RequestBody;
+    
     service.login(auth.username, md5(auth.password))
         .subscribe(data => {
             let token = data.length > 0 ? sign({id:data[0].id}, config.secret) : null

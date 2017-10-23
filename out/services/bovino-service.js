@@ -19,8 +19,8 @@ var BovinoService = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     //permite recuperar los bovinos pertenecientes a un usuario o finca
-    BovinoService.prototype.findBovinos = function (id_finca) {
-        return this.query("SELECT * FROM " + table + " WHERE finca = ?", [id_finca]);
+    BovinoService.prototype.findBovinos = function (idFinca) {
+        return this.query("SELECT * FROM " + table + " WHERE finca = ?", [idFinca]);
     };
     return BovinoService;
 }(database_service_1.DatabaseService));
