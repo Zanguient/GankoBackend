@@ -22,6 +22,9 @@ var FincaService = /** @class */ (function (_super) {
     FincaService.prototype.findFincas = function (id) {
         return this.query("SELECT * FROM " + table + " WHERE usuario = ?", [id]);
     };
+    FincaService.prototype.addFinca = function (nombre, ubicacion, hectareas, usuario) {
+        return this.query("INSERT INTO " + table + " (nombre,ubicacion,hectareas,usuario) VALUES (?,?,?,?)", [nombre, ubicacion, hectareas, usuario]);
+    };
     return FincaService;
 }(database_service_1.DatabaseService));
 exports.FincaService = FincaService;

@@ -11,6 +11,11 @@ export class FincaService extends DatabaseService {
     findFincas(id: string) {
         return this.query<Finca>(`SELECT * FROM ${table} WHERE usuario = ?`, [id]);
     }
+
+    addFinca(nombre:string,ubicacion:string,hectareas:string,usuario:string){
+        return this.query(`INSERT INTO `+table+` (nombre,ubicacion,hectareas,usuario) VALUES (?,?,?,?)`,[nombre,ubicacion,hectareas,usuario])
+    }
+
 }
 
 export class Finca {

@@ -12,4 +12,6 @@ var get_bovinos_1 = require("./bovinos/get-bovinos");
 exports.getBovinos = get_bovinos_1.getBovinos;
 var new_password_1 = require("./users/new-password");
 exports.newPassword = new_password_1.newPassword;
+var add_finca_1 = require("./fincas/add-finca");
+exports.addFinca = add_finca_1.addFinca;
 //# sourceMappingURL=index.js.map

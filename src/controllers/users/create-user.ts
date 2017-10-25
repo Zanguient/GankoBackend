@@ -12,7 +12,6 @@ interface RequestBody {
     password: string;
     identificacion: number;
     estado: string;
-
 }
 
 interface LoginData{
