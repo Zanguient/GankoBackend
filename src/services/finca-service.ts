@@ -12,8 +12,14 @@ export class FincaService extends DatabaseService {
         return this.query<Finca>(`SELECT * FROM ${table} WHERE usuario = ?`, [id]);
     }
 
+    //permite agregar una finca nueva
     addFinca(nombre:string,ubicacion:string,hectareas:string,usuario:string){
         return this.query(`INSERT INTO `+table+` (nombre,ubicacion,hectareas,usuario) VALUES (?,?,?,?)`,[nombre,ubicacion,hectareas,usuario])
+    }
+
+    //permite eliminar una finca
+    deleteFinca(id:number){
+        return this.query(`DELETE FROM `+table+` WHERE id = ?`,[id]);
     }
 
 }
