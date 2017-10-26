@@ -3,11 +3,11 @@ import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body'
 
-class ResponseFinca{
+class ResponseFinca extends ResponseBody{
     constructor(success:boolean,public data,err:string){
+        super(success,err);
     }
 }
-
 export function deleteFinca(req,res,next){
     let idFinca = req.params.idfinca;
     fincaService.deleteFinca(idFinca)
