@@ -22,6 +22,11 @@ export class FincaService extends DatabaseService {
         return this.query(`DELETE FROM `+table+` WHERE id = ?`,[id]);
     }
 
+    //permite editar una finca
+    updateFinca(idfinca:number,nombre:string,ubicacion:string,hectareas:string,usuario:string){
+        return this.query(`UPDATE `+table+` SET nombre = ?,ubicacion = ?,hectareas = ?, usuario = ? WHERE id = ? `,[nombre,ubicacion,hectareas,usuario,idfinca]);
+    }
+
 }
 
 export class Finca {
