@@ -22,8 +22,13 @@ var FincaService = /** @class */ (function (_super) {
     FincaService.prototype.findFincas = function (id) {
         return this.query("SELECT * FROM " + table + " WHERE usuario = ?", [id]);
     };
+    //permite agregar una finca nueva
     FincaService.prototype.addFinca = function (nombre, ubicacion, hectareas, usuario) {
         return this.query("INSERT INTO " + table + " (nombre,ubicacion,hectareas,usuario) VALUES (?,?,?,?)", [nombre, ubicacion, hectareas, usuario]);
+    };
+    //permite eliminar una finca
+    FincaService.prototype.deleteFinca = function (id) {
+        return this.query("DELETE FROM " + table + " WHERE id = ?", [id]);
     };
     return FincaService;
 }(database_service_1.DatabaseService));

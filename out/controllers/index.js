@@ -14,4 +14,6 @@ var new_password_1 = require("./users/new-password");
 exports.newPassword = new_password_1.newPassword;
 var add_finca_1 = require("./fincas/add-finca");
 exports.addFinca = add_finca_1.addFinca;
+var delete_finca_1 = require("./fincas/delete-finca");
+exports.deleteFinca = delete_finca_1.deleteFinca;
 //# sourceMappingURL=index.js.map
