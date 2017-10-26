@@ -30,6 +30,10 @@ var FincaService = /** @class */ (function (_super) {
     FincaService.prototype.deleteFinca = function (id) {
         return this.query("DELETE FROM " + table + " WHERE id = ?", [id]);
     };
+    //permite editar una finca
+    FincaService.prototype.updateFinca = function (idfinca, nombre, ubicacion, hectareas, usuario) {
+        return this.query("UPDATE " + table + " SET nombre = ?,ubicacion = ?,hectareas = ?, usuario = ? WHERE id = ? ", [nombre, ubicacion, hectareas, usuario, idfinca]);
+    };
     return FincaService;
 }(database_service_1.DatabaseService));
 exports.FincaService = FincaService;
