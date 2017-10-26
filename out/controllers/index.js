@@ -16,4 +16,6 @@ var add_finca_1 = require("./fincas/add-finca");
 exports.addFinca = add_finca_1.addFinca;
 var delete_finca_1 = require("./fincas/delete-finca");
 exports.deleteFinca = delete_finca_1.deleteFinca;
+var update_finca_1 = require("./fincas/update-finca");
+exports.updateFinca = update_finca_1.updateFinca;
 //# sourceMappingURL=index.js.map

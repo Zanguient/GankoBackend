@@ -23,9 +23,19 @@
 }
 * HEAD: "Authorization" : "String token"
 
-
 ## DELETE FINCA
 ### Se define la ruta para eliminar una finca
 * Method: DELETE
 * Route: "delete-finca/{id_finca}"
+* HEAD: "Authorization" : "String token"
+
+## UPDATE FINCA
+### Se define la ruta para agregar una finca nueva
+* Method: PUT
+* Route: "update-finca/{idfinca}"
+* Body Request: {
+    "nombre" : "String",
+    "ubicacion" : "String",
+    "hectareas" : "number"
+}
 * HEAD: "Authorization" : "String token"

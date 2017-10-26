@@ -5,4 +5,5 @@ export { getFinca } from "./fincas/get-finca";
 export { getBovinos } from "./bovinos/get-bovinos";
 export { newPassword } from "./users/new-password"
 export { addFinca } from "./fincas/add-finca";
-export { deleteFinca} from './fincas/delete-finca'
+export { deleteFinca } from './fincas/delete-finca'
+export { updateFinca } from './fincas/update-finca'
