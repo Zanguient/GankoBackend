@@ -15,13 +15,14 @@ class ResponseBody {
 //se ejecuta cuando se requiere recuperacion de contraseña
 export function resetPassword(req: Request, res: Response, next) {
     let reset = req.body as RequestBody;
+    console.log("email reset "+reset.email);
     service.resetPassword(reset.email)
         .subscribe(data => {
             if(data.length > 0){
                 sendMail(data[0]);
                 res.send(new ResponseBody(data ? true : false, data[0], null));
             }else{
-                res.send(new ResponseBody(null, null, "Error, el Email no existe"));
+                res.send(new ResponseBody(null, null, "Error, email Incorrecto"));
             }
             
         }, err => {
