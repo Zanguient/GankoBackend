@@ -13,7 +13,6 @@ var ResponseBody = /** @class */ (function () {
 //se ejecuta cuando se requiere recuperacion de contraseña
 function resetPassword(req, res, next) {
     var reset = req.body;
-    console.log("email reset " + reset.email);
     user_service_1.service.resetPassword(reset.email)
         .subscribe(function (data) {
         if (data.length > 0) {

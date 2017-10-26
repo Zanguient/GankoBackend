@@ -14,17 +14,17 @@ export class FincaService extends DatabaseService {
 
     //permite agregar una finca nueva
     addFinca(nombre:string,ubicacion:string,hectareas:string,usuario:string){
-        return this.query(`INSERT INTO `+table+` (nombre,ubicacion,hectareas,usuario) VALUES (?,?,?,?)`,[nombre,ubicacion,hectareas,usuario])
+        return this.query(`INSERT INTO ${table} (nombre,ubicacion,hectareas,usuario) VALUES (?,?,?,?)`,[nombre,ubicacion,hectareas,usuario])
     }
 
     //permite eliminar una finca
     deleteFinca(id:number){
-        return this.query(`DELETE FROM `+table+` WHERE id = ?`,[id]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`,[id]);
     }
 
     //permite editar una finca
     updateFinca(idfinca:number,nombre:string,ubicacion:string,hectareas:string,usuario:string){
-        return this.query(`UPDATE `+table+` SET nombre = ?,ubicacion = ?,hectareas = ?, usuario = ? WHERE id = ? `,[nombre,ubicacion,hectareas,usuario,idfinca]);
+        return this.query(`UPDATE ${table} SET nombre = ?,ubicacion = ?,hectareas = ?, usuario = ? WHERE id = ? `,[nombre,ubicacion,hectareas,usuario,idfinca]);
     }
 
 }

@@ -15,7 +15,6 @@ class ResponseBody {
 //se ejecuta cuando se requiere recuperacion de contraseña
 export function resetPassword(req: Request, res: Response, next) {
     let reset = req.body as RequestBody;
-    console.log("email reset "+reset.email);
     service.resetPassword(reset.email)
         .subscribe(data => {
             if(data.length > 0){
