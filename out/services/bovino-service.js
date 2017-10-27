@@ -34,10 +34,10 @@ var BovinoService = /** @class */ (function (_super) {
         ]);
     };
     //permite editar un bovino
-    BovinoService.prototype.updateBovino = function (id, idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos, partoFallo, fechaSalida, finca, usuario) {
-        return this.query("UPDATE " + table + " SET id_bovino = ?, imagen = ?, nombre = ?, fecha = ?, genero = ?,\n        proposito = ?, peso = ?, color = ?, raza = ?, id_madre = ?, id_padre = ?, salida = ?, lote = ?, salida_por = ?,\n        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id = ? ", [
-            idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
-            partoFallo, fechaSalida, finca, usuario, id
+    BovinoService.prototype.updateBovino = function (idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos, partoFallo, fechaSalida, finca, usuario) {
+        return this.query("UPDATE " + table + " SET imagen = ?, nombre = ?, fecha = ?, genero = ?,\n        proposito = ?, peso = ?, color = ?, raza = ?, id_madre = ?, id_padre = ?, salida = ?, lote = ?, salida_por = ?,\n        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id_bovino = ? ", [
+            imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
+            partoFallo, fechaSalida, finca, usuario, idBovino
         ]);
     };
     //permite eliminar un bovino usando su identificador asignado

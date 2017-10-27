@@ -24,7 +24,8 @@ var ResponseBovino = /** @class */ (function (_super) {
 function updateBovino(req, res, next) {
     var bovino = req.body;
     var idbovino = req.params.idbovino;
-    bovino_service_1.bovinoService.updateBovino(idbovino, bovino.idBovino, bovino.imagen, bovino.name, bovino.fecha, bovino.genero, bovino.proposito, bovino.peso, bovino.color, bovino.raza, bovino.idMadre, bovino.idPadre, bovino.salida, bovino.lote, bovino.salidaPor, bovino.numeroPartos, bovino.partoFallo, bovino.fechaSalida, bovino.finca, bovino.usuario)
+    var idusuario = req.id;
+    bovino_service_1.bovinoService.updateBovino(idbovino, bovino.imagen, bovino.name, bovino.fecha, bovino.genero, bovino.proposito, bovino.peso, bovino.color, bovino.raza, bovino.idMadre, bovino.idPadre, bovino.salida, bovino.lote, bovino.salidaPor, bovino.numeroPartos, bovino.partoFallo, bovino.fechaSalida, bovino.finca, idusuario)
         .subscribe(function (data) {
         res.send(new ResponseBovino(data ? true : false, data, null));
     }, function (err) {
