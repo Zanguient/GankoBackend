@@ -42,10 +42,9 @@
 ## UPDATE BOVINO
 ### Se define la ruta para actualizar un bovino
 * Method: PUT
-* Route: "update-bovino/{id_bovino}"
+* Route: "update-bovino/{id_bovino}" //este id_bovino es el asignado por el usuario, no de la bd.
 * HEAD: "Authorization" : "String token"
 * BODY : {
-    idBovino: string,
     imagen: string,
     name: string,
     fecha: Date,
@@ -69,5 +68,5 @@
 ## DELETE BOVINO
 ### Se define la ruta para eliminar un bovino
 * Method: DELETE
-* Route: "delete-bovino/{id_bovino}"
+* Route: "delete-bovino/{id_bovino}" //este id_bovino es el asignado por el usuario, no de la bd.
 * HEAD: "Authorization" : "String token"
