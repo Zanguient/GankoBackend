@@ -22,7 +22,7 @@ var ResponseBovino = /** @class */ (function (_super) {
     return ResponseBovino;
 }(response_body_1.ResponseBody));
 function deleteBovino(req, res, next) {
-    bovino_service_1.bovinoService.deleteBovino(req.params.idBovino)
+    bovino_service_1.bovinoService.deleteBovino(req.params.idbovino)
         .subscribe(function (data) {
         res.send(new ResponseBovino(data ? true : false, data, null));
     }, function (err) {

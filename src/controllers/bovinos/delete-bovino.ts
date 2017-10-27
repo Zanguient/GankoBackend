@@ -10,7 +10,7 @@ class ResponseBovino extends ResponseBody {
 }
 
 export function deleteBovino(req, res: Response, next) {
-    bovinoService.deleteBovino(req.params.idBovino)
+    bovinoService.deleteBovino(req.params.idbovino)
         .subscribe(data => {
             res.send(new ResponseBovino(data ? true : false, data, null));
         }, err => {
