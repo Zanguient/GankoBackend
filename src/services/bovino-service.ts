@@ -29,14 +29,14 @@ export class BovinoService extends DatabaseService {
     }
 
     //permite editar un bovino
-    updateBovino(id: string, idBovino: string, imagen: string, name: string, fecha: Date, genero: string, proposito: string,
+    updateBovino(idBovino: string, imagen: string, name: string, fecha: Date, genero: string, proposito: string,
         peso: number, color: string, raza: string, idmadre: string, idpadre: string, salida: string, lote: string, salidaPor: string,
         numeroPartos: number, partoFallo: string, fechaSalida: Date, finca: number, usuario: number) {
-        return this.query(`UPDATE ${table} SET id_bovino = ?, imagen = ?, nombre = ?, fecha = ?, genero = ?,
+        return this.query(`UPDATE ${table} SET imagen = ?, nombre = ?, fecha = ?, genero = ?,
         proposito = ?, peso = ?, color = ?, raza = ?, id_madre = ?, id_padre = ?, salida = ?, lote = ?, salida_por = ?,
-        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id = ? `, [
-                idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
-                partoFallo, fechaSalida, finca, usuario, id]);
+        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id_bovino = ? `, [
+                imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
+                partoFallo, fechaSalida, finca, usuario, idBovino]);
     }
 
     //permite eliminar un bovino usando su identificador asignado
