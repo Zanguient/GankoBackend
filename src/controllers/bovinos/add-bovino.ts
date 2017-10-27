@@ -12,9 +12,10 @@ class ResponseBovino extends ResponseBody {
 
 export function addBovino(req, res: Response, next) {
     let bovino = req.body as RequestBody;
+    let idusuario = req.id;
     bovinoService.addBovino(bovino.idBovino, bovino.imagen, bovino.name, bovino.fecha, bovino.genero, bovino.proposito,
         bovino.peso, bovino.color, bovino.raza, bovino.idMadre, bovino.idPadre, bovino.salida, bovino.lote, bovino.salidaPor,
-        bovino.numeroPartos, bovino.partoFallo, bovino.fechaSalida, bovino.finca, bovino.usuario)
+        bovino.numeroPartos, bovino.partoFallo, bovino.fechaSalida, bovino.finca, idusuario)
         .subscribe(data => {
             res.send(new ResponseBovino(data ? true : false, data, null));
         }, err => {
@@ -41,5 +42,4 @@ interface RequestBody {
     partoFallo: string,
     fechaSalida: Date,
     finca: number,
-    usuario: number
 }
