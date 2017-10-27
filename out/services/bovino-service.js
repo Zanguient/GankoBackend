@@ -28,14 +28,14 @@ var BovinoService = /** @class */ (function (_super) {
     };
     //permite insertar un nuevo bovino
     BovinoService.prototype.addBovino = function (idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos, partoFallo, fechaSalida, finca, usuario) {
-        this.query("INSERT INTO " + table + " (id_bovino,imagen,nombre,fecha,genero,proposito,peso,color,\n                raza,id_madre,id_padre,salida,lote,salida_por,numero_partos,parto_fallido,fecha_salida,finca,usuario) VALUES \n                (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
+        return this.query("INSERT INTO " + table + " (id_bovino,imagen,nombre,fecha,genero,proposito,peso,color,\n                raza,id_madre,id_padre,salida,lote,salida_por,numero_partos,parto_fallido,fecha_salida,finca,usuario) VALUES \n                (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
             idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
             partoFallo, fechaSalida, finca, usuario
         ]);
     };
     //permite editar un bovino
     BovinoService.prototype.updateBovino = function (id, idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos, partoFallo, fechaSalida, finca, usuario) {
-        this.query("UPDATE " + table + " SET id_bovino = ?, imagen = ?, nombre = ?, fecha = ?, genero = ?,\n        proposito = ?, peso = ?, color = ?, raza = ?, id_madre = ?, id_padre = ?, salida = ?, lote = ?, salida_por = ?,\n        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id = ? ", [
+        return this.query("UPDATE " + table + " SET id_bovino = ?, imagen = ?, nombre = ?, fecha = ?, genero = ?,\n        proposito = ?, peso = ?, color = ?, raza = ?, id_madre = ?, id_padre = ?, salida = ?, lote = ?, salida_por = ?,\n        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id = ? ", [
             idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
             partoFallo, fechaSalida, finca, usuario, id
         ]);

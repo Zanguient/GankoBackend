@@ -13,35 +13,35 @@ export class BovinoService extends DatabaseService {
     }
 
     //permite encontrar un bovino por medio de su identificador asignado
-    findByIdBovino(idbovino:string){
-        return this.query<Bovino>(`SELECT * FROM ${table} WHERE id_bovino = ?`,[idbovino]);
+    findByIdBovino(idbovino: string) {
+        return this.query<Bovino>(`SELECT * FROM ${table} WHERE id_bovino = ?`, [idbovino]);
     }
 
     //permite insertar un nuevo bovino
-    addBovino(idBovino:string,imagen:string,name:string,fecha:Date,genero:string,proposito:string,
-        peso:number,color:string,raza:string,idmadre:string,idpadre:string,salida:string,lote:string,salidaPor:string,
-        numeroPartos:number,partoFallo:string,fechaSalida:Date,finca:number,usuario:number){
-            this.query(`INSERT INTO ${table} (id_bovino,imagen,nombre,fecha,genero,proposito,peso,color,
+    addBovino(idBovino: string, imagen: string, name: string, fecha: Date, genero: string, proposito: string,
+        peso: number, color: string, raza: string, idmadre: string, idpadre: string, salida: string, lote: string, salidaPor: string,
+        numeroPartos: number, partoFallo: string, fechaSalida: Date, finca: number, usuario: number) {
+        return this.query(`INSERT INTO ${table} (id_bovino,imagen,nombre,fecha,genero,proposito,peso,color,
                 raza,id_madre,id_padre,salida,lote,salida_por,numero_partos,parto_fallido,fecha_salida,finca,usuario) VALUES 
-                (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,[
-                idBovino,imagen,name,fecha,genero,proposito,peso,color,raza,idmadre,idpadre,salida,lote,salidaPor,numeroPartos,
-                partoFallo,fechaSalida,finca,usuario]);
-        }
+                (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [
+                idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
+                partoFallo, fechaSalida, finca, usuario]);
+    }
 
     //permite editar un bovino
-    updateBovino(id:number,idBovino:string,imagen:string,name:string,fecha:Date,genero:string,proposito:string,
-    peso:number,color:string,raza:string,idmadre:string,idpadre:string,salida:string,lote:string,salidaPor:string,
-    numeroPartos:number,partoFallo:string,fechaSalida:Date,finca:number,usuario:number){
-        this.query(`UPDATE ${table} SET id_bovino = ?, imagen = ?, nombre = ?, fecha = ?, genero = ?,
+    updateBovino(id: string, idBovino: string, imagen: string, name: string, fecha: Date, genero: string, proposito: string,
+        peso: number, color: string, raza: string, idmadre: string, idpadre: string, salida: string, lote: string, salidaPor: string,
+        numeroPartos: number, partoFallo: string, fechaSalida: Date, finca: number, usuario: number) {
+        return this.query(`UPDATE ${table} SET id_bovino = ?, imagen = ?, nombre = ?, fecha = ?, genero = ?,
         proposito = ?, peso = ?, color = ?, raza = ?, id_madre = ?, id_padre = ?, salida = ?, lote = ?, salida_por = ?,
-        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id = ? `,[
-            idBovino,imagen,name,fecha,genero,proposito,peso,color,raza,idmadre,idpadre,salida,lote,salidaPor,numeroPartos,
-            partoFallo,fechaSalida,finca,usuario,id]);
+        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id = ? `, [
+                idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
+                partoFallo, fechaSalida, finca, usuario, id]);
     }
 
     //permite eliminar un bovino usando su identificador asignado
-    deleteBovino(idbovino){
-        return this.query(`DELETE FROM ${table} WHERE id_bovino = ?`,[idbovino]);
+    deleteBovino(idbovino) {
+        return this.query(`DELETE FROM ${table} WHERE id_bovino = ?`, [idbovino]);
     }
 
 }
