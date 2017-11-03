@@ -11,9 +11,8 @@ class ResponseBovino extends ResponseBody {
 }
 
 export function addBovino(req, res: Response, next) {
-    
     let bovino = req.body as Bovino;
-    let idusuario = req.id;
+    bovino.usuario = req.id;
     bovinoService.addBovino(bovino)
         .subscribe(data => {
             res.send(new ResponseBovino(data ? true : false, data, null));
