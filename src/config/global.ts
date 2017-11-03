@@ -2,25 +2,25 @@
 import * as del from 'del';
 import * as Loki from 'lokijs';
 
-// export const config = {
-//     secret : "Ganko2017",
-//        database: {
-//            host: 'us-cdbr-iron-east-05.cleardb.net',
-//            user: 'bb942c918452fa',
-//            password: 'e45e8c49',
-//            database: 'heroku_6de81001f978b1a'
-//       }
-// }
-
 export const config = {
     secret : "Ganko2017",
        database: {
-           host: 'localhost',
-           user: 'root',
-           password: 'root',
-           database: 'test'
+           host: 'us-cdbr-iron-east-05.cleardb.net',
+           user: 'bb942c918452fa',
+           password: 'e45e8c49',
+           database: 'heroku_6de81001f978b1a'
       }
 }
+
+// export const config = {
+//     secret : "Ganko2017",
+//        database: {
+//            host: 'localhost',
+//            user: 'root',
+//            password: 'root',
+//            database: 'test'
+//       }
+// }
 
 export const loadCollection = function (colName, db: Loki): Promise<LokiCollection<any>> {
     return new Promise(resolve => {
