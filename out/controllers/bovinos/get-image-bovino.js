@@ -51,14 +51,22 @@ function getImageBovino(req, res, next) {
                     idBovino = req.params.idbovino;
                     bovino_service_1.bovinoService.findById(idBovino)
                         .subscribe(function (data) {
-                        var result = col.get(data.imagen);
-                        if (!result) {
-                            res.sendStatus(404);
-                            return;
+                        try {
+                            var idimagen = data[0].imagen;
+                            console.log("idimagen " + idimagen);
+                            var result = col.get(idimagen);
+                            console.log("imagen de bovino : " + result);
+                            if (!result) {
+                                res.sendStatus(404);
+                                return;
+                            }
+                            ;
+                            res.setHeader('Content-Type', result.mimetype);
+                            fs.createReadStream(path.join(add_image_bovino_1.UPLOAD_PATH, result.filename)).pipe(res);
                         }
-                        ;
-                        res.setHeader('Content-Type', result.mimetype);
-                        fs.createReadStream(path.join(add_image_bovino_1.UPLOAD_PATH, result.filename)).pipe(res);
+                        catch (err) {
+                            res.sendStatus(400);
+                        }
                     });
                     return [2 /*return*/];
             }

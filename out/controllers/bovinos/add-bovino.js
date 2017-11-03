@@ -23,8 +23,8 @@ var ResponseBovino = /** @class */ (function (_super) {
 }(response_body_1.ResponseBody));
 function addBovino(req, res, next) {
     var bovino = req.body;
-    var idusuario = req.id;
-    bovino_service_1.bovinoService.addBovino(bovino.idBovino, bovino.name, bovino.fecha, bovino.genero, bovino.proposito, bovino.peso, bovino.color, bovino.raza, bovino.idMadre, bovino.idPadre, bovino.salida, bovino.lote, bovino.salidaPor, bovino.numeroPartos, bovino.partoFallo, bovino.fechaSalida, bovino.finca, idusuario)
+    bovino.usuario = req.id;
+    bovino_service_1.bovinoService.addBovino(bovino)
         .subscribe(function (data) {
         res.send(new ResponseBovino(data ? true : false, data, null));
     }, function (err) {

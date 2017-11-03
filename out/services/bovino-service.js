@@ -31,18 +31,12 @@ var BovinoService = /** @class */ (function (_super) {
         return this.query("SELECT * FROM " + table + " WHERE id = ?", [idbovino]);
     };
     //permite insertar un nuevo bovino
-    BovinoService.prototype.addBovino = function (idBovino, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos, partoFallo, fechaSalida, finca, usuario) {
-        return this.query("INSERT INTO " + table + " (id_bovino,nombre,fecha,genero,proposito,peso,color,\n                raza,id_madre,id_padre,salida,lote,salida_por,numero_partos,parto_fallido,fecha_salida,finca,usuario) VALUES \n                (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [
-            idBovino, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
-            partoFallo, fechaSalida, finca, usuario
-        ]);
+    BovinoService.prototype.addBovino = function (bovino) {
+        return this.query("INSERT INTO " + table + " SET ?", [bovino]);
     };
     //permite editar un bovino
-    BovinoService.prototype.updateBovino = function (idBovino, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos, partoFallo, fechaSalida, finca, usuario) {
-        return this.query("UPDATE " + table + " SET imagen = ?, nombre = ?, fecha = ?, genero = ?,\n        proposito = ?, peso = ?, color = ?, raza = ?, id_madre = ?, id_padre = ?, salida = ?, lote = ?, salida_por = ?,\n        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id_bovino = ? ", [
-            name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
-            partoFallo, fechaSalida, finca, usuario, idBovino
-        ]);
+    BovinoService.prototype.updateBovino = function (bovino) {
+        return this.query("UPDATE " + table + " SET ? ", [bovino]);
     };
     //permite subir la foto del bovino
     BovinoService.prototype.updateImageBovino = function (id, idImage) {
@@ -56,26 +50,28 @@ var BovinoService = /** @class */ (function (_super) {
 }(database_service_1.DatabaseService));
 exports.BovinoService = BovinoService;
 var Bovino = /** @class */ (function () {
-    function Bovino(idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idMadre, idPadre, salida, lote, salidaPor, numeroPartos, partoFallo, fechaSalida, finca, usuario) {
-        this.idBovino = idBovino;
+    function Bovino(id_bovino, imagen, name, fecha_ingreso, genero, proposito, peso, color, raza, id_Madre, id_Padre, lote, salida_por, numero_partos, parto_fallo, fecha_salida, precio_compra, precio_venta, finca, usuario, version) {
+        this.id_bovino = id_bovino;
         this.imagen = imagen;
         this.name = name;
-        this.fecha = fecha;
+        this.fecha_ingreso = fecha_ingreso;
         this.genero = genero;
         this.proposito = proposito;
         this.peso = peso;
         this.color = color;
         this.raza = raza;
-        this.idMadre = idMadre;
-        this.idPadre = idPadre;
-        this.salida = salida;
+        this.id_Madre = id_Madre;
+        this.id_Padre = id_Padre;
         this.lote = lote;
-        this.salidaPor = salidaPor;
-        this.numeroPartos = numeroPartos;
-        this.partoFallo = partoFallo;
-        this.fechaSalida = fechaSalida;
+        this.salida_por = salida_por;
+        this.numero_partos = numero_partos;
+        this.parto_fallo = parto_fallo;
+        this.fecha_salida = fecha_salida;
+        this.precio_compra = precio_compra;
+        this.precio_venta = precio_venta;
         this.finca = finca;
         this.usuario = usuario;
+        this.version = version;
     }
     return Bovino;
 }());

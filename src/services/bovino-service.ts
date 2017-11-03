@@ -17,7 +17,7 @@ export class BovinoService extends DatabaseService {
         return this.query<Bovino>(`SELECT * FROM ${table} WHERE id_bovino = ?`, [idbovino]);
     }
     //permite buscar el bovino por id de BD
-    findById(idbovino: string) {
+    findById(idbovino: number) {
         return this.query<Bovino>(`SELECT * FROM ${table} WHERE id = ?`, [idbovino]);
     }
     //permite insertar un nuevo bovino

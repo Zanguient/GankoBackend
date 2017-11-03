@@ -13,14 +13,12 @@ export async function getImageBovino(req, res, next) {
     bovinoService.findById(idBovino)
     .subscribe(data=>{
         try {
-            
-            const result = col.get(data.imagen);
-            console.log("imagen de bovino : "+result);
+            let idimagen = data[0].imagen;
+            const result = col.get(idimagen);
             if (!result) {
                 res.sendStatus(404);
                 return;
             };
-    
             res.setHeader('Content-Type', result.mimetype);
             fs.createReadStream(path.join(UPLOAD_PATH, result.filename)).pipe(res);
         } catch (err) {
