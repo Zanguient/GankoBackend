@@ -16,27 +16,23 @@ export class BovinoService extends DatabaseService {
     findByIdBovino(idbovino: string) {
         return this.query<Bovino>(`SELECT * FROM ${table} WHERE id_bovino = ?`, [idbovino]);
     }
-
+    //permite buscar el bovino por id de BD
+    findById(idbovino: string) {
+        return this.query<Bovino>(`SELECT * FROM ${table} WHERE id = ?`, [idbovino]);
+    }
     //permite insertar un nuevo bovino
-    addBovino(idBovino: string, imagen: string, name: string, fecha: Date, genero: string, proposito: string,
-        peso: number, color: string, raza: string, idmadre: string, idpadre: string, salida: string, lote: string, salidaPor: string,
-        numeroPartos: number, partoFallo: string, fechaSalida: Date, finca: number, usuario: number) {
-        return this.query(`INSERT INTO ${table} (id_bovino,imagen,nombre,fecha,genero,proposito,peso,color,
-                raza,id_madre,id_padre,salida,lote,salida_por,numero_partos,parto_fallido,fecha_salida,finca,usuario) VALUES 
-                (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, [
-                idBovino, imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
-                partoFallo, fechaSalida, finca, usuario]);
+    addBovino(bovino : Bovino) {
+        return this.query(`INSERT INTO ${table} SET ?`, [bovino]);
     }
 
     //permite editar un bovino
-    updateBovino(idBovino: string, imagen: string, name: string, fecha: Date, genero: string, proposito: string,
-        peso: number, color: string, raza: string, idmadre: string, idpadre: string, salida: string, lote: string, salidaPor: string,
-        numeroPartos: number, partoFallo: string, fechaSalida: Date, finca: number, usuario: number) {
-        return this.query(`UPDATE ${table} SET imagen = ?, nombre = ?, fecha = ?, genero = ?,
-        proposito = ?, peso = ?, color = ?, raza = ?, id_madre = ?, id_padre = ?, salida = ?, lote = ?, salida_por = ?,
-        numero_partos = ?, parto_fallido = ?, fecha_salida = ?, finca = ?, usuario = ? WHERE id_bovino = ? `, [
-                imagen, name, fecha, genero, proposito, peso, color, raza, idmadre, idpadre, salida, lote, salidaPor, numeroPartos,
-                partoFallo, fechaSalida, finca, usuario, idBovino]);
+    updateBovino(bovino:Bovino) {
+        return this.query(`UPDATE ${table} SET ? `, [bovino]);
+    }
+
+    //permite subir la foto del bovino
+    updateImageBovino(id: number, idImage: number) {
+        return this.query(`UPDATE ${table} SET imagen = ? WHERE id = ?`, [idImage, id]);
     }
 
     //permite eliminar un bovino usando su identificador asignado
@@ -48,9 +44,9 @@ export class BovinoService extends DatabaseService {
 
 export class Bovino {
     constructor(public idBovino: string,
-        public imagen: string,
+        public imagen: number,
         public name: string,
-        public fecha: Date,
+        public fechaIngreso: Date,
         public genero: string,
         public proposito: number,
         public peso: number,
@@ -58,14 +54,16 @@ export class Bovino {
         public raza: string,
         public idMadre: string,
         public idPadre: string,
-        public salida: string,
         public lote: string,
         public salidaPor: string,
         public numeroPartos: string,
         public partoFallo: string,
         public fechaSalida: string,
+        public precioCompra:number,
+        public precioVenta:number,
         public finca: number,
-        public usuario: number) { }
+        public usuario: number,
+        public version:number) { }
 }
 
 export const bovinoService: BovinoService = new BovinoService();

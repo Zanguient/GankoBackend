@@ -2,7 +2,6 @@ import * as express from 'express';
 import * as logger from 'morgan';
 import * as bodyParser from 'body-parser';
 import * as path from 'path';
-import index from './routes/index';
 import user from './routes/user';
 import finca from './routes/finca';
 import bovino from './routes/bovino';
@@ -21,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+
 app.use('/user', user);
 app.use('/finca', finca);
 app.use('/bovino', bovino);

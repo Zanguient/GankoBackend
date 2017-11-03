@@ -10,3 +10,5 @@ export { getBovinos } from "./bovinos/get-bovinos";
 export { addBovino } from "./bovinos/add-bovino";
 export { updateBovino } from "./bovinos/update-bovino";
 export { deleteBovino } from "./bovinos/delete-bovino";
+export { addImageBovino } from "./bovinos/add-image-bovino";
+export { getImageBovino } from "./bovinos/get-image-bovino";

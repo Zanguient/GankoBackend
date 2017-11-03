@@ -18,25 +18,26 @@
 * Route: "add-bovino/"
 * HEAD: "Authorization" : "String token"
 * BODY : {
-    idBovino: string,
-    imagen: string,
-    name: string,
-    fecha: Date,
-    genero: string,
-    proposito: string,
-    peso: number,
-    color: string,
-    raza: string,
-    idMadre: string,
-    idPadre: string,
-    salida: string,
-    lote: string,
-    salidaPor: string,
-    numeroPartos: number,
-    partoFallo: string,
-    fechaSalida: Date,
-    finca: number,
-    usuario: number
+        imagen: number,
+        name: string,
+        fechaIngreso: Date,
+        genero: string,
+        proposito: number,
+        peso: number,
+        color: string,
+        raza: string,
+        idMadre: string,
+        idPadre: string,
+        lote: string,
+        salidaPor: string,
+        numeroPartos: string,
+        partoFallo: string,
+        fechaSalida: string,
+        precioCompra:number,
+        precioVenta:number,
+        finca: number,
+        usuario: number,
+        version:number
 }
 
 ## UPDATE BOVINO
@@ -45,24 +46,26 @@
 * Route: "update-bovino/{id_bovino}" //este id_bovino es el asignado por el usuario, no de la bd.
 * HEAD: "Authorization" : "String token"
 * BODY : {
-    imagen: string,
-    name: string,
-    fecha: Date,
-    genero: string,
-    proposito: string,
-    peso: number,
-    color: string,
-    raza: string,
-    idMadre: string,
-    idPadre: string,
-    salida: string,
-    lote: string,
-    salidaPor: string,
-    numeroPartos: number,
-    partoFallo: string,
-    fechaSalida: Date,
-    finca: number,
-    usuario: number
+    imagen: number,
+        name: string,
+        fechaIngreso: Date,
+        genero: string,
+        proposito: number,
+        peso: number,
+        color: string,
+        raza: string,
+        idMadre: string,
+        idPadre: string,
+        lote: string,
+        salidaPor: string,
+        numeroPartos: string,
+        partoFallo: string,
+        fechaSalida: string,
+        precioCompra:number,
+        precioVenta:number,
+        finca: number,
+        usuario: number,
+        version:number
 }
 
 ## DELETE BOVINO
