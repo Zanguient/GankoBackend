@@ -8,13 +8,13 @@ const table = "finca"
 export class FincaService extends DatabaseService {
 
     //permite recuperar las fincas pertenecientes a un usuario
-    findFincas(id: string) {
-        return this.query<Finca>(`SELECT * FROM ${table} WHERE usuario = ?`, [id]);
+    findFincas(id_usuario: string) {
+        return this.query<Finca>(`SELECT * FROM ${table} WHERE usuario = ?`, [id_usuario]);
     }
 
     //permite agregar una finca nueva
-    addFinca(nombre:string,ubicacion:string,hectareas:string,usuario:string){
-        return this.query(`INSERT INTO ${table} (nombre,ubicacion,hectareas,usuario) VALUES (?,?,?,?)`,[nombre,ubicacion,hectareas,usuario])
+    addFinca(finca:Finca){
+        return this.query(`INSERT INTO ${table} SET ?`,[finca]);
     }
 
     //permite eliminar una finca
@@ -23,17 +23,17 @@ export class FincaService extends DatabaseService {
     }
 
     //permite editar una finca
-    updateFinca(idfinca:number,nombre:string,ubicacion:string,hectareas:string,usuario:string){
-        return this.query(`UPDATE ${table} SET nombre = ?,ubicacion = ?,hectareas = ?, usuario = ? WHERE id = ? `,[nombre,ubicacion,hectareas,usuario,idfinca]);
+    updateFinca(id_finca:number,finca:Finca){
+        return this.query(`UPDATE ${table} SET ? WHERE id = ?`,[finca,id_finca]);
     }
 
 }
 
 export class Finca {
-    constructor(public name: string,
-        public location: string,
-        public size: string,
-        public user: number) { }
+        public nombre: string;
+        public ubicacion: string;
+        public hectareas: string;
+        public usuario: number;
 }
 
 export const fincaService: FincaService = new FincaService();

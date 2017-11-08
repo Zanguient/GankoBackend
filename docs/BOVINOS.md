@@ -44,7 +44,7 @@
 ## UPDATE BOVINO
 ### Se define la ruta para actualizar un bovino
 * Method: PUT
-* Route: "update-bovino/{id_bovino}" //este id_bovino es el asignado por el usuario, no de la bd.
+* Route: "update-bovino/{id_bovino}"
 * HEAD: "Authorization" : "String token"
 * BODY : {
         id_bovino:string,

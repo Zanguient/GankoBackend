@@ -26,8 +26,8 @@ export class BovinoService extends DatabaseService {
     }
 
     //permite editar un bovino
-    updateBovino(bovino:Bovino) {
-        return this.query(`UPDATE ${table} SET ? `, [bovino]);
+    updateBovino(id_bovino:number,bovino:Bovino) {
+        return this.query(`UPDATE ${table} SET ? WHERE id = ?`, [bovino,id_bovino]);
     }
 
     //permite subir la foto del bovino

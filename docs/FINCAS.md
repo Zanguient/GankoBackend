@@ -8,15 +8,15 @@
 
 ## GET FINCAS
 ### Se define la ruta para recibir la lista de fincas asociadas a un usuario
-* Method: GET
-* Route: "get-fincas"
+* METHOD: GET
+* ROUTE: "get-fincas"
 * HEAD: "Authorization" : "String token"
 
 ## ADD FINCA
 ### Se define la ruta para agregar una finca nueva
-* Method: POST
-* Route: "add-finca"
-* Body Request: {
+* METHOD: POST
+* ROTE: "add-finca"
+* BODY: {
     "nombre" : "String",
     "ubicacion" : "String",
     "hectareas" : "number"
@@ -25,15 +25,15 @@
 
 ## DELETE FINCA
 ### Se define la ruta para eliminar una finca
-* Method: DELETE
-* Route: "delete-finca/{id_finca}"
+* METHOD: DELETE
+* ROUTE: "delete-finca/{id_finca}"
 * HEAD: "Authorization" : "String token"
 
 ## UPDATE FINCA
 ### Se define la ruta para agregar una finca nueva
-* Method: PUT
-* Route: "update-finca/{idfinca}"
-* Body Request: {
+* METHOD: PUT
+* ROUTE: "update-finca/{idfinca}"
+* BODY: {
     "nombre" : "String",
     "ubicacion" : "String",
     "hectareas" : "number"

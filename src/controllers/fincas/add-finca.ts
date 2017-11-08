@@ -3,13 +3,6 @@ import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body'
 
-interface RequestBody {
-    nombre: string;
-    ubicacion: string;
-    hectareas: string;
-    usuario: string;
-}
-
 class ResponseFinca extends ResponseBody {
     constructor(success: boolean, public data, err: string) {
         super(success, err);
@@ -17,9 +10,9 @@ class ResponseFinca extends ResponseBody {
 }
 
 export function addFinca(req, res: Response, next) {
-    let finca = req.body as RequestBody;
+    let finca:Finca = req.body;
     finca.usuario = req.id;
-    fincaService.addFinca(finca.nombre, finca.ubicacion, finca.hectareas, finca.usuario)
+    fincaService.addFinca(finca)
         .subscribe(data => {
             res.send(new ResponseFinca(true, data, null));
         }, err => {

@@ -4,21 +4,6 @@ import { config } from '../../config/global'
 import { ResponseBody } from '../response-body'
 var md5 = require('md5');
 
-interface RequestBody {
-    nombre: string;
-    apellido: string;
-    email: string;
-    usuario: string;
-    password: string;
-    identificacion: number;
-    estado: string;
-}
-
-interface LoginData{
-    user: Usuario;
-    token: string;
-}
-
 class ResponseLogin extends ResponseBody{
     constructor(success:boolean,public data,err:string){
         super(success,err);
@@ -26,8 +11,9 @@ class ResponseLogin extends ResponseBody{
 }
 
 export function createUser(req, res, next) {
-    let user = req.body as RequestBody;
-    service.addUser(user.nombre,user.apellido,user.email,user.usuario,user.password,user.identificacion)
+    let user:Usuario = req.body;
+    user.password = md5(user.password);
+    service.addUser(user)
         .subscribe(data => {
             res.send(new ResponseLogin(true,data, null));
         }, err => {

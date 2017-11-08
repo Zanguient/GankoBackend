@@ -8,8 +8,8 @@ const table = "usuario";
 export class UserService extends DatabaseService {
 
     //permite insertar un nuevo usuario
-    addUser(nombre: string, apellido: string,email: string,usuario: string,password:string,identificacion:number) {
-        return this.query('INSERT INTO '+ table +' (`nombre`,`apellido`,`email`,`usuario`,`password`,`identificacion`,`estado`)VALUES(?,?,?,?,?,?,"activo");', [nombre,apellido,email,usuario,md5(password),identificacion]);
+    addUser(usuario:Usuario) {
+        return this.query(`INSERT INTO ${table} set ?`,[usuario]);
     }
     //permite verificar si el nuevo usuario ya existe con el correo suministrado
     checkUserByEmail(email: string) {
@@ -39,10 +39,14 @@ export class UserService extends DatabaseService {
 }
 
 export class Usuario {
-    constructor(public id:number,
-        public name: string,
-        public lastname: string) { }
-}
+        public id:number;
+        public nombre:string;
+        public apellido: string;
+        public email:string;
+        public usuario:string;
+        public password:string;
+        public identificacion:string;
+    }
 export class Email {
     constructor(public email: string,
         public estado: string) { }
