@@ -7,15 +7,16 @@ export class PartoService extends DatabaseService {
 
 
     insertParto(parto:Parto) {
-        this.query(`INSERT INTO ${table} SET ?`, [parto]);
+        return this.query(`INSERT INTO ${table} SET ?`, [parto]);
     }
 
     getParto(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteParto(id_parto: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_parto]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_parto]);
     }
 
 }
+export const partoService: PartoService = new PartoService();

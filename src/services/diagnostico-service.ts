@@ -7,15 +7,16 @@ export class DiagnosticoService extends DatabaseService {
 
 
     insertDiagnostico(diagnostico:Diagnostico) {
-        this.query(`INSERT INTO ${table} SET ?`, [diagnostico]);
+        return this.query(`INSERT INTO ${table} SET ?`, [diagnostico]);
     }
 
     getDiagnostico(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteDiagnostico(id_diagnostico: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_diagnostico]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_diagnostico]);
     }
 
 }
+export const diagnosticoService: DiagnosticoService = new DiagnosticoService();

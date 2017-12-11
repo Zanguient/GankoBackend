@@ -7,15 +7,16 @@ export class VacunaService extends DatabaseService {
 
 
     insertVacuna(vacuna:Vacuna) {
-        this.query(`INSERT INTO ${table} SET ?`, [vacuna]);
+        return this.query(`INSERT INTO ${table} SET ?`, [vacuna]);
     }
 
     getVacuna(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteVacuna(id_vacuna: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_vacuna]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_vacuna]);
     }
 
 }
+export const vacunaService: VacunaService = new VacunaService();

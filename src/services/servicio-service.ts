@@ -7,15 +7,16 @@ export class ServicioService extends DatabaseService {
 
 
     insertServicio(servicio:Servicio) {
-        this.query(`INSERT INTO ${table} SET ?`, [servicio]);
+        return this.query(`INSERT INTO ${table} SET ?`, [servicio]);
     }
 
     getServicio(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteServicio(id_servicio: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_servicio]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_servicio]);
     }
 
 }
+export const servicioService: ServicioService = new ServicioService();

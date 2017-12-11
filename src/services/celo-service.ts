@@ -1,5 +1,6 @@
 import { DatabaseService } from './database-service';
 import { Celo } from "./models/celo";
+import { CebaService } from './ceba-service';
 
 const table = "celo";
 
@@ -7,15 +8,16 @@ export class CeloService extends DatabaseService {
 
 
     insertCelo(celo:Celo) {
-        this.query(`INSERT INTO ${table} SET ?`, [celo]);
+        return this.query(`INSERT INTO ${table} SET ?`, [celo]);
     }
 
     getCelo(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteCelo(id_celo: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_celo]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_celo]);
     }
 
 }
+export const celoService: CeloService = new CeloService();

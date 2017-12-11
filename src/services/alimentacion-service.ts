@@ -7,15 +7,16 @@ export class AlimentacionService extends DatabaseService {
 
 
     insertAlimentacion(alimentacion:Alimentacion) {
-        this.query(`INSERT INTO ${table} SET ?`, [alimentacion]);
+        return this.query(`INSERT INTO ${table} SET ?`, [alimentacion]);
     }
 
-    getPraderas(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+    getAlimentacion(id_bovino: number) {
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteAlimentacion(id_alimentacion: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_alimentacion]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_alimentacion]);
     }
 
 }
+export const alimentacionService: AlimentacionService = new AlimentacionService();

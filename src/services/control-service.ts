@@ -7,15 +7,16 @@ export class ControlService extends DatabaseService {
 
 
     insertControl(control:Control) {
-        this.query(`INSERT INTO ${table} SET ?`, [control]);
+        return this.query(`INSERT INTO ${table} SET ?`, [control]);
     }
 
     getControl(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteControl(id_control: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_control]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_control]);
     }
 
 }
+export const controlService: ControlService = new ControlService();

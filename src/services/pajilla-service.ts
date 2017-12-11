@@ -7,15 +7,16 @@ export class PajillaService extends DatabaseService {
 
 
     insertPajilla(pajilla:Pajilla) {
-        this.query(`INSERT INTO ${table} SET ?`, [pajilla]);
+        return this.query(`INSERT INTO ${table} SET ?`, [pajilla]);
     }
 
     getPajillas() {
-        this.query(`SELECT * FROM ${table} WHERE usada=false ORDER BY desc`);
+        return this.query(`SELECT * FROM ${table} WHERE usada=false ORDER BY desc`);
     }
 
     deletePajilla(id_pajilla: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_pajilla]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_pajilla]);
     }
 
 }
+export const pajillaService: PajillaService = new PajillaService();

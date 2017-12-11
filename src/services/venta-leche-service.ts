@@ -7,19 +7,19 @@ export class VentaLecheService extends DatabaseService {
 
 
     insertVentaLeche(ventaLeche:VentaLeche) {
-        this.query(`INSERT INTO ${table} SET ?`, [ventaLeche]);
+        return this.query(`INSERT INTO ${table} SET ?`, [ventaLeche]);
     }
 
     getVentaLeche() {
-        this.query(`SELECT * FROM ${table}`);
+        return this.query(`SELECT * FROM ${table}`);
     }
 
     getVentaLecheFecha(fecha:Date){
-        this.query(`SELECT * FROM ${table} WHERE fecha >= ?`,[fecha])
+        return this.query(`SELECT * FROM ${table} WHERE fecha >= ?`,[fecha])
     }
 
     deleteVentaLeche(id_venta_leche: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_venta_leche]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_venta_leche]);
     }
-
 }
+export const ventaLecheService: VentaLecheService = new VentaLecheService();

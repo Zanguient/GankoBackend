@@ -7,15 +7,16 @@ export class LecheService extends DatabaseService {
 
 
     insertLeche(leche:Leche) {
-        this.query(`INSERT INTO ${table} SET ?`, [leche]);
+        return this.query(`INSERT INTO ${table} SET ?`, [leche]);
     }
 
     getLeche(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteLeche(id_leche: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_leche]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_leche]);
     }
 
 }
+export const lecheService: LecheService = new LecheService();

@@ -7,15 +7,16 @@ export class ManejoService extends DatabaseService {
 
 
     insertManejo(manejo:Manejo) {
-        this.query(`INSERT INTO ${table} SET ?`, [manejo]);
+        return this.query(`INSERT INTO ${table} SET ?`, [manejo]);
     }
 
     getManejo(id_bovino: number) {
-        this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
     }
 
     deleteManejo(id_manejo: number) {
-        this.query(`DELETE FROM ${table} WHERE id = ?`, [id_manejo]);
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_manejo]);
     }
 
 }
+export const manejoService: ManejoService = new ManejoService();
