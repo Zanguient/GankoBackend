@@ -1,7 +1,8 @@
-import { fincaService, Finca } from '../../services/finca-service'
+import { fincaService } from '../../services/finca-service';
+import { Finca } from "../../services/models/finca";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
-import { ResponseBody } from '../response-body'
+import { ResponseBody } from '../response-body';
 
 class ResponseFinca extends ResponseBody{
     constructor(success:boolean,public data,err:string){

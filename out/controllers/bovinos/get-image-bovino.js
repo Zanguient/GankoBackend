@@ -53,9 +53,7 @@ function getImageBovino(req, res, next) {
                         .subscribe(function (data) {
                         try {
                             var idimagen = data[0].imagen;
-                            console.log("idimagen " + idimagen);
                             var result = col.get(idimagen);
-                            console.log("imagen de bovino : " + result);
                             if (!result) {
                                 res.sendStatus(404);
                                 return;

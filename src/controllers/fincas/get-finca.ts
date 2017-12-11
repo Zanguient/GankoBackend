@@ -1,4 +1,5 @@
-import { fincaService, Finca } from '../../services/finca-service'
+import { fincaService } from '../../services/finca-service';
+import { Finca } from "../../services/models/finca";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 

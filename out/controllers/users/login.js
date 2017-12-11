@@ -28,7 +28,7 @@ function login(req, res, next) {
     var auth = req.body;
     user_service_1.service.login(auth.username, md5(auth.password))
         .subscribe(function (data) {
-        var token = data.length > 0 ? jsonwebtoken_1.sign({ id: data[0].id }, global_1.config.secret) : null;
+        var token = data.length > 0 ? jsonwebtoken_1.sign({ id: data[0].id }, global_1.config["" + process.env.NODE_ENV].secret) : null;
         res.send(new ResponseLogin(data.length > 0 ? true : false, { user: data[0], token: token }, "Usuario o Contraseña Incorrecto"));
     }, function (err) {
         res.status(500).send(new ResponseLogin(false, null, err));

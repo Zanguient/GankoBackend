@@ -5,7 +5,7 @@ import { ResponseBody } from '../controllers/response-body'
 export function ValidateToken(req, res, next) {
     let token = req.get('Authorization');
     console.log("Token : "+token);
-    verify(token, config.secret, (err, decoded) => {
+    verify(token, config[""+process.env.NODE_ENV].secret, (err, decoded) => {
         if (err) {
             res.status(401).send(new ResponseBody(false,"No Autorizado"));
         }else{

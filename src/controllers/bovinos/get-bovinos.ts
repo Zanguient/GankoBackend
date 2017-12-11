@@ -1,4 +1,5 @@
-import { bovinoService, Bovino } from '../../services/bovino-service'
+import { bovinoService} from '../../services/bovino-service';
+import { Bovino } from "../../services/models/bovino";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 

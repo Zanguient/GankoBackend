@@ -8,12 +8,13 @@ const debug = debugModule('node-express-typescript:server');
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+
 // create server and listen on provided port (on all network interfaces).
 const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
+console.log("hola "+process.env.NODE_ENV);
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -70,4 +71,5 @@ function onListening() {
     : 'port ' + addr.port;
 
   console.log('Listening on ' + bind);
+  
 }

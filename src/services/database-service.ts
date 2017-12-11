@@ -14,13 +14,13 @@ export class DatabaseService {
 
     open(): Observable<any> { //Abre la conexion y la cierra automaticamente
         return Observable
-            .fromPromise(mysql.createConnection(config.database))
+            .fromPromise(mysql.createConnection(config[""+process.env.NODE_ENV].database))
             .flatMap(con => Observable.of(con)
                 .do(null, null, () => (con as any).end())
             );
     }
 
-    query<T>(sql: String, params:any[] = []): Observable<T> {//ejecuta open y realiza la sentencia sql
+    query<T>(sql: String, params: any[] = [],): Observable<T> {//ejecuta open y realiza la sentencia sql
         return this.open()
             .flatMap(con => con.query(sql, params))
     }

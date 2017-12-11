@@ -35,8 +35,8 @@ var BovinoService = /** @class */ (function (_super) {
         return this.query("INSERT INTO " + table + " SET ?", [bovino]);
     };
     //permite editar un bovino
-    BovinoService.prototype.updateBovino = function (bovino) {
-        return this.query("UPDATE " + table + " SET ? ", [bovino]);
+    BovinoService.prototype.updateBovino = function (id_bovino, bovino) {
+        return this.query("UPDATE " + table + " SET ? WHERE id = ?", [bovino, id_bovino]);
     };
     //permite subir la foto del bovino
     BovinoService.prototype.updateImageBovino = function (id, idImage) {

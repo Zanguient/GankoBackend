@@ -25,7 +25,7 @@ function updateFinca(req, res, next) {
     var idfinca = req.params.idfinca;
     var finca = req.body;
     finca.usuario = req.id;
-    finca_service_1.fincaService.updateFinca(idfinca, finca.nombre, finca.ubicacion, finca.hectareas, finca.usuario)
+    finca_service_1.fincaService.updateFinca(idfinca, finca)
         .subscribe(function (data) {
         res.send(new ResponseFinca(true, data, null));
     }, function (err) {

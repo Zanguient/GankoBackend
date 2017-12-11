@@ -24,7 +24,7 @@ var ResponseFinca = /** @class */ (function (_super) {
 function addFinca(req, res, next) {
     var finca = req.body;
     finca.usuario = req.id;
-    finca_service_1.fincaService.addFinca(finca.nombre, finca.ubicacion, finca.hectareas, finca.usuario)
+    finca_service_1.fincaService.addFinca(finca)
         .subscribe(function (data) {
         res.send(new ResponseFinca(true, data, null));
     }, function (err) {

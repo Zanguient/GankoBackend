@@ -24,8 +24,7 @@ var ResponseBovino = /** @class */ (function (_super) {
 function updateBovino(req, res, next) {
     var bovino = req.body;
     var idbovino = req.params.idbovino;
-    var idusuario = req.id;
-    bovino_service_1.bovinoService.updateBovino(bovino)
+    bovino_service_1.bovinoService.updateBovino(idbovino, bovino)
         .subscribe(function (data) {
         res.send(new ResponseBovino(data ? true : false, data, null));
     }, function (err) {

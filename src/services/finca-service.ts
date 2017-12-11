@@ -1,6 +1,7 @@
 import { DatabaseService } from './database-service'
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
+import { Finca } from "./models/finca"
 
 
 const table = "finca"
@@ -13,27 +14,19 @@ export class FincaService extends DatabaseService {
     }
 
     //permite agregar una finca nueva
-    addFinca(finca:Finca){
-        return this.query(`INSERT INTO ${table} SET ?`,[finca]);
+    addFinca(finca: Finca) {
+        return this.query(`INSERT INTO ${table} SET ?`, [finca]);
     }
 
     //permite eliminar una finca
-    deleteFinca(id:number){
-        return this.query(`DELETE FROM ${table} WHERE id = ?`,[id]);
+    deleteFinca(id: number) {
+        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id]);
     }
 
     //permite editar una finca
-    updateFinca(id_finca:number,finca:Finca){
-        return this.query(`UPDATE ${table} SET ? WHERE id = ?`,[finca,id_finca]);
+    updateFinca(id_finca: number, finca: Finca) {
+        return this.query(`UPDATE ${table} SET ? WHERE id = ?`, [finca, id_finca]);
     }
-
-}
-
-export class Finca {
-        public nombre: string;
-        public ubicacion: string;
-        public hectareas: string;
-        public usuario: number;
 }
 
 export const fincaService: FincaService = new FincaService();

@@ -12,6 +12,7 @@ var server = http.createServer(app_1.default);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+console.log("hola " + process.env.NODE_ENV);
 /**
  * Normalize a port into a number, string, or false.
  */

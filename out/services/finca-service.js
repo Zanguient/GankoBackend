@@ -19,30 +19,26 @@ var FincaService = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     //permite recuperar las fincas pertenecientes a un usuario
-    FincaService.prototype.findFincas = function (id) {
-        return this.query("SELECT * FROM " + table + " WHERE usuario = ?", [id]);
+    FincaService.prototype.findFincas = function (id_usuario) {
+        return this.query("SELECT * FROM " + table + " WHERE usuario = ?", [id_usuario]);
     };
     //permite agregar una finca nueva
-    FincaService.prototype.addFinca = function (nombre, ubicacion, hectareas, usuario) {
-        return this.query("INSERT INTO " + table + " (nombre,ubicacion,hectareas,usuario) VALUES (?,?,?,?)", [nombre, ubicacion, hectareas, usuario]);
+    FincaService.prototype.addFinca = function (finca) {
+        return this.query("INSERT INTO " + table + " SET ?", [finca]);
     };
     //permite eliminar una finca
     FincaService.prototype.deleteFinca = function (id) {
         return this.query("DELETE FROM " + table + " WHERE id = ?", [id]);
     };
     //permite editar una finca
-    FincaService.prototype.updateFinca = function (idfinca, nombre, ubicacion, hectareas, usuario) {
-        return this.query("UPDATE " + table + " SET nombre = ?,ubicacion = ?,hectareas = ?, usuario = ? WHERE id = ? ", [nombre, ubicacion, hectareas, usuario, idfinca]);
+    FincaService.prototype.updateFinca = function (id_finca, finca) {
+        return this.query("UPDATE " + table + " SET ? WHERE id = ?", [finca, id_finca]);
     };
     return FincaService;
 }(database_service_1.DatabaseService));
 exports.FincaService = FincaService;
 var Finca = /** @class */ (function () {
-    function Finca(name, location, size, user) {
-        this.name = name;
-        this.location = location;
-        this.size = size;
-        this.user = user;
+    function Finca() {
     }
     return Finca;
 }());
