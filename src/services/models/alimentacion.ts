@@ -1,12 +1,12 @@
+export const TYPE_ALIMENTACION = "alimentacion";
+
 export class Alimentacion{
-    constructor(
-        public id_bovino:number,
-        public proposito:String,
-        public fecha:Date,
-        public racion:String,
-        public producto:String,
-        public valor_kilo:number,
-        public total:number,
-        public version:number
-    ){}
+    type:string; //alimentacion
+    bovino:string[];
+    fecha:Date;
+    racion:number;
+    tipo:string; //Forraje Verde, Bloque Nutricional, Concentrado Comercial, Sal Mineralizada, Heno, Ensilaje, Otro
+    otro:string;
+    valorKilo:number;
 }
+

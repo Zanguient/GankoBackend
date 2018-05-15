@@ -1,46 +1,51 @@
-import { DatabaseService } from './database-service';
-import { Bovino } from "./models/bovino"
+import { Bovino, TYPE_BOVINO } from "./models/bovinos"
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
+import { DBConnection } from './db-connection';
 
+export class BovinoService {
 
-const table = "bovino"
+    private static _instance: BovinoService;
+    static get instance(): BovinoService {
+        if (BovinoService._instance == undefined) {
+            BovinoService._instance = new BovinoService(DBConnection.instance);
+        }
+        return BovinoService._instance;
+    }
 
-export class BovinoService extends DatabaseService {
+    constructor(private db: DBConnection) { }
 
     //permite recuperar los bovinos pertenecientes a un usuario o finca
-    findBovinos(idUsuario: number, idFinca: number) {
-        return this.query<Bovino>(`SELECT * FROM ${table} WHERE finca = ? AND usuario = ?`, [idFinca, idUsuario]);
+    findBovinos(idFinca: number) {
+        return this.db.ListByType<Bovino>(TYPE_BOVINO,"finca = $1",[idFinca]);
     }
 
     //permite encontrar un bovino por medio de su identificador asignado
     findByIdBovino(idbovino: string) {
-        return this.query<Bovino>(`SELECT * FROM ${table} WHERE id_bovino = ?`, [idbovino]);
+        return this.db.typedOne<Bovino>(TYPE_BOVINO,"codigo = $1",[idbovino]);
     }
     //permite buscar el bovino por id de BD
-    findById(idbovino: number) {
-        return this.query<Bovino>(`SELECT * FROM ${table} WHERE id = ?`, [idbovino]);
+    findById(idbovino: string) {
+        return this.db.getById(idbovino)
     }
     //permite insertar un nuevo bovino
     addBovino(bovino: Bovino) {
-        return this.query(`INSERT INTO ${table} SET ?`, [bovino]);
+        return this.db.insert(bovino)
     }
 
     //permite editar un bovino
-    updateBovino(id_bovino: number, bovino: Bovino) {
-        return this.query(`UPDATE ${table} SET ? WHERE id = ?`, [bovino, id_bovino]);
+    updateBovino(idBovino: string, bovino: Bovino) {
+        return this.db.replace(idBovino,bovino)
     }
 
     //permite subir la foto del bovino
-    updateImageBovino(id: number, idImage: number) {
-        return this.query(`UPDATE ${table} SET imagen = ? WHERE id = ?`, [idImage, id]);
-    }
+    // updateImageBovino(id: number, idImage: number) {
+    //     return this.query(`UPDATE ${table} SET imagen = ? WHERE id = ?`, [idImage, id]);
+    // }
 
     //permite eliminar un bovino usando su identificador asignado
     deleteBovino(idbovino) {
-        return this.query(`DELETE FROM ${table} WHERE id_bovino = ?`, [idbovino]);
+        return this.db.remove(idbovino)
     }
 
 }
-
-export const bovinoService: BovinoService = new BovinoService();

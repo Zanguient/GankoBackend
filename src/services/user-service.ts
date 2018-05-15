@@ -1,48 +1,39 @@
-import { DatabaseService } from './database-service';
-import { Usuario } from "./models/usuario";
+import { Usuario, TYPE_USER } from "./models/users"
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
+import { DBConnection } from './db-connection';
 
-var md5 = require("md5");
-const table = "usuario";
+export class UserService {
 
-export class UserService extends DatabaseService {
-
-    //permite insertar un nuevo usuario
-    addUser(usuario: Usuario) {
-        return this.query(`INSERT INTO ${table} set ?`, [usuario]);
-    }
-    //permite verificar si el nuevo usuario ya existe con el correo suministrado
-    checkUserByEmail(email: string) {
-        return this.query<Email[]>(`SELECT email from ${table} where email = ?`, [email]);
-    }
-    //permite verificar si el nuevo usuario ya existe con el usuario suministrado
-    checkUserByUser(usuario: string) {
-        return this.query<Email[]>(`SELECT usuario from ${table} where usuario = ?`, [usuario]);
-    }
-    //permite verificar si el usuario y contraseña son correctos para el login
-    login(user: string, pass: string) {
-        return this.query<Usuario[]>(`SELECT id,usuario,estado FROM ${table} WHERE usuario = ? AND password = ?`, [user, pass]);
-    }
-    //permite verificar si el correo existe y el envio del correo para restaurar la contraseña
-    resetPassword(email: string) {
-        return this.query<Email[]>(`SELECT email,estado FROM ${table} WHERE email = ? `, [email]);
-    }
-    //cambia la contraseña antigua por la nueva despues de resetear
-    changePassword(pass: string, email: string) {
-        return this.query(`UPDATE ${table} SET password = ? WHERE email = ? `, [md5(pass), email]);
+    private static _instance: UserService;
+    static get instance(): UserService {
+        if (UserService._instance == undefined) {
+            UserService._instance = new UserService(DBConnection.instance);
+        }
+        return UserService._instance;
     }
 
-    //
-    changeOldPassword(oldPass: string, newPass: string, id: Number) {
-        return this.query(`UPDATE ${table} SET password = ? WHERE id = ? AND password = ?`, [md5(newPass), id, md5(oldPass)]);
+    constructor(private db: DBConnection) { }
+
+    //permite recuperar los bovinos pertenecientes a un usuario o finca
+    login(email: string, pass: string) {
+        return this.db.typedOne(TYPE_USER, "email = $1 and pass = $2", [email, pass]);
     }
+
+    insert(usuario: Usuario) {
+        return this.db.insert(usuario);
+    }
+
+    update(idUsuario: string, usuario: Usuario) {
+        return this.db.replace(idUsuario, usuario);
+    }
+
+    getOneByEmail(email: string) {
+        return this.db.typedOne<Usuario>(TYPE_USER, "email = $1", [email]);
+    }
+
+    getById(id: string) {
+        return this.db.getById<Usuario>(id);
+    }
+
 }
-
-
-export class Email {
-    constructor(public email: string,
-        public estado: string) { }
-}
-
-export const service: UserService = new UserService();

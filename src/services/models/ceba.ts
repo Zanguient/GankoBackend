@@ -1,9 +1,9 @@
-export class Ceba{
-    constructor(
-        public id_bovino:number,
-        public fecha:Date,
-        public peso:number,
-        public gdp:number,
-        public version:number,
-    ){}
+export const TYPE_CEBA = "ceba";
+
+export class Ceba {
+    type: string; //ceba
+    codigoBovino: string;
+    fecha: Date;
+    peso: number;
+    gananciaPeso?: number;
 }

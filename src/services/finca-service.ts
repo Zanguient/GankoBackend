@@ -1,32 +1,35 @@
-import { DatabaseService } from './database-service'
+import { Finca, TYPE_FINCA } from "./models/finca";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
-import { Finca } from "./models/finca"
+import { DBConnection } from './db-connection';
 
 
-const table = "finca"
+export class FincaService {
 
-export class FincaService extends DatabaseService {
-
-    //permite recuperar las fincas pertenecientes a un usuario
-    findFincas(id_usuario: string) {
-        return this.query<Finca>(`SELECT * FROM ${table} WHERE usuario = ?`, [id_usuario]);
+    private static _instance: FincaService;
+    static get instance(): FincaService {
+        if (FincaService._instance == undefined) {
+            FincaService._instance = new FincaService(DBConnection.instance);
+        }
+        return FincaService._instance;
     }
 
-    //permite agregar una finca nueva
-    addFinca(finca: Finca) {
-        return this.query(`INSERT INTO ${table} SET ?`, [finca]);
+    constructor(private db: DBConnection) { }
+
+    getAll() {
+        return this.db.ListByType(TYPE_FINCA);
     }
 
-    //permite eliminar una finca
-    deleteFinca(id: number) {
-        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id]);
+    insert(finca: Finca) {
+        return this.db.insert(finca);
     }
 
-    //permite editar una finca
-    updateFinca(id_finca: number, finca: Finca) {
-        return this.query(`UPDATE ${table} SET ? WHERE id = ?`, [finca, id_finca]);
+    update(id: string, finca: Finca) {
+        return this.db.replace(id, finca);
     }
+
+    getById(id: string) {
+        return this.db.getById<Finca>(id);
+    }
+
 }
-
-export const fincaService: FincaService = new FincaService();

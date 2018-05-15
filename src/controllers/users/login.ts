@@ -1,34 +1,32 @@
-import { service } from '../../services/user-service';
-import { Usuario } from "../../services/models/usuario";
+import { UserService } from '../../services/user-service';
+import { Usuario } from "../../services/models/users";
 import { Response, Request } from 'express';
 import { sign } from 'jsonwebtoken';
-import { config } from '../../config/global';
+import { config, secret } from '../../config/global';
 import { ResponseBody } from '../response-body';
 var md5 = require('md5');
 
 interface RequestBody {
     username: string;
-    password: string;
-}
-
-interface LoginData {
-    user: Usuario;
-    token: string;
+    pass: string;
 }
 
 class ResponseLogin extends ResponseBody {
-    constructor(success: boolean, public data: LoginData, err: string) {
+    constructor(success: boolean, public data: any, err: string) {
         super(success, err);
     }
 }
 
 export function login(req: Request, res: Response, next) {
-    let auth = req.body as RequestBody;
-
-    service.login(auth.username, md5(auth.password))
-        .subscribe(data => {
-            let token = data.length > 0 ? sign({ id: data[0].id }, config["" + process.env.NODE_ENV].secret) : null
-            res.send(new ResponseLogin(data.length > 0 ? true : false, { user: data[0], token: token }, "Usuario o Contraseña Incorrecto"));
+    let login = req.body as RequestBody;
+    UserService.instance.login(login.username, md5(login.pass))
+        .then(data => {
+            if (data) {
+                let token = sign({ id: data.id }, secret);
+                res.send(new ResponseLogin(true, { user: data.id, token: token }, null));
+            } else {
+                res.send(new ResponseLogin(true, "Usuario o contraseña incorrectos", null));
+            }
         }, err => {
             res.status(500).send(new ResponseLogin(false, null, err));
         });

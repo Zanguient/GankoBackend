@@ -1,22 +1,35 @@
-import { DatabaseService } from './database-service';
-import { Pajilla } from "./models/pajilla";
-
-const table = "pajilla";
-
-export class PajillaService extends DatabaseService {
+import { Pajilla, TYPE_PAJILLA } from "./models/pajilla";
+import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs/Observable';
+import { DBConnection } from './db-connection';
 
 
-    insertPajilla(pajilla:Pajilla) {
-        return this.query(`INSERT INTO ${table} SET ?`, [pajilla]);
+export class PajillaService {
+
+    private static _instance: PajillaService;
+    static get instance(): PajillaService {
+        if (PajillaService._instance == undefined) {
+            PajillaService._instance = new PajillaService(DBConnection.instance);
+        }
+        return PajillaService._instance;
     }
 
-    getPajillas() {
-        return this.query(`SELECT * FROM ${table} WHERE usada=false ORDER BY desc`);
+    constructor(private db: DBConnection) { }
+
+    getAll() {
+        return this.db.ListByType(TYPE_PAJILLA);
     }
 
-    deletePajilla(id_pajilla: number) {
-        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_pajilla]);
+    insert(pajilla: Pajilla) {
+        return this.db.insert(pajilla);
+    }
+
+    update(id: string, pajilla: Pajilla) {
+        return this.db.replace(id, pajilla);
+    }
+
+    getById(id: string) {
+        return this.db.getById<Pajilla>(id);
     }
 
 }
-export const pajillaService: PajillaService = new PajillaService();

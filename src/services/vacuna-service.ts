@@ -1,22 +1,35 @@
-import { DatabaseService } from './database-service';
-import { Vacuna } from "./models/vacuna";
-
-const table = "vacuna";
-
-export class VacunaService extends DatabaseService {
+import { TYPE_REGISTRO_VACUNAS, RegistroVacunas } from "./models/vacunas";
+import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs/Observable';
+import { DBConnection } from './db-connection';
 
 
-    insertVacuna(vacuna:Vacuna) {
-        return this.query(`INSERT INTO ${table} SET ?`, [vacuna]);
+export class VacunaService {
+
+    private static _instance: VacunaService;
+    static get instance(): VacunaService {
+        if (VacunaService._instance == undefined) {
+            VacunaService._instance = new VacunaService(DBConnection.instance);
+        }
+        return VacunaService._instance;
     }
 
-    getVacuna(id_bovino: number) {
-        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+    constructor(private db: DBConnection) { }
+
+    getAll() {
+        return this.db.ListByType(TYPE_REGISTRO_VACUNAS);
     }
 
-    deleteVacuna(id_vacuna: number) {
-        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_vacuna]);
+    insert(registroVacunas: RegistroVacunas) {
+        return this.db.insert(registroVacunas);
+    }
+
+    update(id: string, registroVacunas: RegistroVacunas) {
+        return this.db.replace(id, registroVacunas);
+    }
+
+    getById(id: string) {
+        return this.db.getById<RegistroVacunas>(id);
     }
 
 }
-export const vacunaService: VacunaService = new VacunaService();

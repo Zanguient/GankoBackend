@@ -1,22 +1,35 @@
-import { DatabaseService } from './database-service';
-import { Leche } from "./models/leche";
-
-const table = "leche";
-
-export class LecheService extends DatabaseService {
+import { Finca, TYPE_FINCA } from "./models/finca";
+import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs/Observable';
+import { DBConnection } from './db-connection';
 
 
-    insertLeche(leche:Leche) {
-        return this.query(`INSERT INTO ${table} SET ?`, [leche]);
+export class FincaService {
+
+    private static _instance: FincaService;
+    static get instance(): FincaService {
+        if (FincaService._instance == undefined) {
+            FincaService._instance = new FincaService(DBConnection.instance);
+        }
+        return FincaService._instance;
     }
 
-    getLeche(id_bovino: number) {
-        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+    constructor(private db: DBConnection) { }
+
+    getAll() {
+        return this.db.ListByType(TYPE_FINCA);
     }
 
-    deleteLeche(id_leche: number) {
-        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_leche]);
+    insert(finca: Finca) {
+        return this.db.insert(finca);
+    }
+
+    update(id: string, finca: Finca) {
+        return this.db.replace(id, finca);
+    }
+
+    getById(id: string) {
+        return this.db.getById<Finca>(id);
     }
 
 }
-export const lecheService: LecheService = new LecheService();

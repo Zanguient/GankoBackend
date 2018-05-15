@@ -1,34 +1,22 @@
+import { ConfigI } from "./cfg";
 
-import * as del from 'del';
-import * as Loki from 'lokijs';
-
-
-export const config = {
-    production: {
-        secret: "Ganko2017",
-        database: {
-            host: 'us-cdbr-iron-east-05.cleardb.net',
-            user: 'bb942c918452fa',
-            password: 'e45e8c49',
-            database: 'heroku_6de81001f978b1a'
-        }
-    },
-    test: {
-        secret: "Ganko2017",
-        database: {
-            host: 'localhost',
-            user: 'root',
-            password: 'root',
-            database: 'test'
-        }
+const CONFIG_DEV: ConfigI = {
+    database: {
+        host: "localhost",
+        bucket: "ganko",
+        username: "admin",
+        password: "123456"
     }
-}
+};
 
-export const loadCollection = function (colName, db: Loki): Promise<LokiCollection<any>> {
-    return new Promise(resolve => {
-        db.loadDatabase({}, () => {
-            const _collection = db.getCollection(colName) || db.addCollection(colName);
-            resolve(_collection);
-        })
-    });
-}
+const CONFIG_PROD: ConfigI = {
+    database: {
+        host: "localhost",
+        bucket: "ganko",
+        username: "admin",
+        password: "123456"
+    }
+};
+export const secret = "g4nk0B0v1no5";
+const env = process.env.NODE_ENV || "development";
+export const config = env == "development" ? CONFIG_DEV : CONFIG_PROD;

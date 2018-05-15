@@ -1,22 +1,35 @@
-import { DatabaseService } from './database-service';
-import { Manejo } from "./models/manejo";
-
-const table = "manejo";
-
-export class ManejoService extends DatabaseService {
+import { RegistroManejo, TYPE_REGISTRO_MANEJO } from "./models/manejo";
+import 'rxjs/add/operator/mergeMap';
+import { Observable } from 'rxjs/Observable';
+import { DBConnection } from './db-connection';
 
 
-    insertManejo(manejo:Manejo) {
-        return this.query(`INSERT INTO ${table} SET ?`, [manejo]);
+export class ManejoService {
+
+    private static _instance: ManejoService;
+    static get instance(): ManejoService {
+        if (ManejoService._instance == undefined) {
+            ManejoService._instance = new ManejoService(DBConnection.instance);
+        }
+        return ManejoService._instance;
     }
 
-    getManejo(id_bovino: number) {
-        return this.query(`SELECT * FROM ${table} WHERE id_bovino = ?`, [id_bovino]);
+    constructor(private db: DBConnection) { }
+
+    getAll() {
+        return this.db.ListByType(TYPE_REGISTRO_MANEJO);
     }
 
-    deleteManejo(id_manejo: number) {
-        return this.query(`DELETE FROM ${table} WHERE id = ?`, [id_manejo]);
+    insert(manejo: RegistroManejo) {
+        return this.db.insert(manejo);
+    }
+
+    update(id: string, manejo:RegistroManejo) {
+        return this.db.replace(id, manejo);
+    }
+
+    getById(id: string) {
+        return this.db.getById<RegistroManejo>(id);
     }
 
 }
-export const manejoService: ManejoService = new ManejoService();

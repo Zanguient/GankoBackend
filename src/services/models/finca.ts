@@ -1,7 +1,14 @@
+export const TYPE_FINCA = "finca";
+
 export class Finca {
-    public nombre: string;
-    public ubicacion: string;
-    public hectareas: string;
-    public usuario: number;
-    public version: number;
+    usuarioDni:string;
+    type:string; // finca
+    nombre: string;
+    ubicacion: {
+        departamento: string;
+        ciudad: string;
+        region: string;
+        direccion: string;
+    }
+    hectareas: number;
 }

@@ -9,9 +9,13 @@
     "test": "npm run compiletests && set NODE_ENV=test&& mocha ./tests/out/tests/**/test*.js",
     "compile": "node ./node_modules/typescript/bin/tsc -p ./src",
     "compiletests": "node ./node_modules/typescript/bin/tsc -p ./tests",
-    "postinstall": "gulp build"
+    "postinstall": "gulp build",
+    "buildandrun": "gulp build && npm start",
+    "build": "gulp build"
   },
   "dependencies": {
+    "@types/uuid": "^3.4.3",
+    "@types/bluebird": "^3.5.20",
     "@types/body-parser": "^1.16.1",
     "@types/chai": "^4.0.4",
     "@types/chai-as-promised": "^7.1.0",
@@ -34,6 +38,7 @@
     "@types/power-assert": "^1.4.29",
     "@types/serve-favicon": "^2.2.28",
     "body-parser": "~1.13.2",
+    "bluebird": "^3.5.1",
     "browser-sync": "^2.18.8",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
@@ -62,6 +67,8 @@
     "rxjs": "^5.4.3",
     "save": "^2.3.1",
     "serve-favicon": "~2.3.0",
-    "typescript": "^2.2.1"
+    "typescript": "^2.2.1",
+    "couchbase": "^2.4.6",
+    "uuid": "^3.2.1"
   }
 }
