@@ -12,7 +12,7 @@ class ResponseFinca extends ResponseBody {
 }
 
 
-export function updateCeba(req, res: Response, next) {
+export function updateFinca(req, res: Response, next) {
     let finca: Finca = req.body;
     let idFinca = req.params.idFinca;
     FincaService.instance.update(idFinca, finca)

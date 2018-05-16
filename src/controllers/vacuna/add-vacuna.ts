@@ -10,7 +10,7 @@ class ResponseVacunas extends ResponseBody {
         super(success, err);
     }
 }
-export function addSanidad(req, res: Response, next) {
+export function addVacuna(req, res: Response, next) {
     let sanidad = req.body as RegistroVacunas;
     VacunaService.instance.insert(sanidad)
         .then(data => {

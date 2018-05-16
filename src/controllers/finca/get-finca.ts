@@ -12,7 +12,7 @@ class ResponseFinca extends ResponseBody {
 }
 
 
-export function getCeba(req, res: Response, next) {
+export function getFinca(req, res: Response, next) {
     
     FincaService.instance.getAll()
         .then(data => {

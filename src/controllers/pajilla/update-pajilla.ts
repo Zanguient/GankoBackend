@@ -11,7 +11,7 @@ class ResponsePajilla extends ResponseBody {
     }
 }
 
-export function updateManejo(req, res: Response, next) {
+export function updatePajilla(req, res: Response, next) {
     let pajilla: Pajilla = req.body;
     let idPajilla = req.params.idPajilla;
     PajillaService.instance.update(idPajilla, pajilla)
