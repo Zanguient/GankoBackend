@@ -1,35 +1,38 @@
-import { Finca, TYPE_FINCA } from "./models/finca";
+import { Produccion,TYPE_PRODUCCION } from "./models/produccion";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
 
 
-export class FincaService {
+export class LecheService {
 
-    private static _instance: FincaService;
-    static get instance(): FincaService {
-        if (FincaService._instance == undefined) {
-            FincaService._instance = new FincaService(DBConnection.instance);
+    private static _instance: LecheService;
+    static get instance(): LecheService {
+        if (LecheService._instance == undefined) {
+            LecheService._instance = new LecheService(DBConnection.instance);
         }
-        return FincaService._instance;
+        return LecheService._instance;
     }
 
     constructor(private db: DBConnection) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_FINCA);
+        return this.db.ListByType(TYPE_PRODUCCION);
     }
 
-    insert(finca: Finca) {
-        return this.db.insert(finca);
+    insert(produccion: Produccion) {
+        return this.db.insert(produccion);
     }
 
-    update(id: string, finca: Finca) {
-        return this.db.replace(id, finca);
+    update(id: string, produccion: Produccion) {
+        return this.db.replace(id, produccion);
     }
 
     getById(id: string) {
-        return this.db.getById<Finca>(id);
+        return this.db.getById<Produccion>(id);
+    }
+    delete(id:string){
+        return this.db.remove(id);
     }
 
 }

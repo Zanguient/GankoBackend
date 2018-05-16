@@ -31,5 +31,8 @@ export class SanidadService {
     getById(id: string) {
         return this.db.getById<RegistroSanidad>(id);
     }
+    delete(id:string){
+        return this.db.remove(id);
+    }
 
 }

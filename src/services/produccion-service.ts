@@ -31,5 +31,8 @@ export class ProduccionService {
     getById(id: string) {
         return this.db.getById<Produccion>(id);
     }
+    delete(id:string){
+        return this.db.remove(id);
+    }
 
 }

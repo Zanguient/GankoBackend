@@ -31,5 +31,8 @@ export class CebaService {
     getById(id: string) {
         return this.db.getById<Ceba>(id);
     }
+    delete(id:string){
+        return this.db.remove(id);
+    }
 
 }

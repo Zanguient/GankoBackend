@@ -31,5 +31,8 @@ export class FincaService {
     getById(id: string) {
         return this.db.getById<Finca>(id);
     }
+    delete(id:string){
+        return this.db.remove(id);
+    }
 
 }

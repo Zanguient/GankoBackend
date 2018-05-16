@@ -32,4 +32,8 @@ export class AlimentacionService {
         return this.db.getById<Alimentacion>(id);
     }
 
+    delete(id:string){
+        return this.db.remove(id);
+    }
+
 }

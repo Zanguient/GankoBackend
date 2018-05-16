@@ -31,5 +31,7 @@ export class VacunaService {
     getById(id: string) {
         return this.db.getById<RegistroVacunas>(id);
     }
-
+    delete(id:string){
+        return this.db.remove(id);
+    }
 }

@@ -31,5 +31,8 @@ export class VentaService {
     getById(id: string) {
         return this.db.getById<SalidaLeche>(id);
     }
+    delete(id:string){
+        return this.db.remove(id);
+    }
 
 }

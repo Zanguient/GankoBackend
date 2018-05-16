@@ -31,5 +31,8 @@ export class ManejoService {
     getById(id: string) {
         return this.db.getById<RegistroManejo>(id);
     }
+    delete(id:string){
+        return this.db.remove(id);
+    }
 
 }

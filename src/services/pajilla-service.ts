@@ -31,5 +31,8 @@ export class PajillaService {
     getById(id: string) {
         return this.db.getById<Pajilla>(id);
     }
+    delete(id:string){
+        return this.db.remove(id);
+    }
 
 }
