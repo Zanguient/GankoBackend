@@ -25,7 +25,7 @@ export function login(req: Request, res: Response, next) {
                 let token = sign({ id: data.id }, secret);
                 res.send(new ResponseLogin(true, { user: data.id, token: token }, null));
             } else {
-                res.send(new ResponseLogin(true, "Usuario o contraseña incorrectos", null));
+                res.send(new ResponseLogin(false, "Usuario o contraseña incorrectos", null));
             }
         }, err => {
             res.status(500).send(new ResponseLogin(false, null, err));
