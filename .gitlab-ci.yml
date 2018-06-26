@@ -13,7 +13,7 @@ prepare:
   script: 
     - npm install
   tags:
-    - main
+    - gabko
 
 start:
   stage: deploy
@@ -21,4 +21,4 @@ start:
     - pm2 kill
     - pm2 start ecosystem.config.js --env production
   tags:
-    - main
+    - gabko
