@@ -1,0 +1,24 @@
+stages: 
+  - build
+  - deploy 
+
+cache:
+  untracked: true
+  paths:
+  - node-modules/
+  - out/
+
+prepare:
+  stage: build
+  script: 
+    - npm install
+  tags:
+    - main
+
+start:
+  stage: deploy
+  script:
+    - pm2 kill
+    - pm2 start ecosystem.config.js --env production
+  tags:
+    - main
