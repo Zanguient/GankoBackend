@@ -4,7 +4,7 @@ const CONFIG_DEV: ConfigI = {
     database: {
         host: "localhost",
         bucket: "ganko",
-        username: "admin",
+        username: "ganko",
         password: "123456"
     }
 };
@@ -13,7 +13,7 @@ const CONFIG_PROD: ConfigI = {
     database: {
         host: "localhost",
         bucket: "ganko",
-        username: "admin",
+        username: "ganko",
         password: "123456"
     }
 };
