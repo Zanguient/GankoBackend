@@ -12,8 +12,8 @@ cache:
 prepare:
   stage: build
   script: 
+    - pm2 kill
     - npm install
-    - npm run build
   tags:
     - gabko
 
