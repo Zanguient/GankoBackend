@@ -1,13 +1,12 @@
 import { initialAdmin } from "../config/ini";
 import { request } from "https";
 import { promisifyAll, Promise } from "bluebird";
-import * as UUID from "UUID";
 import { config } from "../config/global";
 import { TYPE_USER } from "../services/models/users";
 
 const couch = require("couchbase");
 const N1qlQuery = couch.N1qlQuery;
-
+const uuid = require("uuid/v4");
 export interface Document<T> {
     id: string;
     doc: T;
@@ -61,7 +60,7 @@ export class DBConnection {
     }
 
     insert(body: any): Promise<string> {
-        const id = UUID.v4();
+        const id = uuid();
         return this.bucket.insertAsync(id, body)
             .then((x: any) => id);
     }
