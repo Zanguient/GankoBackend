@@ -14,7 +14,6 @@
     "build": "gulp build"
   },
   "dependencies": {
-    "@types/uuid": "^3.4.3",
     "@types/bluebird": "^3.5.20",
     "@types/body-parser": "^1.16.1",
     "@types/chai": "^4.0.4",
