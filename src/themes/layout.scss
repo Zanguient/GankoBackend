@@ -1,0 +1,26 @@
+@import 'variables';
+
+@mixin lyContainer($size, $mt:0px) {    
+    .container{
+        width: $size;
+        margin: auto;
+        padding: 0px;        
+    }
+
+    .section{
+        margin-top: $mt;
+    }
+   
+}
+
+@include lyContainer($ly-sm, $sm);
+
+
+@media only screen and (min-width: 600px) {
+    @include lyContainer($ly-md, $md);
+}
+
+@media only screen and (min-width: 920px) {
+    @include lyContainer($ly-lg, $lg);
+}
+
