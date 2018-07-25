@@ -1,4 +1,4 @@
-import { Group } from './group.model';
+import { Grupo } from './common.model';
 
 export const TYPE_MANEJO = 'RegistroManejo';
 export class Manejo {
@@ -18,6 +18,6 @@ export class Manejo {
     observaciones: string;
     orProducto: number;
     orAsistencia: number;
-    grupo: Group;
+    grupo: Grupo;
     bovino: string[];
 }

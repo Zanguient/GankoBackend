@@ -7,9 +7,3 @@ export class Group {
     color: number;
     bovines: string[];
 }
-
-export class Grupo {
-    id?: string;
-    nombre: string;
-    color: number;
-}

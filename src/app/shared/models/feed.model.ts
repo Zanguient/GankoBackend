@@ -1,4 +1,4 @@
-import { Grupo } from './group.model';
+import { Grupo } from './common.model';
 
 export const TYPE_ALIMENTACION = 'RegistroAlimentacion';
 export class Alimentacion {
