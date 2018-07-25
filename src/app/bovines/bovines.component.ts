@@ -9,6 +9,8 @@ export class BovinesComponent implements OnInit {
 
   constructor(nav: NavService) {
     nav.title = 'Bovinos';
+    nav.searchable = true;
+    nav.filterable = true;
   }
 
   ngOnInit() {

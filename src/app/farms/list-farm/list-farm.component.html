@@ -7,10 +7,10 @@
   <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
     <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
 
-        <mat-card (click)="goToDash(d)" class="hoverable" (click)="goToDash()">
+        <mat-card (click)="goToDash(d)" class="hoverable">
 
           <h3>{{d.nombre}}</h3>
-          <p>{{d.ubicacion}}</p>
+          <p appAccent>{{d.ubicacion}}</p>
           <p>{{d.hectareas}} Hectarias</p>
 
           <mat-card-actions align="end">

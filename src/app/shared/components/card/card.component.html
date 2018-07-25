@@ -1,0 +1,14 @@
+<mat-card [class.hoverable]="clickable" (click)="clickItem()">
+  <h2>{{title}}</h2>
+  <mat-card-subtitle > <span [appAccent]="subAccent">{{subtitle}}</span> </mat-card-subtitle>
+  <div class="card-action-top">
+    <button mat-icon-button *ngIf="removable" (mousedown)="removeItem()">
+      <mat-icon>clear</mat-icon>
+    </button>
+    <ng-content select="app-card-corner"></ng-content>
+  </div>
+  <ng-content select="app-card-content"></ng-content>
+  <ng-content select="app-card-obs"></ng-content>
+  <ng-content select="app-card-footer"></ng-content>
+  <ng-content select="app-card-actions"></ng-content>
+</mat-card>
