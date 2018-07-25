@@ -1,5 +1,4 @@
 export const TYPE_BOVINO = 'Bovino';
-
 export class Bovino {
     id?: string;
     type?: string;
