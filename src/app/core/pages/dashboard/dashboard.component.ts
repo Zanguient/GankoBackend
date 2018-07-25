@@ -1,15 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { NavService } from '../../services/nav.service';
+import { Router } from '@angular/router';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
-  constructor() { }
+  isHandset: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.HandsetPortrait)
+    .pipe(
+      map(result => result.matches)
+    );
 
-  ngOnInit() {
+  constructor(private breakpointObserver: BreakpointObserver, public nav: NavService, private router: Router,
+    public session: SessionService) { }
+
+  goToFarm() {
+    this.router.navigate(['fincas']);
+  }
+
+  logout() {
+    this.session.clear();
+    this.router.navigate(['login']);
   }
 
 }

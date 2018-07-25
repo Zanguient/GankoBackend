@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavService } from '../core/services/nav.service';
 
 @Component({
   selector: 'app-manage',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageComponent implements OnInit {
 
-  constructor() { }
+  constructor(nav: NavService) {
+    nav.title = 'Manejo';
+  }
 
   ngOnInit() {
   }

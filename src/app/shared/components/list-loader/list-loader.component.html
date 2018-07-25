@@ -1,3 +1,20 @@
-<p>
-  list-loader works!
-</p>
+<div class="container section mat-typography">
+
+  <div *ngIf="!loading; else loader">
+    <ng-content *ngIf="size != 0; else noContent"></ng-content>
+    <ng-template #noContent>
+      <p>{{noData}}</p>
+    </ng-template>
+  </div>
+
+  <ng-template #loader>
+    <app-loader [big]="true" [align]="'center'"></app-loader>
+  </ng-template>
+
+  <div class="fab" *ngIf="addonable">
+    <a mat-fab color="accent" (click)="onClickAdd()">
+      <mat-icon>add</mat-icon>
+    </a>
+  </div>
+
+</div>

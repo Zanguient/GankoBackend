@@ -1,3 +1,29 @@
 @import 'themes/theme';
 @import 'themes/layout';
 @import 'themes/variables';
+
+.fab{
+    position: fixed;
+    bottom: $md;
+    right: $md;
+}
+
+.snackbar-error{
+    color:#ff9999;
+}
+
+.breadcrumb{
+    padding-top: $md;
+    padding-bottom: $md;
+}
+
+.breadcrumb > span{
+    margin-left: $md;
+}
+
+.card-action-top{
+    position: absolute;
+    right: $sm;
+    top: $sm;
+    color: #999;
+}

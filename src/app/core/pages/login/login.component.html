@@ -1,3 +1,27 @@
-<p>
-  login works!
-</p>
+<div class="login mat-typography" fxLayout="column" fxLayoutAlign="center stretch">
+
+  <div fxLayout="row" fxLayoutAlign="center" class="dark-theme">
+    <mat-card fxFlex="0 0 100%" fxFlex.gt-sm="0 0 50%" fxFlex.gt-md="0 0 25%" class="login-panel">
+
+      <h1>Ganko</h1>
+      <form #formLogin="ngForm">
+
+        <div fxLayout="row wrap">
+
+          <mat-form-field fxFlex="0 0 100%" appearance='outline'>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" required name="email" [(ngModel)]="username">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="0 0 100%" appearance='outline'>
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" required name="pass" [(ngModel)]="password">
+          </mat-form-field>
+          <button (click)="login()" [disabled]="formLogin.invalid" fxFlex="0 0 80%" fxFlexOffset="10%" mat-raised-button color="accent">Entrar</button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+
+
+</div>

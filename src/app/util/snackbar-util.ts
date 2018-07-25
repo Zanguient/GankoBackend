@@ -2,7 +2,7 @@ import { MatSnackBar } from '@angular/material';
 
 export function snackOk(snackbar: MatSnackBar, msg: string) {
     snackbar.open(msg, null, {
-        duration: 1500, panelClass: 'snackbar-ok'
+        duration: 1500
     });
 }
 

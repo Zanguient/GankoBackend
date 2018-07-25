@@ -1,3 +1,47 @@
-<p>
-  add-farm works!
-</p>
+<div class="mat-typography container">
+  <div class="breadcrumb">
+    <button mat-button routerLink="../">Fincas</button> >
+    <span *ngIf="editable; else noEditable"> Editar Finca </span>
+    <ng-template #noEditable>
+      <span> Agregar Finca</span>
+    </ng-template>
+    
+  </div>
+
+  <mat-card>
+
+    <h1 *ngIf="editable; else noEditTitle">Agregar Finca</h1>
+    <ng-template #noEditTitle>
+      <h1>Editar Finca</h1>
+    </ng-template>
+
+    <div class="section">
+      <form #farmFrom="ngForm">
+        <div fxLayout="row wrap">
+          <mat-form-field fxFlex="0 0 100%" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" required name="name" [(ngModel)]="farm.nombre">
+          </mat-form-field>
+          <mat-form-field fxFlex="0 0 100%" appearance="outline">
+            <mat-label>Ubicación</mat-label>
+            <input matInput type="text" required name="ubi" [(ngModel)]="farm.ubicacion">
+          </mat-form-field>
+          <mat-form-field fxFlex="0 0 100%" appearance="outline">
+            <mat-label>Hectarias</mat-label>
+            <input matInput type="number" required min="0" name="hec" [(ngModel)]="farm.hectareas">
+          </mat-form-field>
+          <button *ngIf="!loading" mat-button color="accent" fxFlex="0 0 50%" fxFlex.gt-sm="0 0 20%" fxFlex.gt-md="0 0 15%" fxFlexOffset.gt-sm="60%"
+            fxFlexOffset.gt-md="70%" (click)="cancel()">Cancelar</button>
+
+          <button *ngIf="!loading" [disabled]="farmFrom.invalid" mat-raised-button color="accent" fxFlex="0 0 50%" fxFlex.gt-sm="0 0 20%" fxFlex.gt-md="0 0 15%"
+            (click)="add()">Aceptar</button>
+
+            <app-loader *ngIf="loading" fxFlex=" 0 0 100%"  [align]="'end'"></app-loader>
+        </div>
+
+      </form>
+
+    </div>
+  </mat-card>
+
+</div>

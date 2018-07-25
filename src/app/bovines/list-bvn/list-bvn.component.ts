@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavService } from '../../core/services/nav.service';
 
 @Component({
   selector: 'app-list-bvn',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListBvnComponent implements OnInit {
 
-  constructor() { }
+  info: string;
+
+  constructor(nav: NavService) {
+    nav.search
+      .subscribe(x => this.info = x);
+
+  }
 
   ngOnInit() {
   }

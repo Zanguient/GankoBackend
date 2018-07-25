@@ -20,7 +20,8 @@ import { MatModule } from './mat.module';
   ],
   declarations: [ListLoaderComponent, LoaderComponent, DeleteDialogComponent,
     FilterComponent, BovineSelectedComponent],
+  entryComponents: [DeleteDialogComponent],
   exports: [RouterModule, MatModule, FlexLayoutModule, FormsModule,
-  ListLoaderComponent, LoaderComponent, DeleteDialogComponent, FilterComponent, BovineSelectedComponent]
+    ListLoaderComponent, LoaderComponent, DeleteDialogComponent, FilterComponent, BovineSelectedComponent]
 })
 export class SharedModule { }

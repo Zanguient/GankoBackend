@@ -11,8 +11,8 @@ export abstract class BaseListComponent<T> implements OnInit {
     data: T[] = [];
     loading: boolean;
 
-    constructor(private service: BaseService<T>, private dialog: MatDialog,
-        private router: Router, private route: ActivatedRoute, private snackbar: MatSnackBar) { }
+    constructor(protected service: BaseService<T>, private dialog: MatDialog,
+        protected router: Router, protected route: ActivatedRoute, private snackbar: MatSnackBar) { }
 
     ngOnInit() {
         this.loading = true;
@@ -23,14 +23,13 @@ export abstract class BaseListComponent<T> implements OnInit {
             .subscribe(x => this.data = x, err => snackError(this.snackbar, err));
     }
 
-    abstract getItemName(index: number): string;
     getListParams(): any[] {
         return [];
     }
 
     removeItem(index: number) {
         const dialogRef = this.dialog.open(DeleteDialogComponent, {
-            data: { name: this.getItemName(index), item: this.data[index] },
+            data: { item: this.data[index] },
             autoFocus: false
         });
         dialogRef.afterClosed()

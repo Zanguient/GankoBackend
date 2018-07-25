@@ -1,4 +1,112 @@
-<p>
-  dashboard works!
-</p>
-<router-outlet></router-outlet>
+<mat-sidenav-container class="sidenav-container side-dark">
+
+  <mat-sidenav #drawer class="sidenav list-dark" fixedInViewport="true" [attr.role]="(isHandset | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset | async) ? 'over' : 'side'" [opened]="!(isHandset | async)">
+
+    <div class="brand mat-typography">
+      <img src="assets/images/logo1.png">
+      <div>GANKO</div>
+    </div>
+
+    <mat-nav-list>
+      <h3 matSubheader class="back-title" (click)="goToFarm()">
+        <mat-icon class="icon-back">arrow_back</mat-icon>{{session.farmName}}</h3>
+      <a mat-list-item routerLink="bovinos" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='bovine'></mat-icon> Bovinos</a>
+      <a mat-list-item routerLink="grupos" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='group'></mat-icon> Grupos</a>
+      <a mat-list-item routerLink="leche" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='milk'></mat-icon> Leche</a>
+      <a mat-list-item routerLink="alimentacion" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='feed'></mat-icon> Alimentación</a>
+      <a mat-list-item routerLink="manejo" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='manage'></mat-icon> Manejo</a>
+      <a mat-list-item routerLink="movimientos" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='movement'></mat-icon> Movimientos</a>
+      <a mat-list-item routerLink="vacunas" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='vaccine'></mat-icon> Vacunas</a>
+      <a mat-list-item routerLink="sanidad" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='health'></mat-icon> Sanidad</a>
+      <a mat-list-item routerLink="pajillas" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='straw'></mat-icon> Pajillas</a>
+      <a mat-list-item routerLink="praderas" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='meadow'></mat-icon> Praderas</a>
+      <a mat-list-item routerLink="reportes" routerLinkActive="active">
+        <mat-icon matListIcon svgIcon='reports'></mat-icon> Reportes</a>
+      <mat-divider></mat-divider>
+      <h3 matSubheader>Cuenta</h3>
+      <a mat-list-item (click)="logout()">
+        <mat-icon matListIcon svgIcon='logout'></mat-icon> Cerrar Sesion</a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="sidenav-content">
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span class="container" fxHide.lt-md="{{nav.searching}}">{{nav.title}}</span>
+
+      <div class="actions-bar">
+        <div *ngIf="nav.searching" class="search-bar">
+          <mat-icon>search</mat-icon>
+          <input type="search" name="search" [(ngModel)]="nav.searchText" (input)="nav.search.next(nav.searchText)">
+          <button mat-icon-button (click)="nav.searching = false">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+        <button *ngIf="!nav.searching && nav.searchable" mat-icon-button (click)="nav.searching = true">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button *ngIf="nav.filterable" mat-icon-button [matMenuTriggerFor]="filterMenu">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<mat-menu #filterMenu="matMenu" class="mat-typography">
+
+  <button mat-menu-item (click)="nav.notifyFilter('leche')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados" >{{nav.filters.leche ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>Leche</span>
+  </button>
+  <button mat-menu-item (click)="nav.notifyFilter('ceba')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.ceba ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>Ceba</span>
+  </button>
+  <button mat-menu-item (click)="nav.notifyFilter('ambos')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.ambos ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>Ambos</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="nav.notifyFilter('celo')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.celo ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>En celo</span>
+  </button>
+  <button mat-menu-item (click)="nav.notifyFilter('servicio')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.servicio ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>En servicio</span>
+  </button>
+  <button mat-menu-item (click)="nav.notifyFilter('diagnostico')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.diagnostico ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>En diagnostico</span>
+  </button>
+  <button mat-menu-item (click)="nav.notifyFilter('prenez')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.prenez ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>En Preñez</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="nav.notifyFilter('retirados')">
+    <mat-icon class="check">{{nav.filters.retirados ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>Retirados</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="nav.clearFilter()">
+    <mat-icon>clear</mat-icon>
+    <span>Limpiar Filtros</span>
+  </button>
+</mat-menu>
