@@ -3,9 +3,12 @@
     <div fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
       <div fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" *ngFor="let d of data; index as i">
 
-        <app-card [title]="d.nombre" [subtitle]="d.codigo" [subAccent]="true" [removable]="true" [clickable]="true"
-          (clickCard)="goToDetail($event)" (removeCard)="removeItem($event)" [index]="i"
-        >
+        <app-card [title]="d.nombre" [subtitle]="d.codigo" [subAccent]="true" [removable]="!d.retirado" [clickable]="true" (clickCard)="goToDetail($event)"
+          (removeCard)="removeItem($event)" [index]="i">
+          <app-card-corner *ngIf="d.retirado">
+            <p appWarn style="margin-bottom: 0px;" [align]="'right'">Retirado</p>
+            <p appWarn>{{d.fechaSalida | date}}</p>
+          </app-card-corner>
           <app-card-content>
             <app-card-field [title]="'Sexo'">{{d.genero}}</app-card-field>
             <app-card-field [title]="'raza'">{{d.raza}}</app-card-field>

@@ -1,6 +1,7 @@
 @import 'themes/theme';
 @import 'themes/layout';
 @import 'themes/variables';
+@import 'themes/dimens';
 
 .fab{
     position: fixed;
@@ -19,6 +20,10 @@
 
 .breadcrumb > span{
     margin-left: $md;
+}
+
+.mat-card.bottom-space{
+    margin-bottom: 20px;
 }
 
 .card-action-top{

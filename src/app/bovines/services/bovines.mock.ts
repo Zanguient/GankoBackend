@@ -31,6 +31,7 @@ function makeBovine(index: number): Bovino {
         partos: 0,
         precioCompra: 30000,
         procedencia: 'Compra',
+        fechaSalida: new Date(),
 
         retirado: false,
         finca: '123',
