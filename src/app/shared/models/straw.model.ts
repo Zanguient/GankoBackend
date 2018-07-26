@@ -10,5 +10,5 @@ export class Straw {
     bull: string;
     origin: string;
     value: string;
-    state: string;
+    state: number;
 }

@@ -5,9 +5,7 @@ export class Vacuna {
     id?: string;
     type?: string;
     idFinca: string;
-    idDosisUno?: string;
-    titulo: string;
-    descripcion: string;
+    idAplicacionUno?: string;
     fecha: Date;
     fechaProxima: Date;
     estadoProximo: number;
@@ -19,4 +17,6 @@ export class Vacuna {
     valor: number;
     bovinos: string[];
     noBovinos?: string[];
+    titulo?: string;
+    descripcion?: string;
 }

@@ -5,6 +5,7 @@ export class Sanidad {
     id?: string;
     type?: string;
     idFinca: string;
+    idAplicacionUno: string;
     fecha: Date;
     fechaProxima: Date;
     frecuencia: number;
@@ -14,7 +15,6 @@ export class Sanidad {
     tratamiento: string;
     producto: string;
     dosis: string;
-    via: string;
     numeroAplicaciones: number;
     aplicacion: number;
     observaciones: string;
@@ -22,7 +22,9 @@ export class Sanidad {
     valorAtencion: number;
     grupo?: Grupo;
     bovinos: string[];
-    UnidadesFrecuencia: string;
+    unidadFrecuencia: string;
     noBovinos: string[];
     estadoProximo: number;
+    titulo: string;
+    descripcion: string;
 }

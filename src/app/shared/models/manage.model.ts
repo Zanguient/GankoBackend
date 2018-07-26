@@ -6,9 +6,13 @@ export class Manejo {
     type: string;
     idFinca: string;
     fecha: Date;
-    idDosisUno: string; // = id
-    fechaProx: Date;
+    titulo: string;
+    descripcion: string;
+    idAplicacionUno: string;
+    fechaProxima: Date;
+    estadoProximo: number;
     frecuencia: number;
+    unidadFrecuencia: string;
     numeroAplicaciones: number;
     aplicacion: number;
     tipo: string;
@@ -16,8 +20,9 @@ export class Manejo {
     tratamiento: string;
     producto: string;
     observaciones: string;
-    orProducto: number;
-    orAsistencia: number;
+    valorProducto: number;
+    valorAsistencia: number;
     grupo: Grupo;
-    bovino: string[];
+    bovinos: string[];
+    noBovinos: string[];
 }
