@@ -1,11 +1,8 @@
 <div class="mat-typography">
+  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay fincas registrados'" (add)="goToAdd()">
 
-
-
-<app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay fincas registrados'" (add)="goToAdd()">
-
-  <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
-    <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
 
         <mat-card (click)="goToDash(d)" class="hoverable">
 
@@ -18,9 +15,8 @@
             <button mat-button color="accent" (mousedown)="removeItem(i)">Eliminar</button>
           </mat-card-actions>
         </mat-card>
-      
-    </div>
-  </div>
 
-</app-list-loader>
+      </div>
+    </div>
+  </app-list-loader>
 </div>
