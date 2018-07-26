@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CardFooterComponent implements OnInit {
 
-  @Input() accent: boolean;
+  @Input() accent = false;
   @Input() align: string;
 
   constructor() { }
