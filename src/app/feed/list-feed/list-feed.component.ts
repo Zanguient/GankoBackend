@@ -7,11 +7,7 @@ import { FeedService } from '../services/feed.service';
 
 @Component({
   selector: 'app-list-feed',
-  template: `
-    <p>
-      list-feed works!
-    </p>
-  `,
+  templateUrl: './list-feed.component.html',
   styles: []
 })
 export class ListFeedComponent extends BaseListComponent<Alimentacion> {

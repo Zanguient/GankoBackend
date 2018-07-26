@@ -21,6 +21,7 @@ function makeBovine(index: number): Bovino {
         tipo: 'Leche',
         codigo: '000' + index,
         fechaIngreso: new Date(),
+        fechaNacimiento: new Date(),
         genero: 'Hembra',
         proposito: 'Leche',
         peso: 100,

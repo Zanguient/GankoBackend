@@ -13,6 +13,8 @@ export class CardComponent implements OnInit {
   @Input() removable: boolean;
   @Input() clickable: boolean;
   @Input() index: number;
+  @Input() marginBottom = true;
+
   @Output() removeCard: EventEmitter<number> = new EventEmitter();
   @Output() clickCard: EventEmitter<number> = new EventEmitter();
 
