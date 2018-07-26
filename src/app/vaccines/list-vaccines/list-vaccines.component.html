@@ -1,3 +1,33 @@
-<p>
-  list-vaccines works!
-</p>
+<div class="filter container">
+  <mat-radio-group name="filter" [selected]="filterRecientes">
+    <mat-radio-button value="1" #filterRecientes (click)="changeFilter(0)">Recientes</mat-radio-button>
+    <mat-radio-button value="2" #filterProximos (click)="changeFilter(1)">Proximos</mat-radio-button>
+    <mat-radio-button value="3" #filterPendientes (click)="changeFilter(2)">Pendientes</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<div class="mat-typography ">
+  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay fincas registrados'" (add)="goToAdd()">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
+
+        <app-card [title]="d.nombre" subtitle="{{ (filter === 0 ? d.fecha : d.fechaProxima) | date}}" [subAccent]="true" [clickable]="true">
+          <app-card-content>
+            <app-card-field [title]="'Dosis'">{{d.dosisMl}} ml</app-card-field>
+            <app-card-field *ngIf="filter !== 1" [title]="'Valor'">{{d.valor | currency}}</app-card-field>
+          </app-card-content>
+          <app-card-footer [align]="'end'" *ngIf="d.grupo">
+            <mat-icon class="small" svgIcon="group"></mat-icon> {{d.grupo.nombre}} ({{d.bovinos.length}})
+          </app-card-footer>
+          <app-card-footer [align]="'end'" *ngIf="!d.grupo">
+            <mat-icon class="small" svgIcon="bovine"></mat-icon> {{d.bovinos.length}}</app-card-footer>
+          <app-card-actions [align]="'flex-end'" *ngIf="filter === 1">
+            <button mat-button color="accent">Omitir</button>
+            <button mat-button color="accent">Aplicar</button>
+          </app-card-actions>
+        </app-card>
+
+      </div>
+    </div>
+  </app-list-loader>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card-actions',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card-actions.component.scss']
 })
 export class CardActionsComponent implements OnInit {
+
+  @Input() align = 'flex-start';
 
   constructor() { }
 
