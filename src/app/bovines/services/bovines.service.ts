@@ -27,7 +27,7 @@ export class BovinesService extends BaseService<Bovino> {
     );
   }
 
-  list(...params: any[]): Observable<Bovino[]> {
+  list(): Observable<Bovino[]> {
     return timer(500).pipe(
       tap(() => this.data = this.data.length > 0 ? this.data : bovines()),
       map(() => new Rspn(true, this.data)), // simular respuesta
