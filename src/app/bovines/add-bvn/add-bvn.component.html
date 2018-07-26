@@ -10,12 +10,105 @@
     <form #formAdd="ngForm" autocomplete="off">
       <div fxLayout="row wrap" fxLayoutGap="16px">
 
-        
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Codigo</mat-label>
+          <input matInput type="text" [(ngModel)]="item.codigo" name="cod" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput type="text" [(ngModel)]="item.nombre" name="nom" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Raza</mat-label>
+          <input matInput type="text" [(ngModel)]="item.raza" name="raz" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)">
+          <mat-select #origin placeholder="Procedencia"  [(ngModel)]="item.procedencia" name="pro" required>
+            <mat-option value="Nacimiento"> Nacimiento</mat-option>
+            <mat-option value="Compra"> Compra</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <h5 fxFlex="0 0 100%">Sexo</h5>
+        <mat-radio-group #sex class="m-bottom" fxFlex="0 0 100%" [selected]="macho"  [(ngModel)]="item.genero" name="gen" required>
+          <mat-radio-button value="Macho" #macho>Macho</mat-radio-button>
+          <mat-radio-button value="Hembra" #hembra>Hembra</mat-radio-button>
+        </mat-radio-group>
 
 
-        <div *ngIf="!loading; else loader" fxFlex="0 0 100%">
-          <button mat-button color="accent" (click)="goToBack()">Cancelar</button>
-          <button mat-raised-button color="accent" (click)="add()" [disabled]="formAdd.invalid">Agregar</button>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="hembra.checked">
+          <mat-label>Numero de partos</mat-label>
+          <input matInput type="number" [(ngModel)]="item.partos" name="par" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Peso</mat-label>
+          <input matInput type="number" [(ngModel)]="item.peso" name="pes" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Color</mat-label>
+          <input matInput type="text"  [(ngModel)]="item.color" name="col" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Fecha Nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="birthDate" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-checkbox #dest class="m-bottom" fxFlex="0 0 100%"  [(ngModel)]="item.destete" name="des">Destetado</mat-checkbox>
+
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="dest.checked">
+          <mat-label>Fecha Destete</mat-label>
+          <input matInput [matDatepicker]="pickerD" (focus)="pickerD.open()" [(ngModel)]="desteteDate" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerD"></mat-datepicker-toggle>
+          <mat-datepicker #pickerD></mat-datepicker>
+        </mat-form-field>
+
+        <h5 fxFlex="0 0 100%">Proposito</h5>
+        <mat-radio-group class="m-bottom" fxFlex="0 0 100%" [selected]="p1"  [(ngModel)]="item.proposito" name="prop" required>
+          <mat-radio-button value="Lecheria" #p1>Leche</mat-radio-button>
+          <mat-radio-button value="Ceba" #p1>Ceba</mat-radio-button>
+          <mat-radio-button value="Ambos" #p3>Ambos</mat-radio-button>
+        </mat-radio-group>
+
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Compra'">
+          <mat-label>Fecha Combra</mat-label>
+          <input matInput [matDatepicker]="pickerC" required>
+          <mat-datepicker-toggle matSuffix [for]="pickerC" (focus)="pickerC.open()" [(ngModel)]="buyDate"></mat-datepicker-toggle>
+          <mat-datepicker #pickerC></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-s="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Compra'">
+          <mat-label>Precio de Compra</mat-label>
+          <input matInput type="number"  [(ngModel)]="item.precioCompra" name="prec" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>ID Padre</mat-label>
+          <input matInput type="text"  [(ngModel)]="item.codigoPadre" name="codP" >
+        </mat-form-field>
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>ID Madre</mat-label>
+          <input matInput type="text"  [(ngModel)]="item.codigoMadre" name="codM">
+        </mat-form-field>
+
+        <h5 fxFlex="0 0 100%">Imagen</h5>
+        <img class="add-image clickable" src="{{img? img : ''}}" (click)="this.input.nativeElement.click()">
+
+
+
+        <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
+          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%"  mat-button color="accent" (click)="goToBack()">Cancelar</button>
+          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent" (click)="add()" [disabled]="formAdd.invalid">Agregar</button>
         </div>
 
         <ng-template #loader>
@@ -25,5 +118,7 @@
     </form>
 
   </mat-card>
-
+  
 </div>
+
+<input #fileInput type="file" accept=".jpg" style="display:none;" (change)="imgSelected($event)">

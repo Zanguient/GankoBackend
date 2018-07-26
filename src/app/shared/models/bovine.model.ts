@@ -7,7 +7,7 @@ export class Bovino {
     imagen?: File;
     nombre: string;
     fechaNacimiento?: Date;
-    fechaIngreso: Date;
+    fechaIngreso?: Date;
     genero: string;
     proposito: string;
     peso: number;
@@ -15,9 +15,9 @@ export class Bovino {
     raza: string;
     codigoMadre?: string;
     codigoPadre?: string;
-    lote: number;
-    partos: number;
-    precioCompra: number;
+    lote?: number;
+    partos?: number;
+    precioCompra?: number;
     procedencia: string;
 
     retirado: boolean;
@@ -28,7 +28,7 @@ export class Bovino {
     finca: string;
 
     destete: boolean;
-    fechaDestete: Date;
+    fechaDestete?: Date;
     celos: Date[];
 
     fechaProximoCelo?: Date;
