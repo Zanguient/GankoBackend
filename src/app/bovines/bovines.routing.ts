@@ -14,6 +14,7 @@ import { VaccinationBvnComponent } from './vaccination-bvn/vaccination-bvn.compo
 import { AddMeatBvnComponent } from './meat-bvn/add-meat-bvn/add-meat-bvn.component';
 import { AddMilkBvnComponent } from './milk-bvn/add-milk-bvn/add-milk-bvn.component';
 import { AddReproductiveBvnComponent } from './reproductive-bvn/add-reproductive-bvn/add-reproductive-bvn.component';
+import { RemoveBvnComponent } from './remove-bvn/remove-bvn.component';
 
 export const bovinesRoutes: Routes = [
     {
@@ -29,12 +30,13 @@ export const bovinesRoutes: Routes = [
                     { path: 'leche', component: MilkBvnComponent },
                     { path: 'movimientos', component: MovementBvnComponent },
                     { path: 'reproductivo', component: ReproductiveBvnComponent },
-                    { path: 'vacunas', component: VaccinationBvnComponent}
+                    { path: 'vacunas', component: VaccinationBvnComponent }
                 ]
             },
-            { path: ':id/ceba/agregar', component: AddMeatBvnComponent},
-            { path: ':id/leche/agregar', component: AddMilkBvnComponent},
-            { path: ':id/reproductivo/agregar', component: AddReproductiveBvnComponent}
+            { path: ':id/retirar', component: RemoveBvnComponent },
+            { path: ':id/ceba/agregar', component: AddMeatBvnComponent },
+            { path: ':id/leche/agregar', component: AddMilkBvnComponent },
+            { path: ':id/reproductivo/agregar', component: AddReproductiveBvnComponent }
         ]
     }
 ];

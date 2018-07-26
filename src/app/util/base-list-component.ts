@@ -1,5 +1,5 @@
 import { BaseService } from './base-service';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar, MatDialogRef } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize, filter, flatMap, tap } from 'rxjs/operators';
 import { snackError, snackOk } from './snackbar-util';
@@ -32,7 +32,11 @@ export abstract class BaseListComponent<T> implements OnInit {
             data: { item: this.data[index] },
             autoFocus: false
         });
-        dialogRef.afterClosed()
+        this.removeAction(dialogRef, index);
+    }
+
+    removeAction(dialog: MatDialogRef<DeleteDialogComponent, any>, index: number) {
+        dialog.afterClosed()
             .pipe(
                 filter(x => x !== undefined),
                 flatMap(x => this.service.remove(x.item.id)),

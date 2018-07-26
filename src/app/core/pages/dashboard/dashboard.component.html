@@ -48,7 +48,7 @@
       <span class="container" fxHide.lt-md="{{nav.searching}}">{{nav.title}}</span>
 
       <div class="actions-bar">
-        <div *ngIf="nav.searching" class="search-bar">
+        <div *ngIf="nav.searching && nav.searchable" class="search-bar">
           <mat-icon>search</mat-icon>
           <input type="search" name="search" [(ngModel)]="nav.searchText" (input)="nav.search.next(nav.searchText)">
           <button mat-icon-button (click)="nav.searching = false">

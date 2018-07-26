@@ -19,6 +19,7 @@ import { BovinesComponent } from './bovines.component';
 import { BovinesService } from './services/bovines.service';
 import { SharedModule } from '../shared/shared.module';
 import { DetailBvnComponent } from './detail-bvn/detail-bvn.component';
+import { RemoveBvnComponent } from './remove-bvn/remove-bvn.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,7 @@ import { DetailBvnComponent } from './detail-bvn/detail-bvn.component';
     MeatBvnComponent, AddMeatBvnComponent, MilkBvnComponent, AddMilkBvnComponent,
     MovementBvnComponent, ReproductiveBvnComponent, ServiceBvnComponent,
     CurrentServiceBvnComponent, AddReproductiveBvnComponent, VaccinationBvnComponent, ListBvnComponent,
-    AddBvnComponent, BovinesComponent, DetailBvnComponent],
+    AddBvnComponent, BovinesComponent, DetailBvnComponent, RemoveBvnComponent],
   providers: [BovinesService]
 })
 export class BovinesModule { }
