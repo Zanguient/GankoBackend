@@ -1,3 +1,29 @@
-<p>
-  add-bvn works!
-</p>
+<div class="container mat-typography">
+  <div class="breadcrumb">
+    <button mat-button routerLink="../">Bovinos</button> >
+    <span>Agregar Bovino</span>
+  </div>
+
+  <mat-card>
+    <h1>Agregar Bovino</h1>
+
+    <form #formAdd="ngForm" autocomplete="off">
+      <div fxLayout="row wrap" fxLayoutGap="16px">
+
+        
+
+
+        <div *ngIf="!loading; else loader" fxFlex="0 0 100%">
+          <button mat-button color="accent" (click)="goToBack()">Cancelar</button>
+          <button mat-raised-button color="accent" (click)="add()" [disabled]="formAdd.invalid">Agregar</button>
+        </div>
+
+        <ng-template #loader>
+          <app-loader></app-loader>
+        </ng-template>
+      </div>
+    </form>
+
+  </mat-card>
+
+</div>

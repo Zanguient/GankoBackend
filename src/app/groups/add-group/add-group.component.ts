@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-group',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-group.component.scss']
 })
 export class AddGroupComponent implements OnInit {
+  loading = false;
 
-  constructor() { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+  }
+
+  goToBack() {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  add() {
+
   }
 
 }
