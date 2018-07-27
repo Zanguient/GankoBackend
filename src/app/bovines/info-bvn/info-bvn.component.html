@@ -1,6 +1,38 @@
 <mat-card *ngIf="item">
 
-  <h1 appNmBottom>{{item.nombre}}</h1>
-  <p appAccentgt>Codigo: {{item.codigo}}</p>
+  <div fxLayout="row wrap" fxLayoutGap="20px">
+    <img class="img-bovine" src="{{item.imagen ? item.imagen : 'assets/images/bovine.jpg'}}" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(30%-20px)">
+    <div fxFlex="0 0 100%" fxFlex.gt-sm="0 0 50%" fxFlex.gt-md="0 0 70%">
+      <h1 appNmBottom>{{item.nombre}}</h1>
+      <p appAccent>Codigo: {{item.codigo}}</p>
+      <app-card-content>
+        <app-card-field [title]="'Raza'">{{item.raza}}</app-card-field>
+        <app-card-field [title]="'Sexo'">{{item.genero}}</app-card-field>
+        <app-card-field [title]="'Color'">{{item.color}}</app-card-field>
+        <app-card-field [title]="'Proposito'">{{item.proposito}}</app-card-field>
+        <app-card-field [title]="'Peso'">{{item.peso}}</app-card-field>
+        <app-card-field *ngIf="item.genero === 'Hembra'" [title]="'Partos'">{{item.partos}}</app-card-field>
+        <app-card-field [title]="'Procendencia'">{{item.procedencia}}</app-card-field>
+        <app-card-field [title]="'Fecha Nacimiento'">{{item.fechaNacimiento | date}}</app-card-field>
+        
+        
+      </app-card-content>
+    </div>
+
+  </div>
+
+  <h2>Información</h2>
+
+  <div fxLayout="row wrap" fxLayoutGap="20px">
+    <a routerLink="../leche" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)">Leche</a>
+    <a routerLink="../reproductivo" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)">Reproductivo</a>
+    <a routerLink="../ceba" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)">Ceba</a>
+    <a routerLink="../alimentacion" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)">Alimentación</a>
+    <a routerLink="../manejo" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)">Manejo</a>
+    <a routerLink="../movimientos" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)">Movimientos</a>
+    <a routerLink="../vacunas" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)">Vacunas</a>
+    <a routerLink="../sanidad" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)" fxFlex.gt-md="0 0 calc(25%-20px)">Sanidad</a>
+  </div>
+
 
 </mat-card>
