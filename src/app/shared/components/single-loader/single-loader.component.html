@@ -1,7 +1,7 @@
 <div *ngIf="!loading; else loader">
   <ng-content *ngIf="success; else noContent"></ng-content>
   <ng-template #noContent>
-    <p>{{noData}}</p>
+    <p>{{error}}</p>
   </ng-template>
 </div>
 

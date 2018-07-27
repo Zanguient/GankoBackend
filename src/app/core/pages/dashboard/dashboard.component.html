@@ -41,37 +41,44 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="sidenav-content">
-    <mat-toolbar color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span class="container" fxHide.lt-md="{{nav.searching}}">{{nav.title}}</span>
+    <div class="main">
 
-      <div class="actions-bar">
-        <div *ngIf="nav.searching && nav.searchable" class="search-bar">
-          <mat-icon>search</mat-icon>
-          <input type="search" name="search" [(ngModel)]="nav.searchText" (input)="nav.search.next(nav.searchText)">
-          <button mat-icon-button (click)="nav.searching = false">
-            <mat-icon>clear</mat-icon>
+
+      <mat-toolbar color="primary">
+        <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span class="container" fxHide.lt-md="{{nav.searching}}">{{nav.title}}</span>
+
+        <div class="actions-bar">
+          <div *ngIf="nav.searching && nav.searchable" class="search-bar">
+            <mat-icon>search</mat-icon>
+            <input type="search" name="search" [(ngModel)]="nav.searchText" (input)="nav.search.next(nav.searchText)">
+            <button mat-icon-button (click)="nav.searching = false">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+          <button *ngIf="!nav.searching && nav.searchable" mat-icon-button (click)="nav.searching = true">
+            <mat-icon>search</mat-icon>
+          </button>
+          <button *ngIf="nav.filterable" mat-icon-button [matMenuTriggerFor]="filterMenu">
+            <mat-icon>filter_list</mat-icon>
           </button>
         </div>
-        <button *ngIf="!nav.searching && nav.searchable" mat-icon-button (click)="nav.searching = true">
-          <mat-icon>search</mat-icon>
-        </button>
-        <button *ngIf="nav.filterable" mat-icon-button [matMenuTriggerFor]="filterMenu">
-          <mat-icon>filter_list</mat-icon>
-        </button>
-      </div>
 
-    </mat-toolbar>
-    <router-outlet></router-outlet>
+      </mat-toolbar>
+      <div class="main-content">
+          <router-outlet></router-outlet>
+      </div>
+      
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
 <mat-menu #filterMenu="matMenu" class="mat-typography">
 
   <button mat-menu-item (click)="nav.notifyFilter('leche')" [disabled]="nav.filters.retirados">
-    <mat-icon [class.check]="!nav.filters.retirados" >{{nav.filters.leche ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.leche ? 'check_box':'check_box_outline_blank'}}</mat-icon>
     <span>Leche</span>
   </button>
   <button mat-menu-item (click)="nav.notifyFilter('ceba')" [disabled]="nav.filters.retirados">

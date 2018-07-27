@@ -22,7 +22,9 @@ export class AppComponent {
       .addSvgIcon('straw', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/straw.svg'))
       .addSvgIcon('vaccine', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/vaccine.svg'))
       .addSvgIcon('feed', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/feed.svg'))
-      .addSvgIcon('bovine', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/bovine.svg'));
+      .addSvgIcon('bovine', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/bovine.svg'))
+      .addSvgIcon('ceba', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ceba.svg'))
+      .addSvgIcon('reproductive', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/reproductive.svg'));
   }
 
 }
