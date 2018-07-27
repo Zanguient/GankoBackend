@@ -5,6 +5,7 @@ import { finalize, filter, flatMap, tap } from 'rxjs/operators';
 import { snackError, snackOk } from './snackbar-util';
 import { DeleteDialogComponent } from '../shared/components/delete-dialog/delete-dialog.component';
 import { OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export abstract class BaseListComponent<T> implements OnInit {
 
@@ -16,11 +17,15 @@ export abstract class BaseListComponent<T> implements OnInit {
 
     ngOnInit() {
         this.loading = true;
-        this.service.list(this.getListParams())
+        this.getServiceList()
             .pipe(
                 finalize(() => this.loading = false)
             )
             .subscribe(x => this.data = x, err => snackError(this.snackbar, err));
+    }
+
+    getServiceList(): Observable<T[]> {
+        return this.service.list(this.getListParams());
     }
 
     getListParams(): any[] {

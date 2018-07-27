@@ -1,3 +1,10 @@
-<p>
-  manage-bvn works!
-</p>
+<div class="mat-typography ">
+  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay registros de manejo'" [addonable]="false">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" *ngFor="let d of data; index as i">
+
+
+      </div>
+    </div>
+  </app-list-loader>
+</div>
