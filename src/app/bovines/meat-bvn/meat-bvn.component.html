@@ -1,3 +1,50 @@
-<p>
-  meat-bvn works!
-</p>
+<div class="container">
+  <mat-card>
+    <h1>Ganancia de Peso</h1>
+
+    <div [hidden]="loading">
+      <div *ngIf="data.length > 0 ;else noData">
+        <table #tableMeet mat-table [dataSource]="data" class="info-table">
+
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef>Fecha</th>
+            <td mat-cell *matCellDef="let element">{{element.meet.fecha | date}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="peso">
+            <th mat-header-cell *matHeaderCellDef>Peso</th>
+            <td mat-cell *matCellDef="let element">{{element.meet.peso}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button (mousedown)="removeItem(element.i)">
+                <mat-icon inline="true">clear</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+        </table>
+      </div>
+
+      <ng-template #noData>
+        <div class="section">
+          <p>Pesos no registrados</p>
+        </div>
+      </ng-template>
+
+    </div>
+
+    <app-loader *ngIf="loading" [align]="'center'"></app-loader>
+
+
+  </mat-card>
+</div>
+
+<div class="fab">
+  <button mat-fab (click)="goToAdd()"><mat-icon>add</mat-icon></button>
+</div>

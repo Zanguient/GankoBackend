@@ -1,4 +1,4 @@
-<div class="container section mat-typography">
+<div class="container mat-typography" [class.section]="section">
   
   <div *ngIf="!loading; else loader">
     <ng-content *ngIf="size != 0; else noContent"></ng-content>

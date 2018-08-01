@@ -30,16 +30,16 @@ export const bovinesRoutes: Routes = [
                     { path: 'sanidad', component: HealthBvnComponent },
                     { path: 'manejo', component: ManageBvnComponent },
                     { path: 'ceba', component: MeatBvnComponent },
+                    { path: 'ceba/agregar', component: AddMeatBvnComponent },
                     { path: 'leche', component: MilkBvnComponent },
+                    { path: 'leche/agregar', component: AddMilkBvnComponent },
                     { path: 'movimientos', component: MovementBvnComponent },
                     { path: 'reproductivo', component: ReproductiveBvnComponent },
-                    { path: 'vacunas', component: VaccinationBvnComponent },
+                    { path: 'vacunas', component: VaccinationBvnComponent }
                 ]
             },
 
             { path: ':id/retirar', component: RemoveBvnComponent },
-            { path: ':id/ceba/agregar', component: AddMeatBvnComponent },
-            { path: ':id/leche/agregar', component: AddMilkBvnComponent },
             { path: ':id/reproductivo/agregar', component: AddReproductiveBvnComponent }
         ]
     }

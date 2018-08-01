@@ -11,6 +11,7 @@ export class ListLoaderComponent {
   @Input() size: number;
   @Input() noData: string;
   @Input() addonable = true;
+  @Input() section = true;
   @Output() add: EventEmitter<number> = new EventEmitter();
 
   constructor() { }

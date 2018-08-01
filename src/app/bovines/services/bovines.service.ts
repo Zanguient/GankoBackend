@@ -4,10 +4,10 @@ import { SessionService } from '../../core/services/session.service';
 import { Bovino } from '../../shared/models/bovine.model';
 import { BaseService } from '../../util/base-service';
 import { Observable, timer } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, mergeMap } from 'rxjs/operators';
 import { Rspn } from '../../shared/models/response.model';
-import { validate } from '../../util/http-util';
-import { bovines, bovine } from './bovines.mock';
+import { validate, listToDoc } from '../../util/http-util';
+import { bovines, bovine, productions, meets } from './bovines.mock';
 import { milks } from '../../milk/services/milk.mock';
 import { Leche } from '../../shared/models/milk.model';
 import { Alimentacion } from '../../shared/models/feed.model';
@@ -18,6 +18,8 @@ import { Vacuna } from '../../shared/models/vaccine.model';
 import { vaccines } from '../../vaccines/services/vaccines.mock';
 import { Sanidad } from '../../shared/models/health.model';
 import { healths } from '../../health/services/health.mock';
+import { Produccion } from '../../shared/models/milk-production.model';
+import { Meet } from '../../shared/models/meet.model';
 
 @Injectable()
 export class BovinesService extends BaseService<Bovino> {
@@ -66,9 +68,16 @@ export class BovinesService extends BaseService<Bovino> {
     );
   }
 
-  listMilk(id: string): Observable<Leche[]> {
+  listMilk(id: string): Observable<Produccion[]> {
     return timer(500).pipe(
-      map(() => new Rspn(true, milks())), // simular respuesta
+      map(() => new Rspn(true, productions())), // simular respuesta
+      map(x => validate(x))
+    );
+  }
+
+  addMilk(prod: Produccion): Observable<string> {
+    return timer(500).pipe(
+      map(() => new Rspn(true, '')), // simular respuesta
       map(x => validate(x))
     );
   }
@@ -77,8 +86,25 @@ export class BovinesService extends BaseService<Bovino> {
 
   }
 
-  listCeba(id: string) {
+  listMeet(id: string): Observable<Meet[]> {
+    return timer(500).pipe(
+      map(() => new Rspn(true, meets())), // simular respuesta
+      map(x => validate(x))
+    );
+  }
 
+  removeMeet(id: string): Observable<string> {
+    return timer(500).pipe(
+      map(() => new Rspn(true, '')), // simular respuesta
+      map(x => validate(x))
+    );
+  }
+
+  addMeet(meet: Meet) {
+    return timer(500).pipe(
+      map(() => new Rspn(true, '')), // simular respuesta
+      map(x => validate(x))
+    );
   }
 
   listFeed(id: string): Observable<Alimentacion[]> {

@@ -1,4 +1,6 @@
 import { Bovino } from '../../shared/models/bovine.model';
+import { Produccion } from '../../shared/models/milk-production.model';
+import { Meet, TYPE_CEBA } from '../../shared/models/meet.model';
 
 export function bovines(): Bovino[] {
     return [
@@ -39,4 +41,23 @@ function makeBovine(index: number): Bovino {
         fechaDestete: new Date(),
         celos: []
     };
+}
+
+
+export function productions(): Produccion[] {
+    return [
+        { fecha: new Date(), jornada: 'Mañana', litros: '20', bovino: '123' },
+        { fecha: new Date(), jornada: 'Mañana', litros: '40', bovino: '123' },
+        { fecha: new Date(), jornada: 'Tarde', litros: '50', bovino: '123' },
+        { fecha: new Date(), jornada: 'Tarde', litros: '10', bovino: '123' }
+    ];
+}
+
+export function meets(): Meet[] {
+    return [
+        { eliminado: false, gananciaPeso: 0, peso: 100, fecha: new Date(), type: TYPE_CEBA },
+        { eliminado: false, gananciaPeso: 0, peso: 240, fecha: new Date(), type: TYPE_CEBA },
+        { eliminado: false, gananciaPeso: 0, peso: 230, fecha: new Date(), type: TYPE_CEBA },
+        { eliminado: false, gananciaPeso: 0, peso: 180, fecha: new Date(), type: TYPE_CEBA },
+    ]
 }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BovinesService } from '../services/bovines.service';
-import { Leche } from '../../shared/models/milk.model';
-import { mergeMap, finalize } from 'rxjs/operators';
+import { finalize, mergeMap } from 'rxjs/operators';
+import { Produccion } from '../../shared/models/milk-production.model';
 import { snackError } from '../../util/snackbar-util';
+import { BovinesService } from '../services/bovines.service';
 
 @Component({
   selector: 'app-milk-bvn',
@@ -13,7 +13,7 @@ import { snackError } from '../../util/snackbar-util';
 })
 export class MilkBvnComponent {
 
-  data: Leche[] = [];
+  data: Produccion[] = [];
   loading = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private service: BovinesService, private snack: MatSnackBar) {
@@ -27,7 +27,7 @@ export class MilkBvnComponent {
   }
 
   goToAdd() {
-
+    this.router.navigate(['agregar'], { relativeTo: this.route });
   }
 
 }
