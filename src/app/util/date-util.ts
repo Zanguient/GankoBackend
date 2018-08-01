@@ -1,5 +1,5 @@
-export function nowFormat(): string {
-    const date = new Date();
+export function nowFormat(dt?: Date): string {
+    const date = dt ? dt : new Date();
     return date.getFullYear() + '-' + numberFormat(date.getMonth() + 1) + '-' + numberFormat(date.getDate());
 }
 

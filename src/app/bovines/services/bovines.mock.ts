@@ -59,5 +59,5 @@ export function meats(): Meat[] {
         { eliminado: false, gananciaPeso: 0, peso: 240, fecha: new Date(), type: TYPE_CEBA },
         { eliminado: false, gananciaPeso: 0, peso: 230, fecha: new Date(), type: TYPE_CEBA },
         { eliminado: false, gananciaPeso: 0, peso: 180, fecha: new Date(), type: TYPE_CEBA },
-    ]
+    ];
 }

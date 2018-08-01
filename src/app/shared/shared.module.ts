@@ -20,6 +20,7 @@ import { WarnDirective } from './directives/warn.directive';
 import { MatModule } from './mat.module';
 import { NmBottomDirective } from './directives/nm-bottom.directive';
 import { SingleLoaderComponent } from './components/single-loader/single-loader.component';
+import { NoSpaceDirective } from './directives/no-space.directive';
 
 
 
@@ -33,7 +34,8 @@ import { SingleLoaderComponent } from './components/single-loader/single-loader.
   declarations: [ListLoaderComponent, LoaderComponent, DeleteDialogComponent,
     FilterComponent, BovineSelectedComponent, CardComponent, CardCornerComponent,
     CardObsComponent, CardContentComponent, CardFieldComponent, CardFooterComponent,
-    CardActionsComponent, AccentDirective, WarnDirective, NmBottomDirective, SingleLoaderComponent],
+    CardActionsComponent, AccentDirective, WarnDirective, NmBottomDirective, SingleLoaderComponent,
+    NoSpaceDirective],
 
   entryComponents: [DeleteDialogComponent],
 
@@ -41,6 +43,6 @@ import { SingleLoaderComponent } from './components/single-loader/single-loader.
     ListLoaderComponent, LoaderComponent, DeleteDialogComponent, FilterComponent, BovineSelectedComponent,
     AccentDirective, WarnDirective, CardComponent, CardCornerComponent,
     CardObsComponent, CardContentComponent, CardFieldComponent, CardFooterComponent,
-    CardActionsComponent, NmBottomDirective, SingleLoaderComponent]
+    CardActionsComponent, NmBottomDirective, SingleLoaderComponent, NoSpaceDirective]
 })
 export class SharedModule { }

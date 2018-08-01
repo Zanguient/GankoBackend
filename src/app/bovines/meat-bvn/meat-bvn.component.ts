@@ -8,6 +8,7 @@ import { Bovino } from '../../shared/models/bovine.model';
 import { Meat } from '../../shared/models/meat.model';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { BovinesService } from '../services/bovines.service';
+import { nowFormat } from '../../util/date-util';
 
 @Component({
   selector: 'app-meat-bvn',
@@ -19,8 +20,13 @@ export class MeatBvnComponent {
   @ViewChild('tableMeat') table: MatTable<TableMeat>;
 
   loading = false;
+  loadingDes = false;
+
   columns: string[] = ['fecha', 'peso', 'actions'];
   data: TableMeat[] = [];
+  edit = false;
+
+  desteteDate: Date;
 
   bvn: Bovino;
 
@@ -29,7 +35,10 @@ export class MeatBvnComponent {
 
     this.loading = true;
     service.selected('').pipe(
-      tap(x => this.bvn = x),
+      tap(x => {
+        this.bvn = x;
+        this.desteteDate = x.fechaDestete ? x.fechaDestete : new Date();
+      }),
       mergeMap(x => this.service.listMeat(x.id)),
       mergeMap((x: Meat[]) => from(x).pipe(map((v, i) => new TableMeat(i, v)), toArray())),
       finalize(() => this.loading = false)
@@ -56,6 +65,17 @@ export class MeatBvnComponent {
 
   goToAdd() {
     this.router.navigate(['agregar'], { relativeTo: this.route });
+  }
+
+  saveDes() {
+    this.loadingDes = true;
+    this.service.updateMeet(this.desteteDate).pipe(
+      tap(() => this.bvn.fechaDestete = this.desteteDate),
+      finalize(() => this.loadingDes = false)
+    ).subscribe(() => {
+      this.edit = false;
+      snackOk(this.snack, 'Fecha actualizada');
+    }, err => snackError(this.snack, err));
   }
 
 }

@@ -1,6 +1,29 @@
 <div class="container">
   <mat-card>
-    <h1>Ganancia de Peso</h1>
+    <h2 appNoSpace>Destete</h2>
+    <button mat-button color="accent" *ngIf="!edit; else editDes" (click)="edit = true">{{bvn.destete ? (bvn.fechaDestete|date) : 'Fecha no especificada'}}</button>
+
+    <ng-template #editDes>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de Destete</mat-label>
+          <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="desteteDate" name="dat" required #dat="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div *ngIf="!loadingDes; else rotorDes">
+        <button mat-button color="accent" (click)="edit = false">Cancelar</button>
+        <button mat-raised-button color="accent" [disabled]="dat.invalid" (click)="saveDes()">Aceptar</button>
+      </div>
+      <ng-template #rotorDes>
+        <app-loader></app-loader>
+      </ng-template>
+    </ng-template>
+
+
+    <br>
+    <h2>Ganancia de Peso</h2>
 
     <div [hidden]="loading">
       <div *ngIf="data.length > 0 ;else noData">
@@ -46,5 +69,7 @@
 </div>
 
 <div class="fab">
-  <button mat-fab (click)="goToAdd()"><mat-icon>add</mat-icon></button>
+  <button mat-fab (click)="goToAdd()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

@@ -100,7 +100,14 @@ export class BovinesService extends BaseService<Bovino> {
     );
   }
 
-  addMeat(meat: Meat) {
+  addMeat(meat: Meat): Observable<string> {
+    return timer(500).pipe(
+      map(() => new Rspn(true, '')), // simular respuesta
+      map(x => validate(x))
+    );
+  }
+
+  updateMeet(date: Date): Observable<string> {
     return timer(500).pipe(
       map(() => new Rspn(true, '')), // simular respuesta
       map(x => validate(x))
