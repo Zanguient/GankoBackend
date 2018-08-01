@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { nowFormat } from '../../../util/date-util';
-import { Meet, TYPE_CEBA } from '../../../shared/models/meet.model';
+import { Meat, TYPE_CEBA } from '../../../shared/models/meat.model';
 import { Bovino } from '../../../shared/models/bovine.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BovinesService } from '../../services/bovines.service';
@@ -16,8 +16,8 @@ import { finalize } from '../../../../../node_modules/rxjs/operators';
 export class AddMeatBvnComponent {
 
   loading = false;
-  meetDate = nowFormat();
-  item: Meet = { bovino: '', eliminado: false, fecha: new Date(), finca: '', gananciaPeso: 0, peso: 0, type: TYPE_CEBA };
+  meatDate = nowFormat();
+  item: Meat = { bovino: '', eliminado: false, fecha: new Date(), finca: '', gananciaPeso: 0, peso: 0, type: TYPE_CEBA };
 
   bvn: Bovino;
 
@@ -35,9 +35,9 @@ export class AddMeatBvnComponent {
 
   add() {
     this.item.bovino = this.bvn.id;
-    this.item.fecha = new Date(this.meetDate);
+    this.item.fecha = new Date(this.meatDate);
     this.loading = true;
-    this.service.addMeet(this.item).pipe(
+    this.service.addMeat(this.item).pipe(
       finalize(() => this.loading = false)
     ).subscribe(() => {
       snackOk(this.snack, 'Registro agregado');

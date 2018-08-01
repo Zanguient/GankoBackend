@@ -1,6 +1,6 @@
 import { Bovino } from '../../shared/models/bovine.model';
 import { Produccion } from '../../shared/models/milk-production.model';
-import { Meet, TYPE_CEBA } from '../../shared/models/meet.model';
+import { Meat, TYPE_CEBA } from '../../shared/models/meat.model';
 
 export function bovines(): Bovino[] {
     return [
@@ -53,7 +53,7 @@ export function productions(): Produccion[] {
     ];
 }
 
-export function meets(): Meet[] {
+export function meats(): Meat[] {
     return [
         { eliminado: false, gananciaPeso: 0, peso: 100, fecha: new Date(), type: TYPE_CEBA },
         { eliminado: false, gananciaPeso: 0, peso: 240, fecha: new Date(), type: TYPE_CEBA },

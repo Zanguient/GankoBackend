@@ -5,7 +5,7 @@ import { filter, finalize, flatMap, map, mergeMap, tap, toArray } from 'rxjs/ope
 import { from } from '../../../../node_modules/rxjs';
 import { DeleteDialogComponent } from '../../shared/components/delete-dialog/delete-dialog.component';
 import { Bovino } from '../../shared/models/bovine.model';
-import { Meet } from '../../shared/models/meet.model';
+import { Meat } from '../../shared/models/meat.model';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { BovinesService } from '../services/bovines.service';
 
@@ -16,11 +16,11 @@ import { BovinesService } from '../services/bovines.service';
 })
 export class MeatBvnComponent {
 
-  @ViewChild('tableMeet') table: MatTable<TableMeet>;
+  @ViewChild('tableMeat') table: MatTable<TableMeat>;
 
   loading = false;
   columns: string[] = ['fecha', 'peso', 'actions'];
-  data: TableMeet[] = [];
+  data: TableMeat[] = [];
 
   bvn: Bovino;
 
@@ -30,8 +30,8 @@ export class MeatBvnComponent {
     this.loading = true;
     service.selected('').pipe(
       tap(x => this.bvn = x),
-      mergeMap(x => this.service.listMeet(x.id)),
-      mergeMap((x: Meet[]) => from(x).pipe(map((v, i) => new TableMeet(i, v)), toArray())),
+      mergeMap(x => this.service.listMeat(x.id)),
+      mergeMap((x: Meat[]) => from(x).pipe(map((v, i) => new TableMeat(i, v)), toArray())),
       finalize(() => this.loading = false)
     ).subscribe(x => this.data = x, err => snackError(this.snack, err));
   }
@@ -45,7 +45,7 @@ export class MeatBvnComponent {
       .afterClosed()
       .pipe(
         filter(x => x !== undefined),
-        flatMap(x => this.service.removeMeet(x.item.meet.id)),
+        flatMap(x => this.service.removeMeat(x.item.meat.id)),
         tap(() => {
           this.data.splice(index, 1);
           this.table.renderRows();
@@ -60,7 +60,7 @@ export class MeatBvnComponent {
 
 }
 
-class TableMeet {
+class TableMeat {
   constructor(public i: number,
-    public meet: Meet) { }
+    public meat: Meat) { }
 }

@@ -1,5 +1,5 @@
 export const TYPE_CEBA = 'Ceba';
-export class Meet {
+export class Meat {
     id?: string;
     type: string;
     finca?: string;
