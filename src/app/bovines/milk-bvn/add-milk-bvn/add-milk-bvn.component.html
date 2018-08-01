@@ -9,7 +9,7 @@
 
           <mat-form-field fxFlex="0 0 100%" appearance="outline">
             <mat-label>Fecha</mat-label>
-            <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="milkDate" name="dat" required>
+            <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="item.fecha" name="dat" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>

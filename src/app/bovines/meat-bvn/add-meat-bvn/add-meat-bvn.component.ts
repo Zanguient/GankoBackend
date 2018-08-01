@@ -16,7 +16,6 @@ import { finalize } from '../../../../../node_modules/rxjs/operators';
 export class AddMeatBvnComponent {
 
   loading = false;
-  meatDate = nowFormat();
   item: Meat = { bovino: '', eliminado: false, fecha: new Date(), finca: '', gananciaPeso: 0, peso: 0, type: TYPE_CEBA };
 
   bvn: Bovino;
@@ -35,7 +34,6 @@ export class AddMeatBvnComponent {
 
   add() {
     this.item.bovino = this.bvn.id;
-    this.item.fecha = new Date(this.meatDate);
     this.loading = true;
     this.service.addMeat(this.item).pipe(
       finalize(() => this.loading = false)

@@ -14,7 +14,7 @@ import { snackError, snackOk } from '../../util/snackbar-util';
 export class RemoveBvnComponent implements OnInit {
 
   item: Bovino;
-  releaseDate: string;
+  releaseDate =  new Date();
   reason: string;
 
   loading = false;
@@ -45,7 +45,7 @@ export class RemoveBvnComponent implements OnInit {
     this.loading = true;
     this.item.retirado = true;
     this.item.motivoSalida = this.reason;
-    this.item.fechaSalida = new Date(this.releaseDate);
+    this.item.fechaSalida = this.releaseDate;
     this.service.update(this.item).pipe(
       finalize(() => this.loading = false)
     ).subscribe(() => {
