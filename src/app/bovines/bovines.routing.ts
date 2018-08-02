@@ -35,12 +35,12 @@ export const bovinesRoutes: Routes = [
                     { path: 'leche/agregar', component: AddMilkBvnComponent },
                     { path: 'movimientos', component: MovementBvnComponent },
                     { path: 'reproductivo', component: ReproductiveBvnComponent },
+                    { path: 'reproductivo/agregar', component: AddReproductiveBvnComponent },
                     { path: 'vacunas', component: VaccinationBvnComponent }
                 ]
             },
 
-            { path: ':id/retirar', component: RemoveBvnComponent },
-            { path: ':id/reproductivo/agregar', component: AddReproductiveBvnComponent }
+            { path: ':id/retirar', component: RemoveBvnComponent }
         ]
     }
 ];

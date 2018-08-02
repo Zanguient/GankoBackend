@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { from } from 'rxjs';
+import { filter, finalize, mergeMap, tap, toArray } from 'rxjs/operators';
 import { Bovino } from '../../../../shared/models/bovine.model';
+import { snackError, snackOk } from '../../../../util/snackbar-util';
 import { BovinesService } from '../../../services/bovines.service';
-import { tap, finalize } from '../../../../../../node_modules/rxjs/operators';
-import { snackOk, snackError } from '../../../../util/snackbar-util';
-import { MatSnackBar } from '../../../../../../node_modules/@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-zeal-bvn',
@@ -19,9 +21,15 @@ export class ZealBvnComponent {
 
   loading: boolean;
 
-  constructor(private service: BovinesService, private snack: MatSnackBar) {
-    service.selected('')
-      .subscribe(x => this.bvn = x);
+  serviceActivated = false;
+
+  constructor(private service: BovinesService, private snack: MatSnackBar, private router: Router, private route: ActivatedRoute) {
+    service.selected('').pipe(
+      tap(x => this.bvn = x),
+      mergeMap(x => from(x.servicios ? x.servicios : [])),
+      filter(x => !x.finalizado),
+      toArray()
+    ).subscribe(x => this.serviceActivated = x.length > 0);
   }
 
   setAddMode() {
@@ -39,10 +47,14 @@ export class ZealBvnComponent {
       const zeals = this.bvn.celos ? this.bvn.celos : [];
       zeals.splice(0, 0, this.zealDate);
 
-      const time = this.zealDate.getTime() + (86400000 * 21);
+      const time = (new Date(this.zealDate)).getTime() + (86400000 * 21);
       this.bvn.fechaProximoCelo = new Date(time);
       snackOk(this.snack, 'Celo Registrado');
     }, err => snackError(this.snack, err));
+  }
+
+  goToAddService() {
+    this.router.navigate(['agregar'], { relativeTo: this.route });
   }
 
 }

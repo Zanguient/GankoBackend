@@ -43,12 +43,12 @@ export class Servicio {
     fechaUltimoCelo: Date;
     condicionCorporal: number;
     empadre: string;
-    codigoToro: string;
-    pajilla: string;
-    diagnostico: Diagnostico;
-    parto: Parto;
-    novedad: Novedad;
-    posFechaParto: Date;
+    codigoToro?: string;
+    pajilla?: string;
+    diagnostico?: Diagnostico;
+    parto?: Parto;
+    novedad?: Novedad;
+    posFechaParto?: Date;
     finalizado: boolean;
 }
 

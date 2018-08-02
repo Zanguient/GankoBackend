@@ -1,14 +1,14 @@
 <mat-card *ngIf="bvn">
   <div *ngIf="bvn.celos && bvn.celos.length > 0">
-      <h2 appNoSpace>Proximo celo estimado</h2>
-      <p>{{bvn.fechaProximoCelo | date}}</p>      
+    <h2 appNoSpace>Proximo celo estimado</h2>
+    <p>{{bvn.fechaProximoCelo | date}}</p>
   </div>
   <div fxLayout="row" fxLayoutAlign="flex-start center">
     <h2 appNoSpace>Fechas de Celos</h2>
-    <button mat-icon-button color="accent" *ngIf="!addMode" (click)="setAddMode()">
+    <button mat-icon-button color="accent" *ngIf="!addMode && !serviceActivated" (click)="setAddMode()">
       <mat-icon>add</mat-icon>
     </button>
-    <button mat-icon-button color="accent" *ngIf="addMode" (click)="addMode = false">
+    <button mat-icon-button color="accent" *ngIf="addMode && !serviceActivated" (click)="addMode = false">
       <mat-icon>clear</mat-icon>
     </button>
   </div>
@@ -29,7 +29,13 @@
   </div>
 
   <mat-list>
-    <mat-list-item *ngFor="let z of bvn.celos"> {{z|date}} </mat-list-item>
+    <mat-list-item *ngFor="let z of bvn.celos; first as fi">
+      <div fxLayout="row" style="width: 100%;">
+        <div fxFlex="1 0 auto">{{z|date}}</div>
+        <button *ngIf="fi && !serviceActivated" mat-button color="accent" (click)="goToAddService()">+ Servicio</button>
+        <p appAccent *ngIf="fi && serviceActivated">En Servicio</p>
+      </div>
+    </mat-list-item>
   </mat-list>
   <p *ngIf="bvn.celos.length == 0">No Hay celos registrados</p>
 </mat-card>
