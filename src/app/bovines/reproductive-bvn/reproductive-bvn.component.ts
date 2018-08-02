@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReproductiveBvnComponent implements OnInit {
 
+  filter = '1';
+
   constructor() { }
 
   ngOnInit() {

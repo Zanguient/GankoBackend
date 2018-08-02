@@ -1,3 +1,17 @@
 <div class="container">
+    <div class="filter">
+        <mat-radio-group name="filter" [selected]="filter1" [(ngModel)]="filter">
+            <mat-radio-button value="1" #filter1>Celos</mat-radio-button>
+            <mat-radio-button value="2" #filter2>Servicio actual</mat-radio-button>
+            <mat-radio-button value="3" #filter3>Servicios previos</mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+    <div [ngSwitch]="filter">
+        <app-zeal-bvn *ngSwitchCase="1"></app-zeal-bvn>
+        <app-current-service-bvn *ngSwitchCase="2"></app-current-service-bvn>
+        <app-service-bvn *ngSwitchCase="3"></app-service-bvn>        
+    </div>
+
 
 </div>

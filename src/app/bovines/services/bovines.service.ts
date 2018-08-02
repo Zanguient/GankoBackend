@@ -142,4 +142,13 @@ export class BovinesService extends BaseService<Bovino> {
     );
   }
 
+  // Zeals
+
+  addZeal(id: string, date: Date): Observable<string> {
+    return timer(500).pipe(
+      map(() => new Rspn(true, '')), // simular respuesta
+      map(x => validate(x))
+    );
+  }
+
 }
