@@ -57,7 +57,7 @@
 
         <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
           <mat-label>Fecha Nacimiento</mat-label>
-          <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="birthDate" required>
+          <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="birthDate" required name="fNa">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -67,7 +67,7 @@
 
         <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="dest.checked">
           <mat-label>Fecha Destete</mat-label>
-          <input matInput [matDatepicker]="pickerD" (focus)="pickerD.open()" [(ngModel)]="desteteDate" required>
+          <input matInput [matDatepicker]="pickerD" (focus)="pickerD.open()" [(ngModel)]="desteteDate" required  name="fDe">
           <mat-datepicker-toggle matSuffix [for]="pickerD"></mat-datepicker-toggle>
           <mat-datepicker #pickerD></mat-datepicker>
         </mat-form-field>
@@ -82,7 +82,7 @@
 
         <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Compra'">
           <mat-label>Fecha Combra</mat-label>
-          <input matInput [matDatepicker]="pickerC" required>
+          <input matInput [matDatepicker]="pickerC" (focus)="pickerD.open()" [(ngModel)]="buyDate" required  name="fCo">
           <mat-datepicker-toggle matSuffix [for]="pickerC" (focus)="pickerC.open()" [(ngModel)]="buyDate"></mat-datepicker-toggle>
           <mat-datepicker #pickerC></mat-datepicker>
         </mat-form-field>
