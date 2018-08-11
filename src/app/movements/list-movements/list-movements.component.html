@@ -1,0 +1,48 @@
+<div class="container section">
+  <mat-card>
+    <mat-tab-group mat-stretch-tabs>
+      <mat-tab label="PRADERAS LIBRES">
+        <mat-table [dataSource]="dataPradL" class="mat-elevation-z8">
+          <!-- identificador -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+          </ng-container>
+
+          <!-- libre desde -->
+          <ng-container matColumnDef="transactionDate">
+            <mat-header-cell *matHeaderCellDef> Libre desde </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.transactionDate}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnasPradL"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnasPradL;"></mat-row>
+        </mat-table>
+      </mat-tab>
+      <mat-tab label="PRADERAS OCUPADAS">
+          <mat-table [dataSource]="dataPradO" class="mat-elevation-z8">
+              <!-- identificador -->
+              <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+              </ng-container>
+    
+              <!-- libre desde -->
+              <ng-container matColumnDef="transactionDate">
+                <mat-header-cell *matHeaderCellDef> Libre desde </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.transactionDate}} </mat-cell>
+              </ng-container>
+
+              <!-- Grupo -->
+              <ng-container matColumnDef="group">
+                  <mat-header-cell *matHeaderCellDef> Grupo </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.group}} </mat-cell>
+                </ng-container>
+    
+              <mat-header-row *matHeaderRowDef="columnasPradO"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: columnasPradO;" (click)="clickPrueba()"></mat-row>
+            </mat-table>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

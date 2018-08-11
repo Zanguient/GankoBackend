@@ -1,0 +1,12 @@
+<div class="mat-typography">
+    <h2 mat-dialog-title>Añada un grupo a esta pradera</h2>
+    <mat-dialog-content>
+      <mat-select>
+        <mat-option [value]="1">Opcion 1</mat-option>
+      </mat-select>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button [mat-dialog-close]="undefined">Cancelar</button>
+        <button mat-button mat-dialog-close (click)="accept()">Aceptar</button>
+    </mat-dialog-actions>
+</div>
