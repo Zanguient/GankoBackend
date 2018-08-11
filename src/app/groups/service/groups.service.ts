@@ -28,6 +28,7 @@ export class GroupsService extends BaseService<Group> {
   }
 
   list(): Observable<Group[]> {
+    console.log('llama grupos');
     return timer(500).pipe(
       tap(() => this.data = this.data.length > 0 ? this.data : groups()),
       map(() => new Rspn(true, this.data)), // simular respuesta

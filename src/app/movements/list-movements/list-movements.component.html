@@ -2,7 +2,7 @@
   <mat-card>
     <mat-tab-group mat-stretch-tabs>
       <mat-tab label="PRADERAS LIBRES">
-        <mat-table [dataSource]="dataPradL" class="mat-elevation-z8">
+        <mat-table [dataSource]="data" class="mat-elevation-z8">
           <!-- identificador -->
           <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
@@ -16,11 +16,11 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="columnasPradL"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: columnasPradL;"></mat-row>
+          <mat-row *matRowDef="let row; columns: columnasPradL;" (click)="addGroupDialog()"></mat-row>
         </mat-table>
       </mat-tab>
       <mat-tab label="PRADERAS OCUPADAS">
-          <mat-table [dataSource]="dataPradO" class="mat-elevation-z8">
+          <mat-table [dataSource]="data" class="mat-elevation-z8">
               <!-- identificador -->
               <ng-container matColumnDef="id">
                 <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
@@ -40,7 +40,7 @@
                 </ng-container>
     
               <mat-header-row *matHeaderRowDef="columnasPradO"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: columnasPradO;" (click)="clickPrueba()"></mat-row>
+              <mat-row *matRowDef="let row; columns: columnasPradO;" (click)="removeGroupDialog()"></mat-row>
             </mat-table>
       </mat-tab>
     </mat-tab-group>
