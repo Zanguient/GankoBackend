@@ -28,5 +28,4 @@ export abstract class BaseService<T> {
         paths.forEach(x => url += `/${x}`);
         return url;
     }
-
 }

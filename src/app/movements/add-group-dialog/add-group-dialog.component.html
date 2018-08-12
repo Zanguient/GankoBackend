@@ -1,12 +1,16 @@
 <div class="mat-typography">
-    <h2 mat-dialog-title>Añada un grupo a esta pradera</h2>
+  <h2 mat-dialog-title>Añada un grupo a la Pradera {{data.name}}</h2>
+  <form #formAddGroup="ngForm">
     <mat-dialog-content>
-      <mat-select placeholder="Grupos">
-        <mat-option *ngFor="let group of options" [value]="group.id">{{group.nombre}}</mat-option>
-      </mat-select>
+      <mat-form-field>
+        <mat-select placeholder="Grupos" name="group" [(ngModel)]="data.item" required>          
+          <mat-option *ngFor="let group of data.options" [value]="group">{{group.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-dialog-content>
     <mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="undefined">Cancelar</button>
-        <button mat-button mat-dialog-close (click)="accept()">Aceptar</button>
+      <button mat-button [mat-dialog-close]="undefined">Cancelar</button>
+      <button mat-button (click)="accept()" [disabled]="data.item == null">Aceptar</button>
     </mat-dialog-actions>
+  </form>
 </div>
