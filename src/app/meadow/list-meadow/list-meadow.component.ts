@@ -26,7 +26,6 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
     }
     service.list().subscribe(x => {
       for (const pradera of x) {
-        pradera.isUsedMeadow = true;
         this.gridList[pradera.cellId].pradera = pradera;
       }
     }, err => snackError(snack, err));
@@ -49,6 +48,7 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
           cell.pradera.available = true;
           cell.pradera.fechaSalida = new Date();
           cell.pradera.identificador = this.data.length + 1;
+          cell.pradera.cellId = cell.cellId;
           this.service.add(cell.pradera).subscribe(() => snackOk(this.snackB, 'Se guardo correctamente'),
             err => snackError(this.snackB, err));
         }
@@ -59,11 +59,11 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
       });
 
       dialogRef.afterClosed().subscribe(rsp => {
-        this.service.select(this.data[cell.cellId]);
+        this.service.select(cell.pradera);
         if (rsp === 0) {
-          this.goToAdmin(cell.cellId);
+          this.goToAdmin(cell.pradera.identificador);
         } else if (rsp === 1) {
-          this.goToAlert(cell.cellId);
+          this.goToAlert(cell.pradera.identificador);
         }
       }, err => snackError(this.snackB, err));
     }
@@ -71,11 +71,11 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
   }
 
   goToAdmin(index: number) {
-    this.router.navigate([(this.data[index] as any).id], { relativeTo: this.route });
+    this.router.navigate([index], { relativeTo: this.route });
   }
 
   goToAlert(index: number) {
-    this.router.navigate([(this.data[index] as any).id + '/alertas'], { relativeTo: this.route });
+    this.router.navigate([index + '/alertas'], { relativeTo: this.route });
   }
 
 

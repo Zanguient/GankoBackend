@@ -29,6 +29,7 @@ function makeItem(item: number): Pradera {
         aforo: [],
         group: item % 2 ? '' : 'Grupo ' + item,
         available: item % 2 ? true : false,
-        cellId: item % 2 ? item - 1 : item * 3
+        cellId: item % 2 ? item - 1 : item * 3,
+        isUsedMeadow: true
     };
 }
