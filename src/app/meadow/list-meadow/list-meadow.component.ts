@@ -41,13 +41,17 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
 
       dialogRef.afterClosed().subscribe(rsp => {
         if (rsp) {
-          cell.pradera.tamanoEnHectareas = rsp[2];
-          cell.pradera.tamano = rsp[1];
+          console.log(Object.values(rsp));
+          cell.pradera.tamanoEnHectareas = rsp.tamanoEnHectareas;
+          cell.pradera.tamano = rsp.tamano  ;
           cell.pradera.isUsedMeadow = true;
           cell.pradera.isEmptyMeadow = false;
           cell.pradera.available = true;
           cell.pradera.fechaSalida = new Date();
           cell.pradera.identificador = this.data.length + 1;
+          cell.pradera.id = cell.pradera.identificador.toString();
+          cell.pradera.sequence = 12;
+          cell.pradera.type = 'tipo';
           cell.pradera.cellId = cell.cellId;
           this.service.add(cell.pradera).subscribe(() => snackOk(this.snackB, 'Se guardo correctamente'),
             err => snackError(this.snackB, err));

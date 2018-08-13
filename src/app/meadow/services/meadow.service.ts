@@ -17,7 +17,7 @@ export class MeadowService extends BaseService<Pradera> {
 
   constructor(private http: HttpClient, private session: SessionService) {
     super();
-    this.idFarm = this.session.farmId;
+    this.idFarm = session.farmId;
    }
 
   add(item: Pradera): Observable<string> {

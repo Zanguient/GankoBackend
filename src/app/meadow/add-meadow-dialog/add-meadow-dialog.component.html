@@ -6,7 +6,7 @@
         <input matInput type="number" placeholder="Tamaño" [(ngModel)]="dataP.tamano" name="tamano" required/>
       </mat-form-field>
       <mat-form-field>
-        <mat-select placeholder="Grupos" [(value)]="dataP.tamanoEnHectareas" name="tamanoHectareas" required>
+        <mat-select placeholder="Tipo tamaño" [(value)]="dataP.tamanoEnHectareas" name="tamanoHectareas" required>
           <mat-option [value]=false>m²</mat-option>
           <mat-option [value]=true>Hectareas</mat-option>
         </mat-select>

@@ -15,7 +15,9 @@ export class AddMeadowDialogComponent {
   }
 
   accept() {
-    this.dialogRef.close(this.dataP);
+    this.data.tamano = this.dataP.tamano;
+    this.data.tamanoEnHectareas = this.dataP.tamanoEnHectareas;
+    this.dialogRef.close(this.data);
   }
 
 }
