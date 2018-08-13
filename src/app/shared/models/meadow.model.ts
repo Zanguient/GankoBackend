@@ -16,6 +16,11 @@ export class Pradera {
     group?: string;
     available?: boolean;
     bovinos?: string[];
+    cellId?: number;
+
+    constructor(isUsedMeadow?: boolean) {
+        this.isUsedMeadow = this.isUsedMeadow;
+    }
 }
 
 export class Mantenimiento {
@@ -31,4 +36,14 @@ export class Aforo {
     promedio?: number;
     fechaAforo?: Date;
     total?: number;
+}
+
+export class Cell {
+    cellId: number;
+    pradera: Pradera;
+
+    constructor(cellId: number, pradera: Pradera) {
+        this.cellId = cellId;
+        this.pradera = pradera;
+    }
 }

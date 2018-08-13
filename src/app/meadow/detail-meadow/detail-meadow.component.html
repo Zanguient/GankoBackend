@@ -1,0 +1,40 @@
+<div class="mat-typography submenu-container" fxLayout="row" *ngIf="!loading && item != null; else noItem">
+
+    <div class="submenu">
+  
+      <mat-nav-list>
+        <a mat-list-item routerLink="info" routerLinkActive="active">
+          <mat-icon>settings_applications</mat-icon>
+        </a>
+        <a mat-list-item routerLink="alertas" routerLinkActive="active">
+          <mat-icon>add_alert</mat-icon>
+        </a>             
+      </mat-nav-list>
+  
+    </div>
+    <div fxFlex="grow">
+  
+      <div style="height: 100%; overflow: auto;">
+        <div class="breadcrumb container">
+          <button mat-button routerLink="../">Praderas</button> >
+          <span>{{"Pradera " + item.identificador}}</span>
+        </div>
+  
+        <router-outlet></router-outlet>
+      </div>
+  
+  
+    </div>
+  
+  
+  </div>
+  
+  <ng-template #noItem>
+    <div class="container section" *ngIf="!loading">
+      Bovino no encontrado
+    </div>
+  </ng-template>
+  
+  <div *ngIf="loading" class="container section">
+    <app-loader [big]="true" [align]="'center'"></app-loader>
+  </div>
