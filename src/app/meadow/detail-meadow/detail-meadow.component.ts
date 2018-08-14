@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Pradera } from '../../shared/models/meadow.model';
 import { MeadowService } from '../services/meadow.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { mergeMap } from '../../../../node_modules/rxjs/operators';
 import { snackError } from '../../util/snackbar-util';
@@ -16,7 +16,7 @@ export class DetailMeadowComponent implements OnInit {
   loading = false;
   item: Pradera;
 
-  constructor(private service: MeadowService, route: ActivatedRoute, private snack: MatSnackBar) {
+  constructor(private service: MeadowService, private router: Router, private route: ActivatedRoute, private snack: MatSnackBar) {
     this.loading = true;
 
     route.paramMap.pipe(
@@ -27,8 +27,13 @@ export class DetailMeadowComponent implements OnInit {
       this.loading = false;
     }, err => {
       snackError(this.snack, err);
-        this.loading = false;
+      this.loading = false;
     });
+  }
+
+  goToPraderas() {
+    this.service.selectedTab = 0;
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   ngOnInit() {

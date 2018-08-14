@@ -14,11 +14,12 @@ export class MeadowService extends BaseService<Pradera> {
 
   data: Pradera[] = [];
   idFarm: string;
+  selectedTab = 0;
 
   constructor(private http: HttpClient, private session: SessionService) {
     super();
     this.idFarm = session.farmId;
-   }
+  }
 
   add(item: Pradera): Observable<string> {
     item.idFinca = this.session.farmId;

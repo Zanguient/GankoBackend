@@ -18,7 +18,7 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
   gridList: Cell[] = [];
 
   constructor(service: MeadowService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar) {
+    router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar, private serv: MeadowService) {
     super(service, dialog, router, route, snack);
     this.loading = true;
     for (let i = 0; i < 100; i++) {
@@ -58,6 +58,7 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
         }
       }, err => snackError(this.snackB, err));
     } else {
+      this.serv.selectedTab = 0;
       const dialogRef = this.d.open(OptMeadowDialogComponent, {
         autoFocus: false
       });

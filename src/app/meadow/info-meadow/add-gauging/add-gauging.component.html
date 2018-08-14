@@ -1,0 +1,21 @@
+<div class="mat-typography container">
+    <mat-card>
+      <h3>
+        <button mat-icon-button (click)="cancel()">
+          <mat-icon>arrow_back</mat-icon>
+        </button> Agregar Aforo</h3>
+      <div class="section">
+        <form #AforoForm="ngForm">
+          <mat-card-content>
+            <div fxLayout="row wrap">
+              
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-button color="accent" (click)="cancel()">Cancelar</button>
+            <button mat-raised-button color="accent" [disabled]="AforoForm.invalid" (click)="add()">Agregar</button>
+          </mat-card-actions>
+        </form>
+      </div>
+    </mat-card>
+  </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Pradera } from '../../shared/models/meadow.model';
 import { MeadowService } from '../services/meadow.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { mergeMap } from '../../../../node_modules/rxjs/operators';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { MatSnackBar, MatTable } from '@angular/material';
@@ -18,9 +18,11 @@ export class InfoMeadowComponent implements OnInit {
   @ViewChild('tableMant') tableL: MatTable<Pradera[]>;
   columnasMant = ['dateMant', 'total'];
   columnasAforo = ['dateAforo', 'value'];
+  selectedTab;
 
-  constructor(private service: MeadowService, route: ActivatedRoute, private snack: MatSnackBar) {
+  constructor(private service: MeadowService, private route: ActivatedRoute, private snack: MatSnackBar, private router: Router) {
     this.loading = true;
+    this.selectedTab = service.selectedTab;
     route.paramMap.pipe(
       mergeMap(x => service.selected(x.get('id')))
     ).subscribe(x => {
@@ -30,8 +32,6 @@ export class InfoMeadowComponent implements OnInit {
       snackError(this.snack, err);
       this.loading = false;
     });
-
-    service.selected('').subscribe(x => this.item = x);
   }
 
   ngOnInit() {
@@ -40,6 +40,16 @@ export class InfoMeadowComponent implements OnInit {
   updateInfo() {
     this.service.update(this.item).subscribe(x => snackOk(this.snack, 'Se actualizo correctamente la información'),
       err => snackError(this.snack, err));
+  }
+
+  goToAdd() {
+    if (this.selectedTab === 1) {
+      this.service.selectedTab = 1;
+      this.router.navigate(['mantenimiento'], { relativeTo: this.route });
+    } else if (this.selectedTab === 2) {
+      this.service.selectedTab = 2;
+      this.router.navigate(['aforo'], { relativeTo: this.route });
+    }
   }
 
 }

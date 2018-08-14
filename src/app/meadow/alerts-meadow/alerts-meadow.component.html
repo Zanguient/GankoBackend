@@ -1,3 +1,34 @@
-<p>
-  alerts-meadow works!
-</p>
+<div class="container mat-typography">
+  <mat-card *ngIf="item">
+    <mat-card-content>
+      <div *ngIf="data.length > 0 ;else noDataAlarm">
+        <mat-table #tableMant [dataSource]="data" class="mat-elevation-z2">
+          <!-- identificador -->
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.fechaMantenimiento | date:'dd/MM/yyyy'}} </mat-cell>
+          </ng-container>
+
+          <!-- libre desde -->
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.total}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columnasAlert"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columnasAlert;"></mat-row>
+        </mat-table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<ng-template #noDataAlarm>
+  <div class="section">
+    <p>Alertas no registradas</p>
+  </div>
+</ng-template>
+<div class="fab">
+  <button mat-fab (click)="goToAdd()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
