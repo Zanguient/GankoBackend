@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseListComponent } from '../../util/base-list-component';
-import { Pradera, Cell } from '../../shared/models/meadow.model';
+import { Pradera } from '../../shared/models/meadow.model';
 import { MeadowService } from '../services/meadow.service';
 import { MatSnackBar, MatDialog, MatDialogRef } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,45 +15,41 @@ import { OptMeadowDialogComponent } from '../opt-meadow-dialog/opt-meadow-dialog
 })
 export class ListMeadowComponent extends BaseListComponent<Pradera> {
 
-  gridList: Cell[] = [];
+  // gridList: Cell[] = [];
+  praderas: Pradera[] = [];
 
   constructor(service: MeadowService, snack: MatSnackBar, dialog: MatDialog,
     router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar, private serv: MeadowService) {
     super(service, dialog, router, route, snack);
     this.loading = true;
-    for (let i = 0; i < 100; i++) {
+    /*for (let i = 0; i < 100; i++) {
       this.gridList.push(new Cell(i, new Pradera(false)));
-    }
+    }*/
     service.list().subscribe(x => {
-      for (const pradera of x) {
-        this.gridList[pradera.cellId].pradera = pradera;
-      }
+      this.praderas = x;
     }, err => snackError(snack, err));
     this.loading = false;
   }
 
-  openDialog(cell: Cell) {
-    if (!cell.pradera.isUsedMeadow) {
+  openDialog(pradera: Pradera) {
+    if (!pradera.isUsedMeadow) {
       const dialogRef = this.d.open(AddMeadowDialogComponent, {
-        data: { item: cell.pradera },
+        data: { item: pradera },
         autoFocus: false
       });
 
       dialogRef.afterClosed().subscribe(rsp => {
         if (rsp) {
-          console.log(Object.values(rsp));
-          cell.pradera.tamanoEnHectareas = rsp.tamanoEnHectareas;
-          cell.pradera.tamano = rsp.tamano  ;
-          cell.pradera.isUsedMeadow = true;
-          cell.pradera.isEmptyMeadow = false;
-          cell.pradera.available = true;
-          cell.pradera.fechaSalida = new Date();
-          cell.pradera.identificador = this.data.length + 1;
-          cell.pradera.id = cell.pradera.identificador.toString();
-          cell.pradera.sequence = 12;
-          cell.pradera.type = 'tipo';
-          cell.pradera.cellId = cell.cellId;
-          this.service.add(cell.pradera).subscribe(() => snackOk(this.snackB, 'Se guardo correctamente'),
+          pradera.tamanoEnHectareas = rsp.tamanoEnHectareas;
+          pradera.tamano = rsp.tamano;
+          pradera.isUsedMeadow = true;
+          pradera.isEmptyMeadow = false;
+          pradera.available = true;
+          pradera.fechaSalida = new Date();
+          pradera.id = pradera.identificador.toString();
+          pradera.mantenimiento = [];
+          pradera.aforo = [];
+          this.service.update(pradera).subscribe(() => snackOk(this.snackB, 'Se guardo correctamente'),
             err => snackError(this.snackB, err));
         }
       }, err => snackError(this.snackB, err));
@@ -64,11 +60,11 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
       });
 
       dialogRef.afterClosed().subscribe(rsp => {
-        this.service.select(cell.pradera);
+        this.service.select(pradera);
         if (rsp === 0) {
-          this.goToAdmin(cell.pradera.identificador);
+          this.goToAdmin(pradera.identificador);
         } else if (rsp === 1) {
-          this.goToAlert(cell.pradera.identificador);
+          this.goToAlert(pradera.identificador);
         }
       }, err => snackError(this.snackB, err));
     }

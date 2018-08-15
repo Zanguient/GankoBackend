@@ -16,7 +16,7 @@
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field fxFlex="45%">
-                  <mat-select placeholder="Tipo de Graminea" name="tipoGraminea" [(ngModel)]="item.tipoGraminea" required>
+                  <mat-select placeholder="Tipo de Graminea" name="tipoGraminea" [(ngModel)]="item.tipoGraminea">
                     <mat-option value="Pasto Castillo">Pasto Castillo</mat-option>
                     <mat-option value="Pasto Barrera">Pasto Barrera</mat-option>
                     <mat-option value="Pasto King Grass">Pasto King Grass</mat-option>
@@ -26,7 +26,7 @@
               </div>
             </mat-card-content>
             <mat-card-actions align="end">
-              <button mat-stroked-button color="primary" (click)="updateInfo()">Actualizar</button>
+              <button mat-stroked-button color="primary" [disabled]="formTamGram.invalid" (click)="updateInfo()">Actualizar</button>
             </mat-card-actions>
           </form>
         </mat-card>

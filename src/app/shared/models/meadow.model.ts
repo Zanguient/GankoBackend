@@ -16,7 +16,6 @@ export class Pradera {
     group?: string;
     available?: boolean;
     bovinos?: string[];
-    cellId?: number;
 
     constructor(isUsedMeadow?: boolean) {
         this.isUsedMeadow = this.isUsedMeadow;
@@ -38,7 +37,7 @@ export class Aforo {
     total?: number;
 }
 
-export class Cell {
+/* export class Cell {
     cellId: number;
     pradera: Pradera;
 
@@ -46,4 +45,4 @@ export class Cell {
         this.cellId = cellId;
         this.pradera = pradera;
     }
-}
+}*/

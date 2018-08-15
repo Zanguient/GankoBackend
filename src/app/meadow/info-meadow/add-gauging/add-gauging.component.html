@@ -1,21 +1,41 @@
 <div class="mat-typography container">
-    <mat-card>
-      <h3>
-        <button mat-icon-button (click)="cancel()">
-          <mat-icon>arrow_back</mat-icon>
-        </button> Agregar Aforo</h3>
-      <div class="section">
-        <form #AforoForm="ngForm">
-          <mat-card-content>
-            <div fxLayout="row wrap">
-              
+  <mat-card>
+    <h3>
+      <button mat-icon-button (click)="cancel()">
+        <mat-icon>arrow_back</mat-icon>
+      </button> Agregar Aforo</h3>
+    <div class="section">
+      <form #AforoForm="ngForm">
+        <mat-card-content>
+          <div fxLayout="row wrap">
+            <mat-form-field fxFlex="calc(80% - 20px)" style="margin-right: 20px;">
+              <input matInput type="number" placeholder="Cantidad de muestras" [(ngModel)]="muestras" name="muestras" [disabled]="viewBtnMuestras"
+              />
+            </mat-form-field>
+            <div fxFlex="10%">
+              <button mat-raised-button color="accent" [disabled]="viewBtnMuestras || muestras <= 0 || muestras === undefined" (click)="generateArrayValores()">Aceptar</button>
             </div>
-          </mat-card-content>
-          <mat-card-actions align="end">
-            <button mat-button color="accent" (click)="cancel()">Cancelar</button>
-            <button mat-raised-button color="accent" [disabled]="AforoForm.invalid" (click)="add()">Agregar</button>
-          </mat-card-actions>
-        </form>
-      </div>
-    </mat-card>
-  </div>
+            <div fxFlex="10%">
+              <button mat-raised-button color="accent" [disabled]="!viewBtnMuestras" (click)="generateArrayValores()">Limpiar</button>
+            </div>
+          </div>
+          <div fxLayout="row wrap" *ngIf="muestras != 0">
+            <div *ngFor="let val of aforo.valores; let index = index;trackBy:trackByIndex;">
+              <div fxFlex="calc(10% - 20px)">
+                <mat-form-field style="margin-right: 20px;">
+                  <input matInput type="number" [(ngModel)]="aforo.valores[index]" name="valor-{{index+1}}" required placeholder="Valor {{index+1}}"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="accent" (click)="cancel()">Cancelar</button>
+          <button mat-raised-button color="accent" [disabled]="AforoForm.invalid" (click)="add()">Agregar</button>
+        </mat-card-actions>
+      </form>
+    </div>
+  </mat-card>
+</div>

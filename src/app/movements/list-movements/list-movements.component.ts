@@ -40,9 +40,9 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
         this.dataL = [];
         this.dataO = [];
         for (const pradera of x) {
-          if (pradera.available) {
+          if (pradera.available && pradera.isUsedMeadow) {
             this.dataL.push(pradera);
-          } else {
+          } else if (!pradera.available) {
             this.dataO.push(pradera);
           }
         }
