@@ -1,4 +1,4 @@
-<div class="mat-typography container">
+<div class="mat-typography container" *ngIf="!loading">
   <mat-card>
     <h3>
       <button mat-icon-button (click)="cancel()">
@@ -8,7 +8,8 @@
       <form #AforoForm="ngForm">
         <mat-card-content>
           <div fxLayout="row wrap">
-            <mat-form-field fxFlex="calc(80% - 20px)" style="margin-right: 20px;">
+            <mat-form-field fxFlex="calc(80% - 20px)" style="margin-right: 20px;" appearance="outline">
+              <mat-label>Cantidad de muestras</mat-label>
               <input matInput type="number" placeholder="Cantidad de muestras" [(ngModel)]="muestras" name="muestras" [disabled]="viewBtnMuestras"
               />
             </mat-form-field>
@@ -22,7 +23,8 @@
           <div fxLayout="row wrap" *ngIf="muestras != 0">
             <div *ngFor="let val of aforo.valores; let index = index;trackBy:trackByIndex;">
               <div fxFlex="calc(10% - 20px)">
-                <mat-form-field style="margin-right: 20px;">
+                <mat-form-field style="margin-right: 20px;" appearance="outline">
+                  <mat-label>Valor {{index+1}}</mat-label>
                   <input matInput type="number" [(ngModel)]="aforo.valores[index]" name="valor-{{index+1}}" required placeholder="Valor {{index+1}}"
                   />
                 </mat-form-field>
@@ -38,4 +40,7 @@
       </form>
     </div>
   </mat-card>
+</div>
+<div *ngIf="loading" class="container section">
+  <app-loader [big]="true" [align]="'center'"></app-loader>
 </div>

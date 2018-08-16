@@ -1,4 +1,4 @@
-<div class="container mat-typography">
+<div class="container mat-typography" *ngIf="!loading && item != null; else">
   <mat-card *ngIf="item">
     <mat-tab-group mat-stretch-tabs [(selectedIndex)]="selectedTab">
       <mat-tab label="TAMAÑO Y GRAMINEA">
@@ -6,16 +6,19 @@
           <form #formTamGram="ngForm">
             <mat-card-content>
               <div fxLayout="row" fxFlex="100%" style="margin-top: 20px;">
-                <mat-form-field style="margin-right: 30px;" fxFlex="10%">
+                <mat-form-field style="margin-right: 30px;" fxFlex="10%" appearance="outline">
+                  <mat-label>Tamaño pradera</mat-label>
                   <input matInput placeholder="Tamaño pradera" type="number" name="tamano" [(ngModel)]="item.tamano" required/>
                 </mat-form-field>
-                <mat-form-field fxFlex="45%" style="margin-right: 30px;">
+                <mat-form-field fxFlex="45%" style="margin-right: 30px;" appearance="outline">
+                  <mat-label>Tipo tamaño</mat-label>
                   <mat-select placeholder="Tipo tamaño" name="tamanoHectareas" [(ngModel)]="item.tamanoEnHectareas" required>
                     <mat-option [value]=false>m²</mat-option>
                     <mat-option [value]=true>Hectareas</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <mat-form-field fxFlex="45%">
+                <mat-form-field fxFlex="45%" appearance="outline">
+                    <mat-label>Tipo de Graminea</mat-label>
                   <mat-select placeholder="Tipo de Graminea" name="tipoGraminea" [(ngModel)]="item.tipoGraminea">
                     <mat-option value="Pasto Castillo">Pasto Castillo</mat-option>
                     <mat-option value="Pasto Barrera">Pasto Barrera</mat-option>
@@ -100,4 +103,12 @@
   <button mat-fab (click)="goToAdd()">
     <mat-icon>add</mat-icon>
   </button>
+</div>
+<ng-template #noItem>
+  <div class="container section" *ngIf="!loading">
+    Pradera no encontrada
+  </div>
+</ng-template>
+<div *ngIf="loading" class="container section">
+  <app-loader [big]="true" [align]="'center'"></app-loader>
 </div>

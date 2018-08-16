@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Pradera } from '../../shared/models/meadow.model';
-import { MeadowService } from '../services/meadow.service';
 import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { MatSnackBar } from '../../../../node_modules/@angular/material';
-import { mergeMap } from '../../../../node_modules/rxjs/operators';
 import { snackError } from '../../util/snackbar-util';
 import { MeadowAlarm } from '../../shared/models/meadowAlarm.model';
+import { MeadowAlarmService } from '../services/meadowAlarm.service';
+import { MeadowService } from '../services/meadow.service';
+import { mergeMap } from 'rxjs/operators';
+import { Pradera } from '../../shared/models/meadow.model';
 
 @Component({
   selector: 'app-alerts-meadow',
@@ -19,18 +20,32 @@ export class AlertsMeadowComponent implements OnInit {
   loading = false;
   columnasAlert: string[] = ['type', 'date'];
 
-  constructor(private service: MeadowService, private route: ActivatedRoute, private snack: MatSnackBar, private router: Router) {
+  constructor(private service: MeadowAlarmService, private serviceMeadow: MeadowService, private route: ActivatedRoute,
+    private snack: MatSnackBar, private router: Router) {
+    this.loadPradera();
     this.loading = true;
-    route.paramMap.pipe(
-      mergeMap(x => service.selected(x.get('id')))
+    service.list().subscribe(x => {
+      this.data = x;
+      console.log(Object.values(x));
+      this.loading = false;
+    }, err => {
+      snackError(this.snack, err);
+      this.loading = false;
+    });
+  }
+
+  loadPradera() {
+    this.loading = true;
+    this.route.paramMap.pipe(
+      mergeMap(x => this.serviceMeadow.selected(x.get('id')))
     ).subscribe(x => {
-      service.select(x);
+      this.serviceMeadow.select(x);
       this.item = x;
     }, err => {
       snackError(this.snack, err);
       this.loading = false;
     });
-   }
+  }
 
   ngOnInit() {
   }

@@ -29,6 +29,7 @@ export class AddGaugingComponent implements OnInit {
     ).subscribe(x => {
       service.select(x);
       this.item = x;
+      this.loading = false;
     }, err => {
       snackError(this.snack, err);
       this.loading = false;
@@ -67,13 +68,17 @@ export class AddGaugingComponent implements OnInit {
   }
 
   saveAforo() {
+    this.loading = true;
     this.aforo.fechaAforo = new Date();
     this.item.aforo.push(this.aforo);
     this.service.update(this.item).subscribe(rsp => {
       snackOk(this.snack, 'Se almaceno la informacion correctamente');
       this.cancel();
     },
-      err => snackError(this.snack, err));
+      err => {
+        snackError(this.snack, err);
+        this.loading = false;
+      });
   }
 
   generateArrayValores() {

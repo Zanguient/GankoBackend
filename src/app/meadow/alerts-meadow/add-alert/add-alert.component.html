@@ -8,18 +8,21 @@
       <form #alertForm="ngForm">
         <mat-card-content>
           <div fxLayout="row wrap">
-            <mat-form-field fxFlex="100%">
+            <mat-form-field fxFlex="100%" appearance="outline">
+              <mat-label>Tipo</mat-label>
               <mat-select placeholder="Tipo" name="type" [(ngModel)]="alertMeadow.tipo" required>
                 <mat-option value="ocupacion">Ocupación</mat-option>
                 <mat-option value="descanso">Descanso</mat-option>
                 <mat-option value="fertilizacion">Fertilización</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field fxFlex="100%">
-              <input matInput type="number" placeholder="Valor" [(ngModel)]="alertMeadow.valor" name="valor" required/>
+            <mat-form-field fxFlex="100%" appearance="outline">
+              <mat-label>Valor</mat-label>
+              <input matInput type="number" placeholder="Valor" [(ngModel)]="valor" name="valor" required/>
             </mat-form-field>
-            <mat-form-field fxFlex="100%">
-              <mat-select placeholder="Tiempo" name="time" [(ngModel)]="alertMeadow.tiempo" required>
+            <mat-form-field fxFlex="100%" appearance="outline">
+              <mat-label>Tiempo</mat-label>
+              <mat-select placeholder="Tiempo" name="time" [(ngModel)]="tiempo" required>
                 <mat-option value="hora">Hora(s)</mat-option>
                 <mat-option value="dia">Dia(s)</mat-option>
                 <mat-option value="mes">Mes(es)</mat-option>

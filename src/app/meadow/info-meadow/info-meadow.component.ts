@@ -28,6 +28,7 @@ export class InfoMeadowComponent implements OnInit {
     ).subscribe(x => {
       service.select(x);
       this.item = x;
+      this.loading = false;
     }, err => {
       snackError(this.snack, err);
       this.loading = false;

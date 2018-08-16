@@ -7,6 +7,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { AddMeadowDialogComponent } from '../add-meadow-dialog/add-meadow-dialog.component';
 import { OptMeadowDialogComponent } from '../opt-meadow-dialog/opt-meadow-dialog.component';
+import { DeleteDialogComponent } from '../../shared/components/delete-dialog/delete-dialog.component';
+import { filter, flatMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-meadow',
@@ -21,17 +23,21 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
   constructor(service: MeadowService, snack: MatSnackBar, dialog: MatDialog,
     router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar, private serv: MeadowService) {
     super(service, dialog, router, route, snack);
+    this.loadPraderas();
+  }
+
+  loadPraderas() {
     this.loading = true;
     /*for (let i = 0; i < 100; i++) {
       this.gridList.push(new Cell(i, new Pradera(false)));
     }*/
-    service.list().subscribe(x => {
+    this.service.list().subscribe(x => {
       this.praderas = x;
-    }, err => snackError(snack, err));
+    }, err => snackError(this.snackB, err));
     this.loading = false;
   }
 
-  openDialog(pradera: Pradera) {
+  openDialog(pradera: Pradera, index?: number) {
     if (!pradera.isUsedMeadow) {
       const dialogRef = this.d.open(AddMeadowDialogComponent, {
         data: { item: pradera },
@@ -65,10 +71,35 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
           this.goToAdmin(pradera.identificador);
         } else if (rsp === 1) {
           this.goToAlert(pradera.identificador);
+        } else if (rsp === 2) {
+          this.removePradera(pradera, index);
         }
       }, err => snackError(this.snackB, err));
     }
 
+  }
+
+  removePradera(data: Pradera, index: number) {
+    const dialogRef = this.d.open(DeleteDialogComponent, {
+      data: { item: data },
+      autoFocus: false
+    });
+
+    dialogRef.afterClosed().subscribe(x => {
+      this.updateRemoveData(x.item);
+    });
+  }
+
+  updateRemoveData(data: Pradera) {
+    if (!data.available) {
+      snackOk(this.snackB, 'La pardera tiene un grupo asociado');
+    } else {
+      data.isUsedMeadow = false;
+      data.available = true;
+      this.service.update(data).subscribe(rsp => {
+        snackOk(this.snackB, 'Se removio la pradera');
+      }, err => snackError(this.snackB, err));
+    }
   }
 
   goToAdmin(index: number) {

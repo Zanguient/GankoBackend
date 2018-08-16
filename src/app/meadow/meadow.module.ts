@@ -13,6 +13,7 @@ import { AddMaintenanceComponent } from '../meadow/info-meadow/add-maintenance/a
 import { AddGaugingComponent } from '../meadow/info-meadow/add-gauging/add-gauging.component';
 import { AddAlertComponent } from '../meadow/alerts-meadow/add-alert/add-alert.component';
 import { ResultDialogComponent } from '../meadow/info-meadow/add-gauging/result-dialog/result-dialog.component';
+import { MeadowAlarmService } from './services/meadowAlarm.service';
 
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { ResultDialogComponent } from '../meadow/info-meadow/add-gauging/result-
   declarations: [MeadowComponent, AddMeadowDialogComponent, OptMeadowDialogComponent, ListMeadowComponent,
     DetailMeadowComponent, InfoMeadowComponent, AlertsMeadowComponent, AddMaintenanceComponent, AddGaugingComponent, AddAlertComponent,
     ResultDialogComponent],
-  providers: [MeadowService]
+  providers: [MeadowService, MeadowAlarmService]
 })
 export class MeadowModule { }

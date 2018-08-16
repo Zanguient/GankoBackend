@@ -1,4 +1,4 @@
-<div class="mat-typography container">
+<div class="mat-typography container" *ngIf="!loading">
   <mat-card>
     <h3>
       <button mat-icon-button (click)="cancel()">
@@ -8,24 +8,29 @@
       <form #maintenanceForm="ngForm">
         <mat-card-content>
           <div fxLayout="row wrap">
-            <mat-form-field fxFlex="100%" class="margin-form">
+            <mat-form-field fxFlex="100%" class="margin-form" appearance="outline">
+              <mat-label>Fecha</mat-label>
               <input matInput [matDatepicker]="dateMaintenance" placeholder="Fecha" [(ngModel)]="mantenimiento.fechaMantenimiento" name="dateMaintenance"
                 required>
               <mat-datepicker-toggle matSuffix [for]="dateMaintenance"></mat-datepicker-toggle>
               <mat-datepicker #dateMaintenance></mat-datepicker>
             </mat-form-field>
-            <mat-form-field fxFlex="100%">
+            <mat-form-field fxFlex="100%" appearance="outline">
+              <mat-label>Producto</mat-label>
               <input matInput type="text" placeholder="Producto" [(ngModel)]="mantenimiento.producto" name="product" required/>
             </mat-form-field>
-            <mat-form-field fxFlex="100%">
+            <mat-form-field fxFlex="100%" appearance="outline">
+              <mat-label>Cantidad</mat-label>
               <input matInput type="number" placeholder="Cantidad" [(ngModel)]="mantenimiento.cantidad" name="amount" required (keypress)="calculateTotal()"
               />
             </mat-form-field>
-            <mat-form-field fxFlex="100%">
+            <mat-form-field fxFlex="100%" appearance="outline">
+              <mat-label>Valor</mat-label>
               <input matInput type="number" placeholder="Valor" [(ngModel)]="mantenimiento.valor" name="price" required (keypress)="calculateTotal()"
               />
             </mat-form-field>
-            <mat-form-field fxFlex="100%">
+            <mat-form-field fxFlex="100%" appearance="outline">
+              <mat-label>Total</mat-label>
               <input matInput type="number" placeholder="Total" [(ngModel)]="mantenimiento.total" name="total" disabled/>
             </mat-form-field>
           </div>
@@ -37,4 +42,7 @@
       </form>
     </div>
   </mat-card>
+</div>
+<div *ngIf="loading" class="container section">
+  <app-loader [big]="true" [align]="'center'"></app-loader>
 </div>

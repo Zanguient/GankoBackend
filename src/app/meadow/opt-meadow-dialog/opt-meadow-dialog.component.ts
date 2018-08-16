@@ -18,4 +18,7 @@ export class OptMeadowDialogComponent {
     this.dialogRef.close(1);
   }
 
+  remove() {
+    this.dialogRef.close(2);
+  }
 }

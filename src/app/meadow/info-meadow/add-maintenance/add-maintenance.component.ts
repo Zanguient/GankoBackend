@@ -24,6 +24,7 @@ export class AddMaintenanceComponent implements OnInit {
     ).subscribe(x => {
       service.select(x);
       this.item = x;
+      this.loading = false;
     }, err => {
       snackError(this.snack, err);
       this.loading = false;
@@ -42,11 +43,15 @@ export class AddMaintenanceComponent implements OnInit {
   }
 
   add() {
+    this.loading = true;
     this.item.mantenimiento.push(this.mantenimiento);
     this.service.update(this.item).subscribe(rsp => {
       snackOk(this.snack, 'Se actualizo la informacion');
       this.cancel();
-    }, err => snackError(this.snack, err));
+    }, err => {
+      snackError(this.snack, err);
+      this.loading = false;
+    });
   }
 
 }

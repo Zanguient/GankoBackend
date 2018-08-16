@@ -2,10 +2,12 @@
   <h2 mat-dialog-title>Ingrese el tamaño de la Pradera</h2>
   <form #formAddMeadow="ngForm">
     <mat-dialog-content>
-      <mat-form-field style="margin-right: 10px;">
+      <mat-form-field style="margin-right: 10px;" appearance="outline">
+        <mat-label>Tamaño</mat-label>
         <input matInput type="number" placeholder="Tamaño" [(ngModel)]="dataP.tamano" name="tamano" required/>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo tamaño</mat-label>
         <mat-select placeholder="Tipo tamaño" [(value)]="dataP.tamanoEnHectareas" name="tamanoHectareas" required>
           <mat-option [value]=false>m²</mat-option>
           <mat-option [value]=true>Hectareas</mat-option>
