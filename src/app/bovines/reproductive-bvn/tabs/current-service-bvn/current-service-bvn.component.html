@@ -1,3 +1,35 @@
-<p>
-  current-service-bvn works!
-</p>
+<div *ngIf="bvn && item && !item.finalizado">
+  <app-card [title]="item.empadre" subtitle="{{item.fecha | date}}" [subAccent]="true">
+
+    <app-card-content>
+      <app-card-field-lg title="Ultimo Celo">{{item.fechaUltimoCelo | date}}</app-card-field-lg>
+      <app-card-field-lg title="Condición Corporal">{{item.condicionCorporal}}</app-card-field-lg>
+      <app-card-field-lg title="{{straw ? 'Pajilla' : 'Toro'}}">{{straw ? item.pajilla : item.codigoToro}}</app-card-field-lg>
+      <!-- <app-card-field-lg title="Posible Parto">{{item.posFechaParto ? (item.posFechaParto | date) : 'No confirmado'}}</app-card-field-lg> -->
+    </app-card-content>
+
+    <div *ngIf="!item.diagnostico && !loading" fxLayout="row" fxLayoutGap.gt-sm="20px" fxLayoutAlign.gt-sm="flex-end"
+      fxLayoutAlign="space-between">
+      <button mat-button color="accent" (click)="goToAddDiagnostic()">Diagnostico</button>
+      <button mat-button color="accent" (click)="goToAddNovelty()">Novedad</button>
+      <button mat-button color="accent" (click)="goToAddBirth()">Parto</button>
+    </div>
+    <app-loader *ngIf="!item.diagnostico && loading" align='flex-end'></app-loader>
+
+  </app-card>
+
+  <app-card title="Preñez confirmada" *ngIf="item.diagnostico" subtitle="{{item.diagnostico.fecha | date}}" [subAccent]="true">
+
+    <app-card-content>
+      <app-card-field-lg title="Fecha estimada">{{item.posFechaParto | date}}</app-card-field-lg>
+    </app-card-content>
+
+    <div *ngIf="!loading" fxLayout="row" fxLayoutGap.gt-sm="20px" fxLayoutAlign.gt-sm="flex-end" fxLayoutAlign="space-between">
+      <button mat-button color="accent" (click)="goToAddNovelty()">Novedad</button>
+      <button mat-button color="accent" (click)="goToAddBirth()">Parto</button>
+    </div>
+    <app-loader *ngIf="loading" align='flex-end'></app-loader>
+  </app-card>
+</div>
+
+<p *ngIf="!item || item.finalizado">No existe un servicio activo, mira <b>Previos</b> para ver los finalizados o interrumpidos.</p>

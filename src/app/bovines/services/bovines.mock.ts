@@ -34,12 +34,16 @@ function makeBovine(index: number): Bovino {
         precioCompra: 30000,
         procedencia: 'Compra',
         fechaSalida: new Date(),
+        servicios: [{
+            fecha: new Date(), finalizado: false, fechaUltimoCelo: new Date(),
+            condicionCorporal: 10, empadre: 'Monta Natural', codigoToro: 'Cdo012'
+        }],
 
         retirado: false,
         finca: '123',
         destete: true,
         fechaDestete: new Date(),
-        celos: []
+        celos: [new Date()]
     };
 }
 

@@ -6,7 +6,7 @@ import { SessionService } from '../../core/services/session.service';
 import { feeds } from '../../feed/services/feed.mock';
 import { healths } from '../../health/services/health.mock';
 import { manages } from '../../manage/services/manage.mock';
-import { Bovino, Servicio } from '../../shared/models/bovine.model';
+import { Bovino, Servicio, Diagnostico, Novedad, Parto } from '../../shared/models/bovine.model';
 import { Alimentacion } from '../../shared/models/feed.model';
 import { Sanidad } from '../../shared/models/health.model';
 import { Manejo } from '../../shared/models/manage.model';
@@ -155,6 +155,7 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   private bovineToEmp(query: string): Observable<ItemEmp[]> {
+    const farm = this.session.farmId;
     return timer(500).pipe(
       map(() => new Rspn(true, bovines())), // simular respuesta
       map(x => validate(x)),
@@ -165,6 +166,7 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   private strawToEmp(query: string): Observable<ItemEmp[]> {
+    const farm = this.session.farmId;
     return timer(500).pipe(
       map(() => new Rspn(true, straws())), // simular respuesta
       map(x => validate(x)),
@@ -174,10 +176,34 @@ export class BovinesService extends BaseService<Bovino> {
     );
   }
 
-  addService(id: string, service: Servicio) {
+  addService(id: string, service: Servicio): Observable<String> {
     return timer(500).pipe(
       map(() => new Rspn(true, '')), // simular respuesta
       map(x => validate(x))
+    );
+  }
+
+  addDiagnostic(id: string, diagnostic: Diagnostico): Observable<Diagnostico> {
+    return timer(500).pipe(
+      map(() => new Rspn(true, '')), // simular respuesta
+      map(x => validate(x)),
+      map(() => diagnostic)
+    );
+  }
+
+  addNovelty(id: string, novelty: Novedad): Observable<Novedad> {
+    return timer(500).pipe(
+      map(() => new Rspn(true, '')), // simular respuesta
+      map(x => validate(x)),
+      map(x => novelty)
+    );
+  }
+
+  addBirth(id: string, birth: Parto): Observable<Parto> {
+    return timer(500).pipe(
+      map(() => new Rspn(true, '')), // simular respuesta
+      map(x => validate(x)),
+      map(x => birth)
     );
   }
 

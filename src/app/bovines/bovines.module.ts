@@ -23,6 +23,7 @@ import { RemoveBvnComponent } from './remove-bvn/remove-bvn.component';
 import { InfoBvnComponent } from './info-bvn/info-bvn.component';
 import { ZealBvnComponent } from './reproductive-bvn/tabs/zeal-bvn/zeal-bvn.component';
 import { EmpadreDialogComponent } from './reproductive-bvn/empadre-dialog/empadre-dialog.component';
+import { NoveltyDialogComponent } from './reproductive-bvn/novelty-dialog/novelty-dialog.component';
 
 @NgModule({
   imports: [
@@ -34,8 +35,8 @@ import { EmpadreDialogComponent } from './reproductive-bvn/empadre-dialog/empadr
     MovementBvnComponent, ReproductiveBvnComponent, ServiceBvnComponent,
     CurrentServiceBvnComponent, AddReproductiveBvnComponent, VaccinationBvnComponent, ListBvnComponent,
     AddBvnComponent, BovinesComponent, DetailBvnComponent, RemoveBvnComponent, InfoBvnComponent,
-    ZealBvnComponent, ServiceBvnComponent, CurrentServiceBvnComponent, EmpadreDialogComponent],
-  entryComponents: [EmpadreDialogComponent],
+    ZealBvnComponent, ServiceBvnComponent, CurrentServiceBvnComponent, EmpadreDialogComponent, NoveltyDialogComponent],
+  entryComponents: [EmpadreDialogComponent, NoveltyDialogComponent],
   providers: [BovinesService]
 })
 export class BovinesModule { }

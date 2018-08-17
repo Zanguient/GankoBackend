@@ -59,7 +59,7 @@ export class Diagnostico {
 
 export class Parto {
     fecha: Date;
-    numberervalo: number;
+    intervalo: number;
     diasVacios: number;
     sexoCria: string;
     numero: number;

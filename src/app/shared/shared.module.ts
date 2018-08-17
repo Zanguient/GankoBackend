@@ -21,6 +21,7 @@ import { MatModule } from './mat.module';
 import { NmBottomDirective } from './directives/nm-bottom.directive';
 import { SingleLoaderComponent } from './components/single-loader/single-loader.component';
 import { NoSpaceDirective } from './directives/no-space.directive';
+import { CardFieldLgComponent } from './components/card/card-field-lg/card-field-lg.component';
 
 
 
@@ -35,7 +36,8 @@ import { NoSpaceDirective } from './directives/no-space.directive';
     FilterComponent, BovineSelectedComponent, CardComponent, CardCornerComponent,
     CardObsComponent, CardContentComponent, CardFieldComponent, CardFooterComponent,
     CardActionsComponent, AccentDirective, WarnDirective, NmBottomDirective, SingleLoaderComponent,
-    NoSpaceDirective],
+    NoSpaceDirective,
+    CardFieldLgComponent],
 
   entryComponents: [DeleteDialogComponent],
 
@@ -43,6 +45,6 @@ import { NoSpaceDirective } from './directives/no-space.directive';
     ListLoaderComponent, LoaderComponent, DeleteDialogComponent, FilterComponent, BovineSelectedComponent,
     AccentDirective, WarnDirective, CardComponent, CardCornerComponent,
     CardObsComponent, CardContentComponent, CardFieldComponent, CardFooterComponent,
-    CardActionsComponent, NmBottomDirective, SingleLoaderComponent, NoSpaceDirective]
+    CardActionsComponent, NmBottomDirective, SingleLoaderComponent, NoSpaceDirective, CardFieldLgComponent]
 })
 export class SharedModule { }
