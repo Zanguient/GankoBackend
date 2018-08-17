@@ -6,13 +6,13 @@
       <a mat-list-item routerLink="info" routerLinkActive="active">
         <mat-icon svgIcon="bovine"></mat-icon>
       </a>
-      <a mat-list-item routerLink="leche" routerLinkActive="active">
+      <a mat-list-item routerLink="leche" routerLinkActive="active" *ngIf="item.proposito == 'Lecheria' ||  item.proposito == 'Ambos'">
         <mat-icon svgIcon="milk"></mat-icon>
       </a>
-      <a mat-list-item routerLink="reproductivo" routerLinkActive="active">
+      <a mat-list-item routerLink="reproductivo" routerLinkActive="active" *ngIf="item.genero == 'Hembra'">
         <mat-icon svgIcon="reproductive"></mat-icon>
       </a>
-      <a mat-list-item routerLink="ceba" routerLinkActive="active">
+      <a mat-list-item routerLink="ceba" routerLinkActive="active" *ngIf="item.proposito == 'Ceba' || item.proposito == 'Ambos'">
         <mat-icon svgIcon="ceba"></mat-icon>
       </a>
       <a mat-list-item routerLink="alimentacion" routerLinkActive="active">
