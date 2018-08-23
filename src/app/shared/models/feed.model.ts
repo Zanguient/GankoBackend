@@ -5,7 +5,7 @@ export class Alimentacion {
     id?: string;
     type?: string;
     grupo?: Grupo;
-    fecha: Date;
+    fecha?: Date;
     idFinca?: string;
     tipoAlimento: string;
     peso: number;

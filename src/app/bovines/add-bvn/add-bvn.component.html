@@ -39,7 +39,6 @@
         </mat-radio-group>
 
 
-
         <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="hembra.checked">
           <mat-label>Numero de partos</mat-label>
           <input matInput type="number" [(ngModel)]="item.partos" name="par" required>
@@ -81,7 +80,7 @@
 
 
         <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Compra'">
-          <mat-label>Fecha Combra</mat-label>
+          <mat-label>Fecha Compra</mat-label>
           <input matInput [matDatepicker]="pickerC" (focus)="pickerD.open()" [(ngModel)]="buyDate" required  name="fCo">
           <mat-datepicker-toggle matSuffix [for]="pickerC" (focus)="pickerC.open()" [(ngModel)]="buyDate"></mat-datepicker-toggle>
           <mat-datepicker #pickerC></mat-datepicker>
