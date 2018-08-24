@@ -2,7 +2,7 @@ export const TYPE_PAJILLA = 'Straw';
 export class Straw {
     id?: string;
     type?: string;
-    idFarm: string;
+    idFarm?: string;
     idStraw: string;
     layette: string;
     breed: string;
@@ -10,5 +10,5 @@ export class Straw {
     bull: string;
     origin: string;
     value: string;
-    state: number;
+    state?: number;
 }

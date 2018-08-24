@@ -22,7 +22,8 @@ export class AddFeedComponent implements OnInit {
     peso: 0,
     valorkg: 0,
     valorTotal: 0,
-    bovinos: []
+    bovinos: [],
+    type: TYPE_ALIMENTACION
   };
 
   constructor(private router: Router, private route: ActivatedRoute, private snack: MatSnackBar, private service: FeedService) { }
