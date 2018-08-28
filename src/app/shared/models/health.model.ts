@@ -4,10 +4,10 @@ export const TYPE_SANIDAD = 'Sanidad';
 export class Sanidad {
     id?: string;
     type?: string;
-    idFinca: string;
-    idAplicacionUno: string;
-    fecha: Date;
-    fechaProxima: Date;
+    idFinca?: string;
+    idAplicacionUno?: string;
+    fecha?: Date;
+    fechaProxima?: Date;
     frecuencia: number;
     evento: string;
     otra?: string;
@@ -24,7 +24,7 @@ export class Sanidad {
     bovinos: string[];
     unidadFrecuencia: string;
     noBovinos: string[];
-    estadoProximo: number;
-    titulo: string;
-    descripcion: string;
+    estadoProximo?: number;
+    titulo?: string;
+    descripcion?: string;
 }

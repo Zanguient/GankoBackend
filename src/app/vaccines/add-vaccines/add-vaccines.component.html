@@ -10,6 +10,46 @@
     <form #formAdd="ngForm" autocomplete="off">
       <div fxLayout="row wrap" fxLayoutGap="16px">
 
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Nombre de la vacuna</mat-label>
+          <input matInput type="text" [(ngModel)]="item.nombre" name="nom" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="date" required name="fechaVac">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <h5 fxFlex="0 0 100%">Dosis en mililitros</h5>
+        <mat-radio-group class="m-bottom" fxFlex="0 0 100%" [selected]="p1" [(ngModel)]="dosis" name="dosis" required>
+          <mat-radio-button value="5ml" #5ml>5</mat-radio-button>
+          <mat-radio-button value="2ml" #2ml>2</mat-radio-button>
+          <mat-radio-button value="Otra" #otra>Otra</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="otra.checked">
+          <mat-label>Otra</mat-label>
+          <input matInput type="text" [(ngModel)]="item.otra" name="other" required>
+        </mat-form-field>
+
+        <mat-checkbox #reApp class="m-bottom" fxFlex="0 0 100%"   name="reApp">¿Se requiere otra aplicación?</mat-checkbox>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="reApp.checked">
+            <mat-label>Próxima aplicación</mat-label>
+            <input matInput type="number" [(ngModel)]="item.frecuencia" name="frec" required min="0" >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" *ngIf="reApp.checked">
+            <mat-select placeholder="Unidad de frecuencia" [(ngModel)]="item.unidadFrecuencia" name="uniFrec" required >
+                <mat-option value="Horas">Horas</mat-option>
+                <mat-option value="Dias"> Dias</mat-option>
+                <mat-option value="Meses"> Meses</mat-option>
+                <mat-option value="Años"> Años</mat-option>
+            </mat-select>
+        </mat-form-field>
+
 
 
         <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">

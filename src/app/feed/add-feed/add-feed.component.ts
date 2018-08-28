@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Alimentacion, TYPE_ALIMENTACION } from '../../shared/models/feed.model';
+import { MatSnackBar } from '@angular/material';
+import { FeedService } from '../services/feed.service';
+import { finalize } from 'rxjs/operators';
+import { snackError, snackOk } from '../../util/snackbar-util';
 
 @Component({
   selector: 'app-add-feed',
@@ -10,7 +15,18 @@ export class AddFeedComponent implements OnInit {
 
   loading = false;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  date: string;
+
+  item: Alimentacion = {
+    tipoAlimento: '',
+    peso: 0,
+    valorkg: 0,
+    valorTotal: 0,
+    bovinos: [],
+    type: TYPE_ALIMENTACION
+  };
+
+  constructor(private router: Router, private route: ActivatedRoute, private snack: MatSnackBar, private service: FeedService) { }
 
   ngOnInit() {
   }
@@ -20,7 +36,15 @@ export class AddFeedComponent implements OnInit {
   }
 
   add() {
-
+    if (this.date) { this.item.fecha = new Date(this.date); }
+    this.loading = true;
+    this.service.add(this.item).pipe(
+      finalize(() => this.loading = false)
+    ).subscribe(() => {
+      snackOk(this.snack, 'Alimentación Agregada');
+      this.router.navigate(['../'], { relativeTo: this.route });
+    }, err => snackError(this.snack, err));
+  
   }
 
 }

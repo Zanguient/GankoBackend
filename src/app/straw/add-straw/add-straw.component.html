@@ -10,7 +10,43 @@
     <form #formAdd="ngForm" autocomplete="off">
       <div fxLayout="row wrap" fxLayoutGap="16px">
 
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Id</mat-label>
+              <input matInput type="text" [(ngModel)]="item.idStraw" name="id" required>
+          </mat-form-field>
 
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Número de canastilla</mat-label>
+              <input matInput type="text" [(ngModel)]="item.layette" name="canastila" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)">
+              <mat-select placeholder="Propósito" [(ngModel)]="item.purpose" name="pro" required>
+                  <mat-option value="Leche">Leche</mat-option>
+                  <mat-option value="Ceba"> Ceba</mat-option>
+                  <mat-option value="Doble"> Doble propósito</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Toro</mat-label>
+              <input matInput type="text" [(ngModel)]="item.bull" name="toro" required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Nombre de la procedencia</mat-label>
+              <input matInput type="text" [(ngModel)]="item.origin" name="proc" required>
+          </mat-form-field>
+                   
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Valor en pesos</mat-label>
+              <input matInput type="text" [(ngModel)]="item.value" name="valor" required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Raza</mat-label>
+              <input matInput type="text" [(ngModel)]="item.breed" name="raza" required>
+          </mat-form-field>
 
         <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
           <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button color="accent"
