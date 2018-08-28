@@ -26,11 +26,11 @@
     <h2>Información</h2>
 
     <div fxLayout="row wrap" fxLayoutGap="20px">
-      <a routerLink="../leche" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
-        fxFlex.gt-md="0 0 calc(25%-20px)">Leche</a>
-      <a routerLink="../reproductivo" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
+      <a *ngIf="item.proposito == 'Lecheria' ||  item.proposito == 'Ambos'" routerLink="../leche" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
+        fxFlex.gt-md="0 0 calc(25%-20px)" >Leche</a>
+      <a *ngIf="item.genero == 'Hembra'" routerLink="../reproductivo" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
         fxFlex.gt-md="0 0 calc(25%-20px)">Reproductivo</a>
-      <a routerLink="../ceba" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
+      <a *ngIf="item.proposito == 'Ceba' || item.proposito == 'Ambos'" routerLink="../ceba" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
         fxFlex.gt-md="0 0 calc(25%-20px)">Ceba</a>
       <a routerLink="../alimentacion" class="m-bottom" mat-stroked-button color="accent" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
         fxFlex.gt-md="0 0 calc(25%-20px)">Alimentación</a>

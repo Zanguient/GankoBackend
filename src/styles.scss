@@ -22,6 +22,10 @@
     margin-left: $md;
 }
 
+.breadcrumb > div {
+    display: inline-block;
+}
+
 .mat-card.bottom-space{
     margin-bottom: 20px;
 }

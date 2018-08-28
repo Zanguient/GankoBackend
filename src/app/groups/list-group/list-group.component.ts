@@ -14,7 +14,7 @@ import { NavService } from '../../core/services/nav.service';
 export class ListGroupComponent extends BaseListComponent<Group> {
 
   constructor(service: GroupsService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute, nav: NavService) {
+    router: Router, route: ActivatedRoute, public nav: NavService) {
     super(service, dialog, router, route, snack);
     nav.searchable = false;
     nav.filterable = false;
@@ -22,6 +22,12 @@ export class ListGroupComponent extends BaseListComponent<Group> {
 
   getHexColor(number) {
     return '#' + number.toString(16).slice(-6);
+  }
+
+  goToAdd() {
+    this.nav.breadcrumb = [{ path: '../', title: 'Grupos' }];
+    this.nav.nextNavigation = ['..', 'agregar'];
+    this.router.navigate(['seleccionar'], { relativeTo: this.route });
   }
 
 }

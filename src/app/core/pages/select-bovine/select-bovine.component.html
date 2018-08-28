@@ -1,3 +1,89 @@
-<p>
-  select-bovine works!
-</p>
+<div class="side-light select-section mat-typography">
+  <mat-sidenav-container class="select-section">
+    <mat-sidenav-content>
+      <div class="container">
+
+        <div class="breadcrumb">
+          <div *ngFor="let b of nav.breadcrumb; last as last">
+            <button mat-button routerLink="{{b.path}}">{{b.title}}</button> >
+          </div>
+          <span>Seleccionar Bovinos</span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="flex-end">
+          <button mat-button color="accent" (click)="selectAll()"><mat-icon>list</mat-icon>Seleccionar Todos</button>
+        </div>
+
+        <div *ngIf="!(service.loading | async); else loader">
+          <div *ngIf="data.length > 0; else noData ">
+            <div fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
+              <div fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" *ngFor="let d of data; index as i">
+
+                <app-card [title]="d.bvn.nombre" [subtitle]="d.bvn.codigo" [subAccent]="true" [clickable]="true" (clickCard)="select($event)"
+                  [index]="i">
+                  <app-card-corner>
+                    <mat-icon *ngIf="d.selected" appAccent>check</mat-icon>
+                  </app-card-corner>
+                  <app-card-content>
+                    <app-card-field [title]="'Sexo'">{{d.bvn.genero}}</app-card-field>
+                    <app-card-field [title]="'raza'">{{d.bvn.raza}}</app-card-field>
+                    <app-card-field [title]="'Fecha nacimiento'">{{d.bvn.fechaNacimiento | date}}</app-card-field>
+                    <app-card-field [title]="'Proposito'">{{d.bvn.proposito}}</app-card-field>
+
+
+                  </app-card-content>
+                </app-card>
+
+              </div>
+            </div>
+          </div>
+          <ng-template #noData>
+            Bovinos no encontrados
+          </ng-template>
+        </div>
+        <ng-template #loader>
+          <app-loader align="center" big="true"></app-loader>
+        </ng-template>
+
+
+        <div class="btn-selected" *ngIf="isHandset | async">
+          Bovinos: {{count}}
+          <button mat-icon-button (click)="clearAll()">
+            <mat-icon>clear</mat-icon>
+          </button> |
+          <button mat-icon-button (click)="selecteds.toggle()">
+            <mat-icon>list</mat-icon>
+          </button> |
+          <button mat-icon-button (click)="next()">
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+
+        </div>
+      </div>
+    </mat-sidenav-content>
+    <mat-sidenav #selecteds class="sidenav-end" [mode]="(isHandset | async) ? 'over' : 'side'" [opened]="!(isHandset | async)"
+      position="end">
+      <div fxLayout="column" fxFill>
+
+        <div class="title-aside">
+          <h2 appNoSpace>Bovinos Seleccionados</h2>
+          <p *ngIf="selectedsList.length === 0">No hay bovinos seleccionados</p>
+        </div>
+
+        <mat-list fxFlex="1 0 auto" class="selecteds">
+          <mat-list-item *ngFor="let s of selectedsList; index as i">
+            <h4 mat-line>{{s.nombre}}</h4>
+            <p mat-line appAccent>COD. {{s.codigo}}</p>
+            <button mat-icon-button (click)="removeSelected(i)"><mat-icon>cancel</mat-icon></button>
+          </mat-list-item>
+        </mat-list>
+        <div class="bottom-aside">
+          Bovinos: {{count}} <button mat-icon-button (click)="clearAll()"><mat-icon>clear</mat-icon></button> | <button mat-button (click)="next()">Continuar</button>
+          <!-- <button mat-raised-button color="accent">Continuar</button> -->
+        </div>
+
+      </div>
+
+    </mat-sidenav>
+  </mat-sidenav-container>
+</div>

@@ -11,12 +11,12 @@ export class AccessGuardService implements CanActivate {
 
   canActivate(): boolean {
 
-      if (this.session.logged) {
-          return true;
-      }
+      // if (this.session.logged) {
+      //     return true;
+      // }
 
-      this.router.navigate(['login']);
+      // this.router.navigate(['login']);
 
-      return false;
+      return true;
   }
 }

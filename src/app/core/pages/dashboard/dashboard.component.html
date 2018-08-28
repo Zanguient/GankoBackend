@@ -54,7 +54,7 @@
           <div *ngIf="nav.searching && nav.searchable" class="search-bar">
             <mat-icon>search</mat-icon>
             <input type="search" name="search" [(ngModel)]="nav.searchText" (input)="nav.search.next(nav.searchText)">
-            <button mat-icon-button (click)="nav.searching = false">
+            <button mat-icon-button (click)="nav.clearSearch()">
               <mat-icon>clear</mat-icon>
             </button>
           </div>
@@ -107,11 +107,11 @@
     <span>En Preñez</span>
   </button>
   <mat-divider></mat-divider>
-  <button mat-menu-item (click)="nav.notifyFilter('retirados')">
+  <button *ngIf="nav.showRetired" mat-menu-item (click)="nav.notifyFilter('retirados')">
     <mat-icon class="check">{{nav.filters.retirados ? 'check_box':'check_box_outline_blank'}}</mat-icon>
     <span>Retirados</span>
   </button>
-  <mat-divider></mat-divider>
+  <mat-divider *ngIf="nav.showRetired"></mat-divider>
   <button mat-menu-item (click)="nav.clearFilter()">
     <mat-icon>clear</mat-icon>
     <span>Limpiar Filtros</span>

@@ -40,6 +40,10 @@ $app-dark-theme: mat-dark-theme($app-primary, $app-accent);
     @include mat-sidenav-theme($side-dark);    
 }
 
+.side-light{
+  @include mat-sidenav-theme($app-theme);    
+}
+
 .list-dark{
   $foreground-dark : map-get($app-dark-theme ,foreground );
   $foreground-side : map-merge($foreground-dark , (text:#999) );

@@ -3,6 +3,8 @@ import { GroupsComponent } from './groups.component';
 import { ListGroupComponent } from './list-group/list-group.component';
 import { SelectBovineComponent } from '../core/pages/select-bovine/select-bovine.component';
 import { AddGroupComponent } from './add-group/add-group.component';
+import { AccessSelectedService } from '../core/services/access-selected.service';
+import { AccessSelectService } from '../core/services/access-select.service';
 
 export const groupRoutes: Routes = [
     {
