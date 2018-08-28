@@ -1,30 +1,30 @@
 <div class="container section" *ngIf="!loading">
   <mat-card>
-    <mat-tab-group mat-stretch-tabs [(selectedIndex)]="selectedTab">
+    <mat-tab-group mat-stretch-tabs [(selectedIndex)]="selectedTab" (selectedIndexChange)="changeTab()">
       <mat-tab label="REPORTES">
-        <form #alertForm="ngForm">
+        <form #reportForm="ngForm">
           <div fxLayout="row wrap" fxLayoutGap="16px" class="margin_top_tab">
             <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
               <mat-label>Seleccione una categoría</mat-label>
-              <mat-select placeholder="Seleccione una categoría" [(ngModel)]="catSelect" name="typeCat" required>
-                <mat-option [value]="type.key" *ngFor="let type of typeCats">{{type.value}}</mat-option>
+              <mat-select placeholder="Seleccione una categoría" [(ngModel)]="catSelect" name="typeCat" required (selectionChange)="changeCategory()">
+                <mat-option [value]="type.key" *ngFor="let type of service.typeCats">{{type.value}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
               <mat-label>Tipo de reporte</mat-label>
               <mat-select placeholder="Tipo de reporte" [(ngModel)]="reportSelect" name="typeReport" required>
-                <mat-option [value]="type.key" *ngFor="let type of typeReports">{{type.value}}</mat-option>
+                <mat-option [value]="type.key" *ngFor="let type of service.typeCats[catSelect].typeReports">{{type.value}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-radio-group [(ngModel)]="typeReportSelect" name="report" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" style="margin: 50px;">
-              <mat-radio-button *ngFor="let report of reports" [value]="report">
+              <mat-radio-button *ngFor="let report of service.reports" [value]="report">
                 {{report}}
               </mat-radio-button>
             </mat-radio-group>
             <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="typeReportSelect === 'Mensual'">
               <mat-label>Reporte del mes</mat-label>
               <mat-select placeholder="Reporte del mes" [(ngModel)]="monthSelect" name="typeMonth" required>
-                <mat-option [value]="month" *ngFor="let month of months">{{month}}</mat-option>
+                <mat-option [value]="month" *ngFor="let month of service.months">{{month}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field fxFlex="0 0 50%" fxFlex.gt-sm="0 0 calc(25% - 16px)" appearance="outline" *ngIf="typeReportSelect != 'Mensual'">
@@ -35,7 +35,7 @@
             </mat-form-field>
             <mat-form-field fxFlex="0 0 50%" fxFlex.gt-sm="0 0 calc(25% - 16px)" appearance="outline" *ngIf="typeReportSelect != 'Mensual'">
               <mat-label>Hasta</mat-label>
-              <input matInput [matDatepicker]="dateFinal" placeholder="Fecha" [(ngModel)]="dateFinalSelect" name="dateFinal" required>
+              <input matInput [matDatepicker]="dateFinal" placeholder="Fecha" [(ngModel)]="dateFinalSelect" [min]="dateInitSelect" name="dateFinal" required>
               <mat-datepicker-toggle matSuffix [for]="dateFinal"></mat-datepicker-toggle>
               <mat-datepicker #dateFinal></mat-datepicker>
             </mat-form-field>
@@ -43,14 +43,54 @@
         </form>
       </mat-tab>
       <mat-tab label="PROMEDIOS">
-
+        <form #promForm="ngForm">
+          <div fxLayout="row wrap" fxLayoutGap="16px" class="margin_top_tab">
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Seleccionar promedio</mat-label>
+              <mat-select placeholder="Seleccionar promedio" [(ngModel)]="typePromSelect" name="typeProm" required>
+                <mat-option [value]="type.key" *ngFor="let type of service.typeProms">{{type.value}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-radio-group [(ngModel)]="promSelect" name="average" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" *ngIf="service.typeProms[typePromSelect].stateViewAvrg" style="margin: 50px;">
+              <mat-radio-button *ngFor="let prom of service.average" [value]="prom">
+                {{prom}}
+              </mat-radio-button>
+            </mat-radio-group>
+            <mat-radio-group [(ngModel)]="typeReportSelect" name="prom" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" *ngIf="service.typeProms[typePromSelect].stateTypeAvrg" style="margin: 50px;">
+              <mat-radio-button *ngFor="let report of service.reports" [value]="report">
+                {{report}}
+              </mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="typeReportSelect === 'Mensual' && service.typeProms[typePromSelect].stateTypeAvrg">
+              <mat-label>Reporte del mes</mat-label>
+              <mat-select placeholder="Reporte del mes" [(ngModel)]="monthSelect" name="typeMonth" required>
+                <mat-option [value]="month" *ngFor="let month of service.months">{{month}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field fxFlex="0 0 50%" fxFlex.gt-sm="0 0 calc(25% - 16px)" appearance="outline" *ngIf="typeReportSelect != 'Mensual' && service.typeProms[typePromSelect].stateTypeAvrg">
+              <mat-label>Desde</mat-label>
+              <input matInput [matDatepicker]="dateInit" placeholder="Fecha" [(ngModel)]="dateInitSelect" name="dateInit" required>
+              <mat-datepicker-toggle matSuffix [for]="dateInit"></mat-datepicker-toggle>
+              <mat-datepicker #dateInit></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field fxFlex="0 0 50%" fxFlex.gt-sm="0 0 calc(25% - 16px)" appearance="outline" *ngIf="typeReportSelect != 'Mensual' && service.typeProms[typePromSelect].stateTypeAvrg">
+              <mat-label>Hasta</mat-label>
+              <input matInput [matDatepicker]="dateFinal" placeholder="Fecha" [(ngModel)]="dateFinalSelect" [min]="dateInitSelect" name="dateFinal" required>
+              <mat-datepicker-toggle matSuffix [for]="dateFinal"></mat-datepicker-toggle>
+              <mat-datepicker #dateFinal></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </form>
       </mat-tab>
     </mat-tab-group>
     <mat-card-actions align="center">
-      <button mat-mini-fab color="accent" [disabled]="alertForm.invalid" *ngIf="selectedTab != 1">
+      <button mat-mini-fab color="accent" title="Descargar reporte" [disabled]="reportForm.invalid" *ngIf="selectedTab != 1">
         <mat-icon>get_app</mat-icon>
       </button>
-      <button mat-mini-fab color="accent" [disabled]="alertForm.invalid" class="margin_left_btn">
+      <button mat-mini-fab color="accent" title="Visualizar reporte" [disabled]="reportForm.invalid" *ngIf="selectedTab != 1" class="margin_left_btn">
+        <mat-icon>visibility</mat-icon>
+      </button>
+      <button mat-mini-fab color="accent" title="Visualizar promedio" [disabled]="promForm.invalid" *ngIf="selectedTab == 1" class="margin_left_btn">
         <mat-icon>visibility</mat-icon>
       </button>
     </mat-card-actions>
