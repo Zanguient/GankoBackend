@@ -5,6 +5,7 @@ import { AddHealthComponent } from './add-health/add-health.component';
 import { DetailHealthComponent } from './detail-health/detail-health.component';
 import { ReApplyHealthComponent } from './re-apply-health/re-apply-health.component';
 import { SelectGroupComponent } from '../core/pages/select-group/select-group.component';
+import { SelectBovineComponent } from '../core/pages/select-bovine/select-bovine.component';
 
 export const healthRoutes: Routes = [
     {
@@ -12,7 +13,8 @@ export const healthRoutes: Routes = [
             { path: '', component: ListHealthComponent },
             { path: 'agregar', component: AddHealthComponent },
             { path: 'aplicar', component: ReApplyHealthComponent },
-            { path: 'seleccionar', component: SelectGroupComponent},
+            { path: 'grupos', component: SelectGroupComponent},
+            { path: 'bovinos', component: SelectBovineComponent},
             { path: ':id', component: DetailHealthComponent }
         ]
     }

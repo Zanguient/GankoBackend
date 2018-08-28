@@ -59,4 +59,11 @@ export abstract class BaseListComponent<T> implements OnInit {
         this.router.navigate(['agregar'], { relativeTo: this.route });
     }
 
+    goToSubAdd(index: number) {
+        this.prepareSelectBvn();
+        this.router.navigate([index === 0 ? 'grupos' : 'bovinos'], { relativeTo: this.route });
+    }
+
+    prepareSelectBvn() { }
+
 }

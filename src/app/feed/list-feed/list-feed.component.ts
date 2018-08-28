@@ -14,10 +14,15 @@ import { NavService } from '../../core/services/nav.service';
 export class ListFeedComponent extends BaseListComponent<Alimentacion> {
 
   constructor(service: FeedService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute, nav: NavService) {
+    router: Router, route: ActivatedRoute, public nav: NavService) {
     super(service, dialog, router, route, snack);
     nav.filterable = false;
     nav.searchable = false;
+  }
+
+  prepareSelectBvn() {
+    this.nav.breadcrumb = [{ path: '../', title: 'Alimentación' }];
+    this.nav.nextNavigation = ['..', 'agregar'];
   }
 
 }

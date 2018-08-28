@@ -5,6 +5,7 @@ import { AddManageComponent } from './add-manage/add-manage.component';
 import { ReApplyManageComponent } from './re-apply-manage/re-apply-manage.component';
 import { DetailManageComponent } from './detail-manage/detail-manage.component';
 import { SelectGroupComponent } from '../core/pages/select-group/select-group.component';
+import { SelectBovineComponent } from '../core/pages/select-bovine/select-bovine.component';
 
 export const manageRoutes: Routes = [
     {
@@ -12,7 +13,8 @@ export const manageRoutes: Routes = [
             { path: '', component: ListManageComponent },
             { path: 'agregar', component: AddManageComponent },
             { path: 'aplicar', component: ReApplyManageComponent },
-            { path: 'seleccionar', component: SelectGroupComponent},
+            { path: 'grupos', component: SelectGroupComponent},
+            { path: 'bovinos', component: SelectBovineComponent},
             { path: ':id', component: DetailManageComponent }
         ]
     }

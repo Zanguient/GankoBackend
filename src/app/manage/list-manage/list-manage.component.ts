@@ -5,6 +5,7 @@ import { ManageService } from '../services/manage.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { NavService } from '../../core/services/nav.service';
 
 @Component({
   selector: 'app-list-manage',
@@ -16,7 +17,7 @@ export class ListManageComponent extends BaseListComponent<Manejo> {
   filter = 0;
 
   constructor(service: ManageService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute) {
+    router: Router, route: ActivatedRoute, public nav: NavService) {
     super(service, dialog, router, route, snack);
   }
 
@@ -26,6 +27,11 @@ export class ListManageComponent extends BaseListComponent<Manejo> {
     this.service.list().pipe(
       finalize(() => this.loading = false)
     ).subscribe(x => this.data = x);
+  }
+
+  prepareSelectBvn() {
+    this.nav.breadcrumb = [{ path: '../', title: 'Manejo' }];
+    this.nav.nextNavigation = ['..', 'agregar'];
   }
 
 }

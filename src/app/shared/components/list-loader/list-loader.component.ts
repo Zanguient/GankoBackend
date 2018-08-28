@@ -11,13 +11,19 @@ export class ListLoaderComponent {
   @Input() size: number;
   @Input() noData: string;
   @Input() addonable = true;
+  @Input() menu = false;
   @Input() section = true;
   @Output() add: EventEmitter<number> = new EventEmitter();
+  @Output() clickMenu: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
   onClickAdd() {
     this.add.emit(0);
+  }
+
+  onClickMenu(index: number) {
+    this.clickMenu.emit(index);
   }
 
 }

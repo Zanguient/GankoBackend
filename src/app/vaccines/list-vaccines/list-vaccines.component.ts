@@ -5,6 +5,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { VaccinesService } from '../services/vaccines.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
+import { NavService } from '../../core/services/nav.service';
 
 @Component({
   selector: 'app-list-vaccines',
@@ -16,7 +17,7 @@ export class ListVaccinesComponent extends BaseListComponent<Vacuna> {
   filter = 0;
 
   constructor(service: VaccinesService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute) {
+    router: Router, route: ActivatedRoute, public nav: NavService) {
     super(service, dialog, router, route, snack);
   }
 
@@ -26,6 +27,11 @@ export class ListVaccinesComponent extends BaseListComponent<Vacuna> {
     this.service.list().pipe(
       finalize(() => this.loading = false)
     ).subscribe(x => this.data = x);
+  }
+
+  prepareSelectBvn() {
+    this.nav.breadcrumb = [{ path: '../', title: 'Vacunas' }];
+    this.nav.nextNavigation = ['..', 'agregar'];
   }
 
 }
