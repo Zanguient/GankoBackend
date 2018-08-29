@@ -32,7 +32,7 @@ export class AddManageComponent implements OnInit {
     bovinos: [],
     noBovinos: [],
     type: TYPE_MANEJO
-  }
+  };
 
   constructor(private router: Router, private route: ActivatedRoute, private snack: MatSnackBar, private service: ManageService,
     public selected: SelectedBvnService) { }
@@ -49,7 +49,7 @@ export class AddManageComponent implements OnInit {
   add() {
     if (this.date) {
       this.item.fecha = new Date(this.date);
-      this.item.fechaProxima = this.fechaProx(this.date, this.item.numeroAplicaciones, this.item.frecuencia)
+      this.item.fechaProxima = this.fechaProx(this.date, this.item.numeroAplicaciones, this.item.frecuencia);
     }
     this.loading = true;
     this.service.add(this.item).pipe(
@@ -67,17 +67,17 @@ export class AddManageComponent implements OnInit {
   fechaProx(fecha: Date, aplicaciones: number, frecuencia: number): Date {
     if (aplicaciones > 1) {
       switch (this.item.unidadFrecuencia) {
-        case "Horas":
+        case 'Horas':
           return new Date(fecha.getTime() + (frecuencia * 3600 * 1000));
-        case "Dias":
+        case 'Dias':
           return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24));
-        case "Meses":
+        case 'Meses':
           return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30));
-        case "Años":
+        case 'Años':
           return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30 * 12));
       }
     } else {
-      null
+      return null;
     }
 
   }
