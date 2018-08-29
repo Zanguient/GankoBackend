@@ -12,7 +12,7 @@ export const vaccinesRoutes: Routes = [
         path: 'vacunas', component: VaccinesComponent, children: [
             { path: '', component: ListVaccinesComponent },
             { path: 'agregar', component: AddVaccinesComponent },
-            { path: 'aplicar', component: ReApplyVaccinesComponent },
+            { path: ':id/aplicar', component: ReApplyVaccinesComponent },
             { path: 'grupos', component: SelectGroupComponent},
             { path: 'bovinos', component: SelectBovineComponent},
             { path: ':id', component: DetailVaccinesComponent }

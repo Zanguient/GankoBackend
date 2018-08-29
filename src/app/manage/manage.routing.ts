@@ -12,7 +12,7 @@ export const manageRoutes: Routes = [
         path: 'manejo', component: ManageComponent, children: [
             { path: '', component: ListManageComponent },
             { path: 'agregar', component: AddManageComponent },
-            { path: 'aplicar', component: ReApplyManageComponent },
+            { path: ':id/aplicar', component: ReApplyManageComponent },
             { path: 'grupos', component: SelectGroupComponent},
             { path: 'bovinos', component: SelectBovineComponent},
             { path: ':id', component: DetailManageComponent }
