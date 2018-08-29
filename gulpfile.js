@@ -52,10 +52,18 @@ gulp.task('build', function () {
         .pipe(gulp.dest('./out'));
 });
 
+
+gulp.task('public', function () {
+    return gulp.src('./src/public/**/*')
+        .pipe(gulp.dest('./out/public'));
+});
+
+
 // watch for any TypeScript or LESS file changes
 // if a file change is detected, run the TypeScript or LESS compile gulp tasks
 gulp.task('watch', function () {
     gulp.watch('src/**/*.ts', ['build']);
 }); 
 
+gulp.task('buildAll', ['build', 'public']);
 gulp.task('default', ['browser-sync']);

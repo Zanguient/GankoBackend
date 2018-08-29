@@ -9,9 +9,10 @@
     "test": "npm run compiletests && set NODE_ENV=test&& mocha ./tests/out/tests/**/test*.js",
     "compile": "node ./node_modules/typescript/bin/tsc -p ./src",
     "compiletests": "node ./node_modules/typescript/bin/tsc -p ./tests",
-    "postinstall": "gulp build",
     "buildandrun": "gulp build && npm start",
-    "build": "gulp build"
+    "build": "gulp build",
+    "postinstall": "cd frontend/ && npm install",
+    "buildWithFront": "cd frontend/ && npm run build && cd .. && gulp buildAll"
   },
   "dependencies": {
     "@types/bluebird": "^3.5.20",
