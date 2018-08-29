@@ -49,17 +49,17 @@ export class ReApplyHealthComponent implements OnInit {
   fechaProx(fecha: Date, aplicaciones: number, numeroAppTotal: number, frecuencia: number): Date {
     if (aplicaciones < numeroAppTotal) {
       switch (this.item.unidadFrecuencia) {
-        case "Horas":
+        case 'Horas':
           return new Date(fecha.getTime() + (frecuencia * 3600 * 1000));
-        case "Dias":
+        case 'Dias':
           return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24));
-        case "Meses":
+        case 'Meses':
           return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30));
-        case "Años":
+        case 'Años':
           return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30 * 12));
       }
     } else {
-      null
+      return null;
     }
 
   }

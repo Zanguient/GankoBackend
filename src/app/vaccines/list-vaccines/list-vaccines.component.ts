@@ -34,4 +34,9 @@ export class ListVaccinesComponent extends BaseListComponent<Vacuna> {
     this.nav.nextNavigation = ['..', 'agregar'];
   }
 
+  goToApply(item:Vacuna){
+    this.service.select(item);
+    this.router.navigate([item.id, 'aplicar'], {relativeTo: this.route});
+  }
+
 }

@@ -11,6 +11,13 @@
         <form #formAdd="ngForm" autocomplete="off">
             <div fxLayout="row wrap" fxLayoutGap="16px">
 
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Fecha del evento</mat-label>
+                    <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="date" required name="fechaEvento">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
                 <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)">
                     <mat-select #origin placeholder="Tipo de evento" [(ngModel)]="item.evento" name="tipoEve" required>
                         <mat-option value="Enfermedad">Enfermedad</mat-option>

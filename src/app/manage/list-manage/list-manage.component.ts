@@ -34,4 +34,9 @@ export class ListManageComponent extends BaseListComponent<Manejo> {
     this.nav.nextNavigation = ['..', 'agregar'];
   }
 
+  goToApply(item:Manejo){
+    this.service.select(item);
+    this.router.navigate([item.id, 'aplicar'], {relativeTo: this.route});
+  }
+
 }
