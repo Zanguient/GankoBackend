@@ -45,7 +45,7 @@ export class AddVaccinesComponent implements OnInit {
       this.item.fecha = new Date(this.date);
       this.item.fechaProxima = this.fechaProx(this.date, this.item.frecuencia);
     }
-    if (this.other !== '') {
+    if (this.other != '') {
       this.item.dosisMl = parseInt(this.other, null);
     } else {
       this.item.dosisMl = this.dosis;
