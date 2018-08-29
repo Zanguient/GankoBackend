@@ -18,6 +18,11 @@ export class BovineSelectedComponent implements OnInit {
 
   ngOnInit() {
     this.isGroup = this.group != null;
+    if (this.selecteds != null) {
+      console.log('SIZE=>' + this.selecteds.length);
+    }
+
+
   }
 
   goToView() {
