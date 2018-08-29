@@ -14,17 +14,17 @@ import { finalize } from 'rxjs/operators';
 })
 export class ReApplyHealthComponent implements OnInit {
 
-  item:Sanidad;
+  item: Sanidad;
   date: Date;
   loading = false;
 
-  constructor(private route:ActivatedRoute, private service:HealthService, private snack:MatSnackBar, private router: Router) { }
+  constructor(private route: ActivatedRoute, private service: HealthService, private snack: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
-      map(x=> x.get('id')),
-      mergeMap(x=> this.service.selected(x))
-    ).subscribe(x => this.item = x , err=> snackError(this.snack, err));
+      map(x => x.get('id')),
+      mergeMap(x => this.service.selected(x))
+    ).subscribe(x => this.item = x, err => snackError(this.snack, err));
   }
 
   goToBack() {
@@ -35,7 +35,7 @@ export class ReApplyHealthComponent implements OnInit {
     this.item.aplicacion = this.item.aplicacion + 1;
     if (this.date) {
       this.item.fecha = new Date(this.date);
-      this.item.fechaProxima = this.fechaProx(this.date, this.item.aplicacion, this.item.numeroAplicaciones, this.item.frecuencia)
+      this.item.fechaProxima = this.fechaProx(this.date, this.item.aplicacion, this.item.numeroAplicaciones, this.item.frecuencia);
     }
     this.loading = true;
     this.service.add(this.item).pipe(
