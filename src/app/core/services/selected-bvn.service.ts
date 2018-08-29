@@ -6,6 +6,7 @@ import { combineLatest, timer, Observable, Subject, from, BehaviorSubject } from
 import { Rspn } from '../../shared/models/response.model';
 import { validate } from '../../util/http-util';
 import { bovines, bovine } from '../../bovines/services/bovines.mock';
+import { Group } from '../../shared/models/group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class SelectedBvnService {
   loading: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   selecteds: string[];
+  group: Group;
 
 
   constructor(private nav: NavService) { }
@@ -45,6 +47,10 @@ export class SelectedBvnService {
 
   }
 
+  clear() {
+    this.group = null;
+    this.selecteds = null;
+  }
 
 }
 
