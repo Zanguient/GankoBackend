@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material';
 import { VaccinesService } from '../services/vaccines.service';
 import { finalize } from 'rxjs/operators';
 import { snackError, snackOk } from '../../util/snackbar-util';
+import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-add-vaccines',
@@ -20,38 +21,42 @@ export class AddVaccinesComponent implements OnInit {
 
   item: Vacuna = {
     nombre: '',
-    unidadFrecuencia:'',
+    unidadFrecuencia: '',
     frecuencia: 0,
     valor: 0,
     bovinos: [],
     noBovinos: [],
     type: TYPE_VACUNA
-  }
+  };
 
-  constructor(private router: Router, private route: ActivatedRoute, private service: VaccinesService, private snack: MatSnackBar) { }
+  constructor(private router: Router, private route: ActivatedRoute, private service: VaccinesService, private snack: MatSnackBar,
+    public selected: SelectedBvnService) { }
 
   ngOnInit() {
   }
 
   goToBack() {
+    this.selected.clear();
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   add() {
     if (this.date) {
       this.item.fecha = new Date(this.date);
-      this.item.fechaProxima = this.fechaProx(this.date, this.item.frecuencia)
+      this.item.fechaProxima = this.fechaProx(this.date, this.item.frecuencia);
     }
-    if(this.other != ""){
-      this.item.dosisMl = parseInt(this.other)
+    if (this.other !== '') {
+      this.item.dosisMl = parseInt(this.other, null);
+    } else {
+      this.item.dosisMl = this.dosis;
     }
-    else{
-      this.item.dosisMl = this.dosis
-    }
-    
+
     this.loading = true;
     this.service.add(this.item).pipe(
-      finalize(() => this.loading = false)
+      finalize(() => {
+        this.loading = false;
+        this.selected.clear();
+      })
     ).subscribe(() => {
       snackOk(this.snack, 'Vacuna Agregada');
       this.router.navigate(['../'], { relativeTo: this.route });
@@ -60,17 +65,17 @@ export class AddVaccinesComponent implements OnInit {
   }
 
   fechaProx(fecha: Date, frecuencia: number): Date {
-    
-      switch (this.item.unidadFrecuencia) {
-        case "Horas":
-          return new Date(fecha.getTime() + (frecuencia * 3600 * 1000));
-        case "Dias":
-          return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24));
-        case "Meses":
-          return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30));
-        case "Años":
-          return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30 * 12));
-      }
+
+    switch (this.item.unidadFrecuencia) {
+      case 'Horas':
+        return new Date(fecha.getTime() + (frecuencia * 3600 * 1000));
+      case 'Dias':
+        return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24));
+      case 'Meses':
+        return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30));
+      case 'Años':
+        return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30 * 12));
+    }
   }
 
 }

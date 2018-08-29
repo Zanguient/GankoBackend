@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material';
 import { FeedService } from '../services/feed.service';
 import { finalize } from 'rxjs/operators';
 import { snackError, snackOk } from '../../util/snackbar-util';
+import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-add-feed',
@@ -26,12 +27,14 @@ export class AddFeedComponent implements OnInit {
     type: TYPE_ALIMENTACION
   };
 
-  constructor(private router: Router, private route: ActivatedRoute, private snack: MatSnackBar, private service: FeedService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private snack: MatSnackBar, private service: FeedService,
+    public selected: SelectedBvnService) { }
 
   ngOnInit() {
   }
 
   goToBack() {
+    this.selected.clear();
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
@@ -39,12 +42,15 @@ export class AddFeedComponent implements OnInit {
     if (this.date) { this.item.fecha = new Date(this.date); }
     this.loading = true;
     this.service.add(this.item).pipe(
-      finalize(() => this.loading = false)
+      finalize(() => {
+        this.loading = false;
+        this.selected.clear();
+      })
     ).subscribe(() => {
       snackOk(this.snack, 'Alimentación Agregada');
       this.router.navigate(['../'], { relativeTo: this.route });
     }, err => snackError(this.snack, err));
-  
+
   }
 
 }

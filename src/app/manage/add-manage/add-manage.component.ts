@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material';
 import { ManageService } from '../services/manage.service';
 import { finalize } from 'rxjs/operators';
 import { snackError, snackOk } from '../../util/snackbar-util';
+import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-add-manage',
@@ -33,13 +34,15 @@ export class AddManageComponent implements OnInit {
     type: TYPE_MANEJO
   }
 
-  constructor(private router: Router, private route: ActivatedRoute, private snack: MatSnackBar, private service: ManageService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private snack: MatSnackBar, private service: ManageService,
+    public selected: SelectedBvnService) { }
 
   ngOnInit() {
 
   }
 
   goToBack() {
+    this.selected.clear();
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
@@ -50,7 +53,10 @@ export class AddManageComponent implements OnInit {
     }
     this.loading = true;
     this.service.add(this.item).pipe(
-      finalize(() => this.loading = false)
+      finalize(() => {
+        this.loading = false;
+        this.selected.clear();
+      })
     ).subscribe(() => {
       snackOk(this.snack, 'Manejo Agregado');
       this.router.navigate(['../'], { relativeTo: this.route });
