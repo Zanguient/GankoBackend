@@ -20,6 +20,7 @@ import { StrawModule } from './straw/straw.module';
 import { VaccinesModule } from './vaccines/vaccines.module';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 export const MY_FORMATS = {
   parse: {
@@ -42,6 +43,7 @@ export const MY_FORMATS = {
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ColorPickerModule,
     CoreModule,
     BovinesModule,
     FarmsModule,

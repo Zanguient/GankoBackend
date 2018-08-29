@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-add-group',
@@ -9,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AddGroupComponent implements OnInit {
   loading = false;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute, public selected: SelectedBvnService) { }
 
   ngOnInit() {
   }

@@ -10,9 +10,21 @@
     <form #formAdd="ngForm" autocomplete="off">
       <div fxLayout="row wrap" fxLayoutGap="16px">
 
+        <app-bovine-selected fxFlex="0 0 100%" [editable]="true" [selecteds]="selected.selecteds"></app-bovine-selected>
 
 
-        <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
+        <mat-form-field fxFlex="0 0 100%" appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" appearance="outline">
+          <mat-label>Color</mat-label>
+          <input type="color" matInput>
+        </mat-form-field>
+
+
+        <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row">
           <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button color="accent"
             (click)="goToBack()">Cancelar</button>
           <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent" (click)="add()"
