@@ -17,6 +17,7 @@ export class ReApplyHealthComponent implements OnInit {
   item:Sanidad;
   date: Date;
   loading = false;
+  other: boolean;
 
   constructor(private route:ActivatedRoute, private service:HealthService, private snack:MatSnackBar, private router: Router) { }
 

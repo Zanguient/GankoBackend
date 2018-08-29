@@ -5,24 +5,20 @@
   </div>
 
   <mat-card>
-      <h1>Agregar Sanidad</h1>
+      <h1>Aplicar Sanidad</h1>
       <app-bovine-selected></app-bovine-selected>
 
       <form #formAdd="ngForm" autocomplete="off">
           <div fxLayout="row wrap" fxLayoutGap="16px">
 
-              <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)">
-                  <mat-select #origin placeholder="Tipo de evento" [(ngModel)]="item.evento" name="tipoEve" required>
-                      <mat-option value="Enfermedad">Enfermedad</mat-option>
-                      <mat-option value="Endoparáditos"> Endoparáditos</mat-option>
-                      <mat-option value="Ectoparásitos"> Ectoparásitos</mat-option>
-                      <mat-option value="Otro"> Otro</mat-option>
-                  </mat-select>
-              </mat-form-field>
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                <mat-label>Tipo de evento</mat-label>
+                <input matInput type="text" [(ngModel)]="item.evento" name="evento" required disabled="true">
+            </mat-form-field>
 
-              <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Otro'">
+              <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="item.otra">
                   <mat-label>Otro</mat-label>
-                  <input matInput type="text" [(ngModel)]="item.otra" name="other" required>
+                  <input matInput type="text" [(ngModel)]="item.otra" name="other" required disabled="true">
               </mat-form-field>
 
               <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
