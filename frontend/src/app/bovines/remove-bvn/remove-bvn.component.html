@@ -1,0 +1,54 @@
+<div class="container mat-typography">
+  <div class="breadcrumb">
+    <button mat-button routerLink="../../">Bovinos</button> >
+    <span>Retirar Bovino</span>
+  </div>
+
+  <app-single-loader [success]="item != null" [loading]="loadingBovine" [error]="'Bovino no encontrado'">
+    <mat-card>
+      <h1>Retirar Bovino</h1>
+
+      <h2 appNmBottom>Bovino</h2>
+      <p appAccent>Codigo</p>
+
+      <app-card-content>
+        <app-card-field [title]="'Sexo'">Hembra</app-card-field>
+      </app-card-content>
+
+      <form #formAdd="ngForm" autocomplete="off">
+
+        <div fxLayout="row wrap">
+
+          <mat-form-field appearance="outline" fxFlex="0 0 100%">
+            <mat-select placeholder="Motivo" [(ngModel)]="reason" name="mot" required>
+              <mat-option value="Venta"> Venta</mat-option>
+              <mat-option value="Perdida"> Perdida</mat-option>
+              <mat-option value="Muerte"> Muerte</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="0 0 100%" appearance="outline">
+            <mat-label>Fecha de Retiro</mat-label>
+            <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="releaseDate" name="dat" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+
+          <button *ngIf="!loading; else loader" fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%"
+            mat-button color="accent" (click)="goToBack()">Cancelar</button>
+          <button *ngIf="!loading; else loader" fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button
+            color="accent" (click)="remove()" [disabled]="formAdd.invalid">Retirar</button>
+
+
+          <ng-template #loader>
+            <app-loader></app-loader>
+          </ng-template>
+
+        </div>
+      </form>
+    </mat-card>
+  </app-single-loader>
+
+
+</div>

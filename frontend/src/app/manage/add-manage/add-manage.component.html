@@ -1,0 +1,97 @@
+<div class="container mat-typography">
+    <div class="breadcrumb">
+        <button mat-button routerLink="../">Manejo</button> >
+        <span>Agregar Manejo</span>
+    </div>
+
+    <mat-card>
+        <h1>Agregar Manejo</h1>
+        <app-bovine-selected [group]="selected.group" [selecteds]="selected.selecteds" [editable]="selected.group == null"></app-bovine-selected>
+
+        <form #formAdd="ngForm" autocomplete="off">
+            <div fxLayout="row wrap" fxLayoutGap="16px">
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Fecha del evento</mat-label>
+                    <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="date" required name="fechaEvento">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)">
+                    <mat-select #origin placeholder="Tipo de evento" [(ngModel)]="item.titulo" name="tipoEve" required>
+                        <mat-option value="Corte"> Corte de ombligo</mat-option>
+                        <mat-option value="Identificacion"> Identificación</mat-option>
+                        <mat-option value="Descorne"> Descorne</mat-option>
+                        <mat-option value="Cascos"> Arreglo de cascos</mat-option>
+                        <mat-option value="Castración"> Castración</mat-option>
+                        <mat-option value="Secado"> Secado</mat-option>
+                        <mat-option value="Otro"> Otro</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Otro'">
+                    <mat-label>Otro</mat-label>
+                    <input matInput type="text" [(ngModel)]="item.otro" name="other" required>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Tratamiento</mat-label>
+                    <input matInput type="text" [(ngModel)]="item.tratamiento" name="trat" required>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Número de aplicaciones</mat-label>
+                    <input matInput type="number" [(ngModel)]="item.numeroAplicaciones" name="numeroApp" required min="1">
+                </mat-form-field>
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Frecuencia</mat-label>
+                    <input matInput type="number" [(ngModel)]="item.frecuencia" name="frec" required min="0">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)">
+                    <mat-select placeholder="Unidad de frecuencia" [(ngModel)]="item.unidadFrecuencia" name="uniFrec" required>
+                        <mat-option value="Horas">Horas</mat-option>
+                        <mat-option value="Dias"> Dias</mat-option>
+                        <mat-option value="Meses"> Meses</mat-option>
+                        <mat-option value="Años"> Años</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Producto</mat-label>
+                    <input matInput type="text" [(ngModel)]="item.producto" name="prod" required>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Valor del producto</mat-label>
+                    <input matInput type="number" [(ngModel)]="item.valorProducto" name="valorProd" required min="0">
+                </mat-form-field>
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Valor asistencia</mat-label>
+                    <input matInput type="number" [(ngModel)]="item.valorAsistencia" name="valorAsis" required min="0">
+                </mat-form-field>
+
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Observaciones</mat-label>
+                    <input matInput type="text" [(ngModel)]="item.observaciones" name="obs" required>
+                </mat-form-field>
+
+                <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
+                    <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button color="accent"
+                        (click)="goToBack()">Cancelar</button>
+                    <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent" (click)="add()"
+                        [disabled]="formAdd.invalid">Agregar</button>
+                </div>
+
+                <ng-template #loader>
+                    <app-loader></app-loader>
+                </ng-template>
+            </div>
+        </form>
+
+    </mat-card>
+
+</div>

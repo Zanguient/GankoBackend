@@ -1,0 +1,75 @@
+<div class="container">
+  <mat-card>
+    <h2 appNoSpace>Destete</h2>
+    <button mat-button color="accent" *ngIf="!edit; else editDes" (click)="edit = true">{{bvn.destete ? (bvn.fechaDestete|date) : 'Fecha no especificada'}}</button>
+
+    <ng-template #editDes>
+      <div>
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de Destete</mat-label>
+          <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="desteteDate" name="dat" required #dat="ngModel">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div *ngIf="!loadingDes; else rotorDes">
+        <button mat-button color="accent" (click)="edit = false">Cancelar</button>
+        <button mat-raised-button color="accent" [disabled]="dat.invalid" (click)="saveDes()">Aceptar</button>
+      </div>
+      <ng-template #rotorDes>
+        <app-loader></app-loader>
+      </ng-template>
+    </ng-template>
+
+
+    <br>
+    <h2>Ganancia de Peso</h2>
+
+    <div [hidden]="loading">
+      <div *ngIf="data.length > 0 ;else noData">
+        <table #tableMeat mat-table [dataSource]="data" class="info-table">
+
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef>Fecha</th>
+            <td mat-cell *matCellDef="let element">{{element.meat.fecha | date}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="peso">
+            <th mat-header-cell *matHeaderCellDef>Peso</th>
+            <td mat-cell *matCellDef="let element">{{element.meat.peso}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button (mousedown)="removeItem(element.i)">
+                <mat-icon inline="true">clear</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columns"></tr>
+          <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+        </table>
+      </div>
+
+      <ng-template #noData>
+        <div class="section">
+          <p>Pesos no registrados</p>
+        </div>
+      </ng-template>
+
+    </div>
+
+    <app-loader *ngIf="loading" [align]="'center'"></app-loader>
+
+
+  </mat-card>
+</div>
+
+<div class="fab">
+  <button mat-fab (click)="goToAdd()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

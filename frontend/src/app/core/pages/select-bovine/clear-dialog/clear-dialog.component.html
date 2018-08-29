@@ -1,0 +1,10 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>Limpiar Seleccionados</h2>
+  <mat-dialog-content>
+    ¿Desea quitar todos lo bovinos seleccionados ?
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="undefined">Cancelar</button>
+    <button mat-button mat-dialog-close (click)="accept()">Aceptar</button>
+  </mat-dialog-actions>
+</div>

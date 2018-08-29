@@ -1,0 +1,39 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>{{title}}</h2>
+  <mat-dialog-content>
+    <div fxLayout="row wrap">
+
+      <mat-form-field fxFlex="0 0 100%" appearance="outline">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="date" name="dat" required #dat="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-checkbox *ngIf="type === 1" #dest class="m-bottom" fxFlex="0 0 100%" [(ngModel)]="confirm" name="des">Preñez confirmada</mat-checkbox>
+
+      <h5 fxFlex="0 0 100%" *ngIf="type === 0">Novedad</h5>
+      <mat-radio-group *ngIf="type === 0" class="m-bottom" fxFlex="0 0 100%" [(ngModel)]="novelty" name="nov" required>
+        <mat-radio-button value="Aborto" #n1>Aborto</mat-radio-button>
+        <mat-radio-button value="Muerte del Animal" #n2>Muerte del Animal</mat-radio-button>
+      </mat-radio-group>
+
+      <h5 fxFlex="0 0 100%" *ngIf="type === 2">Estado</h5>
+      <mat-radio-group *ngIf="type === 2" class="m-bottom" fxFlex="0 0 100%" [(ngModel)]="state" name="sta" required>
+        <mat-radio-button value="Viv">Vivo</mat-radio-button>
+        <mat-radio-button value="Muert">Muerto</mat-radio-button>
+      </mat-radio-group>
+
+      <h5 fxFlex="0 0 100%" *ngIf="type === 2">Sexo</h5>
+      <mat-radio-group *ngIf="type === 2" class="m-bottom" fxFlex="0 0 100%" [(ngModel)]="sex" name="sex" required>
+        <mat-radio-button value="Macho">Macho</mat-radio-button>
+        <mat-radio-button value="Hembra">Hembra</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="undefined">Cancelar</button>
+    <button mat-button mat-dialog-close (click)="accept()" [disabled]="dat.invalid">Aceptar</button>
+  </mat-dialog-actions>
+</div>

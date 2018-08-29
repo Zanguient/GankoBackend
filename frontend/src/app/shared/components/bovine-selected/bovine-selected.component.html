@@ -1,0 +1,9 @@
+<div fxLayout="row" class="rectangulo" fxLayoutAlign="flex-start center">
+  <div fxFlex="1 0 auto">
+    <h4 appAccent appNoSpace >{{type == 1 || type == 2 ? 'Grupo Seleccionado' : 'Bovinos Seleccionados'}}</h4>
+    <p> 
+      <mat-icon  svgIcon="{{ type == 1 || type == 2 ?  'group':'bovine'}}"></mat-icon> {{type == 0 ? selecteds.length : (type == 1 ? group.nombre + ' ('+group.bovines.length+')' : groupReg.nombre + '( Aplicar a ' +selecteds.length + ')') }} 
+    </p>    
+  </div>
+  <button mat-button color="accent" (click)="goToView()">{{ editable ? 'Editar' : 'Ver'}}</button>
+</div>

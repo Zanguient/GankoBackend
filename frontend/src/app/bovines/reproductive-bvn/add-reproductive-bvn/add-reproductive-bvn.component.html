@@ -1,0 +1,50 @@
+<div class="mat-typography container">
+  <mat-card>
+
+    <h1>
+      <button mat-icon-button (click)="cancel()">
+        <mat-icon>arrow_back</mat-icon>
+      </button> Agregar Servicio</h1>
+
+    <div class="section">
+      <form #srvFrom="ngForm">
+        <div fxLayout="row wrap">
+
+          <mat-form-field fxFlex="0 0 100%" appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="item.fecha" name="dat" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="0 0 100%" appearance="outline">
+            <mat-label>Condición corporal</mat-label>
+            <input matInput type="number" required name="con" [(ngModel)]="item.condicionCorporal">
+          </mat-form-field>
+
+          <h5 fxFlex="0 0 100%">Empadre</h5>
+          <mat-radio-group #emp class="m-bottom" fxFlex="0 0 100%" [selected]="man" [(ngModel)]="item.empadre" name="emp" required>
+            <mat-radio-button value="Monta Natural" #man (click)="itemEmp = null">Monta Natural</mat-radio-button>
+            <mat-radio-button value="Inseminación Artificial" #tar (click)="itemEmp = null">Inseminación Artificial</mat-radio-button>
+          </mat-radio-group>
+
+          <div fxFlex="0 0 100%">
+            <h3 appNoSpace>{{item.empadre === 'Monta Natural' ? 'Toro' : 'Pajilla'}}</h3>
+            <button mat-button color="accent" (click)="findItemEmp()">{{itemEmp ? 'Cod. '+ itemEmp.cod + ' - ' + itemEmp.name : 'Asociar'}}</button>
+          </div>
+
+          <button *ngIf="!loading" mat-button color="accent" fxFlex="0 0 50%" fxFlex.gt-sm="0 0 20%" fxFlex.gt-md="0 0 15%" fxFlexOffset.gt-sm="60%"
+            fxFlexOffset.gt-md="70%" (click)="cancel()">Cancelar</button>
+
+          <button *ngIf="!loading" [disabled]="srvFrom.invalid || itemEmp === null" mat-raised-button color="accent" fxFlex="0 0 50%" fxFlex.gt-sm="0 0 20%"
+            fxFlex.gt-md="0 0 15%" (click)="add()">Agregar</button>
+
+          <app-loader *ngIf="loading" fxFlex=" 0 0 100%" [align]="'end'"></app-loader>
+        </div>
+
+      </form>
+
+    </div>
+  </mat-card>
+
+</div>

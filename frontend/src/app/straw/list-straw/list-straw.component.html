@@ -1,0 +1,18 @@
+<div class="mat-typography ">
+  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay pajillas registrados'" (add)="goToAdd()">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
+
+          <app-card [title]="d.breed" [subtitle]="'Canastilla '+d.layette" [subAccent]="true">
+            <app-card-content>
+              <app-card-field [title]="'Toro'">{{d.bull}}</app-card-field>
+              <app-card-field [title]="'Origen'">{{d.origin}}</app-card-field>
+              <app-card-field [title]="'Proposito'">{{d.purpose}}</app-card-field>
+              <app-card-field [title]="'Valor'">{{d.value | currency}}</app-card-field>
+            </app-card-content>
+          </app-card>
+
+      </div>
+    </div>
+  </app-list-loader>
+</div>

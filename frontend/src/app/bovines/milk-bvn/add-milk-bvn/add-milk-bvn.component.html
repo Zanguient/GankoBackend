@@ -1,0 +1,43 @@
+<div class="mat-typography container">
+  <mat-card>
+
+    <h1><button mat-icon-button (click)="cancel()"><mat-icon>arrow_back</mat-icon></button>   Agregar Producción</h1>
+
+    <div class="section">
+      <form #milkFrom="ngForm">
+        <div fxLayout="row wrap">
+
+          <mat-form-field fxFlex="0 0 100%" appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="item.fecha" name="dat" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="0 0 100%" appearance="outline">
+            <mat-label>Litros</mat-label>
+            <input matInput type="number" required name="lit" [(ngModel)]="item.litros">
+          </mat-form-field>
+
+          <h5 fxFlex="0 0 100%">Jornada</h5>
+          <mat-radio-group #sex class="m-bottom" fxFlex="0 0 100%" [selected]="man" [(ngModel)]="item.jornada" name="jor" required>
+            <mat-radio-button value="Mañana" #man>Mañana</mat-radio-button>
+            <mat-radio-button value="Tarde" #tar>Tarde</mat-radio-button>
+          </mat-radio-group>
+
+
+          <button *ngIf="!loading" mat-button color="accent" fxFlex="0 0 50%" fxFlex.gt-sm="0 0 20%" fxFlex.gt-md="0 0 15%" fxFlexOffset.gt-sm="60%"
+            fxFlexOffset.gt-md="70%" (click)="cancel()">Cancelar</button>
+
+          <button *ngIf="!loading" [disabled]="milkFrom.invalid" mat-raised-button color="accent" fxFlex="0 0 50%" fxFlex.gt-sm="0 0 20%"
+            fxFlex.gt-md="0 0 15%" (click)="add()">Agregar</button>
+
+          <app-loader *ngIf="loading" fxFlex=" 0 0 100%" [align]="'end'"></app-loader>
+        </div>
+
+      </form>
+
+    </div>
+  </mat-card>
+
+</div>

@@ -1,0 +1,61 @@
+<div class="mat-typography submenu-container" fxLayout="row" *ngIf="!loading && item != null; else noItem">
+
+  <div class="submenu">
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="info" routerLinkActive="active">
+        <mat-icon svgIcon="bovine"></mat-icon>
+      </a>
+      <a mat-list-item routerLink="leche" routerLinkActive="active" *ngIf="item.proposito == 'Lecheria' ||  item.proposito == 'Ambos'">
+        <mat-icon svgIcon="milk"></mat-icon>
+      </a>
+      <a mat-list-item routerLink="reproductivo" routerLinkActive="active" *ngIf="item.genero == 'Hembra'">
+        <mat-icon svgIcon="reproductive"></mat-icon>
+      </a>
+      <a mat-list-item routerLink="ceba" routerLinkActive="active" *ngIf="item.proposito == 'Ceba' || item.proposito == 'Ambos'">
+        <mat-icon svgIcon="ceba"></mat-icon>
+      </a>
+      <a mat-list-item routerLink="alimentacion" routerLinkActive="active">
+        <mat-icon svgIcon="feed"></mat-icon>
+      </a>
+      <a mat-list-item routerLink="manejo" routerLinkActive="active">
+        <mat-icon svgIcon="manage"></mat-icon>
+      </a>
+      <a mat-list-item routerLink="movimientos" routerLinkActive="active">
+        <mat-icon svgIcon="movement"></mat-icon>
+      </a>
+      <a mat-list-item routerLink="vacunas" routerLinkActive="active">
+        <mat-icon svgIcon="vaccine"></mat-icon>
+      </a>
+      <a mat-list-item routerLink="sanidad" routerLinkActive="active">
+        <mat-icon svgIcon="health"></mat-icon>
+      </a>
+    </mat-nav-list>
+
+  </div>
+  <div fxFlex="grow">
+
+    <div style="height: 100%; overflow: auto;">
+      <div class="breadcrumb container">
+        <button mat-button routerLink="../../">Bovinos</button> >
+        <span>{{item.nombre}}</span>
+      </div>
+
+      <router-outlet></router-outlet>
+    </div>
+
+
+  </div>
+
+
+</div>
+
+<ng-template #noItem>
+  <div class="container section" *ngIf="!loading">
+    Bovino no encontrado
+  </div>
+</ng-template>
+
+<div *ngIf="loading" class="container section">
+  <app-loader [big]="true" [align]="'center'"></app-loader>
+</div>

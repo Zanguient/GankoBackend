@@ -1,0 +1,38 @@
+<div class="mat-typography">
+    <h2 mat-dialog-title>{{type === 'bull' ? 'Toros' : 'Pajillas'}}</h2>
+    <mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput type="text" #q (input)="textChange.next(q.value)">
+      </mat-form-field>
+      <div class="items-list">
+        <div *ngIf="!loading; else rotor">
+          <div *ngIf="query !== ''; else noQuery">
+            <form autocomplete="off" *ngIf="items.length > 0; else noData">
+              <mat-nav-list>
+                <mat-list-item *ngFor="let t of items; index as i" (click)="select(i)">
+                 <h3 matLine>{{t.name}}</h3>
+                 <p matLine>COD. {{t.cod}}</p>
+                </mat-list-item>
+              </mat-nav-list>
+            </form>
+            <ng-template #noData>
+              <p class="info-list">{{type === 'bull'? 'Toro no encontrado' : 'Pajilla no encotrada'}}</p>
+            </ng-template>
+          </div>
+          <ng-template #noQuery>
+            <p class="info-list">Escribe el {{type === 'bull'? 'nombre o codigo de un Toro':'codigo o raza de una Pajilla'}} para iniciar la busqueda</p>
+          </ng-template>
+  
+        </div>
+        <ng-template #rotor>
+          <app-loader [align]="'center'"></app-loader>
+        </ng-template>
+  
+      </div>
+  
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button [mat-dialog-close]="undefined">Cerrar</button>
+    </mat-dialog-actions>
+  </div>

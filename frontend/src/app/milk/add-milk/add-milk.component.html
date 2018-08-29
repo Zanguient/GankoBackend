@@ -1,0 +1,54 @@
+<div class="container mat-typography">
+    <div class="breadcrumb">
+        <button mat-button routerLink="../">Leche</button> >
+        <span>Agregar Salida de Leche</span>
+    </div>
+
+    <mat-card>
+        <h1>Agregar Salida de Leche</h1>
+
+        <form #formAdd="ngForm" autocomplete="off">
+            <div fxLayout="row wrap" fxLayoutGap="16px">
+
+                    <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                            <mat-label>Fecha</mat-label>
+                            <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="date" required name="fecha">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)">
+                            <mat-select placeholder="Tipo de operación"  [(ngModel)]="item.operacion" name="operacion" required>
+                              <mat-option value="Vendidos"> Litros vendidos</mat-option>
+                              <mat-option value="Perdidos"> Litros perdidos</mat-option>
+                              <mat-option value="Regalados"> Litros regalados</mat-option>
+                              <mat-option value="Consumo"> Consumo propio</mat-option>
+                            </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                            <mat-label>Valor en pesos</mat-label>
+                            <input matInput type="number" [(ngModel)]="item.valorLitro" name="valorLitro" required min="0">
+                          </mat-form-field>
+                    
+                     <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                            <mat-label>Número de litros</mat-label>
+                            <input matInput type="number" [(ngModel)]="item.numeroLitros" name="numeroLitros" required min="0">
+                      </mat-form-field>
+
+                <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
+                    <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button color="accent"
+                        (click)="goToBack()">Cancelar</button>
+                    <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent" (click)="add()"
+                        [disabled]="formAdd.invalid">Agregar</button>
+                </div>
+
+                <ng-template #loader>
+                    <app-loader></app-loader>
+                </ng-template>
+            </div>
+        </form>
+
+    </mat-card>
+
+</div>

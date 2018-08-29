@@ -1,0 +1,18 @@
+<div class="mat-typography ">
+  <app-list-loader [section]="false" [size]="data.length" [loading]="loading" [noData]="'No hay registros de leche'" [addonable]="false">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" *ngFor="let d of data; index as i">
+
+        <app-card [title]="d.tipoAlimento" [subtitle]="d.peso + ' Kilogramos'" [subAccent]="true" [index]="i">
+          <app-card-corner>{{d.fecha | date}}</app-card-corner>
+          <app-card-content>
+            <app-card-field [title]="'Peso'">{{d.peso}}</app-card-field>
+            <app-card-field [title]="'Valor por Kilo'">{{d.valorkg | currency}}</app-card-field>
+            <app-card-field [title]="'Valor total'">{{d.valorTotal | currency}}</app-card-field>
+          </app-card-content>
+        </app-card>
+
+      </div>
+    </div>
+  </app-list-loader>
+</div>

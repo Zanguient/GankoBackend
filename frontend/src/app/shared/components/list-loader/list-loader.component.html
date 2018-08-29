@@ -1,0 +1,37 @@
+<div class="container mat-typography" [class.section]="section">
+
+  <div *ngIf="!loading; else loader">
+    <ng-content *ngIf="size != 0; else noContent"></ng-content>
+    <ng-template #noContent>
+      <p>{{noData}}</p>
+    </ng-template>
+  </div>
+
+  <ng-template #loader>
+    <app-loader [big]="true" [align]="'center'"></app-loader>
+  </ng-template>
+
+  <div class="fab" *ngIf="addonable">
+    <a mat-fab color="accent" (click)="onClickAdd()" *ngIf="!menu; else withMenu">
+      <mat-icon>add</mat-icon>
+    </a>
+
+    <ng-template #withMenu>
+      <a mat-fab color="accent" [matMenuTriggerFor]="subMenu">
+        <mat-icon>add</mat-icon>
+      </a>
+    </ng-template>
+  </div>
+
+  <mat-menu #subMenu="matMenu">
+    <button mat-menu-item (click)="onClickMenu(0)">
+      <mat-icon svgIcon="group"></mat-icon>
+      <span>Seleccionar Grupo</span>
+    </button>
+    <button mat-menu-item (click)="onClickMenu(1)">
+      <mat-icon svgIcon="bovine" ></mat-icon>
+      <span>Seleccionar Bovinos</span>
+    </button>
+  </mat-menu>
+
+</div>

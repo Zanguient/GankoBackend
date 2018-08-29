@@ -1,0 +1,30 @@
+<div *ngIf="data && data.length > 0; else noData" fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
+
+  <div *ngFor="let d of data" fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" >
+    <app-card title="{{d.empadre}}" subtitle="{{d.fecha | date}}" [subAccent]="true">
+
+      <app-card-content>
+        <app-card-field title="Ultimo Celo">{{d.fechaUltimoCelo | date}}</app-card-field>
+        <app-card-field title="Condición Corporal">{{d.condicionCorporal}}</app-card-field>
+        <app-card-field title="{{d.empadre == 'Monta Natural' ? 'Toro' : 'Pajilla'}}">{{d.empadre == 'Monta Natural' ? d.codigoToro : d.pajilla}}</app-card-field>
+        <app-card-field *ngIf="d.diagnostico" title='Fecha Diagnostico'>{{d.diagnostico.fecha | date}}</app-card-field>
+        <app-card-field *ngIf="d.diagnostico" title='Diagnostico'>{{d.diagnostico.confirmacion ? 'Preñez confirmada' : 'Preñez no confirmada'}}</app-card-field>
+        <app-card-field *ngIf="d.novedad" title='Fecha Novedad'>{{d.novedad.fecha | date}}</app-card-field>
+        <app-card-field *ngIf="d.novedad" title='Novedad'>{{d.novedad.novedad}}</app-card-field>
+        <app-card-field *ngIf="d.parto" title='No. Parto'>{{d.parto.numero}}</app-card-field>
+        <app-card-field *ngIf="d.parto" title='Fecha Parto'>{{d.parto.fecha | date}}</app-card-field>
+        <app-card-field *ngIf="d.parto" title='Estado Cria'>{{d.parto.estadoCria}}</app-card-field>
+        <app-card-field *ngIf="d.parto" title='Sexo Cria'>{{d.parto.sexoCria}}</app-card-field>
+        <app-card-field *ngIf="d.parto" title='Dias vacios'>{{d.parto.diasVacios}}</app-card-field>
+        <app-card-field *ngIf="d.parto" title='Dias entre partos'>{{d.parto.intervalo}}</app-card-field>
+      </app-card-content>
+    </app-card>
+    <mat-divider></mat-divider>
+  </div>
+
+
+</div>
+
+<ng-template #noData>
+  <p>No existen registros de Servicios para el bovino</p>
+</ng-template>

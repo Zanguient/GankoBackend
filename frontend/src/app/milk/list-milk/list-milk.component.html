@@ -1,0 +1,19 @@
+<div class="mat-typography ">
+  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay registros de leche'" (add)="goToAdd()">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
+
+        <app-card [subtitle]="d.numeroLitros+' Litros Vendidos'" [subAccent]="true" [index]="i">
+
+          <app-card-corner> {{d.fecha | date}}</app-card-corner>
+          <app-card-content>
+            <app-card-field [title]="'Precio por Litro'">{{d.valorLitro | currency}}</app-card-field>
+            <app-card-field [title]="'Total'">{{d.totalLitros | currency}}</app-card-field>
+          </app-card-content>
+
+        </app-card>
+
+      </div>
+    </div>
+  </app-list-loader>
+</div>

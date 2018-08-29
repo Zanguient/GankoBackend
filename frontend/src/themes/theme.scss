@@ -1,0 +1,80 @@
+@import '~@angular/material/theming';
+
+$app-green: (
+  100: #00d05e,
+  500: #00B050,
+  700: #00a249,
+  contrast: (
+    100: $dark-primary-text,
+    500: $dark-primary-text,
+    700: $dark-primary-text,    
+  )
+);
+
+$app-teal: (
+  100: #b2dfdb,
+  300: #4db6ac,
+  500: #009688,
+  contrast: (
+    100: $light-primary-text,
+    300: $light-primary-text,
+    500: $light-primary-text,    
+  )
+);
+
+@include mat-core();
+$app-primary: mat-palette($mat-green, 600);
+$app-accent:  mat-palette($mat-teal, 500, 100, 700);
+
+$app-theme: mat-light-theme($app-primary, $app-accent);
+$app-dark-theme: mat-dark-theme($app-primary, $app-accent);
+
+@include angular-material-theme($app-theme);
+
+.side-dark{
+    $background-dark : map-get($app-dark-theme, background );
+    $bacground-side : map-merge($background-dark, (card: map_get($mat-grey, 900), dialog: map_get($mat-grey, 900),));
+
+    $side-dark :map-merge($app-dark-theme, (background: $bacground-side) );
+
+    @include mat-sidenav-theme($side-dark);    
+}
+
+.side-light{
+  @include mat-sidenav-theme($app-theme);    
+}
+
+.list-dark{
+  $foreground-dark : map-get($app-dark-theme ,foreground );
+  $foreground-side : map-merge($foreground-dark , (text:#999) );
+  
+  $list-dark :map-merge($app-dark-theme, (foreground: $foreground-side) );
+
+  @include mat-list-theme($list-dark)    
+}
+
+.dark-card{
+  @include mat-card-theme($app-dark-theme);    
+}
+
+.dark-input{
+  @include mat-input-theme($app-dark-theme);    
+}
+
+.dark-theme{
+  @include angular-material-theme($app-dark-theme);
+}
+
+.mat-card.hoverable {
+  cursor: pointer;
+  @include mat-elevation-transition;
+  @include mat-elevation(2);
+
+  &:hover {
+    @include mat-elevation(4);
+  }
+}
+
+
+
+
