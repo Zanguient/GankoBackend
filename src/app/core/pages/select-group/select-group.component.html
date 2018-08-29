@@ -1,3 +1,37 @@
-<p>
-  select-group works!
-</p>
+<div class="mat-typography container">
+
+  <div class="breadcrumb">
+    <div *ngFor="let b of nav.breadcrumb; last as last">
+      <button mat-button routerLink="{{b.path}}">{{b.title}}</button> >
+    </div>
+    <span>Seleccionar Grupo</span>
+  </div>
+
+
+  <div *ngIf="!(service.loading | async); else loader">
+    <div *ngIf="data.length > 0; else noData ">
+      <div fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
+        <div fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" *ngFor="let d of data; index as i">
+
+          <mat-card class="bottom-space hoverable" (click)="select(d)">
+            <div class="border" [style.background-color]="getHexColor(d.color)"></div>
+            <mat-card-header>
+              <div mat-card-avatar></div>
+              <mat-card-title>Nombre del grupo</mat-card-title>
+              <mat-card-subtitle><b>{{d.bovines.length}}</b> Bovinos</mat-card-subtitle>
+            </mat-card-header>            
+          </mat-card>
+
+        </div>
+      </div>
+    </div>
+    <ng-template #noData>
+      Grupos no encontrados
+    </ng-template>
+  </div>
+  <ng-template #loader>
+    <app-loader align="center" big="true"></app-loader>
+  </ng-template>
+
+
+</div>

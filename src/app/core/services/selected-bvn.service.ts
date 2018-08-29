@@ -7,6 +7,7 @@ import { Rspn } from '../../shared/models/response.model';
 import { validate } from '../../util/http-util';
 import { bovines, bovine } from '../../bovines/services/bovines.mock';
 import { Group } from '../../shared/models/group.model';
+import { groups } from '../../groups/service/group.mock';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class SelectedBvnService {
   constructor(private nav: NavService) { }
 
   list(): Observable<BovineSelected[]> {
+    this.clear();
     const filter = this.nav.filter.pipe(
       startWith('')
     );
@@ -30,8 +32,8 @@ export class SelectedBvnService {
       startWith(''),
       map(x => x === '' ? x : 'q=' + x)
     );
+    this.loading.next(true);
     return combineLatest(filter, query).pipe(
-      tap(() => this.loading.next(true)),
       map(x => x.filter(q => q !== '').join('&')),
       map(x => this.url + (x.length > 0 ? '?' + x : x)),
       tap(x => console.log(x)),
@@ -45,6 +47,16 @@ export class SelectedBvnService {
       tap(() => this.loading.next(false), () => this.loading.next(false))
     );
 
+  }
+
+  listGroup(): Observable<Group[]> {
+    this.clear();
+    this.loading.next(true);
+    return timer(500).pipe(
+      map(() => new Rspn(true, groups())), // simular respuesta
+      map(x => validate(x)),
+      tap(() => this.loading.next(false), () => this.loading.next(false))
+    );
   }
 
   clear() {
