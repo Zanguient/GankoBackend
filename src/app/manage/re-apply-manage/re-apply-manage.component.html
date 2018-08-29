@@ -6,14 +6,14 @@
 
     <mat-card>
         <h1>Aplicar Manejo</h1>
-        <app-bovine-selected ></app-bovine-selected>
+        <app-bovine-selected [group]="item.grupo" [selecteds]="item.bovinos" [editable]="true"></app-bovine-selected>
 
         <form #formAdd="ngForm" autocomplete="off">
             <div fxLayout="row wrap" fxLayoutGap="16px">
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Fecha del evento</mat-label>
-                    <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="date" required name="fechaEvento" disabled="true">
+                    <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="item.fechaProxima" required name="fechaEvento" disabled="true">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -31,31 +31,27 @@
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Tratamiento</mat-label>
-                    <input matInput type="text" [(ngModel)]="item.tratamiento" name="trat" required>
+                    <input matInput type="text" [(ngModel)]="item.tratamiento" name="trat" required disabled="true">
                 </mat-form-field>
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Número de aplicaciones</mat-label>
-                    <input matInput type="number" [(ngModel)]="item.numeroAplicaciones" name="numeroApp" required min="1">
+                    <input matInput type="number" [(ngModel)]="item.numeroAplicaciones" name="numeroApp" required min="1" disabled="true">
                 </mat-form-field>
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Frecuencia</mat-label>
-                    <input matInput type="number" [(ngModel)]="item.frecuencia" name="frec" required min="0">
+                    <input matInput type="number" [(ngModel)]="item.frecuencia" name="frec" required min="0" disabled="true">
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)">
-                    <mat-select placeholder="Unidad de frecuencia" [(ngModel)]="item.unidadFrecuencia" name="uniFrec" required>
-                        <mat-option value="Horas">Horas</mat-option>
-                        <mat-option value="Dias"> Dias</mat-option>
-                        <mat-option value="Meses"> Meses</mat-option>
-                        <mat-option value="Años"> Años</mat-option>
-                    </mat-select>
+                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+                    <mat-label>Unidad de frecuencia</mat-label>
+                    <input matInput type="text" [(ngModel)]="item.unidadFrecuencia" name="unidFrec" disabled="true">
                 </mat-form-field>
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Producto</mat-label>
-                    <input matInput type="text" [(ngModel)]="item.producto" name="prod" required>
+                    <input matInput type="text" [(ngModel)]="item.producto" name="prod" required disabled="true">
                 </mat-form-field>
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
@@ -70,7 +66,7 @@
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Observaciones</mat-label>
-                    <input matInput type="text" [(ngModel)]="item.observaciones" name="obs" required>
+                    <input matInput type="text" [(ngModel)]="item.observaciones" name="obs" required disabled="true">
                 </mat-form-field>
 
                 <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
