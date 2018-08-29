@@ -12,7 +12,7 @@
     "buildandrun": "gulp build && npm start",
     "build": "gulp build",
     "postinstall": "cd frontend/ && npm install",
-    "buildWithFront": "cd frontend/ && npm run build && cd .. && gulp buildAll"
+    "buildProd": "cd frontend/ && npm run build && cd .. && gulp buildAll"
   },
   "dependencies": {
     "@types/bluebird": "^3.5.20",

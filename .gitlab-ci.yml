@@ -1,6 +1,6 @@
 stages: 
   - build
-  - deploy
+  - deploy 
 
 cache:
   untracked: true
@@ -10,9 +10,9 @@ cache:
 
 prepare:
   stage: build
-  script: 
-    - pm2 kill
+  script:
     - npm install
+    - npm run buildProd
   tags:
     - gabko
 
