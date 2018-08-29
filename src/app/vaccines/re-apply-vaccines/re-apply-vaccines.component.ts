@@ -15,27 +15,24 @@ import { finalize } from 'rxjs/operators';
 export class ReApplyVaccinesComponent implements OnInit {
 
   item: Vacuna;
-  date: Date;
   loading = false;
+  reApp1: boolean;
 
   constructor(private service: VaccinesService, private snack: MatSnackBar, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
-      map(x=> x.get('id')),
-      mergeMap(x=> this.service.selected(x))
-    ).subscribe(x => this.item = x , err=> snackError(this.snack, err));
+      map(x => x.get('id')),
+      mergeMap(x => this.service.selected(x))
+    ).subscribe(x => this.item = x, err => snackError(this.snack, err));
   }
 
   goToBack() {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  add() {
-    if (this.date) {
-      this.item.fecha = new Date(this.date);
-      this.item.fechaProxima = this.fechaProx(this.date, this.item.frecuencia);
-    }
+  apply() {
+    this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.frecuencia);
     this.loading = true;
     this.service.add(this.item).pipe(
       finalize(() => {

@@ -14,7 +14,7 @@
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Fecha del evento</mat-label>
                     <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="item.fechaProxima" required name="fechaEvento"
-                        disabled="true">
+                        >
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -67,7 +67,7 @@
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Observaciones</mat-label>
-                    <input matInput type="text" [(ngModel)]="item.observaciones" name="obs" required disabled="true">
+                    <input matInput type="text" [(ngModel)]="item.observaciones" name="obs" required >
                 </mat-form-field>
 
                 <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
