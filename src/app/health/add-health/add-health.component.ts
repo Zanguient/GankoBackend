@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material';
 import { HealthService } from '../services/health.service';
 import { finalize } from 'rxjs/operators';
 import { snackError, snackOk } from '../../util/snackbar-util';
+import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-add-health',
@@ -35,12 +36,14 @@ export class AddHealthComponent implements OnInit {
     type: TYPE_SANIDAD
   }
 
-  constructor(private router: Router, private route: ActivatedRoute, private service: HealthService, private snack: MatSnackBar) { }
+  constructor(private router: Router, private route: ActivatedRoute, private service: HealthService, private snack: MatSnackBar,
+    public selected: SelectedBvnService) { }
 
   ngOnInit() {
   }
 
   goToBack() {
+    this.selected.clear();
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
@@ -51,7 +54,10 @@ export class AddHealthComponent implements OnInit {
     }
     this.loading = true;
     this.service.add(this.item).pipe(
-      finalize(() => this.loading = false)
+      finalize(() => {
+        this.loading = false;
+        this.selected.clear();
+      })
     ).subscribe(() => {
       snackOk(this.snack, 'Sanidad Agregada');
       this.router.navigate(['../'], { relativeTo: this.route });
