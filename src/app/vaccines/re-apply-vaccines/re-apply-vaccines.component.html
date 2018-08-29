@@ -1,3 +1,59 @@
-<p>
-  re-apply-vaccines works!
-</p>
+<div class="container mat-typography">
+  <div class="breadcrumb">
+    <button mat-button routerLink="../">Vacunas</button> >
+    <span>Aplicar Vacuna</span>
+  </div>
+
+  <mat-card>
+    <h1>Aplicar Vacunas</h1>
+    <app-bovine-selected [groupReg]="item.grupo" [selecteds]="item.bovinos" [editable]="true"></app-bovine-selected>
+
+    <form #formAdd="ngForm" autocomplete="off">
+      <div fxLayout="row wrap" fxLayoutGap="16px">
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Nombre de la vacuna</mat-label>
+          <input matInput type="text" [(ngModel)]="item.nombre" name="nom" required disabled="true">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="item.fechaProxima" required name="fechaVac"
+            disabled="true">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Dosis en mililitros</mat-label>
+          <input matInput type="text" name="other" [(ngModel)]="item.dosisMl" required disabled="true">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="item.frecuencia">
+          <mat-label>Próxima aplicación</mat-label>
+          <input matInput type="number" [(ngModel)]="item.frecuencia" name="frec" disabled="true">
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="item.frecuencia">
+          <mat-label>Próxima aplicación</mat-label>
+          <input matInput type="number" [(ngModel)]="item.unidadFrecuencia" name="unidFrec" disabled="true">
+        </mat-form-field>
+
+
+
+        <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
+          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button color="accent"
+            (click)="goToBack()">Cancelar</button>
+          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent" (click)="add()"
+            [disabled]="formAdd.invalid">Aplicar</button>
+        </div>
+
+        <ng-template #loader>
+          <app-loader></app-loader>
+        </ng-template>
+      </div>
+    </form>
+
+  </mat-card>
+
+</div>

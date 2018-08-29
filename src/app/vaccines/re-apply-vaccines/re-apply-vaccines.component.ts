@@ -27,4 +27,39 @@ export class ReApplyVaccinesComponent implements OnInit {
     ).subscribe(x => this.item = x , err=> snackError(this.snack, err));
   }
 
+  goToBack() {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  add() {
+    if (this.date) {
+      this.item.fecha = new Date(this.date);
+      this.item.fechaProxima = this.fechaProx(this.date, this.item.frecuencia);
+    }
+    this.loading = true;
+    this.service.add(this.item).pipe(
+      finalize(() => {
+        this.loading = false;
+      })
+    ).subscribe(() => {
+      snackOk(this.snack, 'Aplicacion de vacuna Agregada');
+      this.router.navigate(['../'], { relativeTo: this.route });
+    }, err => snackError(this.snack, err));
+
+  }
+
+  fechaProx(fecha: Date, frecuencia: number): Date {
+    switch (this.item.unidadFrecuencia) {
+      case 'Horas':
+        return new Date(fecha.getTime() + (frecuencia * 3600 * 1000));
+      case 'Dias':
+        return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24));
+      case 'Meses':
+        return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30));
+      case 'Años':
+        return new Date(fecha.getTime() + (frecuencia * 3600 * 1000 * 24 * 30 * 12));
+    }
+  }
+
+
 }
