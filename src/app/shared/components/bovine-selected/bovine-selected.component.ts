@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Bovino } from '../../models/bovine.model';
+import { SelectedBvnService } from '../../../core/services/selected-bvn.service'
 
 @Component({
   selector: 'app-bovine-selected',
@@ -8,21 +8,16 @@ import { Bovino } from '../../models/bovine.model';
 })
 export class BovineSelectedComponent implements OnInit {
 
-  data: Bovino[] = [];
-  removeBvn: EventEmitter<Bovino> = new EventEmitter();
-
-  constructor() { }
+  group: boolean;
+  
+  constructor(public service: SelectedBvnService) { }
 
   ngOnInit() {
+    
+    this.group = this.service.group != null;
   }
 
-  addBovine(bvn: Bovino) {
-    this.data.push(bvn);
-  }
-
-  removeBovine(bvn: Bovino) {
-    const index = this.data.indexOf(bvn);
-    this.data.splice(index, 1);
+  goToView() {
   }
 
 }

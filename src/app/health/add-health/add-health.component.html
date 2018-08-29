@@ -6,6 +6,7 @@
 
     <mat-card>
         <h1>Agregar Sanidad</h1>
+        <app-bovine-selected></app-bovine-selected>
 
         <form #formAdd="ngForm" autocomplete="off">
             <div fxLayout="row wrap" fxLayoutGap="16px">
@@ -21,7 +22,7 @@
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Otro'">
                     <mat-label>Otro</mat-label>
-                    <input matInput type="text" [(ngModel)]="item.otro" name="other" required>
+                    <input matInput type="text" [(ngModel)]="item.otra" name="other" required>
                 </mat-form-field>
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
