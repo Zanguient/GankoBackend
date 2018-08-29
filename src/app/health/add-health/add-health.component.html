@@ -6,7 +6,7 @@
 
     <mat-card>
         <h1>Agregar Sanidad</h1>
-        <app-bovine-selected></app-bovine-selected>
+        <app-bovine-selected [group]="selected.group" [selecteds]="selected.selecteds" [editable]="selected.group == null"></app-bovine-selected>
 
         <form #formAdd="ngForm" autocomplete="off">
             <div fxLayout="row wrap" fxLayoutGap="16px">

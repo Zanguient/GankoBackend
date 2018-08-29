@@ -1,11 +1,11 @@
 <div fxLayout="row" class="rectangulo" fxLayoutAlign="flex-start center">
   <div fxFlex="1 0 auto">
-    <h4 appAccent appNoSpace >{{group ? 'Grupo Seleccionado' : 'Bovinos Seleccionados'}}</h4>
+    <h4 appAccent appNoSpace >{{isGroup ? 'Grupo Seleccionado' : 'Bovinos Seleccionados'}}</h4>
     <p *ngIf="group"> 
       <mat-icon *ngIf="group; else elseBlock" svgIcon="group"></mat-icon>
       <ng-template #elseBlock><mat-icon svgIcon="bovine"></mat-icon></ng-template>
-      {{group ? service.group.nombre + '('+service.group.bovines.length+')'  : service.selecteds.length}} 
+      {{isGroup ? group.nombre + '('+group.bovines.length+')'  : selecteds.length}} 
     </p>    
   </div>
-  <button mat-button color="accent" (click)="goToView()">Ver</button>
+  <button mat-button color="accent" (click)="goToView()">{{ editable ? 'Editar' : 'Ver'}}</button>
 </div>

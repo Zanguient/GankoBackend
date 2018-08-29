@@ -1,5 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { SelectedBvnService } from '../../../core/services/selected-bvn.service';
+import { Group } from '../../models/group.model';
 
 @Component({
   selector: 'app-bovine-selected',
@@ -8,16 +9,19 @@ import { SelectedBvnService } from '../../../core/services/selected-bvn.service'
 })
 export class BovineSelectedComponent implements OnInit {
 
-  group: boolean;
+  isGroup: boolean;
+  @Input() group: Group;
+  @Input() selecteds: string[] = [];
+  @Input() editable = false;
 
   constructor(public service: SelectedBvnService) { }
 
   ngOnInit() {
-
-    this.group = this.service.group != null;
+    this.isGroup = this.group != null;
   }
 
   goToView() {
+
   }
 
 }
