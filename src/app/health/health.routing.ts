@@ -12,7 +12,7 @@ export const healthRoutes: Routes = [
         path: 'sanidad', component: HealthComponent, children: [
             { path: '', component: ListHealthComponent },
             { path: 'agregar', component: AddHealthComponent },
-            { path: 'aplicar', component: ReApplyHealthComponent },
+            { path: ':id/aplicar', component: ReApplyHealthComponent },
             { path: 'grupos', component: SelectGroupComponent},
             { path: 'bovinos', component: SelectBovineComponent},
             { path: ':id', component: DetailHealthComponent }

@@ -6,6 +6,7 @@
 
     <mat-card>
         <h1>Agregar Manejo</h1>
+        <app-bovine-selected></app-bovine-selected>
 
         <form #formAdd="ngForm" autocomplete="off">
             <div fxLayout="row wrap" fxLayoutGap="16px">
@@ -57,11 +58,6 @@
                         <mat-option value="Años"> Años</mat-option>
                     </mat-select>
                 </mat-form-field>
-
-                <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
-                        <mat-label>Valor</mat-label>
-                        <input matInput type="number" [(ngModel)]="item.valor" name="valor" required min="0">
-                    </mat-form-field>
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Producto</mat-label>

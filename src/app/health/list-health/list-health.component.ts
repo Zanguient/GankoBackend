@@ -34,4 +34,8 @@ export class ListHealthComponent extends BaseListComponent<Sanidad> {
     this.nav.nextNavigation = ['..', 'agregar'];
   }
 
+  goToApply(item:Sanidad){
+    this.service.select(item);
+    this.router.navigate([item.id, 'aplicar'], {relativeTo: this.route});
+  }
 }

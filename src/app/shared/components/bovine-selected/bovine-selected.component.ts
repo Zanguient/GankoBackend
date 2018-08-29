@@ -9,24 +9,12 @@ import { SelectedBvnService } from '../../../core/services/selected-bvn.service'
 export class BovineSelectedComponent implements OnInit {
 
   group: boolean;
-  title: string;
-  seleccionado: string;
-
-  constructor(private service: SelectedBvnService) { }
+  
+  constructor(public service: SelectedBvnService) { }
 
   ngOnInit() {
     
-      
-    
-    
-    if(this.group == null){
-      this.title = "Bovinos seleccionados"
-      this.seleccionado = "Numero de bovinos"
-    }
-    else{
-      this.title = "Grupo seleccionado"
-      this.seleccionado = "Nombre del grupo"
-    }
+    this.group = this.service.group != null;
   }
 
   goToView() {
