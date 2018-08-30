@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlBase: ''
+  urlBase: 'http://104.209.144.166:8080/'
 };
 
 /*
