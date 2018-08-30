@@ -73,10 +73,10 @@ export class DBConnection {
         return this.getByQuery(where, params, select, limit, offset);
     }
 
-    ListByType<T>(type: string, where: string = undefined, params: any[] = [], limit: number = undefined, offset: number = undefined): Promise<Document<T>[]> {
+    ListByType<T>(type: string, where: string = undefined, params: any[] = [], limit: number = undefined, offset: number = undefined, order: string[] = undefined): Promise<Document<T>[]> {
         let whereQuery = "type = '" + type + "'";
         if (where) whereQuery += " AND " + where;
-        return this.getByQuery(whereQuery, params, undefined, limit, offset);
+        return this.getByQuery(whereQuery, params, undefined, limit, offset, order);
     }
 
     ListWithSltByType<T>(type: string, select: string, where: string = undefined, params: any[] = [], limit: number = undefined, offset: number = undefined): Promise<Document<T>[]> {
@@ -86,13 +86,13 @@ export class DBConnection {
     }
 
     one<T>(where: string, params: any[], select: string = undefined): Promise<Document<T>> {
-        return this.getOneByQuery(where, params, select);
+        return this.getOneByQuery<T>(where, params, select);
     }
 
     typedOne<T>(type: string, where: string = undefined, params: any[] = [], select: string = undefined): Promise<Document<T>> {
         let whereQuery = "type = '" + type + "'";
         if (where) whereQuery += " AND " + where;
-        return this.getOneByQuery(whereQuery, params, select);
+        return this.getOneByQuery<T>(whereQuery, params, select);
     }
 
     getById<T>(id: string): Promise<Document<T>> {
@@ -103,6 +103,12 @@ export class DBConnection {
                 return undefined;
             });
     }
+
+    getRevById<T>(id: string): Promise<Document<T>> {
+        return this.getOneByQuery("meta(`" + this.bucketName + "`).id = $1", [id]);
+    }
+
+
 
     remove(id: string): Promise<string> {
         return this.bucket.removeAsync(id)
@@ -127,33 +133,37 @@ export class DBConnection {
             + "cedula = 987"
             + " WHERE meta(`" + this.bucketName + "`).id = '" + id + "'";
         if (where) query += ` AND ${where}`;
-        console.log("N1QL Update=> " + query);
         const n1ql = N1qlQuery.fromString(query);
         return this.bucket.queryAsync(n1ql, params)
             .then((x: any) => {
-                console.log(JSON.stringify(x));
                 return id;
             });
     }
 
-    private getByQuery(where: string, params: any[], select: string = undefined, limit: number = undefined, offset: number = undefined): Promise<any> {
+    private getByQuery(where: string, params: any[], select: string = undefined, limit: number = undefined, offset: number = undefined, order: string[] = undefined, ): Promise<any> {
         let query = `SELECT ${select != undefined ? select : "meta(`" + this.bucketName + "`).id, *"} ` + "FROM `" + this.bucketName + "` WHERE " + `${where}`;
+        if (order) query += ` ORDER BY ${order[0]} ${order[1]}`;
         if (limit) query += ` LIMIT ${limit}`;
         if (offset) query += ` LIMIT ${offset}`;
-        console.log("QUERY=>" + query);
         const n1ql = N1qlQuery.fromString(query);
         return this.bucket.queryAsync(n1ql, params)
             .then((x: any[]) => { return x.map(y => { return { id: y.id, doc: y[this.bucketName] }; }); });
     }
 
-    private getOneByQuery(where: string, params: any[], select: string = undefined) {
-        const query = `SELECT ${select != undefined ? select : "meta(`" + this.bucketName + "`).id, *"} ` + "FROM `" + this.bucketName + "` WHERE " + `${where} LIMIT 1`;
+    private getOneByQuery<T>(where: string, params: any[], select: string = undefined): Promise<Document<T>> {
+        const query = `SELECT ${select != undefined ? select : "meta(`" + this.bucketName + "`).id, meta(`" + this.bucketName + "`).rev,  *"} ` + "FROM `" + this.bucketName + "` WHERE " + `${where} LIMIT 1`;
         const n1ql = N1qlQuery.fromString(query);
+
         return this.bucket.queryAsync(n1ql, params)
             .then((x: any[]) => {
-                return x.map(y => { return { id: y.id, doc: y[this.bucketName] }; });
+                return x.map(y => { return { id: y.id, doc: y[this.bucketName], rev: y.rev }; });
             })
             .then((x: any[]) => x.length > 0 ? x[0] : undefined);
+
+    }
+
+    byId(id: string) {
+        return this.bucket.getAsync(id);
     }
 
 }
