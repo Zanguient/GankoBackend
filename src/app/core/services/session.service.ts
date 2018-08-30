@@ -13,6 +13,14 @@ export class SessionService {
     sessionStorage.setItem('id', id);
   }
 
+  get token(): string {
+    return sessionStorage.getItem('token');
+  }
+
+  set token(token: string) {
+    sessionStorage.setItem('token', token);
+  }
+
   get logged(): boolean {
     return sessionStorage.getItem('logged') === 'true';
   }
@@ -39,6 +47,7 @@ export class SessionService {
 
   clear() {
     this.id = null;
+    this.token = null;
     this.logged = false;
     this.farmId = null;
     this.farmName = null;

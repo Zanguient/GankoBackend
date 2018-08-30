@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { MatSnackBar } from '@angular/material';
+import { snackError } from '../../../util/snackbar-util';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
 
-  constructor(private router: Router, private loginService: LoginService) { }
+  constructor(private router: Router, private loginService: LoginService, private snackbar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -23,10 +25,10 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
         this.router.navigate(['fincas']);
       },
-      err => {
-        alert(err);
-      }
-      )
+        () => {
+          snackError(this.snackbar, 'Usuario o contraseña incorrectos');
+        }
+      );
   }
 
 }
