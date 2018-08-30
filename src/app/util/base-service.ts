@@ -29,4 +29,12 @@ export abstract class BaseService<T> {
         return url;
     }
 
+    makeAuth(token: string) {
+        return {
+            headers: {
+                'Authorization': token
+            }
+        };
+    }
+
 }

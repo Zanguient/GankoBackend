@@ -11,7 +11,7 @@ import { SessionService } from './session.service';
 })
 export class LoginService {
 
-  url = `${environment.urlBase}api/v1/`;
+  url = `${environment.urlBase}/user/login`;
 
   constructor(private http: HttpClient, private session: SessionService) { }
 
@@ -21,11 +21,10 @@ export class LoginService {
       pass: pass
     }, {}).pipe(
       map(x => validate(x)),
-      map(d => {
-        console.log(d.user);
-        this.session.id = d.user;
-        this.session.token = d.token;
-        return d;
+      map(x => {
+        this.session.id = x.user;
+        this.session.token = x.token;
+        return x;
       })
     );
 
