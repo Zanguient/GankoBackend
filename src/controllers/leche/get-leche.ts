@@ -12,7 +12,7 @@ class ResponseLeche extends ResponseBody {
 }
 
 
-export function getLeche(req, res: Response, next) {
+export function getLecheByIdFinca(req, res: Response, next) {
     
     LecheService.instance.getAll()
         .then(data => {

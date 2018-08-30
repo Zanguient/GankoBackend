@@ -1,4 +1,4 @@
-import { SalidaLeche,TYPE_VENTA } from "./models/venta";
+import { Leche,TYPE_LECHE } from "./models/venta";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
@@ -17,19 +17,19 @@ export class VentaService {
     constructor(private db: DBConnection) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_VENTA);
+        return this.db.ListByType(TYPE_LECHE);
     }
 
-    insert(salidaLeche: SalidaLeche) {
+    insert(salidaLeche: Leche) {
         return this.db.insert(salidaLeche);
     }
 
-    update(id: string, salidaLeche: SalidaLeche) {
+    update(id: string, salidaLeche: Leche) {
         return this.db.replace(id, salidaLeche);
     }
 
     getById(id: string) {
-        return this.db.getById<SalidaLeche>(id);
+        return this.db.getById<Leche>(id);
     }
     delete(id:string){
         return this.db.remove(id);

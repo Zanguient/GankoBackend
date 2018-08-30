@@ -14,6 +14,7 @@ import produccion from './routes/produccion';
 import sanidad from './routes/sanidad';
 import vacuna from './routes/vacuna';
 import venta from './routes/venta';
+import grupo from './routes/grupo';
 import cookieParser = require('cookie-parser'); // this module doesn't use the ES6 default export yet
 import cors = require('cors');
 
@@ -31,15 +32,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/api/v1/user', user);
-app.use('/api/v1/bovino', bovino);
+app.use('/api/v1/fincas', finca);
+app.use('/api/v1/bovinos', bovino);
 app.use('/api/v1/alimentacion', alimentacion);
-app.use('/api/v1/ceba', ceba);
-app.use('/api/v1/finca', finca);
-app.use('/api/v1/leche', leche);
-app.use('/api/v1/manejo', manejo);
-app.use('/api/v1/pajilla', pajilla);
-app.use('/api/v1/produccion', produccion);
 app.use('/api/v1/sanidad', sanidad);
+app.use('/api/v1/manejo', manejo);
+app.use('/api/v1/ceba', ceba);
+app.use('/api/v1/leche', leche);
+app.use('/api/v1/pajilla', pajilla);
+app.use('/api/v1/grupos',grupo);
+app.use('/api/v1/produccion', produccion);
 app.use('/api/v1/vacuna', vacuna);
 app.use('/api/v1/venta', venta);
 

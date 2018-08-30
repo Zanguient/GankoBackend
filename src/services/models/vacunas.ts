@@ -1,9 +1,22 @@
-import { Vacuna } from './bovinos';
-export const TYPE_REGISTRO_VACUNAS = "registroVacunas";
+import { Grupo } from './common';
 
-export class RegistroVacunas {
-    type: string; // registroVacunas
-    fecha: Date;
-    vacunas: Vacuna[];
-    bovinos: string[];
+export const TYPE_VACUNA = 'RegistroVacuna';
+export class Vacuna {
+    id?: string;
+    type?: string;
+    idFinca?: string;
+    idAplicacionUno?: string;
+    fecha?: Date;
+    fechaProxima?: Date;
+    estadoProximo?: number;
+    nombre: string;
+    dosisMl?: number;
+    frecuencia: number;
+    unidadFrecuencia: string;
+    grupo?: Grupo;
+    valor: number;
+    bovinos?: string[];
+    noBovinos?: string[];
+    titulo?: string;
+    descripcion?: string;
 }

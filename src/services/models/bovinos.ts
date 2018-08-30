@@ -1,22 +1,24 @@
-export const TYPE_BOVINO = "bovino";
+export const TYPE_BOVINO = 'Bovino';
 export class Bovino {
-    type: string; //bovino
+    id?: string;
+    type?: string;
+    tipo: string;
     codigo: string;
-    imagenRemota: string;
-    imagenLocal: string;
+    imagen?: string;
     nombre: string;
     fechaNacimiento?: Date;
-    fechaIngreso: Date;
-    genero: string; //macho|hembra
-    proposito: string; //leche|cebas|ambos
+    fechaIngreso?: Date;
+    genero: string;
+    proposito: string;
     peso: number;
     color: string;
     raza: string;
     codigoMadre?: string;
     codigoPadre?: string;
-    lote: number;
+    lote?: number;
     partos?: number;
     precioCompra?: number;
+    procedencia: string;
 
     retirado: boolean;
     fechaSalida?: Date;
@@ -28,73 +30,43 @@ export class Bovino {
     destete: boolean;
     fechaDestete?: Date;
     celos: Date[];
-    servicios: Servicio[];
-    vacunas: Vacuna[];
-    sanidad: Sanidad[];
-    manejo: Manejo[];
+
+    fechaProximoCelo?: Date;
+
+    seleccionado?: boolean;
+
+    servicios?: Servicio[];
 }
 
-class Servicio {
+export class Servicio {
     fecha: Date;
-    fechaUltimoCelo: Date; // Revisar con Edwin
+    fechaUltimoCelo: Date;
     condicionCorporal: number;
-    empadre: string; //monta, inseminacion
+    empadre: string;
     codigoToro?: string;
     pajilla?: string;
-    diagnosticos: Diagnostico[];
+    diagnostico?: Diagnostico;
     parto?: Parto;
+    novedad?: Novedad;
+    posFechaParto?: Date;
+    finalizado: boolean;
+}
+
+export class Diagnostico {
+    fecha: Date;
     confirmacion: boolean;
 }
 
-class Diagnostico {
+export class Parto {
     fecha: Date;
-    novedad: String; // Muerte | Aborto
-}
-
-class Parto {
-    fecha: Date;
-    intervalo: number; // Dias entre partos
-    diasVacios: number; // Dias desde el ultimo parto hasta el servicio
+    intervalo: number;
+    diasVacios: number;
     sexoCria: string;
-    estadoCria: string; //vivo | muerto
+    numero: number;
+    estadoCria: string;
 }
 
-export class Vacuna {
-    nombre: string;
-    dosis: number;
-    aplicaciones: Aplicacion[];
-}
-
-export class Sanidad {
+export class Novedad {
     fecha: Date;
-    evento: string; //enfermedad|endoparasitos|ectoparasistos|otra
-    otra?: string;
-    diagnostico: string;
-    tratamiento: string;
-    producto: string;
-    dosis: string;
-    via: string;
-    numeroAplicaciones: number;
-    frecuencia: number;
-    observaciones: string;
-    aplicaciones: Aplicacion[];
-}
-
-export class Manejo {
-    fecha: Date;
-    numeroAplicaciones: number;
-    frecuencia: number;
-    tipo:string; // corte de ombligo, identificación, descorné, arreglo de cascos, castración, secado, otro
-    otro?:string;
-    tratamiento:string;
-    producto:string;
-    observaciones:string;
-    aplicaciones:Aplicacion[];
-}
-
-class Aplicacion {
-    fecha: Date;
-    aplicado: boolean;
-    valorProducto:number;
-    valorAsistencia?:number
+    novedad: string;
 }

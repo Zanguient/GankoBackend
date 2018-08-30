@@ -1,8 +1,10 @@
-export const TYPE_PRODUCCION = "produccion";
+export const TYPE_PROD_LECHE = 'Produccion';
 
 export class Produccion {
-    type: string; //producción
-    bovino:string;
+    id?: string;
+    type?: string;
+    bovino: string;
     jornada: string;
     litros: string;
+    fecha: Date;
 }

@@ -16,7 +16,7 @@ export class BovinoService {
     constructor(private db: DBConnection) { }
 
     //permite recuperar los bovinos pertenecientes a un usuario o finca
-    findBovinos(idFinca: number) {
+    findBovinos(idFinca: string,q:string,leche:boolean,ceba:boolean,ambos:boolean,celo:boolean,servicio:boolean,diagnostico:boolean,destete:boolean,retirados:boolean,sexo:string) {
         return this.db.ListByType<Bovino>(TYPE_BOVINO,"finca = $1",[idFinca]);
     }
 

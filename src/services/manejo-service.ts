@@ -1,4 +1,4 @@
-import { RegistroManejo, TYPE_REGISTRO_MANEJO } from "./models/manejo";
+import { Manejo,TYPE_MANEJO } from "./models/manejo";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
@@ -17,19 +17,23 @@ export class ManejoService {
     constructor(private db: DBConnection) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_REGISTRO_MANEJO);
+        return this.db.ListByType(TYPE_MANEJO);
     }
 
-    insert(manejo: RegistroManejo) {
+    getAllByIdBovino(idBovino:string){
+        return this.db.ListByType(TYPE_MANEJO,"bovinos.id = $1",[idBovino]);
+    }
+
+    insert(manejo: Manejo) {
         return this.db.insert(manejo);
     }
 
-    update(id: string, manejo:RegistroManejo) {
+    update(id: string, manejo:Manejo) {
         return this.db.replace(id, manejo);
     }
 
     getById(id: string) {
-        return this.db.getById<RegistroManejo>(id);
+        return this.db.getById<Manejo>(id);
     }
     delete(id:string){
         return this.db.remove(id);
