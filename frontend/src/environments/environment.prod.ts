@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  urlBase: ''
+  urlBase: '/api/v1',
+  urlSync: 'http://localhost:4985/ganko'
 };
