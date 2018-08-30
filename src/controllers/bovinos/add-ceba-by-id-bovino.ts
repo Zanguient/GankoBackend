@@ -4,6 +4,7 @@ import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
 import { CebaService } from '../../services/ceba-service';
+import { Meat } from '../../services/models/ceba';
 
 
 class ResponseBovino extends ResponseBody {
@@ -13,8 +14,9 @@ class ResponseBovino extends ResponseBody {
 }
 
 export function addCebaByIdBovino(req, res: Response, next) {
-    let idBovino = req.body.idBovino;
-    CebaService.instance.addBovino(bovino)
+    let idBovino = req.params.idBovino;
+    let ceba:Meat = req.body.ceba;
+    CebaService.instance.insert(ceba)
         .then(data => {
             res.send(new ResponseBovino(data ? true : false, data, null));
         }, err => {

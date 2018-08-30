@@ -6,23 +6,30 @@ import { getSanidadByIdBovino } from '../controllers/bovinos/get-sanidad-by-id-b
 import { getManejoByIdBovino } from '../controllers/bovinos/get-manejo-by-id-bovino';
 import { getCebaByIdBovino } from '../controllers/bovinos/get-ceba-by-id-bovino';
 import { deleteCebaByIdBovinoAndCeba } from '../controllers/bovinos/delete-ceba-by-id-bovino-and-ceba';
+import { addCebaByIdBovino } from '../controllers/bovinos/add-ceba-by-id-bovino';
+import { getMilkByIdBovino } from '../controllers/bovinos/get-milk-by-id-bovino';
+import { addMilkByIdBovino } from '../controllers/bovinos/add-milk-by-id-bovino';
+import { getVacunaByIdBovino } from '../controllers/bovinos/get-vacuna-by-id-bovino';
 
 const bovino: Router = Router();
 
-bovino.get('/:idFinca', ValidateToken, getBovinos);
+ValidateToken;
+bovino.get('/:idFinca', getBovinos);
+bovino.post('/', addBovino);
+bovino.delete('/:idBovino', deleteBovino);
+bovino.get('/:idBovino', getBovino);
+bovino.get('/:idBovino/alimentacion', getAlimentacionByIdBovino);
+bovino.get('/:idBovino/sanidad', getSanidadByIdBovino);
+bovino.get("/:idBovino/manejo", getManejoByIdBovino);
+bovino.get("/:idBovino/ceba", getCebaByIdBovino);
+bovino.delete("/:idBovino/ceba/:idCeba", deleteCebaByIdBovinoAndCeba);
+bovino.post("/:idBovino/ceba", addCebaByIdBovino);
+bovino.put("/:idBovino/destete", updateBovino);
+bovino.get("/:idBovino/leche", getMilkByIdBovino);
+bovino.post("/:idBovino/leche", addMilkByIdBovino)
+bovino.put("/:idBovino/celo", updateBovino);
+bovino.put("/:idBovino/servicio", updateBovino);
+bovino.get("/:idBovino/vacunas", getVacunaByIdBovino);
 
-
-bovino.post('/', ValidateToken, addBovino);
-bovino.delete('/:idBovino', ValidateToken, deleteBovino);
-bovino.get('/:idBovino', ValidateToken, getBovino);
-bovino.get('/:idBovino/alimentacion',ValidateToken,getAlimentacionByIdBovino);
-bovino.get('/:idBovino/sanidad',ValidateToken,getSanidadByIdBovino);
-bovino.get("/:idBovino/manejo",ValidateToken,getManejoByIdBovino);
-bovino.get("/:idBovino/ceba",ValidateToken,getCebaByIdBovino);
-bovino.delete("/:idBovino/ceba/:idCeba",ValidateToken,deleteCebaByIdBovinoAndCeba);
-bovino.post("/:idBovino/ceba",ValidateToken,addCebaByIdBovino);
-
-
-bovino.put('/update-bovino/:idBovino', ValidateToken, updateBovino);
 
 export default bovino;
