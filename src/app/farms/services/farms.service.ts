@@ -8,11 +8,13 @@ import { map, tap } from 'rxjs/operators';
 import { validate } from '../../util/http-util';
 import { BaseService } from '../../util/base-service';
 import { farms } from './farms.mock';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class FarmsService extends BaseService<Finca> {
 
   data: Finca[] = [];
+  url = `${environment.urlBase}api/v1/`;
 
   constructor(private http: HttpClient, private session: SessionService) {
     super();
@@ -21,8 +23,11 @@ export class FarmsService extends BaseService<Finca> {
   add(item: Finca): Observable<string> {
     item.type = TYPE_FINCA;
     item.usuarioId = this.session.id;
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.post<Rspn<any>>(`${this.url}finca/add-finca`, { item }, {
+      headers: {
+        'Authorization': this.session.token
+      }
+    }).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );

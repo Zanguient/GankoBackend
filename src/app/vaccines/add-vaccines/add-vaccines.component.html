@@ -17,7 +17,7 @@
         </mat-form-field>
 
         <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
-            <mat-label>Fecha</mat-label>
+            <mat-label>Fecha de aplicación</mat-label>
             <input matInput [matDatepicker]="picker" (focus)="picker.open()" [(ngModel)]="date" required name="fechaVac">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -30,7 +30,7 @@
           <mat-radio-button value="Otra" #otra>Otra</mat-radio-button>
         </mat-radio-group>
 
-        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="otra.checked">
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline"  [(ngModel)]="other" *ngIf="otra.checked">
           <mat-label>Otra</mat-label>
           <input matInput type="text"  name="other" required>
         </mat-form-field>
@@ -50,8 +50,6 @@
                 <mat-option value="Años"> Años</mat-option>
             </mat-select>
         </mat-form-field>
-
-
 
         <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
           <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button color="accent"

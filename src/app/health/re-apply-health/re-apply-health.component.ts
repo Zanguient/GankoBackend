@@ -15,7 +15,6 @@ import { finalize } from 'rxjs/operators';
 export class ReApplyHealthComponent implements OnInit {
 
   item: Sanidad;
-  date: Date;
   loading = false;
 
   constructor(private route: ActivatedRoute, private service: HealthService, private snack: MatSnackBar, private router: Router) { }
@@ -33,10 +32,8 @@ export class ReApplyHealthComponent implements OnInit {
 
   apply() {
     this.item.aplicacion = this.item.aplicacion + 1;
-    if (this.date) {
-      this.item.fecha = new Date(this.date);
-      this.item.fechaProxima = this.fechaProx(this.date, this.item.aplicacion, this.item.numeroAplicaciones, this.item.frecuencia);
-    }
+    this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.aplicacion,
+      this.item.numeroAplicaciones, this.item.frecuencia);
     this.loading = true;
     this.service.add(this.item).pipe(
       finalize(() => this.loading = false)
