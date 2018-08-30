@@ -31,7 +31,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/api/v1', user);
+app.use('/api/v1/user', user);
 app.use('/api/v1/fincas', finca);
 app.use('/api/v1/bovinos', bovino);
 app.use('/api/v1/alimentacion', alimentacion);
