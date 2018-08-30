@@ -1,10 +1,30 @@
-import { Sanidad } from './bovinos';
+import { Grupo } from './common';
 
-export const TYPE_REGISTRO_SANIDAD = "registroSanidad";
-
-export class RegistroSanidad {
-    type: string; // registroSanidad
-    fecha: Date;
-    evento: Sanidad;
+export const TYPE_SANIDAD = 'Sanidad';
+export class Sanidad {
+    id?: string;
+    type?: string;
+    idFinca?: string;
+    idAplicacionUno?: string;
+    fecha?: Date;
+    fechaProxima?: Date;
+    frecuencia: number;
+    evento: string;
+    otra?: string;
+    diagnostico: string;
+    tratamiento: string;
+    producto: string;
+    dosis: string;
+    numeroAplicaciones: number;
+    aplicacion: number;
+    observaciones: string;
+    valorProducto: number;
+    valorAtencion: number;
+    grupo?: Grupo;
     bovinos: string[];
+    unidadFrecuencia: string;
+    noBovinos: string[];
+    estadoProximo?: number;
+    titulo?: string;
+    descripcion?: string;
 }

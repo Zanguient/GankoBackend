@@ -1,4 +1,4 @@
-import { TYPE_REGISTRO_SANIDAD, RegistroSanidad } from "./models/sanidad";
+import { Sanidad,TYPE_SANIDAD } from "./models/sanidad";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
@@ -17,19 +17,23 @@ export class SanidadService {
     constructor(private db: DBConnection) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_REGISTRO_SANIDAD);
+        return this.db.ListByType(TYPE_SANIDAD);
     }
 
-    insert(registroSanidad: RegistroSanidad) {
+    getAllByIdBovino(idBovino:string){
+        return this.db.ListByType(TYPE_SANIDAD,"bovinos.id = $1",[idBovino]);
+    }
+
+    insert(registroSanidad: Sanidad) {
         return this.db.insert(registroSanidad);
     }
 
-    update(id: string, registroSanidad: RegistroSanidad) {
+    update(id: string, registroSanidad: Sanidad) {
         return this.db.replace(id, registroSanidad);
     }
 
     getById(id: string) {
-        return this.db.getById<RegistroSanidad>(id);
+        return this.db.getById<Sanidad>(id);
     }
     delete(id:string){
         return this.db.remove(id);

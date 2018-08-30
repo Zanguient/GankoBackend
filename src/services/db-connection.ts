@@ -156,6 +156,14 @@ export class DBConnection {
             .then((x: any[]) => x.length > 0 ? x[0] : undefined);
     }
 
+    deleteByQuery(where: string, params: any[]) {
+        const query = "DELETE FROM `" + this.bucketName + "` WHERE " + `${where} LIMIT 1`;
+        const n1ql = N1qlQuery.fromString(query);
+        return this.bucket.queryAsync(n1ql, params)
+            .then((x: any[]) => {
+                return x.map(y => { return { id: y.id, doc: y[this.bucketName] }; });
+            })
+            .then((x: any[]) => x.length > 0 ? x[0] : undefined);
+    }
+
 }
-
-

@@ -1,12 +1,15 @@
-export const TYPE_ALIMENTACION = "alimentacion";
+import { Grupo } from './common';
 
-export class Alimentacion{
-    type:string; //alimentacion
-    bovino:string[];
-    fecha:Date;
-    racion:number;
-    tipo:string; //Forraje Verde, Bloque Nutricional, Concentrado Comercial, Sal Mineralizada, Heno, Ensilaje, Otro
-    otro:string;
-    valorKilo:number;
+export const TYPE_ALIMENTACION = 'RegistroAlimentacion';
+export class Alimentacion {
+    id?: string;
+    type?: string;
+    grupo?: Grupo;
+    fecha?: Date;
+    idFinca?: string;
+    tipoAlimento: string;
+    peso: number;
+    valorkg: number;
+    valorTotal: number;
+    bovinos: string[];
 }
-

@@ -1,8 +1,11 @@
-export const TYPE_VENTA = "venta";
-
-export class SalidaLeche {
-    type: string; //venta
-    fecha: Date;
-    operacion: string; // venta, consumo propio, regalada, perdida
-    valorLitro?: number;
+export const TYPE_LECHE = 'SalidaLeche';
+export class Leche {
+    id?: string;
+    type?: string;
+    idFarm?: string;
+    fecha?: Date;
+    operacion: string;
+    valorLitro: number;
+    numeroLitros: number;
+    totalLitros: number;
 }

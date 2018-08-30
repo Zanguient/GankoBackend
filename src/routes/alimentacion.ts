@@ -4,6 +4,8 @@ import { ValidateToken } from '../middlewares/token-validation';
 
 const alimentacion: Router = Router();
 
+
+
 alimentacion.get('/get-alimentacion',ValidateToken,getAlimentacion);
 alimentacion.post('/add-alimentacion',ValidateToken,addAlimentacion);
 alimentacion.delete('/delete-alimentacion/:idAlimentacion',ValidateToken,deleteAlimentacion);

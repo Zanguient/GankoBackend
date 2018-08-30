@@ -19,6 +19,9 @@ export class AlimentacionService {
     getAll(){
         return this.db.ListByType(TYPE_ALIMENTACION);
     }
+    getAllByIdBovino(idBovino:string){
+        return this.db.ListByType(TYPE_ALIMENTACION,"bovinos.id = $1",[idBovino]);
+    }
 
     insert(alimentacion: Alimentacion) {
         return this.db.insert(alimentacion);

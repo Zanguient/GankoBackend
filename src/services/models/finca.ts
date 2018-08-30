@@ -1,14 +1,10 @@
-export const TYPE_FINCA = "finca";
+export const TYPE_FINCA = 'Finca';
 
 export class Finca {
-    usuarioDni:string;
-    type:string; // finca
+    id?: string;
+    usuarioId?: string;
     nombre: string;
-    ubicacion: {
-        departamento: string;
-        ciudad: string;
-        region: string;
-        direccion: string;
-    }
+    ubicacion: string;
     hectareas: number;
+    type?: string;
 }
