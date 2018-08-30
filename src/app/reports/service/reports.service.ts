@@ -56,15 +56,15 @@ export class ReportsService {
       { key: 0, value: 'Pajillas' }]
   }];
 
-  typeProms = [{ key: 0, value: 'Producción de leche', stateViewAvrg: true, stateTypeAvrg: true, stateAvrgMonth: true },
-  { key: 1, value: 'Ganancia diaria de peso', stateViewAvrg: true, stateTypeAvrg: true, stateAvrgMonth: true },
-  { key: 2, value: 'Días abiertos', stateViewAvrg: true, stateTypeAvrg: false, stateAvrgMonth: false },
-  { key: 3, value: 'Intervalo entre partos' , stateViewAvrg: true, stateTypeAvrg: false, stateAvrgMonth: false},
-  { key: 4, value: 'Partos por mes' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: true},
-  { key: 5, value: 'Total abortos' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: false},
-  { key: 6, value: 'Total partos' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: false},
-  { key: 7, value: 'Total servicios' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: false},
-  { key: 8, value: 'Total servicios efectivos' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: false}];
+  typeProms = [{ key: 0, value: 'Producción de leche', stateViewAvrg: true, stateTypeAvrg: true, stateAvrgMonth: true, month: false },
+  { key: 1, value: 'Ganancia diaria de peso', stateViewAvrg: true, stateTypeAvrg: true, stateAvrgMonth: true, month: false },
+  { key: 2, value: 'Días abiertos', stateViewAvrg: true, stateTypeAvrg: false, stateAvrgMonth: false, month: false },
+  { key: 3, value: 'Intervalo entre partos' , stateViewAvrg: true, stateTypeAvrg: false, stateAvrgMonth: false, month: false},
+  { key: 4, value: 'Partos por mes' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: true, month: true},
+  { key: 5, value: 'Total abortos' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: false, month: false},
+  { key: 6, value: 'Total partos' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: false, month: false},
+  { key: 7, value: 'Total servicios' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: false, month: false},
+  { key: 8, value: 'Total servicios efectivos' , stateViewAvrg: false, stateTypeAvrg: false, stateAvrgMonth: false, month: false}];
 
   reports: string[] = ['Mensual', 'Rango de fechas'];
 
