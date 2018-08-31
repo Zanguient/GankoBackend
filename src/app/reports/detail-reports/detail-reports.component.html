@@ -94,12 +94,9 @@
       </mat-tab>
     </mat-tab-group>
     <mat-card-actions align="center">
-      <button mat-mini-fab color="accent" title="Descargar reporte" [disabled]="reportForm.invalid" *ngIf="selectedTab != 1">
+      <button mat-mini-fab color="accent" title="Descargar reporte" [disabled]="reportForm.invalid" *ngIf="selectedTab != 1" (click)="downloadReport()">
         <mat-icon>get_app</mat-icon>
-      </button>
-      <button mat-mini-fab color="accent" title="Visualizar reporte" [disabled]="reportForm.invalid" *ngIf="selectedTab != 1" class="margin_left_btn">
-        <mat-icon>visibility</mat-icon>
-      </button>
+      </button>      
       <button mat-mini-fab color="accent" title="Visualizar promedio" [disabled]="promForm.invalid" *ngIf="selectedTab == 1 && !viewAverage" class="margin_left_btn" (click)="getAverage()">
         <mat-icon>visibility</mat-icon>
       </button>
@@ -114,7 +111,7 @@
       <p *ngIf="typeReportSelect === 'Mensual' && (typePromSelect.stateTypeAvrg || service.typeProms[typePromSelect.key].month)">{{monthSelect}} de {{getYear()}}</p>
       <p *ngIf="typeReportSelect != 'Mensual' && typePromSelect.stateTypeAvrg">{{dateInitSelect | date:'dd/MM/yyyy'}} - {{dateFinalSelect | date:'dd/MM/yyyy'}}</p>
       <p>{{promSelect}}</p>
-      <h1>0.0</h1>
+      <h1>{{average}}</h1>
     </mat-card-content>
     <mat-card-actions align="end">
       <button mat-icon-button color="accent" title="Cerrar" (click)="closeAverage()"><mat-icon>highlight_off</mat-icon></button>

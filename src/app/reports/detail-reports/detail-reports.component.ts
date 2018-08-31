@@ -25,6 +25,7 @@ export class DetailReportsComponent implements OnInit {
   bovineSelect: Bovino;
   lstBovine: Bovino[];
   viewAverage: boolean;
+  average: number;
 
 
   constructor(public service: ReportsService, private serviceBovine: BovinesService, private snack: MatSnackBar) {
@@ -74,6 +75,7 @@ export class DetailReportsComponent implements OnInit {
     this.dateInitSelect = null;
     this.dateFinalSelect = null;
     this.promSelect = 'Total';
+    this.viewAverage = false;
   }
 
   changeCategory() {
@@ -85,7 +87,13 @@ export class DetailReportsComponent implements OnInit {
   }
 
   getAverage() {
+    // obtener resultado promedio
     this.viewAverage = true;
+    this.average = 0.0;
+  }
+
+  downloadReport() {
+    // descargar reporte
   }
 
 }
