@@ -38,7 +38,7 @@ export class SelectedBvnService {
     return combineLatest(filter, query).pipe(
       tap(() => this.loading.next(true)),
       map(x => x.filter(q => q !== '').join('&')),
-      map(x => this.makeUrl('bovinos', this.session.farmId) + (x.length > 0 ? '?' + x : x)),
+      map(x => this.makeUrl('bovinos', 'finca',  this.session.farmId) + (x.length > 0 ? '?' + x : x)),
       mergeMap(x => this.http.get<Rspn<Doc<Bovino>[]>>(x, this.makeAuth(this.session.token))),
       map(x => validate(x)),
       mergeMap(x => listToDoc(x)),

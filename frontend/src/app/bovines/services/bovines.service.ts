@@ -45,13 +45,27 @@ export class BovinesService extends BaseService<Bovino> {
     this.loading.next(true);
 
     return combineLatest(filter, query).pipe(
-      tap(() => this.loading.next(true)),
-      map(x => x.filter(q => q !== '').join('&')),
-      map(x => this.makeUrl('bovinos', this.session.farmId) + (x.length > 0 ? '?' + x : x)),
-      mergeMap(x => this.http.get<Rspn<Doc<Bovino>[]>>(x, this.makeAuth(this.session.token))),
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x),
+      tap(() => {
+        this.loading.next(true);
+      }),
+      map(x => {
+        return x.filter(q => q !== '').join('&');
+      }),
+      map(x => {
+        return this.makeUrl('bovinos', 'finca', this.session.farmId) + (x.length > 0 ? '?' + x : x);
+      }),
+      mergeMap(x => {
+        return this.http.get<Rspn<Doc<Bovino>[]>>(x, this.makeAuth(this.session.token));
+      }),
+      map(x => {
+        return validate(x);
+      }),
+      mergeMap(x => {
+        return listToDoc(x);
+      }),
+      tap(x => {
+        this.data = x;
+      }),
       tap(() => this.loading.next(false), () => this.loading.next(false))
     );
 
@@ -177,11 +191,11 @@ export class BovinesService extends BaseService<Bovino> {
     const farm = this.session.farmId;
     return this.http.get<Rspn<Doc<Straw>[]>>(this.makeUrl('pajillas', farm + '?q=' + query),
       this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => from(x)),
-      map(x => new ItemEmp(x.id, x.doc.breed, x.doc.idStraw, x.doc.layette)),
-      toArray()
-    );
+        map(x => validate(x)),
+        mergeMap(x => from(x)),
+        map(x => new ItemEmp(x.id, x.doc.breed, x.doc.idStraw, x.doc.layette)),
+        toArray()
+      );
   }
 
   addService(id: string, service: Servicio): Observable<String> {
