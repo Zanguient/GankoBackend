@@ -204,24 +204,24 @@ export class BovinesService extends BaseService<Bovino> {
     );
   }
 
-  addDiagnostic(id: string, diagnostic: Diagnostico): Observable<Diagnostico> {
-    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'diagnostico'), diagnostic, this.makeAuth(this.session.token)).pipe(
+  addDiagnostic(id: string, service: Servicio): Observable<Diagnostico> {
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'novedad'), service, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      map(() => diagnostic)
+      map(() => service.diagnostico)
     );
   }
 
-  addNovelty(id: string, novelty: Novedad): Observable<Novedad> {
-    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'novedad'), novelty, this.makeAuth(this.session.token)).pipe(
+  addNovelty(id: string, service: Servicio): Observable<Novedad> {
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'novedad'), service, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      map(x => novelty)
+      map(x => service.novedad)
     );
   }
 
-  addBirth(id: string, birth: Parto): Observable<Parto> {
-    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'parto'), birth, this.makeAuth(this.session.token)).pipe(
+  addBirth(id: string, service: Servicio): Observable<Parto> {
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'novedad'), service, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      map(x => birth)
+      map(x => service.parto)
     );
   }
 
