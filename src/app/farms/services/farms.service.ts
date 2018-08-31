@@ -22,14 +22,14 @@ export class FarmsService extends BaseService<Finca> {
   add(item: Finca): Observable<string> {
     item.type = TYPE_FINCA;
     item.usuarioId = this.session.id;
-    return this.http.post<Rspn<string>>(this.makeUrl('finca'), item, this.makeAuth(this.session.token)).pipe(
+    return this.http.post<Rspn<string>>(this.makeUrl('fincas'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );
   }
 
   list(): Observable<Finca[]> {
-    return this.http.get<Rspn<Doc<Finca>[]>>(this.makeUrl('finca'), this.makeAuth(this.session.token)).pipe(
+    return this.http.get<Rspn<Doc<Finca>[]>>(this.makeUrl('fincas'), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       mergeMap(x => listToDoc(x)),
       tap(x => this.data = x)
@@ -39,19 +39,19 @@ export class FarmsService extends BaseService<Finca> {
   update(item: Finca): Observable<string> {
     const id = item.id;
     delete item.id;
-    return this.http.put<Rspn<string>>(this.makeUrl('finca', id), this.makeAuth(this.session.token)).pipe(
+    return this.http.put<Rspn<string>>(this.makeUrl('fincas', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
 
   remove(id: string): Observable<string> {
-    return this.http.delete<Rspn<string>>(this.makeUrl('finca', id), this.makeAuth(this.session.token)).pipe(
+    return this.http.delete<Rspn<string>>(this.makeUrl('fincas', id), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
 
   getById(id: string): Observable<Finca> {
-    return this.http.get<Rspn<Doc<Finca>>>(this.makeUrl('finca', id), this.makeAuth(this.session.token)).pipe(
+    return this.http.get<Rspn<Doc<Finca>>>(this.makeUrl('fincas', id), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       map(x => toDoc(x))
     );
