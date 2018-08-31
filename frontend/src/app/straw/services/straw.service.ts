@@ -29,8 +29,7 @@ export class StrawService extends BaseService<Straw> {
 
   list(): Observable<Straw[]> {
     const farm = this.session.farmId;
-    return this.http.get<Rspn<Doc<Straw>[]>>(this.makeUrl('pajillas', farm),
-      this.makeAuthAndParams(this.session.token, ['q', 'consulta']))
+    return this.http.get<Rspn<Doc<Straw>[]>>(this.makeUrl('pajillas', farm), this.makeAuth(this.session.token))
       .pipe(
         map(x => validate(x)),
         mergeMap(x => listToDoc(x)),
