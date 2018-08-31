@@ -1,5 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { HttpParams } from '@angular/common/http';
 
 export abstract class BaseService<T> {
 
@@ -38,13 +39,14 @@ export abstract class BaseService<T> {
     }
 
     makeAuthAndParams(token: string, ...params: [string, string][]) {
-        const mParams = new URLSearchParams();
-        params.forEach(x => mParams.append(x[0], x[1]));
+        const mParams: {[k: string]: string} = {};
+        params.forEach(x => mParams[x[0]] = x[1]);
+        console.log(mParams);
         return {
             headers: {
                 'Authorization': token
             },
-            search: mParams
+            params: mParams
         };
     }
 
