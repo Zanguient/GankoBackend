@@ -28,22 +28,39 @@ export class ManageService extends BaseService<Manejo> {
   }
 
   list(): Observable<Manejo[]> {
-    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo'), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)
-    );
-    /*return timer(500).pipe(
-      tap(() => this.data = this.data.length > 0 ? this.data : manages()),
-      map(() => new Rspn(true, this.data)), // simular respuesta
-      map(x => validate(x))
-    );*/
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', 'finca', this.session.farmId),
+    this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
+  }
+
+  listNext(): Observable<Manejo[]> {
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', 'finca', this.session.farmId),
+      this.makeAuthAndParams(this.session.token, ['q', 'proximos']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
+  }
+
+  listPendings(): Observable<Manejo[]> {
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', 'finca', this.session.farmId),
+    this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
   update(item: Manejo): Observable<string> {
     const id = item.id;
     delete item.id;
-    return this.http.put<Rspn<string>>(this.makeUrl('manejo', id), item, this.makeAuth(this.session.token)).pipe(
+    return this.http.put<Rspn<string>>(this.makeUrl('manejo'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }

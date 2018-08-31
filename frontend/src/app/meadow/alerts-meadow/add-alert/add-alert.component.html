@@ -1,0 +1,41 @@
+<div class="mat-typography container">
+  <mat-card>
+    <h3>
+      <button mat-icon-button (click)="cancel()">
+        <mat-icon>arrow_back</mat-icon>
+      </button> Agregar Alerta</h3>
+    <div class="section">
+      <form #alertForm="ngForm">
+        <mat-card-content>
+          <div fxLayout="row wrap" fxLayoutGap="16px">
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Tipo</mat-label>
+              <mat-select placeholder="Tipo" name="type" [(ngModel)]="alertMeadow.tipo" required>
+                <mat-option value="ocupacion">Ocupación</mat-option>
+                <mat-option value="descanso">Descanso</mat-option>
+                <mat-option value="fertilizacion">Fertilización</mat-option>
+              </mat-select>
+            </mat-form-field>            
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Valor</mat-label>
+              <input matInput type="number" placeholder="Valor" [(ngModel)]="valor" name="valor" required/>
+            </mat-form-field>
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Tiempo</mat-label>
+              <mat-select placeholder="Tiempo" name="time" [(ngModel)]="tiempo" required>
+                <mat-option value="hora">Hora(s)</mat-option>
+                <mat-option value="dia">Dia(s)</mat-option>
+                <mat-option value="mes">Mes(es)</mat-option>
+                <mat-option value="ano">Año(s)</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="accent" (click)="cancel()">Cancelar</button>
+          <button mat-raised-button color="accent" [disabled]="alertForm.invalid" (click)="add()">Agregar</button>
+        </mat-card-actions>
+      </form>
+    </div>
+  </mat-card>
+</div>

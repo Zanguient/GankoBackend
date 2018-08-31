@@ -1,0 +1,11 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>¿Desea guardar estos valores?</h2>
+  <mat-dialog-content>
+    <p>Promedio: {{data.aforo.promedio}} Kg/m²</p>
+    <p>Aforo: {{data.aforo.total}} Kg</p>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="undefined">Cancelar</button>
+    <button mat-button (click)="accept()">Aceptar</button>
+  </mat-dialog-actions>
+</div>

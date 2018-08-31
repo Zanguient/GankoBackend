@@ -1,0 +1,48 @@
+<div class="mat-typography container" *ngIf="!loading">
+  <mat-card>
+    <h3>
+      <button mat-icon-button (click)="cancel()">
+        <mat-icon>arrow_back</mat-icon>
+      </button> Agregar Mantenimiento</h3>
+    <div class="section">
+      <form #maintenanceForm="ngForm">
+        <mat-card-content>
+          <div fxLayout="row wrap" fxLayoutGap="16px">
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Fecha</mat-label>
+              <input matInput [matDatepicker]="dateMaintenance" placeholder="Fecha" [(ngModel)]="mantenimiento.fechaMantenimiento" name="dateMaintenance"
+                required>
+              <mat-datepicker-toggle matSuffix [for]="dateMaintenance"></mat-datepicker-toggle>
+              <mat-datepicker #dateMaintenance></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Producto</mat-label>
+              <input matInput type="text" placeholder="Producto" [(ngModel)]="mantenimiento.producto" name="product" required/>
+            </mat-form-field>
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Cantidad</mat-label>
+              <input matInput type="number" placeholder="Cantidad" [(ngModel)]="mantenimiento.cantidad" name="amount" required (keypress)="calculateTotal()"
+              />
+            </mat-form-field>
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Valor</mat-label>
+              <input matInput type="number" placeholder="Valor" [(ngModel)]="mantenimiento.valor" name="price" required (keypress)="calculateTotal()"
+              />
+            </mat-form-field>
+            <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+              <mat-label>Total</mat-label>
+              <input matInput type="number" placeholder="Total" [(ngModel)]="mantenimiento.total" name="total" disabled/>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="accent" (click)="cancel()">Cancelar</button>
+          <button mat-raised-button color="accent" [disabled]="maintenanceForm.invalid" (click)="add()">Agregar</button>
+        </mat-card-actions>
+      </form>
+    </div>
+  </mat-card>
+</div>
+<div *ngIf="loading" class="container section">
+  <app-loader [big]="true" [align]="'center'"></app-loader>
+</div>

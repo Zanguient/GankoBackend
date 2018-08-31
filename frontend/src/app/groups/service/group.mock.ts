@@ -9,16 +9,21 @@ export function groups(): Group[] {
     ];
 }
 
-export function group(): Group {
-    return makeItem(1);
+export function group(item?: string): Group {
+    if (item) {
+        return makeItem(+item);
+    } else {
+        return makeItem(1);
+    }
 }
 
 function makeItem(item: number): Group {
     return {
-        id: '123',
+        id: item.toString(),
         bovines: ['321', '456', '123'],
         color: item % 2 === 0 ? 4921451 : 4051634,
         finca: '123',
-        nombre: 'Grupo ' + item
+        nombre: 'Grupo ' + item,
+        pradera: item % 2 ? null : item.toString()
     };
 }
