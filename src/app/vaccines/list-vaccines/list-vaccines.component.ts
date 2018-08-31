@@ -16,15 +16,22 @@ export class ListVaccinesComponent extends BaseListComponent<Vacuna> {
 
   filter = 0;
 
-  constructor(service: VaccinesService, snack: MatSnackBar, dialog: MatDialog,
+  constructor(private srv: VaccinesService, snack: MatSnackBar, dialog: MatDialog,
     router: Router, route: ActivatedRoute, public nav: NavService) {
-    super(service, dialog, router, route, snack);
+    super(srv, dialog, router, route, snack);
   }
 
   changeFilter(filter: number) {
     this.filter = filter;
     this.loading = true;
-    this.service.list().pipe(
+
+    let api = this.service.list();
+
+    if (filter === 1) {
+      api = this.srv.listNext();
+    } else if (filter === 2) { api = this.srv.listPendings(); }
+
+    api.pipe(
       finalize(() => this.loading = false)
     ).subscribe(x => this.data = x);
   }

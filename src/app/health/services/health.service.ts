@@ -28,7 +28,7 @@ export class HealthService extends BaseService<Sanidad> {
   }
   list(): Observable<Sanidad[]> {
     return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('sanidad', 'finca', this.session.farmId),
-    this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
+      this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
       .pipe(
         map(x => validate(x)),
         mergeMap(x => listToDoc(x)),
@@ -48,7 +48,7 @@ export class HealthService extends BaseService<Sanidad> {
 
   listPendings(): Observable<Sanidad[]> {
     return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('sanidad', 'finca', this.session.farmId),
-    this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
+      this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
       .pipe(
         map(x => validate(x)),
         mergeMap(x => listToDoc(x)),
