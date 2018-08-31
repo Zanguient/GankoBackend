@@ -38,7 +38,7 @@ export class GroupsService extends BaseService<Group> {
   update(item: Group): Observable<string> {
     const id = item.id;
     delete item.id;
-    return this.http.put<Rspn<string>>(this.makeUrl('grupos', id), this.makeAuth(this.session.token)).pipe(
+    return this.http.put<Rspn<string>>(this.makeUrl('grupos', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
