@@ -20,8 +20,13 @@ export class PajillaService {
         return this.db.ListByType(TYPE_PAJILLA);
     }
 
-    getAllByIdFinca(idFinca:string,q:string) {
-        return this.db.ListByType(TYPE_PAJILLA,"idFarm = $1 AND breed = $2 OR idStraw = $3",[idFinca,q,q]);
+    getAllByIdFinca(idFinca: string, q: string) {
+        let where = '';
+        if (q) {
+            const qy = q.toLowerCase();
+            where += ' AND ( LOWER(breed) LIKE "' + qy + '%" OR LOWER(idStraw) LIKE "' + qy + '%")';
+        }
+        return this.db.ListByType(TYPE_PAJILLA, 'idFarm = $1' + where, [idFinca]);
     }
 
     insert(pajilla: Straw) {
@@ -35,7 +40,7 @@ export class PajillaService {
     getById(id: string) {
         return this.db.getById<Straw>(id);
     }
-    delete(id:string){
+    delete(id: string) {
         return this.db.remove(id);
     }
 
