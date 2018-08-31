@@ -37,4 +37,15 @@ export abstract class BaseService<T> {
         };
     }
 
+    makeAuthAndParams(token: string, ...params: [string, string][]) {
+        const mParams = new URLSearchParams();
+        params.forEach(x => mParams.append(x[0], x[1]));
+        return {
+            headers: {
+                'Authorization': token
+            },
+            search: mParams
+        };
+    }
+
 }
