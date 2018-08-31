@@ -18,7 +18,7 @@ export class NavService {
 
   filters: Filter = {
     leche: false, ceba: false, ambos: false, celo: false, servicio: false,
-    diagnostico: false, prenez: false, retirados: false
+    diagnostico: false, destete: false, noDestete: false, retirados: false, macho: false, hembra: false
   };
 
   showRetired = true;
@@ -31,6 +31,12 @@ export class NavService {
   notifyFilter(filter: string) {
     const value = this.filters[filter];
     this.filters[filter] = !value;
+
+    if (filter === 'destete' && value) { this.filters.noDestete = false; }
+    if (filter === 'noDestete' && value) { this.filters.destete = false; }
+    if (filter === 'macho' && value) { this.filters.hembra = false; }
+    if (filter === 'hembra' && value) { this.filters.macho = false; }
+
     this.filter.next(this.makeQuery());
   }
 
@@ -40,7 +46,10 @@ export class NavService {
     this.filters.leche = false;
     this.filters.servicio = false;
     this.filters.diagnostico = false;
-    this.filters.prenez = false;
+    this.filters.destete = false;
+    this.filters.noDestete = false;
+    this.filters.macho = false;
+    this.filters.hembra = false;
     this.filters.retirados = false;
     this.filters.celo = false;
   }
@@ -52,12 +61,24 @@ export class NavService {
   }
 
   private makeQuery(): string {
-    return [['leche', this.filters.leche], ['ceba', this.filters.ceba], ['ambos', this.filters.ambos],
+
+    const queries = [['leche', this.filters.leche], ['ceba', this.filters.ceba], ['ambos', this.filters.ambos],
     ['celo', this.filters.celo], ['servicio', this.filters.servicio], ['diagnostico', this.filters.diagnostico],
-    ['prenez', this.filters.prenez], ['retirados', this.filters.retirados]]
-      .filter(x => x[1])
+    ['retirados', this.filters.retirados]]
+      .filter(x => x[1]);
+
+    if (this.filters.destete || this.filters.noDestete) {
+      queries.push(['destete', this.filters.destete]);
+    }
+
+    if (this.filters.macho || this.filters.hembra) {
+      queries.push(['sexo', this.filters.macho ? 'Macho' : 'Hembra']);
+    }
+
+    return queries
       .map(x => x[0] + '=' + x[1])
       .join('&');
+
   }
 
 }
@@ -69,8 +90,12 @@ export interface Filter {
   celo: boolean;
   servicio: boolean;
   diagnostico: boolean;
-  prenez: boolean;
+  destete: boolean;
+  noDestete: boolean;
   retirados: boolean;
+  macho: boolean;
+  hembra: boolean;
+
 }
 
 export interface Bread {

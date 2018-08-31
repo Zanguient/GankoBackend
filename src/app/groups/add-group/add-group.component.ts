@@ -19,7 +19,8 @@ export class AddGroupComponent implements OnInit {
     bovines: [],
     color: 0,
     finca: '',
-    nombre: ''
+    nombre: '',
+    pradera: ''
   };
   color = '#000000';
 

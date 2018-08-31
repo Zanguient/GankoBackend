@@ -28,4 +28,25 @@ export abstract class BaseService<T> {
         paths.forEach(x => url += `/${x}`);
         return url;
     }
+
+    makeAuth(token: string) {
+        return {
+            headers: {
+                'Authorization': token
+            }
+        };
+    }
+
+    makeAuthAndParams(token: string, ...params: [string, string][]) {
+        const mParams = new URLSearchParams();
+        params.forEach(x => mParams.append(x[0], x[1]));
+        return {
+            headers: {
+                'Authorization': token
+            },
+            search: mParams
+        };
+    }
+
+
 }

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlBase: 'http://104.209.144.166:8080/'
+  urlBase: 'http://104.209.144.166/api/v1',
+  urlSync: 'http://localhost:4985/ganko'
 };
 
 /*
