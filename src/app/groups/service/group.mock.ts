@@ -21,7 +21,7 @@ function makeItem(item: number): Group {
     return {
         id: item.toString(),
         bovines: ['321', '456', '123'],
-        color: item % 2 === 0 ? 4921451 : 4051634,
+        color: item % 2 === 0 ? 4921451 : 16711680,
         finca: '123',
         nombre: 'Grupo ' + item,
         pradera: item % 2 ? null : item.toString()

@@ -7,6 +7,7 @@ import { Bovino } from '../../shared/models/bovine.model';
 import { BovinesService } from '../services/bovines.service';
 import { DeleteDialogComponent } from '../../shared/components/delete-dialog/delete-dialog.component';
 import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-bvn',
@@ -14,6 +15,9 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./list-bvn.component.scss']
 })
 export class ListBvnComponent extends BaseListComponent<Bovino> implements OnDestroy {
+
+  loading: boolean;
+  subsLoading: Subscription;
 
   constructor(private nav: NavService, public srv: BovinesService, snack: MatSnackBar, dialog: MatDialog,
     router: Router, route: ActivatedRoute) {
@@ -23,12 +27,17 @@ export class ListBvnComponent extends BaseListComponent<Bovino> implements OnDes
     nav.searchable = true;
     nav.filterable = true;
 
+    this.subsLoading = this.srv.loading
+      .subscribe(x => this.loading = x);
+
   }
 
   ngOnDestroy() {
+    super.ngOnDestroy();
     this.nav.searchable = false;
     this.nav.filterable = false;
     this.nav.searching = false;
+    this.subsLoading.unsubscribe();
   }
 
   removeAction(dialog: MatDialogRef<DeleteDialogComponent, any>, index: number) {

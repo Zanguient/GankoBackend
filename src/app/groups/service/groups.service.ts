@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../../util/base-service';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
-import { timer, Observable } from 'rxjs';
+import { timer, Observable, of } from 'rxjs';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
 import { validate, listToDoc, toDoc } from '../../util/http-util';
