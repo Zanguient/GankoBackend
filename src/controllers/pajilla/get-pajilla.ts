@@ -17,10 +17,7 @@ export function getPajillasyIdFinca(req, res: Response, next) {
 
     PajillaService.instance.getAllByIdFinca(idFinca,q)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponsePajilla(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponsePajilla(null, null, err));
         })

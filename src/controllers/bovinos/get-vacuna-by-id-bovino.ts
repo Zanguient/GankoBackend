@@ -17,9 +17,7 @@ export function getVacunaByIdBovino(req, res: Response, next) {
     let idBovino = req.params.idBovino;
     VacunaService.instance.getByIdBovino(idBovino)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseBody(true, data, null));
-            }
         }, err => {
             res.status(500).send(new ResponseBody(null, null, err));
         })

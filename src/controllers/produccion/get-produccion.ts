@@ -15,10 +15,7 @@ export function getProduccion(req, res: Response, next) {
     
     ProduccionService.instance.getAll()
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseProduccion(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseProduccion(null, null, err));
         })

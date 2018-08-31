@@ -2,7 +2,6 @@ import { VacunaService } from '../../services/vacuna-service';
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { RegistroVacunas } from '../../services/models/vacunas';
 
 
 class ResponseVacunas extends ResponseBody {

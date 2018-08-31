@@ -2,7 +2,7 @@ import { VacunaService } from '../../services/vacuna-service';
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { RegistroVacunas } from '../../services/models/vacunas';
+import { Vacuna } from '../../services/models/vacunas';
 
 
 class ResponseVacunas extends ResponseBody {
@@ -11,7 +11,7 @@ class ResponseVacunas extends ResponseBody {
     }
 }
 export function updateVacuna(req, res: Response, next) {
-    let vacuna: RegistroVacunas = req.body;
+    let vacuna: Vacuna = req.body;
     let idVacuna = req.params.idVacuna;
     VacunaService.instance.update(idVacuna, vacuna)
         .then(data => {

@@ -15,10 +15,7 @@ export function getAlimentacionByIdBovino(req, res: Response, next) {
     
     AlimentacionService.instance.getAllByIdBovino(req.params.idBovino)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseAlimentacion(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseAlimentacion(null, null, err));
         })

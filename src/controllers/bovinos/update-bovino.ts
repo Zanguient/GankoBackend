@@ -20,4 +20,4 @@ export function updateBovino(req, res: Response, next) {
         }, err => {
             res.status(500).send(new ResponseBovino(null, null, err));
         })
-}
+} 

@@ -2,7 +2,7 @@ import { VentaService } from '../../services/venta-service';
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { SalidaLeche } from '../../services/models/venta';
+import { Leche } from '../../services/models/venta';
 
 
 class ResponseVenta extends ResponseBody {
@@ -11,7 +11,7 @@ class ResponseVenta extends ResponseBody {
     }
 }
 export function updateVenta(req, res: Response, next) {
-    let venta: SalidaLeche = req.body;
+    let venta: Leche = req.body;
     let idVenta = req.params.idVenta;
     VentaService.instance.update(idVenta, venta)
         .then(data => {
