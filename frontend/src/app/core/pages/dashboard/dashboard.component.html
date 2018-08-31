@@ -10,7 +10,8 @@
 
     <mat-nav-list>
       <h3 matSubheader class="back-title" (click)="goToFarm()">
-        <mat-icon class="icon-back">arrow_back</mat-icon>{{session.farmName}}</h3>
+        <mat-icon class="icon-back">arrow_back</mat-icon>{{session.farmName}}
+      </h3>
       <a mat-list-item routerLink="bovinos" routerLinkActive="active">
         <mat-icon matListIcon svgIcon='bovine'></mat-icon> Bovinos</a>
       <a mat-list-item routerLink="grupos" routerLinkActive="active">
@@ -68,9 +69,9 @@
 
       </mat-toolbar>
       <div class="main-content">
-          <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
       </div>
-      
+
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
@@ -100,11 +101,25 @@
   </button>
   <button mat-menu-item (click)="nav.notifyFilter('diagnostico')" [disabled]="nav.filters.retirados">
     <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.diagnostico ? 'check_box':'check_box_outline_blank'}}</mat-icon>
-    <span>En diagnostico</span>
+    <span>Diagnostico</span>
   </button>
-  <button mat-menu-item (click)="nav.notifyFilter('prenez')" [disabled]="nav.filters.retirados">
-    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.prenez ? 'check_box':'check_box_outline_blank'}}</mat-icon>
-    <span>En Preñez</span>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="nav.notifyFilter('destete')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.destete ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>Destete</span>
+  </button>
+  <button mat-menu-item (click)="nav.notifyFilter('noDestete')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.noDestete ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>Sin Destete</span>
+  </button>
+  <mat-divider></mat-divider>
+  <button mat-menu-item (click)="nav.notifyFilter('macho')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.macho ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>Machos</span>
+  </button>
+  <button mat-menu-item (click)="nav.notifyFilter('hembra')" [disabled]="nav.filters.retirados">
+    <mat-icon [class.check]="!nav.filters.retirados">{{nav.filters.hembra ? 'check_box':'check_box_outline_blank'}}</mat-icon>
+    <span>Hebras</span>
   </button>
   <mat-divider></mat-divider>
   <button *ngIf="nav.showRetired" mat-menu-item (click)="nav.notifyFilter('retirados')">

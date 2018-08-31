@@ -16,7 +16,7 @@ export class LoginService {
   constructor(private http: HttpClient, private session: SessionService) { }
 
   login(username: string, pass: string) {
-    return this.http.post<Rspn<LoginResponse>>(`${this.url}user/login`, {
+    return this.http.post<Rspn<LoginResponse>>(this.url, {
       username: username,
       pass: pass
     }, {}).pipe(
