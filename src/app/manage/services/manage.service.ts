@@ -40,6 +40,14 @@ export class ManageService extends BaseService<Manejo> {
     );*/
   }
 
+  listNext(from: Date): Observable<Manejo[]> {
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', from), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x)),
+      tap(x => this.data = x)
+    );
+  }
+
   update(item: Manejo): Observable<string> {
     const id = item.id;
     delete item.id;
