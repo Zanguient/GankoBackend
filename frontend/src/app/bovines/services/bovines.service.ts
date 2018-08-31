@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, Observable, timer } from 'rxjs';
-import { map, mergeMap, tap, toArray } from 'rxjs/operators';
+import { from, Observable, timer, BehaviorSubject, combineLatest } from 'rxjs';
+import { map, mergeMap, tap, toArray, startWith } from 'rxjs/operators';
 import { SessionService } from '../../core/services/session.service';
 import { feeds } from '../../feed/services/feed.mock';
 import { healths } from '../../health/services/health.mock';
@@ -12,38 +12,56 @@ import { Sanidad } from '../../shared/models/health.model';
 import { Manejo } from '../../shared/models/manage.model';
 import { Meat } from '../../shared/models/meat.model';
 import { Produccion } from '../../shared/models/milk-production.model';
-import { Rspn } from '../../shared/models/response.model';
+import { Rspn, Doc } from '../../shared/models/response.model';
 import { Vacuna } from '../../shared/models/vaccine.model';
 import { straws } from '../../straw/services/straw.mock';
 import { BaseService } from '../../util/base-service';
-import { validate } from '../../util/http-util';
+import { validate, listToDoc, toDoc } from '../../util/http-util';
 import { vaccines } from '../../vaccines/services/vaccines.mock';
 import { bovine, bovines, meats, productions } from './bovines.mock';
+import { NavService } from '../../core/services/nav.service';
 
 @Injectable()
 export class BovinesService extends BaseService<Bovino> {
 
   data: Bovino[] = [];
+  loading: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
-  constructor(private http: HttpClient, private session: SessionService) {
+  constructor(private http: HttpClient, private session: SessionService, private nav: NavService) {
     super();
   }
 
   add(item: Bovino): Observable<string> {
     item.finca = this.session.farmId;
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
-      map(x => validate(x)),
-      tap(() => this.data.push(item))
+    return this.http.post<Rspn<string>>(this.makeUrl('bovinos'), item, this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x))
     );
   }
 
   list(): Observable<Bovino[]> {
-    return timer(500).pipe(
-      tap(() => this.data = this.data.length > 0 ? this.data : bovines()),
-      map(() => new Rspn(true, this.data)), // simular respuesta
-      map(x => validate(x))
+    const filter = this.nav.filter.pipe(
+      startWith('')
     );
+    const query = this.nav.search.pipe(
+      startWith(''),
+      map(x => x === '' ? x : 'q=' + x)
+    );
+
+    this.loading.next(true);
+
+    return combineLatest(filter, query).pipe(
+      tap(() => this.loading.next(true)),
+      map(x => x.filter(q => q !== '').join('&')),
+      map(x => this.makeUrl('bovinos', this.session.farmId) + (x.length > 0 ? '?' + x : x)),
+      mergeMap(x => this.http.get<Rspn<Doc<Bovino>[]>>(x, this.makeAuth(this.session.token))),
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x)),
+      tap(x => this.data = x),
+      tap(() => this.loading.next(false), () => this.loading.next(false))
+    );
+
+
+
   }
 
   update(item: Bovino): Observable<string> {
@@ -54,29 +72,27 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   remove(id: string): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.delete<Rspn<string>>(this.makeUrl('bovinos', id), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
 
   getById(id: string): Observable<Bovino> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, bovine())),
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Bovino>>>(this.makeUrl('bovinos', id), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      map(x => toDoc(x))
     );
   }
 
   listMilk(id: string): Observable<Produccion[]> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, productions())), // simular respuesta
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Produccion>[]>>(this.makeUrl('bovinos', id, 'leche'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x))
     );
   }
 
   addMilk(prod: Produccion): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.post<Rspn<string>>(this.makeUrl('bovinos', prod.bovino, 'leche'), prod, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
@@ -86,44 +102,41 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   listMeat(id: string): Observable<Meat[]> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, meats())), // simular respuesta
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Meat>[]>>(this.makeUrl('bovinos', id, 'ceba'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x))
     );
   }
 
-  removeMeat(id: string): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+  removeMeat(id: string, ceba: string): Observable<string> {
+    return this.http.delete<Rspn<string>>(this.makeUrl('bovinos', id, 'ceba', ceba), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
 
   addMeat(meat: Meat): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.post<Rspn<string>>(this.makeUrl('bovinos', meat.bovino, 'ceba'), meat, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
 
-  updateMeet(date: Date): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+  updateMeet(id: string, date: Date): Observable<string> {
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'detete'), { date: date }, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
 
   listFeed(id: string): Observable<Alimentacion[]> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, feeds())), // simular respuesta
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Alimentacion>[]>>(this.makeUrl('bovinos', id, 'alimentacion'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x))
     );
   }
 
   listManage(id: string): Observable<Manejo[]> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, manages())), // simular respuesta
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('bovinos', id, 'manejo'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x))
     );
   }
 
@@ -135,9 +148,9 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   listHealth(id: string): Observable<Sanidad[]> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, healths())), // simular respuesta
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('bovinos', id, 'sanidad'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x))
     );
   }
 

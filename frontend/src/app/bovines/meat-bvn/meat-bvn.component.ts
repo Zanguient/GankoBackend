@@ -54,7 +54,7 @@ export class MeatBvnComponent {
       .afterClosed()
       .pipe(
         filter(x => x !== undefined),
-        flatMap(x => this.service.removeMeat(x.item.meat.id)),
+        flatMap(x => this.service.removeMeat(this.bvn.id, x.item.meat.id)),
         tap(() => {
           this.data.splice(index, 1);
           this.table.renderRows();
@@ -69,7 +69,7 @@ export class MeatBvnComponent {
 
   saveDes() {
     this.loadingDes = true;
-    this.service.updateMeet(this.desteteDate).pipe(
+    this.service.updateMeet(this.bvn.id, this.desteteDate).pipe(
       tap(() => this.bvn.fechaDestete = this.desteteDate),
       finalize(() => this.loadingDes = false)
     ).subscribe(() => {
