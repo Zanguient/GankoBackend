@@ -1,0 +1,114 @@
+<div class="container mat-typography" *ngIf="!loading && item != null; else">
+  <mat-card *ngIf="item">
+    <mat-tab-group mat-stretch-tabs [(selectedIndex)]="selectedTab">
+      <mat-tab label="TAMAÑO Y GRAMINEA">
+        <mat-card class="mat-elevation-z2">
+          <form #formTamGram="ngForm">
+            <mat-card-content>
+              <div fxLayout="row" fxFlex="100%" style="margin-top: 20px;">
+                <mat-form-field style="margin-right: 30px;" fxFlex="10%" appearance="outline">
+                  <mat-label>Tamaño pradera</mat-label>
+                  <input matInput placeholder="Tamaño pradera" type="number" name="tamano" [(ngModel)]="item.tamano" required/>
+                </mat-form-field>
+                <mat-form-field fxFlex="45%" style="margin-right: 30px;" appearance="outline">
+                  <mat-label>Tipo tamaño</mat-label>
+                  <mat-select placeholder="Tipo tamaño" name="tamanoHectareas" [(ngModel)]="item.tamanoEnHectareas" required>
+                    <mat-option [value]=false>m²</mat-option>
+                    <mat-option [value]=true>Hectareas</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field fxFlex="45%" appearance="outline">
+                    <mat-label>Tipo de Graminea</mat-label>
+                  <mat-select placeholder="Tipo de Graminea" name="tipoGraminea" [(ngModel)]="item.tipoGraminea">
+                    <mat-option value="Pasto Castillo">Pasto Castillo</mat-option>
+                    <mat-option value="Pasto Barrera">Pasto Barrera</mat-option>
+                    <mat-option value="Pasto King Grass">Pasto King Grass</mat-option>
+                    <mat-option value="Maralfalfa">Maralfalfa</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </mat-card-content>
+            <mat-card-actions align="end">
+              <button mat-stroked-button color="primary" [disabled]="formTamGram.invalid" (click)="updateInfo()">Actualizar</button>
+            </mat-card-actions>
+          </form>
+        </mat-card>
+      </mat-tab>
+      <mat-tab label="MANTENIMIENTOS">
+        <mat-card>
+          <form #formMant="ngForm">
+            <mat-card-content>
+              <div *ngIf="item.mantenimiento.length > 0 ;else noDataMan">
+                <mat-table #tableMant [dataSource]="item.mantenimiento" class="mat-elevation-z2">
+                  <!-- identificador -->
+                  <ng-container matColumnDef="dateMant">
+                    <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.fechaMantenimiento | date:'dd/MM/yyyy'}} </mat-cell>
+                  </ng-container>
+
+                  <!-- libre desde -->
+                  <ng-container matColumnDef="total">
+                    <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.total}} </mat-cell>
+                  </ng-container>
+
+                  <mat-header-row *matHeaderRowDef="columnasMant"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: columnasMant;"></mat-row>
+                </mat-table>
+              </div>
+            </mat-card-content>
+          </form>
+        </mat-card>
+      </mat-tab>
+      <mat-tab label="AFOROS">
+        <mat-card>
+          <form #formAforo="ngForm">
+            <mat-card-content>
+              <div *ngIf="item.aforo.length > 0 ;else noDataAforo">
+                <mat-table #tableMant [dataSource]="item.aforo" class="mat-elevation-z2">
+                  <!-- identificador -->
+                  <ng-container matColumnDef="dateAforo">
+                    <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.fechaAforo | date:'dd/MM/yyyy'}} </mat-cell>
+                  </ng-container>
+
+                  <!-- libre desde -->
+                  <ng-container matColumnDef="value">
+                    <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.total}} </mat-cell>
+                  </ng-container>
+
+                  <mat-header-row *matHeaderRowDef="columnasAforo"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: columnasAforo;"></mat-row>
+                </mat-table>
+              </div>
+            </mat-card-content>
+          </form>
+        </mat-card>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
+<ng-template #noDataMan>
+  <div class="section">
+    <p>Mantenimientos no registrados</p>
+  </div>
+</ng-template>
+<ng-template #noDataAforo>
+  <div class="section">
+    <p>Aforos no registrados</p>
+  </div>
+</ng-template>
+<div class="fab" *ngIf="selectedTab == 1 || selectedTab == 2">
+  <button mat-fab (click)="goToAdd()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+<ng-template #noItem>
+  <div class="container section" *ngIf="!loading">
+    Pradera no encontrada
+  </div>
+</ng-template>
+<div *ngIf="loading" class="container section">
+  <app-loader [big]="true" [align]="'center'"></app-loader>
+</div>

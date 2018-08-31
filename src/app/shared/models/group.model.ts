@@ -6,4 +6,5 @@ export class Group {
     nombre: string;
     color: number;
     bovines: string[];
+    pradera: string;
 }
