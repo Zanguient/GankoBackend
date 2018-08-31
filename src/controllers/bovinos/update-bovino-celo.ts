@@ -11,13 +11,23 @@ class ResponseBovino extends ResponseBody {
     }
 }
 
-export function updateBovino(req, res: Response, next) {
-    let bovino: Bovino = req.body;
+export function updateBovinoCelo(req, res: Response, next) {
+    let date: Date = req.body;
     let idbovino = req.params.idbovino;
-    BovinoService.instance.updateBovino(idbovino, bovino)
+    let bovino = new Bovino;
+    BovinoService.instance.findById(idbovino)
+        .then(result => {
+            bovino = result.doc as Bovino;
+            bovino.celos.unshift(date);
+            return bovino;
+        })
+        .then(bov => {
+            return BovinoService.instance.updateBovino(idbovino, bov)
+        })
         .then(data => {
             res.send(new ResponseBovino(data ? true : false, data, null));
         }, err => {
             res.status(500).send(new ResponseBovino(null, null, err));
         })
-} 
+
+}

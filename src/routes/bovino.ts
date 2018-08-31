@@ -10,6 +10,10 @@ import { addCebaByIdBovino } from '../controllers/bovinos/add-ceba-by-id-bovino'
 import { getMilkByIdBovino } from '../controllers/bovinos/get-milk-by-id-bovino';
 import { addMilkByIdBovino } from '../controllers/bovinos/add-milk-by-id-bovino';
 import { getVacunaByIdBovino } from '../controllers/bovinos/get-vacuna-by-id-bovino';
+import { updateBovinoDestete } from '../controllers/bovinos/update-bovino-destete';
+import { updateBovinoCelo } from '../controllers/bovinos/update-bovino-celo';
+import { updateBovinoServicio } from '../controllers/bovinos/update-bovino-servicio';
+import { updateBovinoNovedad } from '../controllers/bovinos/update-bovino-novedad';
 
 const bovino: Router = Router();
 
@@ -23,14 +27,12 @@ bovino.get("/:idBovino/manejo", getManejoByIdBovino);
 bovino.get("/:idBovino/ceba", getCebaByIdBovino);
 bovino.delete("/:idBovino/ceba/:idCeba", deleteCebaByIdBovinoAndCeba);
 bovino.post("/:idBovino/ceba", addCebaByIdBovino);
-bovino.put("/:idBovino/destete", updateBovino);
+bovino.put("/:idBovino/destete", updateBovinoDestete);
 bovino.get("/:idBovino/leche", getMilkByIdBovino);
 bovino.post("/:idBovino/leche", addMilkByIdBovino)
-bovino.put("/:idBovino/celo", updateBovino);
-bovino.put("/:idBovino/servicio", updateBovino);
-bovino.put("/:idBovino/diagnostico", updateBovino);
-bovino.put("/:idBovino/novedad", updateBovino);
-bovino.put("/:idBovino/parto", updateBovino);
+bovino.put("/:idBovino/celo", updateBovinoCelo);
+bovino.put("/:idBovino/servicio", updateBovinoServicio);
+bovino.put("/:idBovino/novedad", updateBovinoNovedad);
 bovino.get("/:idBovino/vacunas", getVacunaByIdBovino);
 bovino.get('/:idFinca', getBovinos);
 
