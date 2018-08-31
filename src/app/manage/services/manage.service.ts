@@ -3,9 +3,9 @@ import { BaseService } from '../../util/base-service';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
 import { timer, Observable } from 'rxjs';
-import { Rspn } from '../../shared/models/response.model';
-import { map, tap } from 'rxjs/operators';
-import { validate } from '../../util/http-util';
+import { Rspn, Doc } from '../../shared/models/response.model';
+import { map, tap, mergeMap } from 'rxjs/operators';
+import { validate, listToDoc } from '../../util/http-util';
 import { Manejo } from '../../shared/models/manage.model';
 import { manages, manage } from './manage.mock';
 
@@ -28,11 +28,16 @@ export class ManageService extends BaseService<Manejo> {
   }
 
   list(): Observable<Manejo[]> {
-    return timer(500).pipe(
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x)),
+      tap(x => this.data = x)
+    );
+    /*return timer(500).pipe(
       tap(() => this.data = this.data.length > 0 ? this.data : manages()),
       map(() => new Rspn(true, this.data)), // simular respuesta
       map(x => validate(x))
-    );
+    );*/
   }
 
   update(item: Manejo): Observable<string> {
