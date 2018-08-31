@@ -3,6 +3,7 @@ import { Produccion } from "../../services/models/produccion";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
+import { Leche } from '../../services/models/venta';
 
 
 class ResponseLeche extends ResponseBody {
@@ -11,10 +12,8 @@ class ResponseLeche extends ResponseBody {
     }
 }
 
-
-
 export function updateLeche(req, res: Response, next) {
-    let produccion: Produccion = req.body;
+    let produccion: Leche = req.body;
     let idProduccion = req.params.idProduccion;
     LecheService.instance.update(idProduccion, produccion)
         .then(data => {

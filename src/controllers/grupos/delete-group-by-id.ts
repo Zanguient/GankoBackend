@@ -16,9 +16,7 @@ export function deleteGroupById(req, res: Response, next) {
     let idGrupo = req.params.idGrupo;
     GruposService.instance.delete(idGrupo)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseGroup(true, data, null));
-            }
         }, err => {
             res.status(500).send(new ResponseGroup(null, null, err));
         })

@@ -34,9 +34,7 @@ function createPraderasIfNotExists(idFinca: string, res: Response) {
                 if (count == 100) {
                     PraderaService.instance.getAllByIdFarm(idFinca)
                         .then(data => {
-                            if (data.length > 0) {
                                 res.send(new ResponsePradera(true, data, null));
-                            }
                         }, err => {
                             res.status(500).send(new ResponsePradera(null, null, err));
                         })

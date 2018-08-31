@@ -14,10 +14,7 @@ export function getCeba(req, res: Response, next) {
     
     CebaService.instance.getAll()
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseCeba(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseCeba(null, null, err));
         })

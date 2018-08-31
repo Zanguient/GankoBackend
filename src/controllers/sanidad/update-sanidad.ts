@@ -2,7 +2,7 @@ import { SanidadService } from '../../services/sanidad-service';
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { RegistroSanidad } from '../../services/models/sanidad';
+import { Sanidad } from '../../services/models/sanidad';
 
 
 class ResponseSanidad extends ResponseBody {
@@ -11,7 +11,7 @@ class ResponseSanidad extends ResponseBody {
     }
 }
 export function updateSanidad(req, res: Response, next) {
-    let sanidad: RegistroSanidad = req.body;
+    let sanidad: Sanidad = req.body;
     let idSanidad = req.params.idSanidad;
     SanidadService.instance.update(idSanidad, sanidad)
         .then(data => {

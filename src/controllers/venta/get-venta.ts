@@ -2,7 +2,6 @@ import { VentaService } from '../../services/venta-service';
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { SalidaLeche } from '../../services/models/venta';
 
 
 class ResponseVenta extends ResponseBody {

@@ -1,5 +1,4 @@
 import { ManejoService } from '../../services/manejo-service';
-import { RegistroManejo } from "../../services/models/manejo";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';

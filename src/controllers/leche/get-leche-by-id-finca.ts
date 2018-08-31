@@ -16,10 +16,7 @@ export function getLecheByIdFinca(req, res: Response, next) {
     let idFinca = req.params.idFinca;
     LecheService.instance.getAllByIdFInca(idFinca)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseLeche(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseLeche(null, null, err));
         })

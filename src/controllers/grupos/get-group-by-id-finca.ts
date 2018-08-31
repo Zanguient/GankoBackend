@@ -17,10 +17,7 @@ export function getGroupByIdFinca(req, res: Response, next) {
     let idFinca = req.params.idFinca;
     GruposService.instance.getByIdFinca(idFinca)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseGroup(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseGroup(null, null, err));
         })

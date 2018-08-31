@@ -2,7 +2,6 @@ import { SanidadService } from '../../services/sanidad-service';
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { RegistroSanidad } from '../../services/models/sanidad';
 
 
 class ResponseSanidad extends ResponseBody {

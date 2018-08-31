@@ -26,10 +26,7 @@ export function getBovinos(req, res: Response, next) {
     let idFinca = req.params.idFinca;
     BovinoService.instance.findBovinos(idFinca, q, leche, ceba, ambos, celo, servicio, diagnostico, destete, retirados, sexo)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseBody(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseBody(null, null, err));
         })

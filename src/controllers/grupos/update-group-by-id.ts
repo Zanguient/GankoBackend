@@ -18,9 +18,7 @@ export function updateGroup(req, res: Response, next) {
     let grupo:Group = req.body.grupo;
     GruposService.instance.update(idGrupo,grupo)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseGroup(true, data, null));
-            }
         }, err => {
             res.status(500).send(new ResponseGroup(null, null, err));
         })

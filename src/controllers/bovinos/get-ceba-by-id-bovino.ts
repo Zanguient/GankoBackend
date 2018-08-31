@@ -17,10 +17,7 @@ export function getCebaByIdBovino(req, res: Response, next) {
     let idBovino: string = req.params.idBovino;
     CebaService.instance.getAllByIdBovino(idBovino)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseAlimentacion(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseAlimentacion(null, null, err));
         })

@@ -1,5 +1,5 @@
 import { PajillaService } from '../../services/pajilla-service';
-import { Pajilla } from "../../services/models/pajilla";
+import { Straw } from "../../services/models/pajilla";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
