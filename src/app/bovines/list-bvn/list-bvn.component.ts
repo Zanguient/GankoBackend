@@ -15,9 +15,9 @@ import { filter } from 'rxjs/operators';
 })
 export class ListBvnComponent extends BaseListComponent<Bovino> implements OnDestroy {
 
-  constructor(private nav: NavService, service: BovinesService, snack: MatSnackBar, dialog: MatDialog,
+  constructor(private nav: NavService, public srv: BovinesService, snack: MatSnackBar, dialog: MatDialog,
     router: Router, route: ActivatedRoute) {
-    super(service, dialog, router, route, snack);
+    super(srv, dialog, router, route, snack);
 
     nav.title = 'Bovinos';
     nav.searchable = true;

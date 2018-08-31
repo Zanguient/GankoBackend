@@ -4,24 +4,29 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { finalize, filter, flatMap, tap } from 'rxjs/operators';
 import { snackError, snackOk } from './snackbar-util';
 import { DeleteDialogComponent } from '../shared/components/delete-dialog/delete-dialog.component';
-import { OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 
-export abstract class BaseListComponent<T> implements OnInit {
+export abstract class BaseListComponent<T> implements OnInit, OnDestroy {
 
     data: T[] = [];
     loading: boolean;
+    subs: Subscription;
 
     constructor(protected service: BaseService<T>, private dialog: MatDialog,
         protected router: Router, protected route: ActivatedRoute, private snackbar: MatSnackBar) { }
 
     ngOnInit() {
         this.loading = true;
-        this.getServiceList()
+        this.subs = this.getServiceList()
             .pipe(
                 finalize(() => this.loading = false)
             )
             .subscribe(x => this.data = x, err => snackError(this.snackbar, err));
+    }
+
+    ngOnDestroy() {
+        this.subs.unsubscribe();
     }
 
     getServiceList(): Observable<T[]> {

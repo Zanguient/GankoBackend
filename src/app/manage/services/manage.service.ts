@@ -27,31 +27,34 @@ export class ManageService extends BaseService<Manejo> {
     );
   }
 
-  listRecent(): Observable<Manejo[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  list(): Observable<Manejo[]> {
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', 'finca', this.session.farmId),
+    this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
-  listProx(): Observable<Manejo[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  listNext(): Observable<Manejo[]> {
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', 'finca', this.session.farmId),
+      this.makeAuthAndParams(this.session.token, ['q', 'proximos']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
-  listPending(): Observable<Manejo[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  listPendings(): Observable<Manejo[]> {
+    return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', 'finca', this.session.farmId),
+    this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
   update(item: Manejo): Observable<string> {

@@ -39,7 +39,11 @@ export class FarmsService extends BaseService<Finca> {
   update(item: Finca): Observable<string> {
     const id = item.id;
     delete item.id;
+<<<<<<< HEAD
     return this.http.put<Rspn<string>>(this.makeUrl('fincas', id), this.makeAuth(this.session.token)).pipe(
+=======
+    return this.http.put<Rspn<string>>(this.makeUrl('fincas', id), item, this.makeAuth(this.session.token)).pipe(
+>>>>>>> dc342199ca879fccc4891db268123f4ea2824ad8
       map(x => validate(x))
     );
   }

@@ -26,32 +26,34 @@ export class HealthService extends BaseService<Sanidad> {
       tap(() => this.data.push(item))
     );
   }
-
-  listRecent(): Observable<Sanidad[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('sanidad/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  list(): Observable<Sanidad[]> {
+    return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('sanidad', 'finca', this.session.farmId),
+    this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
-  listProx(): Observable<Sanidad[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('sanidad/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  listNext(): Observable<Sanidad[]> {
+    return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('sanidad', 'finca', this.session.farmId),
+      this.makeAuthAndParams(this.session.token, ['q', 'proximos']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
-  listPending(): Observable<Sanidad[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('sanidad/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  listPendings(): Observable<Sanidad[]> {
+    return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('sanidad', 'finca', this.session.farmId),
+    this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
   update(item: Sanidad): Observable<string> {

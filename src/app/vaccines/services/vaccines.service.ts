@@ -28,31 +28,34 @@ export class VaccinesService extends BaseService<Vacuna> {
     );
   }
 
-  listRecent(): Observable<Vacuna[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('vacunas/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  list(): Observable<Vacuna[]> {
+    return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('vacunas', 'finca', this.session.farmId),
+    this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
-  listProx(): Observable<Vacuna[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('vacunas/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  listNext(): Observable<Vacuna[]> {
+    return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('vacunas', 'finca', this.session.farmId),
+      this.makeAuthAndParams(this.session.token, ['q', 'proximos']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
-  listPending(): Observable<Vacuna[]> {
-    const id = this.session.farmId;
-    return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('vacunas/finca',id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)); /*
-    );*/
+  listPendings(): Observable<Vacuna[]> {
+    return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('vacunas', 'finca', this.session.farmId),
+    this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
   update(item: Vacuna): Observable<string> {
@@ -64,8 +67,7 @@ export class VaccinesService extends BaseService<Vacuna> {
   }
 
   remove(id: string): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.delete<Rspn<string>>(this.makeUrl('vacunas', id), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
