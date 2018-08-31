@@ -29,11 +29,12 @@ export class MilkService extends BaseService<Leche> {
   }
 
   list(): Observable<Leche[]> {
-    return this.http.get<Rspn<Doc<Leche>[]>>(this.makeUrl('leche'), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)
-    );
+    return this.http.get<Rspn<Doc<Leche>[]>>(this.makeUrl('leche', 'finca', this.session.farmId),
+      this.makeAuth(this.session.token)).pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
   update(item: Leche): Observable<string> {

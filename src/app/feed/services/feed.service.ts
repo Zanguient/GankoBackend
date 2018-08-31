@@ -28,11 +28,13 @@ export class FeedService extends BaseService<Alimentacion> {
   }
 
   list(): Observable<Alimentacion[]> {
-    return this.http.get<Rspn<Doc<Alimentacion>[]>>(this.makeUrl('alimentacion'), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)
-    );
+    return this.http.get<Rspn<Doc<Alimentacion>[]>>(this.makeUrl('alimentacion', 'finca', this.session.farmId),
+      this.makeAuth(this.session.token))
+      .pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
   update(item: Alimentacion): Observable<string> {
