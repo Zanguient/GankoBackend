@@ -39,7 +39,7 @@ export class MilkService extends BaseService<Leche> {
   update(item: Leche): Observable<string> {
     const id = item.id;
     delete item.id;
-    return this.http.put<Rspn<string>>(this.makeUrl('leche', item.id), item, this.makeAuth(this.session.token)).pipe(
+    return this.http.put<Rspn<string>>(this.makeUrl('leche', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
