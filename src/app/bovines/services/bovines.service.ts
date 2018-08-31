@@ -131,7 +131,7 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   updateMeet(id: string, date: Date): Observable<string> {
-    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'detete'), { date: date }, this.makeAuth(this.session.token)).pipe(
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'destete'), { date: date }, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
