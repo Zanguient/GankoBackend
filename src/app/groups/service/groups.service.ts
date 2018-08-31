@@ -7,7 +7,7 @@ import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
 import { validate, listToDoc, toDoc } from '../../util/http-util';
 import { Group, TYPE_GRUPO } from '../../shared/models/group.model';
-import { groups} from './group.mock';
+import { groups } from './group.mock';
 
 @Injectable()
 export class GroupsService extends BaseService<Group> {
@@ -30,7 +30,7 @@ export class GroupsService extends BaseService<Group> {
   }
 
   list(): Observable<Group[]> {
-    return this.http.get<Rspn<Doc<Group>[]>>(this.makeUrl('grupos'), this.makeAuth(this.session.token)).pipe(
+    return this.http.get<Rspn<Doc<Group>[]>>(this.makeUrl('grupos', 'finca', this.session.farmId), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       mergeMap(x => listToDoc(x)),
       tap(x => this.data = x)
@@ -59,10 +59,10 @@ export class GroupsService extends BaseService<Group> {
   }
 
   getByIdFarm(idFarm: string): Observable<Group[]> {
-    return timer(500).pipe(
-      tap(() => this.data = this.data.length > 0 ? this.data : groups()),
-      map(() => new Rspn(true, this.data)), // simular respuesta
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Group>[]>>(this.makeUrl('grupos', 'finca', idFarm), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x)),
+      tap(x => this.data = x)
     );
   }
 
