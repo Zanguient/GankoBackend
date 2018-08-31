@@ -12,7 +12,7 @@ class ResponsePajilla extends ResponseBody {
 }
 
 export function getPajillasyIdFinca(req, res: Response, next) {
-    let q = req.query.q ? req.query.q : "";
+    let q = req.query.q;
     let idFinca = req.params.idFinca;
 
     PajillaService.instance.getAllByIdFinca(idFinca,q)
