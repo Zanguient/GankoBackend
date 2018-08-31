@@ -13,9 +13,11 @@ import { groups, group } from './group.mock';
 export class GroupsService extends BaseService<Group> {
 
   data: Group[] = [];
+  idFarm: string;
 
   constructor(private http: HttpClient, private session: SessionService) {
     super();
+    this.idFarm = session.farmId;
   }
 
   add(item: Group): Observable<string> {
@@ -51,8 +53,17 @@ export class GroupsService extends BaseService<Group> {
 
   getById(id: string): Observable<Group> {
     return timer(500).pipe(
-      map(() => new Rspn(true, group())),
+      map(() => new Rspn(true, group(id))),
       map(x => validate(x))
     );
   }
+
+  getByIdFarm(idFarm: string): Observable<Group[]> {
+    return timer(500).pipe(
+      tap(() => this.data = this.data.length > 0 ? this.data : groups()),
+      map(() => new Rspn(true, this.data)), // simular respuesta
+      map(x => validate(x))
+    );
+  }
+
 }

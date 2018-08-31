@@ -1,0 +1,16 @@
+.submenu-container{
+    height: 100%;    
+}
+
+.submenu{
+    background:#eee; 
+    border-right: 1px solid #ddd;
+}
+
+.submenu .mat-list-item{
+    color:#888;
+}
+
+.submenu .mat-list-item.active{
+    color:#08ae9e;
+}

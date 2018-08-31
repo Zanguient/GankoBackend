@@ -1,0 +1,65 @@
+<div class="container section" *ngIf="!loading">
+  <mat-card>
+    <mat-tab-group mat-stretch-tabs>
+      <mat-tab label="PRADERAS LIBRES">
+        <div *ngIf="dataL.length > 0 ;else noDataPradL">
+          <mat-table #tableL [dataSource]="dataL" class="mat-elevation-z8">
+            <!-- identificador -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{"Pradera " + element.identificador}} </mat-cell>
+            </ng-container>
+
+            <!-- libre desde -->
+            <ng-container matColumnDef="transactionDate">
+              <mat-header-cell *matHeaderCellDef> Libre desde </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.fechaSalida | date:'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columnasPradL"></mat-header-row>
+            <mat-row class="selection-row" *matRowDef="let row; columns: columnasPradL;" (click)="addGroupDialog(row)"></mat-row>
+          </mat-table>
+        </div>
+      </mat-tab>
+      <mat-tab label="PRADERAS OCUPADAS">
+        <div *ngIf="dataO.length > 0 ;else noDataPradO">
+          <mat-table #tableO [dataSource]="dataO" class="mat-elevation-z8">
+            <!-- identificador -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{"Pradera " + element.identificador}} </mat-cell>
+            </ng-container>
+
+            <!-- libre desde -->
+            <ng-container matColumnDef="transactionDate">
+              <mat-header-cell *matHeaderCellDef> Ocupada desde </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.fechaOcupacion | date:'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+
+            <!-- Grupo -->
+            <ng-container matColumnDef="group">
+              <mat-header-cell *matHeaderCellDef> Grupo </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.group}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columnasPradO"></mat-header-row>
+            <mat-row class="selection-row" *matRowDef="let row; columns: columnasPradO;" (click)="removeGroupDialog(row)"></mat-row>
+          </mat-table>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>
+<div *ngIf="loading" class="container section">
+  <app-loader [big]="true" [align]="'center'"></app-loader>
+</div>
+<ng-template #noDataPradL>
+  <div class="section">
+    <p>No existen praderas disponibles</p>
+  </div>
+</ng-template>
+<ng-template #noDataPradO>
+  <div class="section">
+    <p>No existen praderas ocupadas</p>
+  </div>
+</ng-template>

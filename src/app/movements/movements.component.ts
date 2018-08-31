@@ -3,11 +3,7 @@ import { NavService } from '../core/services/nav.service';
 
 @Component({
   selector: 'app-movements',
-  template: `
-    <p>
-      movements works!
-    </p>
-  `,
+  template: '<router-outlet></router-outlet>',
   styles: []
 })
 export class MovementsComponent implements OnInit {

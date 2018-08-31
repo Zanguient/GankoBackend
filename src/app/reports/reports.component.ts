@@ -3,11 +3,7 @@ import { NavService } from '../core/services/nav.service';
 
 @Component({
   selector: 'app-reports',
-  template: `
-    <p>
-      reports works!
-    </p>
-  `,
+  template: '<router-outlet></router-outlet>',
   styles: []
 })
 export class ReportsComponent implements OnInit {
