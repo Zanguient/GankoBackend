@@ -19,9 +19,9 @@ import { getBovinosByIds } from '../controllers/bovinos/get-bovinos-ids';
 const bovino: Router = Router();
 
 bovino.use(ValidateToken);
+bovino.get('/finca/:idFinca', getBovinos);
 bovino.delete('/:idBovino', deleteBovino);
 bovino.post('/', addBovino);
-bovino.get('/finca/:idFinca', getBovinos);
 bovino.post('/ids', getBovinosByIds);
 bovino.get('/:idBovino', getBovino);
 bovino.get('/:idBovino/alimentacion', getAlimentacionByIdBovino);
