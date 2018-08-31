@@ -1,5 +1,5 @@
 import { CebaService } from '../../services/ceba-service';
-import { Ceba } from "../../services/models/ceba";
+import { TYPE_CEBA,Meat } from "../../services/models/ceba";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';

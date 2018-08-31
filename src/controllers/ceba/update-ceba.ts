@@ -1,5 +1,5 @@
 import { CebaService } from '../../services/ceba-service';
-import { Ceba } from "../../services/models/ceba";
+import { Meat } from "../../services/models/ceba";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
@@ -12,7 +12,7 @@ class ResponseCeba extends ResponseBody {
 }
 
 export function updateCeba(req, res: Response, next) {
-    let ceba: Ceba = req.body;
+    let ceba: Meat = req.body;
     let idCeba = req.params.idCeba;
     CebaService.instance.update(idCeba, ceba)
         .then(data => {

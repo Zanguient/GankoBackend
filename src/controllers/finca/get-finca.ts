@@ -11,9 +11,7 @@ class ResponseFinca extends ResponseBody {
     }
 }
 
-
 export function getFinca(req, res: Response, next) {
-
     FincaService.instance.getAll(req.id)
         .then(data => res.send(new ResponseFinca(true, data, null)))
         .catch(err => res.status(500).send(new ResponseFinca(null, null, err)));
