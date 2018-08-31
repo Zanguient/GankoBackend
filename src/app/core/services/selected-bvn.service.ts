@@ -34,6 +34,7 @@ export class SelectedBvnService {
     );
     this.loading.next(true);
     return combineLatest(filter, query).pipe(
+      tap(() => this.loading.next(true)),
       map(x => x.filter(q => q !== '').join('&')),
       map(x => this.url + (x.length > 0 ? '?' + x : x)),
       tap(x => console.log(x)),
