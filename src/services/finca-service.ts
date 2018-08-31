@@ -16,8 +16,8 @@ export class FincaService {
 
     constructor(private db: DBConnection) { }
 
-    getAll() {
-        return this.db.ListByType(TYPE_FINCA);
+    getAll(user: string) {
+        return this.db.ListByType(TYPE_FINCA, "usuarioId = $1", [user]);
     }
 
     insert(finca: Finca) {
@@ -31,7 +31,7 @@ export class FincaService {
     getById(id: string) {
         return this.db.getById<Finca>(id);
     }
-    delete(id:string){
+    delete(id: string) {
         return this.db.remove(id);
     }
 
