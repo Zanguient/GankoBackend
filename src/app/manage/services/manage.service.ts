@@ -5,8 +5,8 @@ import { SessionService } from '../../core/services/session.service';
 import { timer, Observable } from 'rxjs';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
-import { validate, listToDoc } from '../../util/http-util';
-import { Manejo } from '../../shared/models/manage.model';
+import { validate, listToDoc, toDoc } from '../../util/http-util';
+import { Manejo, TYPE_MANEJO } from '../../shared/models/manage.model';
 import { manages, manage } from './manage.mock';
 
 @Injectable()
@@ -19,9 +19,9 @@ export class ManageService extends BaseService<Manejo> {
   }
 
   add(item: Manejo): Observable<string> {
+    item.type = TYPE_MANEJO;
     item.idFinca = this.session.farmId;
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.post<Rspn<string>>(this.makeUrl('manejo'), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );
@@ -41,8 +41,9 @@ export class ManageService extends BaseService<Manejo> {
   }
 
   update(item: Manejo): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    const id = item.id;
+    delete item.id;
+    return this.http.put<Rspn<string>>(this.makeUrl('manejo', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
@@ -55,9 +56,9 @@ export class ManageService extends BaseService<Manejo> {
   }
 
   getById(id: string): Observable<Manejo> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, manage())),
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Manejo>>>(this.makeUrl('manejo', id), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      map(x => toDoc(x))
     );
   }
 }
