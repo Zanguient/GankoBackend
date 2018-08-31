@@ -3,10 +3,10 @@ import { BaseService } from '../../util/base-service';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
 import { timer, Observable } from 'rxjs';
-import { Rspn } from '../../shared/models/response.model';
+import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap } from 'rxjs/operators';
-import { validate } from '../../util/http-util';
-import { Sanidad } from '../../shared/models/health.model';
+import { validate, toDoc } from '../../util/http-util';
+import { Sanidad, TYPE_SANIDAD } from '../../shared/models/health.model';
 import { healths, health } from './health.mock';
 
 @Injectable()
@@ -19,9 +19,9 @@ export class HealthService extends BaseService<Sanidad> {
   }
 
   add(item: Sanidad): Observable<string> {
+    item.type = TYPE_SANIDAD;
     item.idFinca = this.session.farmId;
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.post<Rspn<string>>(this.makeUrl('sanidad'), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );
@@ -36,8 +36,9 @@ export class HealthService extends BaseService<Sanidad> {
   }
 
   update(item: Sanidad): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    const id = item.id;
+    delete item.id;
+    return this.http.put<Rspn<string>>(this.makeUrl('sanidad', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
@@ -50,9 +51,9 @@ export class HealthService extends BaseService<Sanidad> {
   }
 
   getById(id: string): Observable<Sanidad> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, health())),
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Sanidad>>>(this.makeUrl('sanidad', id), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      map(x => toDoc(x))
     );
   }
 }

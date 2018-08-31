@@ -3,10 +3,10 @@ import { BaseService } from '../../util/base-service';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
 import { timer, Observable } from 'rxjs';
-import { Rspn } from '../../shared/models/response.model';
+import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap } from 'rxjs/operators';
-import { validate } from '../../util/http-util';
-import { Vacuna } from '../../shared/models/vaccine.model';
+import { validate, toDoc } from '../../util/http-util';
+import { Vacuna, TYPE_VACUNA } from '../../shared/models/vaccine.model';
 import { vaccines, vaccine } from './vaccines.mock';
 
 @Injectable()
@@ -19,9 +19,9 @@ export class VaccinesService extends BaseService<Vacuna> {
   }
 
   add(item: Vacuna): Observable<string> {
+    item.type = TYPE_VACUNA;
     item.idFinca = this.session.farmId;
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.post<Rspn<string>>(this.makeUrl('vacunas'), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );
@@ -36,8 +36,9 @@ export class VaccinesService extends BaseService<Vacuna> {
   }
 
   update(item: Vacuna): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    const id = item.id;
+    delete item.id;
+    return this.http.put<Rspn<string>>(this.makeUrl('vacunas', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
@@ -50,9 +51,9 @@ export class VaccinesService extends BaseService<Vacuna> {
   }
 
   getById(id: string): Observable<Vacuna> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, vaccine())),
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Vacuna>>>(this.makeUrl('vacunas', id), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      map(x => toDoc(x))
     );
   }
 }
