@@ -7,8 +7,8 @@ const finca: Router = Router();
 finca.use(ValidateToken);
 finca.get('/',getFinca);
 finca.post('/',addFinca);
-finca.delete('/:idfinca',deleteFinca);
-finca.put('/:idfinca',updateFinca);
+finca.delete('/:idFinca',deleteFinca);
+finca.put('/:idFinca',updateFinca);
 finca.get('/:id', byId);
 
 

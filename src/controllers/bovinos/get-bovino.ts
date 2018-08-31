@@ -13,10 +13,9 @@ class ResponseBody {
 export function getBovino(req, res: Response, next) {
 
     let idBovino = req.params.idBovino;
-    BovinoService.instance.findByIdBovino(idBovino)
+    BovinoService.instance.findById(idBovino)
         .then(data => {
             res.send(new ResponseBody(true, data, null));
-
         }, err => {
             res.status(500).send(new ResponseBody(null, null, err));
         })
