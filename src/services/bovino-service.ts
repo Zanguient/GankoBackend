@@ -20,7 +20,7 @@ export class BovinoService {
     findBovinos(idFinca: string, q: string, leche: boolean, ceba: boolean, ambos: boolean, celo: boolean, servicio: boolean, diagnostico: boolean, destete: boolean, retirados: boolean, sexo: string) {
         const queries = [];
 
-        if (q) {
+        if (q && q != "") {
             const qy = q.toLowerCase();
             queries.push('(LOWER(nombre) LIKE "' + qy + '%" OR LOWER(codigo) LIKE "' + qy + '%")');
         }
@@ -44,7 +44,7 @@ export class BovinoService {
         }
 
 
-        if (destete != undefined) { queries.push("destete = " + destete); }
+        // if (destete != undefined) { queries.push("destete = " + destete); }
 
         if (sexo) { queries.push('genero = "' + sexo + '"'); }
 
