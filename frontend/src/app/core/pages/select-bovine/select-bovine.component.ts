@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Bovino } from '../../../shared/models/bovine.model';
 import { snackError } from '../../../util/snackbar-util';
@@ -27,6 +27,8 @@ export class SelectBovineComponent implements OnInit, OnDestroy {
   selecteds: any = {};
   count = 0;
 
+  subs: Subscription;
+
   constructor(public service: SelectedBvnService, private breakpointObserver: BreakpointObserver, public nav: NavService,
     private snack: MatSnackBar, private dialog: MatDialog, private router: Router, private route: ActivatedRoute) {
     nav.title = 'Seleccionar Bovinos';
@@ -34,7 +36,7 @@ export class SelectBovineComponent implements OnInit, OnDestroy {
     nav.filterable = true;
     nav.showRetired = false;
 
-    this.service.list()
+    this.subs = this.service.list()
       .subscribe(x => {
         this.data = x;
       }, err => snackError(this.snack, err));
@@ -109,6 +111,7 @@ export class SelectBovineComponent implements OnInit, OnDestroy {
     this.nav.searchable = false;
     this.nav.filterable = false;
     this.nav.showRetired = true;
+    this.subs.unsubscribe();
   }
 
 }

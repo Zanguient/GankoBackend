@@ -34,7 +34,7 @@ bovino.put("/:idBovino/celo", updateBovinoCelo);
 bovino.put("/:idBovino/servicio", updateBovinoServicio);
 bovino.put("/:idBovino/novedad", updateBovinoNovedad);
 bovino.get("/:idBovino/vacunas", getVacunaByIdBovino);
-bovino.get('/:idFinca', getBovinos);
+bovino.get('/finca/:idFinca', getBovinos);
 
 
 export default bovino;

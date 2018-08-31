@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { BovinesService, ItemEmp } from '../../services/bovines.service';
 import { tap, filter, map, mergeMap } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { snackError } from '../../../util/snackbar-util';
   templateUrl: './empadre-dialog.component.html',
   styleUrls: ['./empadre-dialog.component.scss']
 })
-export class EmpadreDialogComponent implements OnInit {
+export class EmpadreDialogComponent implements OnInit, OnDestroy {
 
   textChange: Subject<string> = new Subject();
   items: ItemEmp[] = [];
@@ -19,6 +19,8 @@ export class EmpadreDialogComponent implements OnInit {
   loading = false;
   type: string;
 
+  subs: Subscription;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<EmpadreDialogComponent>,
     private snack: MatSnackBar, private service: BovinesService) { }
 
@@ -26,7 +28,7 @@ export class EmpadreDialogComponent implements OnInit {
 
     this.type = this.data.type;
 
-    this.textChange.pipe(
+    this.subs = this.textChange.pipe(
       tap(x => {
         this.query = x;
         this.loading = true;
@@ -46,6 +48,11 @@ export class EmpadreDialogComponent implements OnInit {
       this.loading = false;
     });
 
+  }
+
+  ngOnDestroy() {
+    this.textChange.complete();
+    this.subs.unsubscribe();
   }
 
   select(index: number) {

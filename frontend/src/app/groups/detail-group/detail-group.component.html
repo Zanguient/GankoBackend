@@ -1,0 +1,28 @@
+<div class="container mat-typography">
+
+  <app-single-loader [error]="'No es posible cargar el grupo'" [loading]="loading" [success]="item != null">
+    <div class="breadcrumb">
+      <button mat-button routerLink="../">Grupos</button> >
+      <span>{{item.nombre}}</span>
+    </div>
+
+    <app-card [title]="item.nombre">
+
+      <app-card-corner>
+        <button mat-icon-button><mat-icon>edit</mat-icon></button>
+      </app-card-corner>
+
+      <app-bovine-selected [editable]="false" [selecteds]="item.bovines"></app-bovine-selected>
+
+      <h3>Color</h3>
+      <div class="group-color" [style.background-color]="getHexColor()"></div>
+
+
+
+    </app-card>
+
+  </app-single-loader> 
+
+
+
+</div>

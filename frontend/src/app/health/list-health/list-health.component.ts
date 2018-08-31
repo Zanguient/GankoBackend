@@ -16,15 +16,21 @@ export class ListHealthComponent extends BaseListComponent<Sanidad> {
 
   filter = 0;
 
-  constructor(service: HealthService, snack: MatSnackBar, dialog: MatDialog,
+  constructor(private srv: HealthService, snack: MatSnackBar, dialog: MatDialog,
     router: Router, route: ActivatedRoute, public nav: NavService) {
-    super(service, dialog, router, route, snack);
+    super(srv, dialog, router, route, snack);
   }
 
   changeFilter(filter: number) {
     this.filter = filter;
     this.loading = true;
-    this.service.list().pipe(
+    let api = this.service.list();
+
+    if (filter === 1) {
+      api = this.srv.listNext();
+    } else if (filter === 2) { api = this.srv.listPendings(); }
+
+    api.pipe(
       finalize(() => this.loading = false)
     ).subscribe(x => this.data = x);
   }
@@ -34,8 +40,8 @@ export class ListHealthComponent extends BaseListComponent<Sanidad> {
     this.nav.nextNavigation = ['..', 'agregar'];
   }
 
-  goToApply(item:Sanidad){
+  goToApply(item: Sanidad) {
     this.service.select(item);
-    this.router.navigate([item.id, 'aplicar'], {relativeTo: this.route});
+    this.router.navigate([item.id, 'aplicar'], { relativeTo: this.route });
   }
 }

@@ -3,11 +3,7 @@ import { NavService } from '../core/services/nav.service';
 
 @Component({
   selector: 'app-meadow',
-  template: `
-    <p>
-      meadow works!
-    </p>
-  `,
+  template: '<router-outlet></router-outlet>',
   styles: []
 })
 export class MeadowComponent implements OnInit {

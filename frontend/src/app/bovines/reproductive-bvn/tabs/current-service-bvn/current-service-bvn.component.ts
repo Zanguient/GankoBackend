@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { from, Observable, of } from 'rxjs';
 import { filter, finalize, first, map, mergeMap, tap, toArray } from 'rxjs/operators';
-import { Bovino, Servicio } from '../../../../shared/models/bovine.model';
+import { Bovino, Servicio, Diagnostico, Novedad, Parto } from '../../../../shared/models/bovine.model';
 import { snackError, snackOk } from '../../../../util/snackbar-util';
 import { BovinesService } from '../../../services/bovines.service';
 import { DIALOG_BIRTH, DIALOG_DIAGNOSTIC, DIALOG_NOVELTY, NoveltyDialogComponent } from '../../novelty-dialog/novelty-dialog.component';
@@ -39,53 +39,70 @@ export class CurrentServiceBvnComponent implements OnInit {
 
   goToAddDiagnostic() {
     this.openDialog(DIALOG_DIAGNOSTIC).pipe(
-      mergeMap(x => this.service.addDiagnostic(this.bvn.id, { confirmacion: x.confirmed, fecha: new Date(x.date) }).pipe(
+      map(x => ({ confirmacion: x.confirmed, fecha: new Date(x.date) }) as Diagnostico),
+      map(x => this.prepareDiagnostic(JSON.parse(JSON.stringify(this.item)), x)),
+      mergeMap(x => this.service.addDiagnostic(this.bvn.id, x).pipe(
         finalize(() => this.loading = false)
       ))
     )
       .subscribe(x => {
-        this.item.diagnostico = x;
-        this.item.posFechaParto = x.confirmacion ? new Date(this.item.fecha.getTime() + 24624000000) : undefined;
-        if (!x.confirmacion) {
-          this.item.finalizado = true;
-          snackError(this.snack, 'Servicio finalizado');
-        }
-
+        this.prepareDiagnostic(this.item, x);
+        if (this.item.finalizado) { snackError(this.snack, 'Servicio finalizado'); }
       });
+  }
+
+  prepareDiagnostic(srv: Servicio, diagnostic: Diagnostico) {
+    srv.diagnostico = diagnostic;
+    srv.posFechaParto = diagnostic.confirmacion ? new Date(this.item.fecha.getTime() + 24624000000) : undefined;
+    srv.finalizado = !diagnostic.confirmacion;
+    return srv;
   }
 
   goToAddNovelty() {
     this.openDialog(DIALOG_NOVELTY).pipe(
-      mergeMap(x => this.service.addNovelty(this.bvn.id, { fecha: new Date(x.date), novedad: x.novelty }).pipe(
+      map(x => ({ fecha: new Date(x.date), novedad: x.novelty } as Novedad)),
+      map(x => this.prepareNovelty(JSON.parse(JSON.stringify(this.item)), x)),
+      mergeMap(x => this.service.addNovelty(this.bvn.id, x).pipe(
         finalize(() => this.loading = false)
       ))
     )
       .subscribe(x => {
-        this.item.novedad = x;
-        this.item.finalizado = true;
+        this.prepareNovelty(this.item, x);
         snackError(this.snack, 'Servicio finalizado');
       });
+  }
+
+  prepareNovelty(srv: Servicio, novelty: Novedad) {
+    srv.novedad = novelty;
+    srv.finalizado = true;
+    return srv;
   }
 
   goToAddBirth() {
     this.openDialog(DIALOG_BIRTH).pipe(
       mergeMap(x => this.calculateEmptyDays(this.item.fecha.getTime(), x)),
       mergeMap(x => this.calculateInterval(x)),
-      mergeMap(x => this.service.addBirth(this.bvn.id, {
+      map(x => ({
         fecha: new Date(x.data.date), diasVacios: x.days, estadoCria: x.data.state,
         intervalo: x.interval, sexoCria: x.data.sex, numero: this.bvn.partos ? this.bvn.partos + 1 : 1
-      }).pipe(
+      }) as Parto),
+      map(x => this.prepareBirth(JSON.parse(JSON.stringify(this.item)), x)),
+      mergeMap(x => this.service.addBirth(this.bvn.id, x).pipe(
         finalize(() => this.loading = false)
       ))
     )
       .subscribe(x => {
-        this.item.parto = x;
-        this.item.finalizado = true;
+        this.prepareBirth(this.item, x);
         this.bvn.partos = x.numero;
         snackOk(this.snack, 'Servicio finalizado');
       });
   }
 
+  prepareBirth(srv: Servicio, x: Parto) {
+    srv.parto = x;
+    srv.finalizado = true;
+    return srv;
+  }
 
   openDialog(type: number): Observable<any> {
     return this.dialog.open(NoveltyDialogComponent, {
