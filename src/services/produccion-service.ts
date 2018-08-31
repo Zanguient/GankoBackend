@@ -1,4 +1,4 @@
-import { Produccion, TYPE_PRODUCCION } from "./models/produccion";
+import { Produccion, TYPE_PROD_LECHE } from "./models/produccion";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
@@ -17,7 +17,7 @@ export class ProduccionService {
     constructor(private db: DBConnection) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_PRODUCCION);
+        return this.db.ListByType(TYPE_PROD_LECHE);
     }
 
     insert(produccion: Produccion) {

@@ -2,7 +2,7 @@ import { VacunaService } from '../../services/vacuna-service';
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { RegistroVacunas } from '../../services/models/vacunas';
+import { TYPE_VACUNA,Vacuna } from '../../services/models/vacunas';
 
 
 class ResponseVacunas extends ResponseBody {
@@ -11,14 +11,11 @@ class ResponseVacunas extends ResponseBody {
     }
 }
 
-export function getVacuna(req, res: Response, next) {
-    
-    VacunaService.instance.getAll()
+export function getVacunaByID(req, res: Response, next) {
+    let idVacuna = req.params.idVacuna;
+    VacunaService.instance.getById(idVacuna)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseVacunas(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseVacunas(null, null, err));
         })

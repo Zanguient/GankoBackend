@@ -8,7 +8,8 @@ import { getGroupById } from '../controllers/grupos/get-group-by-id';
 
 const grupo: Router = Router();
 
-ValidateToken;
+grupo.use(ValidateToken);
+
 grupo.get('/finca/:idFinca',getGroupByIdFinca);
 grupo.delete('/:idGrupo',deleteGroupById);
 grupo.post("/",addGroup);

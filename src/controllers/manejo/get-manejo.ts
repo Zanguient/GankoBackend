@@ -1,5 +1,4 @@
 import { ManejoService } from '../../services/manejo-service';
-import { RegistroManejo } from "../../services/models/manejo";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
@@ -11,14 +10,11 @@ class ResponseManejo extends ResponseBody {
     }
 }
 
-export function getManejo(req, res: Response, next) {
-    
-    ManejoService.instance.getAll()
+export function getManejoById(req, res: Response, next) {
+    let idManejo = req.params.idManejo;
+    ManejoService.instance.getById(idManejo)
         .then(data => {
-            if (data.length > 0) {
                 res.send(new ResponseManejo(true, data, null));
-            }
-
         }, err => {
             res.status(500).send(new ResponseManejo(null, null, err));
         })

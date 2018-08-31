@@ -3,10 +3,10 @@ import { getFinca, addFinca, deleteFinca, updateFinca} from '../controllers/inde
 import { ValidateToken } from '../middlewares/token-validation';
 
 const finca: Router = Router();
-
-finca.get('/',ValidateToken,getFinca);
-finca.post('/',ValidateToken,addFinca);
-finca.delete('/:idfinca',ValidateToken,deleteFinca);
-finca.put('/:idfinca',ValidateToken,updateFinca);
+finca.use(ValidateToken);
+finca.get('/',getFinca);
+finca.post('/',addFinca);
+finca.delete('/:idfinca',deleteFinca);
+finca.put('/:idfinca',updateFinca);
 
 export default finca;

@@ -1,12 +1,11 @@
 import { Router } from 'express';
 import { getSanidad, addSanidad, deleteSanidad, updateSanidad} from '../controllers/index';
 import { ValidateToken } from '../middlewares/token-validation';
+import { getSanidadById } from '../controllers/sanidad/get-sanidad';
 
 const sanidad: Router = Router();
-
-sanidad.get('/get-sanidad',ValidateToken,getSanidad);
-sanidad.post('/add-sanidad',ValidateToken,addSanidad);
-sanidad.delete('/delete-sanidad/:idSanidad',ValidateToken,deleteSanidad);
-sanidad.put('/update-sanidad/:idSanidad',ValidateToken,updateSanidad);
+sanidad.use(ValidateToken);
+sanidad.get('/:idSanidad',getSanidadById);
+sanidad.post('/',addSanidad);
 
 export default sanidad;

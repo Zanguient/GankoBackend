@@ -13,8 +13,8 @@ class ResponseLeche extends ResponseBody {
 
 
 export function getLecheByIdFinca(req, res: Response, next) {
-    
-    LecheService.instance.getAll()
+    let idFinca = req.params.idFinca;
+    LecheService.instance.getAllByIdFInca(idFinca)
         .then(data => {
             if (data.length > 0) {
                 res.send(new ResponseLeche(true, data, null));

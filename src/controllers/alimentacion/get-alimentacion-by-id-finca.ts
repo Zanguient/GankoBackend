@@ -11,9 +11,9 @@ class ResponseAlimentacion extends ResponseBody {
         super(success, err);
     }
 }
-export function getAlimentacionById(req, res: Response, next) {
-    let idAlimentacion = req.params.idAlimentacion;
-    AlimentacionService.instance.getById(idAlimentacion)
+export function getAlimentacionByIdFinca(req, res: Response, next) {
+    let idFinca = req.params.idFinca;
+    AlimentacionService.instance.getByIdFinca(idFinca)
         .then(data => {
                 res.send(new ResponseAlimentacion(true, data, null));
         }, err => {

@@ -1,14 +1,16 @@
 import { Router } from 'express';
 import { getAlimentacion, addAlimentacion, deleteAlimentacion, updateAlimentacion} from '../controllers/index';
 import { ValidateToken } from '../middlewares/token-validation';
+import { getAlimentacionById } from '../controllers/alimentacion/get-alimentacion';
+import { getAlimentacionByIdFinca } from '../controllers/alimentacion/get-alimentacion-by-id-finca';
 
 const alimentacion: Router = Router();
 
 
+alimentacion.use(ValidateToken);
+alimentacion.get('/:idAlimentacion',getAlimentacionById);
+alimentacion.get('/finca/:idFinca',getAlimentacionByIdFinca);
+alimentacion.post('/',addAlimentacion);
 
-alimentacion.get('/get-alimentacion',ValidateToken,getAlimentacion);
-alimentacion.post('/add-alimentacion',ValidateToken,addAlimentacion);
-alimentacion.delete('/delete-alimentacion/:idAlimentacion',ValidateToken,deleteAlimentacion);
-alimentacion.put('/update-alimentacion/:idAlimentacion',ValidateToken,updateAlimentacion);
 
 export default alimentacion;

@@ -2,7 +2,7 @@ import { SanidadService } from '../../services/sanidad-service';
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { RegistroSanidad } from '../../services/models/sanidad';
+import { Sanidad } from '../../services/models/sanidad';
 
 
 class ResponseSanidad extends ResponseBody {
@@ -11,7 +11,7 @@ class ResponseSanidad extends ResponseBody {
     }
 }
 export function addSanidad(req, res: Response, next) {
-    let sanidad = req.body as RegistroSanidad;
+    let sanidad = req.body as Sanidad;
     SanidadService.instance.insert(sanidad)
         .then(data => {
             res.send(new ResponseSanidad(data ? true : false, data, null));

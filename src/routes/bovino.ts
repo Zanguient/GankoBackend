@@ -13,10 +13,9 @@ import { getVacunaByIdBovino } from '../controllers/bovinos/get-vacuna-by-id-bov
 
 const bovino: Router = Router();
 
-ValidateToken;
-bovino.get('/:idFinca', getBovinos);
-bovino.post('/', addBovino);
+bovino.use(ValidateToken);
 bovino.delete('/:idBovino', deleteBovino);
+bovino.post('/', addBovino);
 bovino.get('/:idBovino', getBovino);
 bovino.get('/:idBovino/alimentacion', getAlimentacionByIdBovino);
 bovino.get('/:idBovino/sanidad', getSanidadByIdBovino);
@@ -29,7 +28,11 @@ bovino.get("/:idBovino/leche", getMilkByIdBovino);
 bovino.post("/:idBovino/leche", addMilkByIdBovino)
 bovino.put("/:idBovino/celo", updateBovino);
 bovino.put("/:idBovino/servicio", updateBovino);
+bovino.put("/:idBovino/diagnostico", updateBovino);
+bovino.put("/:idBovino/novedad", updateBovino);
+bovino.put("/:idBovino/parto", updateBovino);
 bovino.get("/:idBovino/vacunas", getVacunaByIdBovino);
+bovino.get('/:idFinca', getBovinos);
 
 
 export default bovino;

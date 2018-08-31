@@ -1,5 +1,5 @@
 import { ManejoService } from '../../services/manejo-service';
-import { RegistroManejo } from "../../services/models/manejo";
+import { Manejo } from "../../services/models/manejo";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
@@ -12,7 +12,7 @@ class ResponseManejo extends ResponseBody {
 }
 
 export function addManejo(req, res: Response, next) {
-    let manejo = req.body as RegistroManejo;
+    let manejo = req.body as Manejo;
     ManejoService.instance.insert(manejo)
         .then(data => {
             res.send(new ResponseManejo(data ? true : false, data, null));

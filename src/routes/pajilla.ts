@@ -1,15 +1,14 @@
 import { Router } from 'express';
-import { getPajilla, addPajilla, deletePajilla, updatePajilla} from '../controllers/index';
+import { addPajilla, deletePajilla, updatePajilla} from '../controllers/index';
 import { ValidateToken } from '../middlewares/token-validation';
 import { getPajillasyIdFinca } from '../controllers/pajilla/get-pajilla';
 
 const pajilla: Router = Router();
+ValidateToken;
 
-pajilla.get('/:idFinca',ValidateToken,getPajillasyIdFinca);
+pajilla.get('/:idFinca',getPajillasyIdFinca);
 
-
-pajilla.post('/add-pajilla',ValidateToken,addPajilla);
-pajilla.delete('/delete-pajilla/:idPajilla',ValidateToken,deletePajilla);
-pajilla.put('/update-pajilla/:idPajilla',ValidateToken,updatePajilla);
+pajilla.post('/',addPajilla);
+pajilla.put('/:idPajilla',updatePajilla);
 
 export default pajilla;
