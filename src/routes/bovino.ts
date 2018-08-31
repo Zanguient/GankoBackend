@@ -14,12 +14,15 @@ import { updateBovinoDestete } from '../controllers/bovinos/update-bovino-destet
 import { updateBovinoCelo } from '../controllers/bovinos/update-bovino-celo';
 import { updateBovinoServicio } from '../controllers/bovinos/update-bovino-servicio';
 import { updateBovinoNovedad } from '../controllers/bovinos/update-bovino-novedad';
+import { getBovinosByIds } from '../controllers/bovinos/get-bovinos-ids';
 
 const bovino: Router = Router();
 
 bovino.use(ValidateToken);
 bovino.delete('/:idBovino', deleteBovino);
 bovino.post('/', addBovino);
+bovino.get('/finca/:idFinca', getBovinos);
+bovino.post('/ids', getBovinosByIds);
 bovino.get('/:idBovino', getBovino);
 bovino.get('/:idBovino/alimentacion', getAlimentacionByIdBovino);
 bovino.get('/:idBovino/sanidad', getSanidadByIdBovino);
@@ -34,7 +37,7 @@ bovino.put("/:idBovino/celo", updateBovinoCelo);
 bovino.put("/:idBovino/servicio", updateBovinoServicio);
 bovino.put("/:idBovino/novedad", updateBovinoNovedad);
 bovino.get("/:idBovino/vacunas", getVacunaByIdBovino);
-bovino.get('/finca/:idFinca', getBovinos);
+
 
 
 export default bovino;

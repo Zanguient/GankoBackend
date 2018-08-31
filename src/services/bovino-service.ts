@@ -38,21 +38,25 @@ export class BovinoService {
         }
         if (servicio || diagnostico) {
             queries.push('servicio[0].finalizado = false')
-            if(diagnostico){
+            if (diagnostico) {
                 queries.push('servicio[0].diagnostico.confirmacion = true')
             }
         }
-        
+
 
         if (destete != undefined) { queries.push("destete = " + destete); }
 
         if (sexo) { queries.push('genero = "' + sexo + '"'); }
 
-        let where = "finca = $1"; 
-        where = where + (queries.length > 0? " AND "+queries.join(" AND ") : '' );
+        let where = "finca = $1";
+        where = where + (queries.length > 0 ? " AND " + queries.join(" AND ") : '');
 
 
         return this.db.ListByType<Bovino>(TYPE_BOVINO, where, [idFinca]);
+    }
+
+    findBovinosByIds(ids: string[]) {
+        return this.db.ListByType<Bovino>(TYPE_BOVINO, "META(ganko).id IN $1", [ids]);
     }
 
     //permite encontrar un bovino por medio de su identificador asignado
