@@ -2,6 +2,7 @@ import { Bovino, TYPE_BOVINO } from "./models/bovinos"
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { updateFinca } from "../controllers";
 
 export class BovinoService {
 
@@ -16,13 +17,47 @@ export class BovinoService {
     constructor(private db: DBConnection) { }
 
     //permite recuperar los bovinos pertenecientes a un usuario o finca
-    findBovinos(idFinca: string,q:string,leche:boolean,ceba:boolean,ambos:boolean,celo:boolean,servicio:boolean,diagnostico:boolean,destete:boolean,retirados:boolean,sexo:string) {
-        return this.db.ListByType<Bovino>(TYPE_BOVINO,"finca = $1",[idFinca]);
+    findBovinos(idFinca: string, q: string, leche: boolean, ceba: boolean, ambos: boolean, celo: boolean, servicio: boolean, diagnostico: boolean, destete: boolean, retirados: boolean, sexo: string) {
+        const queries = [];
+
+        if (q) {
+            const qy = q.toLowerCase();
+            queries.push('(LOWER(nombre) LIKE "' + qy + '%" OR LOWER(codigo) LIKE "' + qy + '%")');
+        }
+
+        const prop = [];
+        if (leche) { prop.push('"Lecheria"'); }
+        if (ceba) { prop.push('"Ceba"'); }
+        if (ambos) { prop.push('"Ambos"'); }
+
+        if (prop.length > 0) { queries.push('proposito IN [' + prop.join(',') + ']'); }
+
+        if (celo) {
+            const date = (new Date()).getTime() - 10800000;
+            queries.push('celo[0] <= "' + date + '"');
+        }
+        if (servicio || diagnostico) {
+            queries.push('servicio[0].finalizado = false')
+            if(diagnostico){
+                queries.push('servicio[0].diagnostico.confirmacion = true')
+            }
+        }
+        
+
+        if (destete != undefined) { queries.push("destete = " + destete); }
+
+        if (sexo) { queries.push('genero = "' + sexo + '"'); }
+
+        let where = "finca = $1"; 
+        where = where + (queries.length > 0? " AND "+queries.join(" AND ") : '' );
+
+
+        return this.db.ListByType<Bovino>(TYPE_BOVINO, where, [idFinca]);
     }
 
     //permite encontrar un bovino por medio de su identificador asignado
     findByIdBovino(idbovino: string) {
-        return this.db.typedOne<Bovino>(TYPE_BOVINO,"codigo = $1",[idbovino]);
+        return this.db.typedOne<Bovino>(TYPE_BOVINO, "codigo = $1", [idbovino]);
     }
     //permite buscar el bovino por id de BD
     findById(idbovino: string) {
@@ -35,7 +70,7 @@ export class BovinoService {
 
     //permite editar un bovino
     updateBovino(idBovino: string, bovino: Bovino) {
-        return this.db.replace(idBovino,bovino)
+        return this.db.replace(idBovino, bovino)
     }
 
     //permite subir la foto del bovino
