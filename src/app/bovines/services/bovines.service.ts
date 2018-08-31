@@ -1,25 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, Observable, timer, BehaviorSubject, combineLatest } from 'rxjs';
-import { map, mergeMap, tap, toArray, startWith } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, from, Observable } from 'rxjs';
+import { map, mergeMap, startWith, tap, toArray } from 'rxjs/operators';
+import { NavService } from '../../core/services/nav.service';
 import { SessionService } from '../../core/services/session.service';
-import { feeds } from '../../feed/services/feed.mock';
-import { healths } from '../../health/services/health.mock';
-import { manages } from '../../manage/services/manage.mock';
-import { Bovino, Servicio, Diagnostico, Novedad, Parto } from '../../shared/models/bovine.model';
+import { Bovino, Diagnostico, Novedad, Parto, Servicio } from '../../shared/models/bovine.model';
 import { Alimentacion } from '../../shared/models/feed.model';
 import { Sanidad } from '../../shared/models/health.model';
 import { Manejo } from '../../shared/models/manage.model';
 import { Meat } from '../../shared/models/meat.model';
 import { Produccion } from '../../shared/models/milk-production.model';
-import { Rspn, Doc } from '../../shared/models/response.model';
+import { Doc, Rspn } from '../../shared/models/response.model';
+import { Straw } from '../../shared/models/straw.model';
 import { Vacuna } from '../../shared/models/vaccine.model';
-import { straws } from '../../straw/services/straw.mock';
 import { BaseService } from '../../util/base-service';
-import { validate, listToDoc, toDoc } from '../../util/http-util';
-import { vaccines } from '../../vaccines/services/vaccines.mock';
-import { bovine, bovines, meats, productions } from './bovines.mock';
-import { NavService } from '../../core/services/nav.service';
+import { listToDoc, toDoc, validate } from '../../util/http-util';
 
 @Injectable()
 export class BovinesService extends BaseService<Bovino> {
@@ -65,8 +60,9 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   update(item: Bovino): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    const id = item.id;
+    delete item.id;
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
@@ -141,9 +137,9 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   listVaccines(id: string): Observable<Vacuna[]> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, vaccines())), // simular respuesta
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('bovinos', id, 'vacunas'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x))
     );
   }
 
@@ -157,8 +153,7 @@ export class BovinesService extends BaseService<Bovino> {
   // Zeals
 
   addZeal(id: string, date: Date): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'celo'), { date: date }, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
@@ -169,52 +164,48 @@ export class BovinesService extends BaseService<Bovino> {
 
   private bovineToEmp(query: string): Observable<ItemEmp[]> {
     const farm = this.session.farmId;
-    return timer(500).pipe(
-      map(() => new Rspn(true, bovines())), // simular respuesta
-      map(x => validate(x)),
-      mergeMap(x => from(x)),
-      map(x => new ItemEmp(x.id, x.nombre, x.codigo)),
-      toArray()
-    );
+    return this.http.get<Rspn<Doc<Bovino>[]>>(this.makeUrl('bovinos', farm + '?sexo=Macho&q=' + query),
+      this.makeAuth(this.session.token)).pipe(
+        map(x => validate(x)),
+        mergeMap(x => from(x)),
+        map(x => new ItemEmp(x.id, x.doc.nombre, x.doc.codigo)),
+        toArray()
+      );
   }
 
   private strawToEmp(query: string): Observable<ItemEmp[]> {
     const farm = this.session.farmId;
-    return timer(500).pipe(
-      map(() => new Rspn(true, straws())), // simular respuesta
+    return this.http.get<Rspn<Doc<Straw>[]>>(this.makeUrl('pajillas', farm + '?q=' + query),
+      this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       mergeMap(x => from(x)),
-      map(x => new ItemEmp(x.id, x.breed, x.idStraw, x.layette)),
+      map(x => new ItemEmp(x.id, x.doc.breed, x.doc.idStraw, x.doc.layette)),
       toArray()
     );
   }
 
   addService(id: string, service: Servicio): Observable<String> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'servicio'), service, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
 
   addDiagnostic(id: string, diagnostic: Diagnostico): Observable<Diagnostico> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'diagnostico'), diagnostic, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       map(() => diagnostic)
     );
   }
 
   addNovelty(id: string, novelty: Novedad): Observable<Novedad> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'novedad'), novelty, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       map(x => novelty)
     );
   }
 
   addBirth(id: string, birth: Parto): Observable<Parto> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    return this.http.put<Rspn<string>>(this.makeUrl('bovinos', id, 'parto'), birth, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       map(x => birth)
     );
