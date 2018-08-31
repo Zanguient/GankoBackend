@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../../util/base-service';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
-import { timer, Observable } from 'rxjs';
+import { timer, Observable, of } from 'rxjs';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
 import { validate, listToDoc, toDoc } from '../../util/http-util';
 import { Group, TYPE_GRUPO } from '../../shared/models/group.model';
-import { groups} from './group.mock';
+import { groups } from './group.mock';
 
 @Injectable()
 export class GroupsService extends BaseService<Group> {
@@ -30,7 +30,8 @@ export class GroupsService extends BaseService<Group> {
   }
 
   list(): Observable<Group[]> {
-    return this.http.get<Rspn<Doc<Group>[]>>(this.makeUrl('grupos'), this.makeAuth(this.session.token)).pipe(
+    return  this.http.get<Rspn<Doc<Group>[]>>(this.makeUrl('grupos', 'finca', this.session.farmId), this.makeAuth(this.session.token)).pipe(
+    // return of({ success: true, data: groups() }).pipe(
       map(x => validate(x)),
       mergeMap(x => listToDoc(x)),
       tap(x => this.data = x)
