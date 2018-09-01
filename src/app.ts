@@ -42,7 +42,7 @@ app.use('/api/v1/leche', leche);
 app.use('/api/v1/pajilla', pajilla);
 app.use('/api/v1/grupos',grupo);
 app.use('/api/v1/produccion', produccion);
-app.use('/api/v1/vacuna', vacuna);
+app.use('/api/v1/vacunas', vacuna);
 app.use('/api/v1/venta', venta);
 
 
