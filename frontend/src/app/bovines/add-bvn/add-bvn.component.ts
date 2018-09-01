@@ -38,6 +38,7 @@ export class AddBvnComponent implements OnInit {
     proposito: '',
     raza: '',
     retirado: false,
+    type: TYPE_BOVINO,
     tipo: TYPE_BOVINO
   };
 
