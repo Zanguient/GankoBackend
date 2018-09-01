@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectedBvnService } from '../../core/services/selected-bvn.service';
-import { Group } from '../../shared/models/group.model';
+import { Group, TYPE_GRUPO } from '../../shared/models/group.model';
 import { GroupsService } from '../service/groups.service';
 import { finalize } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
@@ -20,7 +20,8 @@ export class AddGroupComponent implements OnInit {
     color: 0,
     finca: '',
     nombre: '',
-    pradera: ''
+    pradera: '',
+    type: TYPE_GRUPO
   };
   color = '#000000';
 

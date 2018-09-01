@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FarmsService } from '../services/farms.service';
-import { Finca } from '../../shared/models/farm.model';
+import { Finca, TYPE_FINCA } from '../../shared/models/farm.model';
 import { MatSnackBar } from '@angular/material';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { finalize } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { finalize } from 'rxjs/operators';
 })
 export class AddFarmComponent implements OnInit {
 
-  farm: Finca = { nombre: '', hectareas: 1, ubicacion: '' };
+  farm: Finca = { nombre: '', hectareas: 1, ubicacion: '' , type: TYPE_FINCA};
   loading = false;
   editable = false;
 
