@@ -54,6 +54,14 @@ export class AddVaccinesComponent implements OnInit {
     }
 
     this.loading = true;
+
+    if (this.selected.group) {
+      const gr = this.selected.group;
+      this.item.grupo = { color: gr.color, id: gr.id, nombre: gr.nombre };
+    }
+
+    this.item.bovinos = this.selected.selecteds;
+    
     this.service.add(this.item).pipe(
       finalize(() => {
         this.loading = false;
