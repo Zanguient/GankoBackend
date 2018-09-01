@@ -44,7 +44,7 @@ export class BovinoService {
         }
 
 
-        // if (destete != undefined) { queries.push("destete = " + destete); }
+        if (destete != undefined) { queries.push("destete = " + destete); }
 
         if (sexo) { queries.push('genero = "' + sexo + '"'); }
 
