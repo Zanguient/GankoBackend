@@ -53,6 +53,14 @@ export class AddHealthComponent implements OnInit {
       this.item.fechaProxima = this.fechaProx(this.date, this.item.numeroAplicaciones, this.item.frecuencia);
     }
     this.loading = true;
+
+    if (this.selected.group) {
+      const gr = this.selected.group;
+      this.item.grupo = { color: gr.color, id: gr.id, nombre: gr.nombre };
+    }
+
+    this.item.bovinos = this.selected.selecteds;
+
     this.service.add(this.item).pipe(
       finalize(() => {
         this.loading = false;
