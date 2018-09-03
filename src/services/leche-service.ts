@@ -1,4 +1,4 @@
-import { Leche,TYPE_LECHE } from "./models/leche";
+import { Produccion,TYPE_PROD_LECHE } from "./models/leche";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
@@ -17,27 +17,27 @@ export class LecheService {
     constructor(private db: DBConnection) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_LECHE);
+        return this.db.ListByType(TYPE_PROD_LECHE);
     }
 
     getAllByIdFInca(idFinca:string) {
-        return this.db.ListByType(TYPE_LECHE,"idFarm = $1",[idFinca]);
+        return this.db.ListByType(TYPE_PROD_LECHE,"idFarm = $1",[idFinca]);
     }
 
-    insert(produccion: Leche) {
+    insert(produccion: Produccion) {
         return this.db.insert(produccion);
     }
 
-    update(id: string, produccion: Leche) {
+    update(id: string, produccion: Produccion) {
         return this.db.replace(id, produccion);
     }
 
     getById(id: string) {
-        return this.db.getById<Leche>(id);
+        return this.db.getById<Produccion>(id);
     }
 
     getByIdBovino(idBovino: string) {
-        return this.db.ListByType(TYPE_LECHE,"ANY bovino in Produccion.bovinos SATISFIES bovino = $1",[idBovino]);
+        return this.db.ListByType(TYPE_PROD_LECHE,"bovino = $1",[idBovino]);
     }
 
     delete(id:string){
