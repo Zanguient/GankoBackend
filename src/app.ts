@@ -39,7 +39,7 @@ app.use('/api/v1/sanidad', sanidad);
 app.use('/api/v1/manejo', manejo);
 app.use('/api/v1/ceba', ceba);
 app.use('/api/v1/leche', leche);
-app.use('/api/v1/pajilla', pajilla);
+app.use('/api/v1/pajillas', pajilla);
 app.use('/api/v1/grupos',grupo);
 app.use('/api/v1/produccion', produccion);
 app.use('/api/v1/vacunas', vacuna);
