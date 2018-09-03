@@ -27,5 +27,5 @@ export class Sanidad {
     estadoProximo?: number;
     titulo?: string;
     descripcion?: string;
-    channels: string[];
+    channels?: string[];
 }
