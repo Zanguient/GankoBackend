@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { HealthService } from '../services/health.service';
 import { Sanidad } from '../../shared/models/health.model';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { MatSnackBar } from '../../../../node_modules/@angular/material';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { finalize } from 'rxjs/operators';
+import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-re-apply-health',
@@ -17,12 +18,14 @@ export class ReApplyHealthComponent implements OnInit {
   item: Sanidad;
   loading = false;
 
-  constructor(private route: ActivatedRoute, private service: HealthService, private snack: MatSnackBar, private router: Router) { }
+  constructor(private route: ActivatedRoute, private service: HealthService, private snack: MatSnackBar, private router: Router,
+    public selecteds: SelectedBvnService) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
       map(x => x.get('id')),
-      mergeMap(x => this.service.selected(x))
+      mergeMap(x => this.service.selected(x)),
+      tap(x => this.selecteds.selecteds = x.bovinos)
     ).subscribe(x => this.item = x, err => snackError(this.snack, err));
   }
 
@@ -30,11 +33,19 @@ export class ReApplyHealthComponent implements OnInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
+  goToEditSelected() {
+    this.router.navigate(['editar'], { relativeTo: this.route });
+  }
+
   apply() {
     this.item.aplicacion = this.item.aplicacion + 1;
     this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.aplicacion,
       this.item.numeroAplicaciones, this.item.frecuencia);
     this.loading = true;
+
+    this.item.bovinos = this.selecteds.selecteds;
+    this.item.noBovinos = this.selecteds.removeds;
+
     this.service.add(this.item).pipe(
       finalize(() => this.loading = false)
     ).subscribe(() => {

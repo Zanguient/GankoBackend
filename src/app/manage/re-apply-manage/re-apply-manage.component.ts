@@ -3,9 +3,10 @@ import { Manejo } from '../../shared/models/manage.model';
 import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { ManageService } from '../services/manage.service';
 import { MatSnackBar } from '../../../../node_modules/@angular/material';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { finalize } from 'rxjs/operators';
+import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-re-apply-manage',
@@ -17,17 +18,23 @@ export class ReApplyManageComponent implements OnInit {
   item: Manejo;
   loading = false;
 
-  constructor(private route: ActivatedRoute, private service: ManageService, private snack: MatSnackBar, private router: Router) { }
+  constructor(private route: ActivatedRoute, private service: ManageService, private snack: MatSnackBar, private router: Router,
+    public selecteds: SelectedBvnService) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
       map(x => x.get('id')),
-      mergeMap(x => this.service.selected(x))
+      mergeMap(x => this.service.selected(x)),
+      tap(x => this.selecteds.selecteds = x.bovinos)
     ).subscribe(x => this.item = x, err => snackError(this.snack, err));
   }
 
   goToBack() {
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  goToEditSelected() {
+    this.router.navigate(['editar'], { relativeTo: this.route });
   }
 
   apply() {
@@ -36,6 +43,10 @@ export class ReApplyManageComponent implements OnInit {
       this.item.numeroAplicaciones, this.item.frecuencia);
 
     this.loading = true;
+
+    this.item.bovinos = this.selecteds.selecteds;
+    this.item.noBovinos = this.selecteds.removeds;
+
     this.service.add(this.item).pipe(
       finalize(() => this.loading = false)
     ).subscribe(() => {

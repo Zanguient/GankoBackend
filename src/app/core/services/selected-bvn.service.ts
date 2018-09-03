@@ -19,22 +19,24 @@ export class SelectedBvnService {
   loading: Subject<boolean> = new Subject();
 
   selecteds: string[];
+  removeds: string[] = [];
   group: Group;
 
-
-
+  editable = false;
 
   constructor(private nav: NavService, private session: SessionService, private http: HttpClient) { }
 
   listSelecteds() {
-    return this.http.post<Rspn<Doc<Bovino>[]>>(this.makeUrl('bovinos', 'ids'), { ids: this.selecteds },
-     this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => from(x)),
-      map(x => toDoc(x)),
-      map(x => new BovineRemoved(x, false)),
-      toArray()
-    );
+    const sls = this.group ? this.group.bovines : this.selecteds;
+
+    return this.http.post<Rspn<Doc<Bovino>[]>>(this.makeUrl('bovinos', 'ids'), { ids: sls },
+      this.makeAuth(this.session.token)).pipe(
+        map(x => validate(x)),
+        mergeMap(x => from(x)),
+        map(x => toDoc(x)),
+        map(x => new BovineRemoved(x, false)),
+        toArray()
+      );
   }
 
 

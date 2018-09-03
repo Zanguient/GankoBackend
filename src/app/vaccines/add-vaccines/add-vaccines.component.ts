@@ -40,6 +40,10 @@ export class AddVaccinesComponent implements OnInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
+  goToEditSelected() {
+    this.router.navigate(['editar'], { relativeTo: this.route });
+  }
+
   add() {
     if (this.date) {
       this.item.fecha = new Date(this.date);
