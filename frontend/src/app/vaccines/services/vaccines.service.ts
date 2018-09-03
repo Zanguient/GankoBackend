@@ -22,7 +22,7 @@ export class VaccinesService extends BaseService<Vacuna> {
   add(item: Vacuna): Observable<string> {
     item.type = TYPE_VACUNA;
     item.idFinca = this.session.farmId;
-    return this.http.post<Rspn<string>>(this.makeUrl('vacunas'), this.makeAuth(this.session.token)).pipe(
+    return this.http.post<Rspn<string>>(this.makeUrl('vacunas'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );
@@ -30,7 +30,7 @@ export class VaccinesService extends BaseService<Vacuna> {
 
   list(): Observable<Vacuna[]> {
     return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('vacunas', 'finca', this.session.farmId),
-    this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
+      this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
       .pipe(
         map(x => validate(x)),
         mergeMap(x => listToDoc(x)),
@@ -50,7 +50,7 @@ export class VaccinesService extends BaseService<Vacuna> {
 
   listPendings(): Observable<Vacuna[]> {
     return this.http.get<Rspn<Doc<Vacuna>[]>>(this.makeUrl('vacunas', 'finca', this.session.farmId),
-    this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
+      this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
       .pipe(
         map(x => validate(x)),
         mergeMap(x => listToDoc(x)),
@@ -61,7 +61,7 @@ export class VaccinesService extends BaseService<Vacuna> {
   update(item: Vacuna): Observable<string> {
     const id = item.id;
     delete item.id;
-    return this.http.put<Rspn<string>>(this.makeUrl('vacunas'), item, this.makeAuth(this.session.token)).pipe(
+    return this.http.put<Rspn<string>>(this.makeUrl('vacunas', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
