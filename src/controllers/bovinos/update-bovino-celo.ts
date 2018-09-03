@@ -13,7 +13,7 @@ class ResponseBovino extends ResponseBody {
 
 export function updateBovinoCelo(req, res: Response, next) {
     let date: Date = req.body;
-    let idbovino = req.params.idbovino;
+    let idbovino = req.params.idBovino;
     let bovino = new Bovino;
     BovinoService.instance.findById(idbovino)
         .then(result => {

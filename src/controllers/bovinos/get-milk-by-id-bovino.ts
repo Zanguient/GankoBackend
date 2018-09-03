@@ -13,7 +13,7 @@ class ResponseBody {
 
 export function getMilkByIdBovino(req, res: Response, next) {
 
-    let idBovino = req.params.idBovino;
+    let idBovino:string = req.params.idBovino;
     LecheService.instance.getByIdBovino(idBovino)
         .then(data => {
                 res.send(new ResponseBody(true, data, null));

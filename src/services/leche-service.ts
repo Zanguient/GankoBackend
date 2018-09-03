@@ -37,7 +37,7 @@ export class LecheService {
     }
 
     getByIdBovino(idBovino: string) {
-        return this.db.ListByType<Leche>(TYPE_LECHE,"ANY bovino in Produccion.bovinos SATISFIES bovino = $1",[idBovino]);
+        return this.db.ListByType(TYPE_LECHE,"ANY bovino in Produccion.bovinos SATISFIES bovino = $1",[idBovino]);
     }
 
     delete(id:string){
