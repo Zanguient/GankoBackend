@@ -41,6 +41,7 @@ export class Pradera {
         this.idFinca = idFinca;
         this.isUsedMeadow = false;
         this.isEmptyMeadow = true;
+        this.type = TYPE_PRADERA;
     }
 
 }

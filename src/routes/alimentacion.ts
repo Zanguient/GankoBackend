@@ -6,7 +6,6 @@ import { getAlimentacionByIdFinca } from '../controllers/alimentacion/get-alimen
 
 const alimentacion: Router = Router();
 
-
 alimentacion.use(ValidateToken);
 alimentacion.get('/:idAlimentacion',getAlimentacionById);
 alimentacion.get('/finca/:idFinca',getAlimentacionByIdFinca);

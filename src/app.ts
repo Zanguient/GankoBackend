@@ -15,6 +15,7 @@ import sanidad from './routes/sanidad';
 import vacuna from './routes/vacuna';
 import venta from './routes/venta';
 import grupo from './routes/grupo';
+import pradera from './routes/praderas';
 import cookieParser = require('cookie-parser'); // this module doesn't use the ES6 default export yet
 import cors = require('cors');
 
@@ -44,6 +45,7 @@ app.use('/api/v1/grupos',grupo);
 app.use('/api/v1/produccion', produccion);
 app.use('/api/v1/vacunas', vacuna);
 app.use('/api/v1/venta', venta);
+app.use('/api/v1/praderas',pradera);
 
 
 // catch 404 and forward to error handler

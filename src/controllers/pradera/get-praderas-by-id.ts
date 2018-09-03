@@ -17,4 +17,4 @@ export function getPraderaById(req, res: Response, next) {
         }, err => {
             res.status(500).send(new ResponsePradera(null, null, err));
         })
-}
+} 
