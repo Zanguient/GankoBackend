@@ -8,4 +8,5 @@ export class MeadowAlarm {
     wasShowed?: boolean;
     fechaProxima?: Date;
     tipo?: string;
+    channels?: string[];
 }

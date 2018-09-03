@@ -25,4 +25,5 @@ export class Manejo {
     grupo?: Grupo;
     bovinos?: string[];
     noBovinos?: string[];
+    channels?: string[];
 }

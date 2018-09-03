@@ -36,6 +36,7 @@ export class Bovino {
     seleccionado?: boolean;
 
     servicios?: Servicio[];
+    channels?: string[];
 }
 
 export class Servicio {

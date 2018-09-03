@@ -7,6 +7,7 @@ export class Movimiento {
     transactionDate: Date;
     idFarm: string;
 
+    channels?: string[];
     constructor(id?: string, sequence?: number, type?: string, idPradera?: string, bovinos?: string[],
         transactionDate?: Date, idFarm?: string) {
         this.id = id;

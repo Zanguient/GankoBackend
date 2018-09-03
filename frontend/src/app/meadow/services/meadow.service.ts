@@ -23,6 +23,7 @@ export class MeadowService extends BaseService<Pradera> {
 
   add(item: Pradera): Observable<string> {
     item.idFinca = this.session.farmId;
+    item.channels = [this.session.id];
     return timer(500).pipe(
       map(() => new Rspn(true, '')), // simular respuesta
       map(x => validate(x)),

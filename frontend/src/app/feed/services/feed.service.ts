@@ -21,6 +21,7 @@ export class FeedService extends BaseService<Alimentacion> {
   add(item: Alimentacion): Observable<string> {
     item.type = TYPE_ALIMENTACION;
     item.idFinca = this.session.farmId;
+    item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('alimentacion'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))

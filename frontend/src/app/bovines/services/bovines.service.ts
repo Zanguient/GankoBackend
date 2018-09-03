@@ -28,6 +28,7 @@ export class BovinesService extends BaseService<Bovino> {
 
   add(item: Bovino): Observable<string> {
     item.finca = this.session.farmId;
+    item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('bovinos'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
@@ -102,6 +103,7 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   addMilk(prod: Produccion): Observable<string> {
+    prod.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('bovinos', prod.bovino, 'leche'), prod, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
@@ -125,6 +127,8 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   addMeat(meat: Meat): Observable<string> {
+    meat.channels = [this.session.id];
+    meat.finca = this.session.farmId;
     return this.http.post<Rspn<string>>(this.makeUrl('bovinos', meat.bovino, 'ceba'), meat, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
