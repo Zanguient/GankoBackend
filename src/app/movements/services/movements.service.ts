@@ -23,6 +23,7 @@ export class MovementsService extends BaseService<Movimiento> {
 
   add(item: Movimiento): Observable<string> {
     item.idFarm = this.session.farmId;
+    item.channels = [this.session.id];
     return timer(500).pipe(
       map(() => new Rspn(true, '')), // simular respuesta
       map(x => validate(x)),

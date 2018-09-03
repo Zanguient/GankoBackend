@@ -22,6 +22,7 @@ export class MilkService extends BaseService<Leche> {
   add(item: Leche): Observable<string> {
     item.type = TYPE_LECHE;
     item.idFarm = this.session.farmId;
+    item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('leche'), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))

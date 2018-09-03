@@ -23,6 +23,8 @@ export class MeadowAlarmService extends BaseService<MeadowAlarm> {
   }
 
   add(item: MeadowAlarm): Observable<string> {
+    item.channels = [this.session.id];
+
     return timer(500).pipe(
       map(() => new Rspn(true, '')), // simular respuesta
       map(x => validate(x)),
