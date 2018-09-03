@@ -7,4 +7,5 @@ export class Group {
     color: number;
     bovines: string[];
     pradera: string;
+    channels?: string[];
 }

@@ -8,4 +8,5 @@ export class Meat {
     peso: number;
     gananciaPeso: number;
     eliminado: boolean;
+    channels?: string[];
 }

@@ -12,4 +12,5 @@ export class Alimentacion {
     valorkg: number;
     valorTotal: number;
     bovinos: string[];
+    channels?: string[];
 }

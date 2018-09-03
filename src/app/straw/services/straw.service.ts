@@ -21,6 +21,7 @@ export class StrawService extends BaseService<Straw> {
   add(item: Straw): Observable<string> {
     item.type = TYPE_PAJILLA;
     item.idFarm = this.session.farmId;
+    item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('pajillas'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))

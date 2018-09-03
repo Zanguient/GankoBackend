@@ -19,4 +19,5 @@ export class Vacuna {
     noBovinos?: string[];
     titulo?: string;
     descripcion?: string;
+    channels?: string[];
 }

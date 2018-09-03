@@ -16,6 +16,7 @@ export class Pradera {
     group?: string;
     available?: boolean;
     bovinos?: string[];
+    channels?: string[];
 
     constructor(isUsedMeadow?: boolean) {
         this.isUsedMeadow = this.isUsedMeadow;
