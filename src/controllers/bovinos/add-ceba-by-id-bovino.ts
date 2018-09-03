@@ -15,7 +15,7 @@ class ResponseBovino extends ResponseBody {
 
 export function addCebaByIdBovino(req, res: Response, next) {
     let idBovino = req.params.idBovino;
-    let ceba:Meat = req.body.ceba;
+    let ceba:Meat = req.body;
     CebaService.instance.insert(ceba)
         .then(data => {
             res.send(new ResponseBovino(data ? true : false, data, null));

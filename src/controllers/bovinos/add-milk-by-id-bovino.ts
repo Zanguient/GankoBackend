@@ -13,13 +13,14 @@ class ResponseBody {
         public err: string) { }
 }
 
-export function addMilkByIdBovino(req, res: Response, next) {
-    let leche:Leche = req.body.leche;
+export function addMilkByIdBovino(req: Request, res: Response, next) {
+    let leche: Leche = req.body;
+
     let idBovino = req.params.idBovino;
     LecheService.instance.insert(leche)
         .then(data => {
-                res.send(new ResponseBody(true, data, null));
-            
+            res.send(new ResponseBody(true, data, null));
+
         }, err => {
             res.status(500).send(new ResponseBody(null, null, err));
         })

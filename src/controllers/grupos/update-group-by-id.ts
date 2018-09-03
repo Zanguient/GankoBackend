@@ -15,7 +15,7 @@ class ResponseGroup extends ResponseBody {
 
 export function updateGroup(req, res: Response, next) {
     let idGrupo = req.params.idGrupo;
-    let grupo:Group = req.body.grupo;
+    let grupo:Group = req.body;
     GruposService.instance.update(idGrupo,grupo)
         .then(data => {
                 res.send(new ResponseGroup(true, data, null));

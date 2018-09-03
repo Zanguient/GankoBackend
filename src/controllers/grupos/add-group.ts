@@ -14,7 +14,7 @@ class ResponseGroup extends ResponseBody {
 }
 
 export function addGroup(req, res: Response, next) {
-    let grupo:Group = req.body.grupo;
+    let grupo:Group = req.body;
     GruposService.instance.insert(grupo)
         .then(data => {
                 res.send(new ResponseGroup(true, data, null));
