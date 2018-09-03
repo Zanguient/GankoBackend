@@ -21,7 +21,7 @@ export class ManageService extends BaseService<Manejo> {
   add(item: Manejo): Observable<string> {
     item.type = TYPE_MANEJO;
     item.idFinca = this.session.farmId;
-    return this.http.post<Rspn<string>>(this.makeUrl('manejo'), this.makeAuth(this.session.token)).pipe(
+    return this.http.post<Rspn<string>>(this.makeUrl('manejo'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );
@@ -29,7 +29,7 @@ export class ManageService extends BaseService<Manejo> {
 
   list(): Observable<Manejo[]> {
     return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', 'finca', this.session.farmId),
-    this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
+      this.makeAuthAndParams(this.session.token, ['q', 'recientes']))
       .pipe(
         map(x => validate(x)),
         mergeMap(x => listToDoc(x)),
@@ -49,7 +49,7 @@ export class ManageService extends BaseService<Manejo> {
 
   listPendings(): Observable<Manejo[]> {
     return this.http.get<Rspn<Doc<Manejo>[]>>(this.makeUrl('manejo', 'finca', this.session.farmId),
-    this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
+      this.makeAuthAndParams(this.session.token, ['q', 'pendientes']))
       .pipe(
         map(x => validate(x)),
         mergeMap(x => listToDoc(x)),

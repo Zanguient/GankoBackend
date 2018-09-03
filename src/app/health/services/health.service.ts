@@ -21,7 +21,7 @@ export class HealthService extends BaseService<Sanidad> {
   add(item: Sanidad): Observable<string> {
     item.type = TYPE_SANIDAD;
     item.idFinca = this.session.farmId;
-    return this.http.post<Rspn<string>>(this.makeUrl('sanidad'), this.makeAuth(this.session.token)).pipe(
+    return this.http.post<Rspn<string>>(this.makeUrl('sanidad'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );
