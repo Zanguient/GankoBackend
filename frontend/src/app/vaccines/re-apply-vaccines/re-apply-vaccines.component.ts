@@ -3,9 +3,10 @@ import { Vacuna } from '../../shared/models/vaccine.model';
 import { VaccinesService } from '../services/vaccines.service';
 import { MatSnackBar } from '../../../../node_modules/@angular/material';
 import { Router, ActivatedRoute } from '../../../../node_modules/@angular/router';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { finalize } from 'rxjs/operators';
+import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-re-apply-vaccines',
@@ -18,13 +19,19 @@ export class ReApplyVaccinesComponent implements OnInit {
   loading = false;
   reApp1: boolean;
 
-  constructor(private service: VaccinesService, private snack: MatSnackBar, private router: Router, private route: ActivatedRoute) { }
+  constructor(private service: VaccinesService, private snack: MatSnackBar, private router: Router, private route: ActivatedRoute,
+    public selecteds: SelectedBvnService) { }
 
   ngOnInit() {
     this.route.paramMap.pipe(
       map(x => x.get('id')),
-      mergeMap(x => this.service.selected(x))
+      mergeMap(x => this.service.selected(x)),
+      tap(x => this.selecteds.selecteds = x.bovinos)
     ).subscribe(x => this.item = x, err => snackError(this.snack, err));
+  }
+
+  goToEditSelected() {
+    this.router.navigate(['editar'], { relativeTo: this.route });
   }
 
   goToBack() {
@@ -34,6 +41,8 @@ export class ReApplyVaccinesComponent implements OnInit {
   apply() {
     this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.frecuencia);
     this.loading = true;
+    this.item.bovinos = this.selecteds.selecteds;
+    this.item.noBovinos = this.selecteds.removeds;
     this.service.add(this.item).pipe(
       finalize(() => {
         this.loading = false;

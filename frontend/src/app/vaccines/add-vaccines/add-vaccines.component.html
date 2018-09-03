@@ -6,7 +6,7 @@
 
   <mat-card>
     <h1>Agregar Vacunas</h1>
-    <app-bovine-selected [group]="selected.group" [selecteds]="selected.selecteds" [editable]="selected.group == null"></app-bovine-selected>
+    <app-bovine-selected (clickView)="goToEditSelected()"  [group]="selected.group" [selecteds]="selected.selecteds" [editable]="selected.group == null"></app-bovine-selected>
 
     <form #formAdd="ngForm" autocomplete="off">
       <div fxLayout="row wrap" fxLayoutGap="16px">

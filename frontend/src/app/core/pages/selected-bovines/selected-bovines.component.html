@@ -1,0 +1,33 @@
+<div class="mat-typography ">
+  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay bovinos registrados'" [addonable]="false">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" *ngFor="let d of data; index as i">
+
+        <app-card [title]="d.bvn.nombre" [subtitle]="d.bvn.codigo" [subAccent]="true">
+          <app-card-corner *ngIf="d.removed">
+            <p appWarn>Removido</p>
+          </app-card-corner>
+          <app-card-content>
+            <app-card-field [title]="'Sexo'">{{d.bvn.genero}}</app-card-field>
+            <app-card-field [title]="'raza'">{{d.bvn.raza}}</app-card-field>
+            <app-card-field [title]="'Proposito'">{{d.bvn.proposito}}</app-card-field>
+          </app-card-content>
+          <app-card-actions [align]="'flex-end'" *ngIf="service.editable">
+
+            <button *ngIf="!d.removed" color="warn" mat-button (click)="d.removed = true; changes = changes + 1;">Remover</button>
+            <button *ngIf="d.removed" color="accent" mat-button (click)="d.removed = false; changes = changes - 1;">Deshacer</button>
+          </app-card-actions>
+        </app-card>
+
+      </div>
+    </div>
+  </app-list-loader>
+</div>
+
+<div class="bottom-container-selected" *ngIf="service.editable">
+  <div class="bottom-selected">
+      <button color="accent" mat-raised-button (click)="cancel()">Cancelar</button>
+      <button color="accent" mat-raised-button [disabled]="changes == 0" (click)="next()">Aceptar</button>
+  </div>
+  
+</div>

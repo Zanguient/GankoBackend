@@ -1,0 +1,13 @@
+.bottom-container-selected{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    
+}
+
+.bottom-selected{
+    background: #009999;
+}

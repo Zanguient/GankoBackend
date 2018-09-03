@@ -6,12 +6,15 @@ import { ReApplyVaccinesComponent } from './re-apply-vaccines/re-apply-vaccines.
 import { DetailVaccinesComponent } from './detail-vaccines/detail-vaccines.component';
 import { SelectGroupComponent } from '../core/pages/select-group/select-group.component';
 import { SelectBovineComponent } from '../core/pages/select-bovine/select-bovine.component';
+import { SelectedBovinesComponent } from '../core/pages/selected-bovines/selected-bovines.component';
 
 export const vaccinesRoutes: Routes = [
     {
         path: 'vacunas', component: VaccinesComponent, children: [
             { path: '', component: ListVaccinesComponent },
             { path: 'agregar', component: AddVaccinesComponent },
+            { path: 'agregar/editar', component: SelectedBovinesComponent },
+            { path: ':id/aplicar/editar', component: SelectedBovinesComponent },
             { path: ':id/aplicar', component: ReApplyVaccinesComponent },
             { path: 'grupos', component: SelectGroupComponent},
             { path: 'bovinos', component: SelectBovineComponent},

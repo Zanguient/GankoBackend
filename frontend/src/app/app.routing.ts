@@ -1,9 +1,10 @@
-import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { LoginComponent } from './core/pages/login/login.component';
-import { farmsRoutes } from './farms/farms.routing';
-import { DashboardComponent } from './core/pages/dashboard/dashboard.component';
+import { RouterModule, Routes } from '@angular/router';
 import { bovinesRoutes } from './bovines/bovines.routing';
+import { DashboardComponent } from './core/pages/dashboard/dashboard.component';
+import { LoginComponent } from './core/pages/login/login.component';
+import { NotFoundComponent } from './core/pages/not-found/not-found.component';
+import { farmsRoutes } from './farms/farms.routing';
 import { feedRoutes } from './feed/feed.routing';
 import { groupRoutes } from './groups/groups.routing';
 import { healthRoutes } from './health/health.routing';
@@ -15,7 +16,6 @@ import { notificationsRoutes } from './notifications/notifications.routing';
 import { reportsRoutes } from './reports/reports.routing';
 import { strawRoutes } from './straw/straw.routing';
 import { vaccinesRoutes } from './vaccines/vaccines.routing';
-import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },

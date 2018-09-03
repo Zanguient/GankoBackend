@@ -15,6 +15,7 @@ export class BovineSelectedComponent implements OnInit {
   @Input() groupReg: Grupo;
   @Input() selecteds: string[] = [];
   @Input() editable = false;
+  @Output() clickView: EventEmitter<number> = new EventEmitter();
 
   constructor(public service: SelectedBvnService) { }
 
@@ -24,7 +25,8 @@ export class BovineSelectedComponent implements OnInit {
   }
 
   goToView() {
-
+    this.service.editable = this.editable;
+    this.clickView.emit(0);
   }
 
 }
