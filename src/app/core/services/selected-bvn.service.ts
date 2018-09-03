@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, from, Observable, timer } from 'rxjs';
+import { combineLatest, from, Observable, Subject, timer } from 'rxjs';
 import { map, mergeMap, startWith, tap, toArray } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { groups } from '../../groups/service/group.mock';
+import { bovines } from '../../bovines/services/bovines.mock';
 import { Bovino } from '../../shared/models/bovine.model';
 import { Group } from '../../shared/models/group.model';
-import { Rspn, Doc } from '../../shared/models/response.model';
-import { validate, listToDoc } from '../../util/http-util';
+import { Doc, Rspn } from '../../shared/models/response.model';
+import { listToDoc, validate, toDoc } from '../../util/http-util';
 import { NavService } from './nav.service';
 import { SessionService } from './session.service';
 
@@ -16,14 +16,27 @@ import { SessionService } from './session.service';
 })
 export class SelectedBvnService {
 
-  url = '';
-  loading: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  loading: Subject<boolean> = new Subject();
 
   selecteds: string[];
   group: Group;
 
 
+
+
   constructor(private nav: NavService, private session: SessionService, private http: HttpClient) { }
+
+  listSelecteds() {
+    return this.http.post<Rspn<Doc<Bovino>[]>>(this.makeUrl('bovinos', 'ids'), { ids: this.selecteds },
+     this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => from(x)),
+      map(x => toDoc(x)),
+      map(x => new BovineRemoved(x, false)),
+      toArray()
+    );
+  }
+
 
   list(): Observable<BovineSelected[]> {
     this.clear();
@@ -87,4 +100,11 @@ export class BovineSelected {
   constructor(
     public bvn: Bovino,
     public selected: boolean) { }
+}
+
+export class BovineRemoved {
+  constructor(
+    public bvn: Bovino,
+    public removed: boolean
+  ) { }
 }

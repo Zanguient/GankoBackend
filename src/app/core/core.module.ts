@@ -7,6 +7,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { SharedModule } from '../shared/shared.module';
 import { ClearDialogComponent } from './pages/select-bovine/clear-dialog/clear-dialog.component';
+import { SelectedBovinesComponent } from './pages/selected-bovines/selected-bovines.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { ClearDialogComponent } from './pages/select-bovine/clear-dialog/clear-d
   entryComponents: [
     ClearDialogComponent
   ],
-  declarations: [SelectBovineComponent, SelectGroupComponent, LoginComponent, DashboardComponent, NotFoundComponent, ClearDialogComponent]
+  declarations: [SelectBovineComponent, SelectGroupComponent, LoginComponent, DashboardComponent, NotFoundComponent, ClearDialogComponent, SelectedBovinesComponent]
 })
 export class CoreModule { }
