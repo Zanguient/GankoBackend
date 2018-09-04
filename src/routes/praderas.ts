@@ -10,7 +10,7 @@ const pradera: Router = Router();
 
 pradera.use(ValidateToken);
 pradera.get('/:idFinca',getPraderaByIdFarm);
-pradera.get('/:idPradera',getPraderaById);
+pradera.get('/:idPradera/pradera',getPraderaById);
 pradera.put('/:idPradera',updatePraderaById);
 pradera.get('/:idPradera/alertas',getAlertaByIdPradera);
 pradera.post('/:idFinca/alertas',addAlertaByIdPradera);
