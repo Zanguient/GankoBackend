@@ -32,6 +32,7 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
       this.gridList.push(new Cell(i, new Pradera(false)));
     }*/
     this.service.list().subscribe(x => {
+      console.log(Object.values(x));
       this.praderas = x;
     }, err => snackError(this.snackB, err));
     this.loading = false;
@@ -48,11 +49,11 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
         if (rsp) {
           pradera.tamanoEnHectareas = rsp.tamanoEnHectareas;
           pradera.tamano = rsp.tamano;
-          pradera.isUsedMeadow = true;
-          pradera.isEmptyMeadow = false;
+          pradera.isUsedMeadow = !pradera.isUsedMeadow;
+          pradera.isEmptyMeadow = !pradera.isEmptyMeadow;
           pradera.available = true;
           pradera.fechaSalida = new Date();
-          pradera.id = pradera.identificador.toString();
+          pradera.identificador = 1;
           pradera.mantenimiento = [];
           pradera.aforo = [];
           this.service.update(pradera).subscribe(() => snackOk(this.snackB, 'Se guardo correctamente'),
@@ -68,9 +69,9 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
       dialogRef.afterClosed().subscribe(rsp => {
         this.service.select(pradera);
         if (rsp === 0) {
-          this.goToAdmin(pradera.identificador);
+          this.goToAdmin(pradera.id);
         } else if (rsp === 1) {
-          this.goToAlert(pradera.identificador);
+          this.goToAlert(pradera.id);
         } else if (rsp === 2) {
           this.removePradera(pradera, index);
         }
@@ -91,22 +92,23 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
   }
 
   updateRemoveData(data: Pradera) {
-    if (!data.available) {
+    if (!data.group) {
       snackOk(this.snackB, 'La pardera tiene un grupo asociado');
     } else {
-      data.isUsedMeadow = false;
-      data.available = true;
+      data.isUsedMeadow = !data.isUsedMeadow;
+      data.isEmptyMeadow = !data.isEmptyMeadow;
+      delete data.available;
       this.service.update(data).subscribe(rsp => {
         snackOk(this.snackB, 'Se removio la pradera');
       }, err => snackError(this.snackB, err));
     }
   }
 
-  goToAdmin(index: number) {
+  goToAdmin(index: String) {
     this.router.navigate([index], { relativeTo: this.route });
   }
 
-  goToAlert(index: number) {
+  goToAlert(index: String) {
     this.router.navigate([index + '/alertas'], { relativeTo: this.route });
   }
 
