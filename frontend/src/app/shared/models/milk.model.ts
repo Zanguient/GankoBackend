@@ -8,4 +8,5 @@ export class Leche {
     valorLitro: number;
     numeroLitros: number;
     totalLitros: number;
+    channels?: string[];
 }

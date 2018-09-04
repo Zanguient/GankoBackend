@@ -11,4 +11,5 @@ export class Straw {
     origin: string;
     value: string;
     state?: number;
+    channels?: string[];
 }

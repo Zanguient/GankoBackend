@@ -23,6 +23,7 @@ export class GroupsService extends BaseService<Group> {
   add(item: Group): Observable<string> {
     item.type = TYPE_GRUPO;
     item.finca = this.session.farmId;
+    item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('grupos'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))

@@ -7,4 +7,5 @@ export class Produccion {
     jornada: string;
     litros: string;
     fecha: Date;
+    channels?: string[];
 }

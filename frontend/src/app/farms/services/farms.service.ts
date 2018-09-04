@@ -22,6 +22,7 @@ export class FarmsService extends BaseService<Finca> {
   add(item: Finca): Observable<string> {
     item.type = TYPE_FINCA;
     item.usuarioId = this.session.id;
+    item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('fincas'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))

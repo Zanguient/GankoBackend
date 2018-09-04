@@ -7,4 +7,5 @@ export class Finca {
     ubicacion: string;
     hectareas: number;
     type?: string;
+    channels?: string[];
 }
