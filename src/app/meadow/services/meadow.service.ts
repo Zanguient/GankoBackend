@@ -15,6 +15,7 @@ export class MeadowService extends BaseService<Pradera> {
   data: Pradera[] = [];
   idFarm: string;
   selectedTab = 0;
+  idPradera = null;
 
   constructor(private http: HttpClient, private session: SessionService) {
     super();
@@ -40,8 +41,11 @@ export class MeadowService extends BaseService<Pradera> {
   }
 
   update(item: Pradera): Observable<string> {
-    const id = item.id;
+    let id = item.id;
     delete item.id;
+    if (id === undefined) {
+      id = this.idPradera;
+    }
     return this.http.put<Rspn<string>>(this.makeUrl('praderas', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
@@ -55,6 +59,7 @@ export class MeadowService extends BaseService<Pradera> {
   }
 
   getById(id: string): Observable<Pradera> {
+    this.idPradera = id;
     return this.http.get<Rspn<Doc<Pradera>>>(this.makeUrl('praderas', id, 'pradera'), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       map(x => toDoc(x))

@@ -19,6 +19,7 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
 
   // gridList: Cell[] = [];
   praderas: Pradera[] = [];
+  idArray: boolean[] = [];
 
   constructor(service: MeadowService, snack: MatSnackBar, dialog: MatDialog,
     router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar, private serv: MeadowService) {
@@ -32,10 +33,22 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
       this.gridList.push(new Cell(i, new Pradera(false)));
     }*/
     this.service.list().subscribe(x => {
-      console.log(Object.values(x));
       this.praderas = x;
+      this.addIdArray();
     }, err => snackError(this.snackB, err));
     this.loading = false;
+  }
+
+  addIdArray() {
+    this.idArray = [];
+    for (let i = 0; i < 100; i++) {
+      this.idArray.push(false);
+    }
+    for (let i = 0; i < this.praderas.length; i++) {
+      if (this.praderas[i].identificador !== undefined) {
+        this.idArray[this.praderas[i].identificador - 1] = true;
+      }
+    }
   }
 
   openDialog(pradera: Pradera, index?: number) {
@@ -47,17 +60,21 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
 
       dialogRef.afterClosed().subscribe(rsp => {
         if (rsp) {
+          const praderaOld: Pradera = pradera;
           pradera.tamanoEnHectareas = rsp.tamanoEnHectareas;
           pradera.tamano = rsp.tamano;
           pradera.isUsedMeadow = !pradera.isUsedMeadow;
           pradera.isEmptyMeadow = !pradera.isEmptyMeadow;
           pradera.available = true;
           pradera.fechaSalida = new Date();
-          pradera.identificador = 1;
+          pradera.identificador = this.getIdentificador();
           pradera.mantenimiento = [];
           pradera.aforo = [];
           this.service.update(pradera).subscribe(() => snackOk(this.snackB, 'Se guardo correctamente'),
-            err => snackError(this.snackB, err));
+            err => {
+              snackError(this.snackB, err);
+              this.loadPraderas();
+            });
         }
       }, err => snackError(this.snackB, err));
     } else {
@@ -80,6 +97,18 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
 
   }
 
+  getIdentificador() {
+    let identificador = 0;
+    for (let i = 0; i < this.idArray.length; i++) {
+      if (!this.idArray[i]) {
+        identificador = i + 1;
+        this.idArray[i] = true;
+        break;
+      }
+    }
+    return identificador;
+  }
+
   removePradera(data: Pradera, index: number) {
     const dialogRef = this.d.open(DeleteDialogComponent, {
       data: { item: data },
@@ -92,15 +121,26 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
   }
 
   updateRemoveData(data: Pradera) {
-    if (!data.group) {
+    if (data.group !== undefined) {
       snackOk(this.snackB, 'La pardera tiene un grupo asociado');
     } else {
       data.isUsedMeadow = !data.isUsedMeadow;
       data.isEmptyMeadow = !data.isEmptyMeadow;
       delete data.available;
+      delete data.identificador;
+      delete data.aforo;
+      delete data.bovinos;
+      delete data.mantenimiento;
+      delete data.tamano;
+      delete data.tamanoEnHectareas;
+      delete data.fechaSalida;
       this.service.update(data).subscribe(rsp => {
         snackOk(this.snackB, 'Se removio la pradera');
-      }, err => snackError(this.snackB, err));
+        this.addIdArray();
+      }, err => {
+        snackError(this.snackB, err);
+        this.loadPraderas();
+      });
     }
   }
 

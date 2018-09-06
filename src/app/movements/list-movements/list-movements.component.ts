@@ -132,7 +132,7 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
         item.fechaSalida = new Date();
         item.available = true;
         item.bovinos = [];
-        item.group = null;
+        delete item.group;
         this.meadowservice.update(item).subscribe(() => {
           // si todo sale bien se obtiene el grupo asociado por el nombre
           this.getGroup(nameGroup);
