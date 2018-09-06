@@ -9,6 +9,7 @@ import { AddMeadowDialogComponent } from '../add-meadow-dialog/add-meadow-dialog
 import { OptMeadowDialogComponent } from '../opt-meadow-dialog/opt-meadow-dialog.component';
 import { DeleteDialogComponent } from '../../shared/components/delete-dialog/delete-dialog.component';
 import { filter, flatMap, map } from 'rxjs/operators';
+import { MeadowAlarmService } from '../services/meadowAlarm.service';
 
 @Component({
   selector: 'app-list-meadow',
@@ -22,7 +23,8 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
   idArray: boolean[] = [];
 
   constructor(service: MeadowService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar, private serv: MeadowService) {
+    router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar, private serv: MeadowService,
+  private meadowAlarmService: MeadowAlarmService) {
     super(service, dialog, router, route, snack);
     this.loadPraderas();
   }
@@ -144,11 +146,13 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
     }
   }
 
-  goToAdmin(index: String) {
+  goToAdmin(index: string) {
+    this.meadowAlarmService.idPradera = index;
     this.router.navigate([index], { relativeTo: this.route });
   }
 
-  goToAlert(index: String) {
+  goToAlert(index: string) {
+    this.meadowAlarmService.idPradera = index;
     this.router.navigate([index + '/alertas'], { relativeTo: this.route });
   }
 

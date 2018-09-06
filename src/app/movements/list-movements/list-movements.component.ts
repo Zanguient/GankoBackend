@@ -63,7 +63,6 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
 
   addGroupDialog(item: Pradera) {
     const groups: Group[] = [];
-    console.log(Object.values(this.g));
     for (const group of this.g) {
       if (group.pradera === '') {
         groups.push(group);
@@ -142,11 +141,9 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
   }
 
   getGroup(name: string) {
-    console.log(Object.values(this.g));
     for (const group of this.g) {
       if (group.nombre === name) {
         group.pradera = '';
-        console.log('Grupo encontrado id: ' + group.id);
         this.updateGroupPrad(group);
         break;
       }
