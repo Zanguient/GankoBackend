@@ -21,4 +21,5 @@ export class AlarmaPradera{
     wasShowed: boolean;
     fechaProxima: Date;
     tipo:string;
+    idFinca:string;
 }

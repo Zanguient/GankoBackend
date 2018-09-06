@@ -12,7 +12,8 @@ pradera.use(ValidateToken);
 pradera.get('/:idFinca',getPraderaByIdFarm);
 pradera.get('/:idPradera/pradera',getPraderaById);
 pradera.put('/:idPradera',updatePraderaById);
+
 pradera.get('/:idPradera/alertas',getAlertaByIdPradera);
-pradera.post('/:idFinca/alertas',addAlertaByIdPradera);
+pradera.post('/alertas',addAlertaByIdPradera);
 
 export default pradera;

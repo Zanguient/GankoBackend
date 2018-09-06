@@ -41,7 +41,7 @@ export class PraderaService {
     }
 
     getAlertByIdPradera(idPradera:string){
-        return this.db.ListByType(TYPE_ALARMA_PRADERA,"meadow = $1",[idPradera]);
+        return this.db.ListByType(TYPE_ALARMA_PRADERA,"meadow = $1",[idPradera]); 
     }
 
     addAlert(alerta:AlarmaPradera){
