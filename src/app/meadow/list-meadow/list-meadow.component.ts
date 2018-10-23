@@ -9,6 +9,7 @@ import { AddMeadowDialogComponent } from '../add-meadow-dialog/add-meadow-dialog
 import { OptMeadowDialogComponent } from '../opt-meadow-dialog/opt-meadow-dialog.component';
 import { DeleteDialogComponent } from '../../shared/components/delete-dialog/delete-dialog.component';
 import { filter, flatMap, map } from 'rxjs/operators';
+import { MeadowAlarmService } from '../services/meadowAlarm.service';
 
 @Component({
   selector: 'app-list-meadow',
@@ -19,9 +20,11 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
 
   // gridList: Cell[] = [];
   praderas: Pradera[] = [];
+  idArray: boolean[] = [];
 
   constructor(service: MeadowService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar, private serv: MeadowService) {
+    router: Router, route: ActivatedRoute, private d: MatDialog, private snackB: MatSnackBar, private serv: MeadowService,
+  private meadowAlarmService: MeadowAlarmService) {
     super(service, dialog, router, route, snack);
     this.loadPraderas();
   }
@@ -33,8 +36,21 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
     }*/
     this.service.list().subscribe(x => {
       this.praderas = x;
+      this.addIdArray();
     }, err => snackError(this.snackB, err));
     this.loading = false;
+  }
+
+  addIdArray() {
+    this.idArray = [];
+    for (let i = 0; i < 100; i++) {
+      this.idArray.push(false);
+    }
+    for (let i = 0; i < this.praderas.length; i++) {
+      if (this.praderas[i].identificador !== undefined) {
+        this.idArray[this.praderas[i].identificador - 1] = true;
+      }
+    }
   }
 
   openDialog(pradera: Pradera, index?: number) {
@@ -46,17 +62,21 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
 
       dialogRef.afterClosed().subscribe(rsp => {
         if (rsp) {
+          const praderaOld: Pradera = pradera;
           pradera.tamanoEnHectareas = rsp.tamanoEnHectareas;
           pradera.tamano = rsp.tamano;
-          pradera.isUsedMeadow = true;
-          pradera.isEmptyMeadow = false;
+          pradera.isUsedMeadow = !pradera.isUsedMeadow;
+          pradera.isEmptyMeadow = !pradera.isEmptyMeadow;
           pradera.available = true;
           pradera.fechaSalida = new Date();
-          pradera.id = pradera.identificador.toString();
+          pradera.identificador = this.getIdentificador();
           pradera.mantenimiento = [];
           pradera.aforo = [];
           this.service.update(pradera).subscribe(() => snackOk(this.snackB, 'Se guardo correctamente'),
-            err => snackError(this.snackB, err));
+            err => {
+              snackError(this.snackB, err);
+              this.loadPraderas();
+            });
         }
       }, err => snackError(this.snackB, err));
     } else {
@@ -68,15 +88,27 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
       dialogRef.afterClosed().subscribe(rsp => {
         this.service.select(pradera);
         if (rsp === 0) {
-          this.goToAdmin(pradera.identificador);
+          this.goToAdmin(pradera.id);
         } else if (rsp === 1) {
-          this.goToAlert(pradera.identificador);
+          this.goToAlert(pradera.id);
         } else if (rsp === 2) {
           this.removePradera(pradera, index);
         }
       }, err => snackError(this.snackB, err));
     }
 
+  }
+
+  getIdentificador() {
+    let identificador = 0;
+    for (let i = 0; i < this.idArray.length; i++) {
+      if (!this.idArray[i]) {
+        identificador = i + 1;
+        this.idArray[i] = true;
+        break;
+      }
+    }
+    return identificador;
   }
 
   removePradera(data: Pradera, index: number) {
@@ -91,22 +123,36 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
   }
 
   updateRemoveData(data: Pradera) {
-    if (!data.available) {
+    if (data.group !== undefined) {
       snackOk(this.snackB, 'La pardera tiene un grupo asociado');
     } else {
-      data.isUsedMeadow = false;
-      data.available = true;
+      data.isUsedMeadow = !data.isUsedMeadow;
+      data.isEmptyMeadow = !data.isEmptyMeadow;
+      delete data.available;
+      delete data.identificador;
+      delete data.aforo;
+      delete data.bovinos;
+      delete data.mantenimiento;
+      delete data.tamano;
+      delete data.tamanoEnHectareas;
+      delete data.fechaSalida;
       this.service.update(data).subscribe(rsp => {
         snackOk(this.snackB, 'Se removio la pradera');
-      }, err => snackError(this.snackB, err));
+        this.addIdArray();
+      }, err => {
+        snackError(this.snackB, err);
+        this.loadPraderas();
+      });
     }
   }
 
-  goToAdmin(index: number) {
+  goToAdmin(index: string) {
+    this.meadowAlarmService.idPradera = index;
     this.router.navigate([index], { relativeTo: this.route });
   }
 
-  goToAlert(index: number) {
+  goToAlert(index: string) {
+    this.meadowAlarmService.idPradera = index;
     this.router.navigate([index + '/alertas'], { relativeTo: this.route });
   }
 

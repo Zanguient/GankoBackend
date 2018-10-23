@@ -1,5 +1,5 @@
 <div class="container section" *ngIf="!loading">
-  <mat-grid-list cols="10" rowHeight="80px;">
+  <mat-grid-list cols="10" rowHeight="60px;">
     <mat-grid-tile *ngFor="let cell of praderas; index as i">
       <div style="width: 40px; height: 40px; margin: auto;">
         <button mat-raised-button  color="{{cell.isUsedMeadow ? 'warn' : 'accent'}}" (click)="openDialog(cell, i)">

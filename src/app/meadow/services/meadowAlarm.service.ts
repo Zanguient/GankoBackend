@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../../util/base-service';
 import { Observable, timer } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { validate } from '../../util/http-util';
-import { Rspn } from '../../shared/models/response.model';
+import { map, tap, mergeMap } from 'rxjs/operators';
+import { validate, listToDoc } from '../../util/http-util';
+import { Rspn, Doc } from '../../shared/models/response.model';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
 import { meadows, meadow } from './meadow.mock';
@@ -16,6 +16,7 @@ export class MeadowAlarmService extends BaseService<MeadowAlarm> {
   data: MeadowAlarm[] = [];
   idFarm: string;
   selectedTab = 0;
+  idPradera: string;
 
   constructor(private http: HttpClient, private session: SessionService) {
     super();
@@ -24,20 +25,19 @@ export class MeadowAlarmService extends BaseService<MeadowAlarm> {
 
   add(item: MeadowAlarm): Observable<string> {
     item.channels = [this.session.id];
-
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
-      map(x => validate(x)),
-      tap(() => this.data.push(item))
-    );
+    return this.http.post<Rspn<string>>(this.makeUrl('praderas', 'alertas'), item,
+      this.makeAuth(this.session.token)).pipe(
+        map(x => validate(x))
+      );
   }
 
   list(): Observable<MeadowAlarm[]> {
-    return timer(500).pipe(
-      tap(() => this.data = this.data.length > 0 ? this.data : meadowAlarms()),
-      map(() => new Rspn(true, this.data)), // simular respuesta
-      map(x => validate(x))
-    );
+    return this.http.get<Rspn<Doc<MeadowAlarm>[]>>(this.makeUrl('praderas', this.idPradera, 'alertas'),
+      this.makeAuth(this.session.token)).pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
   update(item: MeadowAlarm): Observable<string> {

@@ -58,13 +58,4 @@ export class GroupsService extends BaseService<Group> {
       map(x => toDoc(x))
     );
   }
-
-  getByIdFarm(idFarm: string): Observable<Group[]> {
-    return this.http.get<Rspn<Doc<Group>[]>>(this.makeUrl('grupos', 'finca', idFarm), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)
-    );
-  }
-
 }

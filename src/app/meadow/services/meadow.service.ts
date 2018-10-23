@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../../util/base-service';
 import { Pradera } from '../../shared/models/meadow.model';
 import { Observable, timer } from '../../../../node_modules/rxjs';
-import { map, tap } from '../../../../node_modules/rxjs/operators';
-import { validate } from '../../util/http-util';
-import { Rspn } from '../../shared/models/response.model';
+import { map, tap, mergeMap } from '../../../../node_modules/rxjs/operators';
+import { validate, listToDoc, toDoc } from '../../util/http-util';
+import { Rspn, Doc } from '../../shared/models/response.model';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
 import { meadows, meadow } from './meadow.mock';
@@ -15,6 +15,7 @@ export class MeadowService extends BaseService<Pradera> {
   data: Pradera[] = [];
   idFarm: string;
   selectedTab = 0;
+  idPradera = null;
 
   constructor(private http: HttpClient, private session: SessionService) {
     super();
@@ -32,16 +33,20 @@ export class MeadowService extends BaseService<Pradera> {
   }
 
   list(): Observable<Pradera[]> {
-    return timer(500).pipe(
-      tap(() => this.data = this.data.length > 0 ? this.data : meadows()),
-      map(() => new Rspn(true, this.data)), // simular respuesta
-      map(x => validate(x))
+    return this.http.get<Rspn<Doc<Pradera>[]>>(this.makeUrl('praderas', this.session.farmId), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x)),
+      tap(x => this.data = x)
     );
   }
 
   update(item: Pradera): Observable<string> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, '')), // simular respuesta
+    let id = item.id;
+    delete item.id;
+    if (id === undefined) {
+      id = this.idPradera;
+    }
+    return this.http.put<Rspn<string>>(this.makeUrl('praderas', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
@@ -54,17 +59,10 @@ export class MeadowService extends BaseService<Pradera> {
   }
 
   getById(id: string): Observable<Pradera> {
-    return timer(500).pipe(
-      map(() => new Rspn(true, meadow())),
-      map(x => validate(x))
-    );
-  }
-
-  getByIdFarm(id: string): Observable<Pradera[]> {
-    return timer(500).pipe(
-      tap(() => this.data = this.data.length > 0 ? this.data : meadows()),
-      map(() => new Rspn(true, this.data)), // simular respuesta
-      map(x => validate(x))
+    this.idPradera = id;
+    return this.http.get<Rspn<Doc<Pradera>>>(this.makeUrl('praderas', id, 'pradera'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      map(x => toDoc(x))
     );
   }
 }

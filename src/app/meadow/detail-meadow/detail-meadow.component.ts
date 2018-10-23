@@ -18,7 +18,6 @@ export class DetailMeadowComponent implements OnInit {
 
   constructor(private service: MeadowService, private router: Router, private route: ActivatedRoute, private snack: MatSnackBar) {
     this.loading = true;
-
     route.paramMap.pipe(
       mergeMap(x => this.service.selected(x.get('id')))
     ).subscribe(x => {
