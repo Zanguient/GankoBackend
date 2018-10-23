@@ -83,7 +83,7 @@ export class AddAlertComponent implements OnInit {
 
     this.alertMeadow.id = null;
     this.alertMeadow.sequence = null;
-    this.alertMeadow.type = null;
+    this.alertMeadow.type = 'MeadowAlarm';
     this.alertMeadow.meadow = this.item.id;
     this.alertMeadow.title = 'Acciones pendientes en la pradera ' + this.item.identificador;
     this.alertMeadow.description = desc;

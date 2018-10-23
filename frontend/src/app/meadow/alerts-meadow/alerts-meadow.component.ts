@@ -24,6 +24,9 @@ export class AlertsMeadowComponent implements OnInit {
     private snack: MatSnackBar, private router: Router) {
     this.loadPradera();
     this.loading = true;
+    if (this.service.idPradera === undefined) {
+      this.service.idPradera = this.serviceMeadow.idPradera;
+    }
     service.list().subscribe(x => {
       this.data = x;
       console.log(Object.values(x));

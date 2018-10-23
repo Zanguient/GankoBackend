@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '../../../../../node_modules/@angular/router';
 import { Aforo, Pradera } from '../../../shared/models/meadow.model';
 import { MatDialog, MatSnackBar } from '../../../../../node_modules/@angular/material';
 import { ResultDialogComponent } from './result-dialog/result-dialog.component';

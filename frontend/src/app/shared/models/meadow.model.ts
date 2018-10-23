@@ -19,7 +19,7 @@ export class Pradera {
     channels?: string[];
 
     constructor(isUsedMeadow?: boolean) {
-        this.isUsedMeadow = this.isUsedMeadow;
+        this.isUsedMeadow = isUsedMeadow;
     }
 }
 

@@ -35,20 +35,21 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
   }
 
   loadData(refresh: boolean) {
-    this.meadowservice.getByIdFarm(this.meadowservice.idFarm).subscribe(
+    this.meadowservice.list().subscribe(
       x => {
         this.dataL = [];
         this.dataO = [];
         for (const pradera of x) {
-          if (pradera.available && pradera.isUsedMeadow) {
+          if (pradera.available && pradera.available !== undefined) {
             this.dataL.push(pradera);
-          } else if (!pradera.available) {
+          }
+          if (!pradera.available && pradera.available !== undefined) {
             this.dataO.push(pradera);
           }
         }
         if (refresh) { this.refreshTable(); }
       }, err => snackError(this.snackb, err));
-    this.groupService.getByIdFarm(this.groupService.idFarm).subscribe(x => this.g = x, err => snackError(this.snackb, err));
+    this.groupService.list().subscribe(x => this.g = x, err => snackError(this.snackb, err));
   }
 
   refreshTable() {
@@ -63,7 +64,7 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
   addGroupDialog(item: Pradera) {
     const groups: Group[] = [];
     for (const group of this.g) {
-      if (group.pradera === null) {
+      if (group.pradera === '') {
         groups.push(group);
       }
     }
@@ -84,18 +85,19 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
 
     dialogRef.afterClosed().subscribe(group => {
       if (group) {
-        item.group = 'Grupo ' + group.id;
+        item.group = group.nombre;
         item.fechaOcupacion = new Date();
         item.bovinos = group.bovinos;
         item.available = false;
 
-        const move: Movimiento = new Movimiento(null, null, null, item.id, group.bovinos, new Date(), item.idFinca);
+        const move: Movimiento = new Movimiento(null, null, null, 'Pradera ' + item.identificador, group.bovinos, new Date(), item.idFinca);
 
         group.pradera = item.id.toString();
         // actualiza informacion de la pradera
         this.meadowservice.update(item).subscribe(resp => {
           // si todo ok actualiza informacion de grupo
           this.updateGroup(move, group);
+          // this.insertMovement(move);
         });
       }
     }, err => snackError(this.snackb, err));
@@ -129,7 +131,7 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
         item.fechaSalida = new Date();
         item.available = true;
         item.bovinos = [];
-        item.group = null;
+        delete item.group;
         this.meadowservice.update(item).subscribe(() => {
           // si todo sale bien se obtiene el grupo asociado por el nombre
           this.getGroup(nameGroup);
@@ -141,7 +143,7 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
   getGroup(name: string) {
     for (const group of this.g) {
       if (group.nombre === name) {
-        group.pradera = null;
+        group.pradera = '';
         this.updateGroupPrad(group);
         break;
       }
