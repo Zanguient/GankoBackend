@@ -48,7 +48,8 @@ export class BovinoService {
 
         if (sexo) { queries.push('genero = "' + sexo + '"'); }
 
-        let where = "finca = $1";
+        const ret = retirados === true ? true : false;
+        let where = "finca = $1 AND retirado = " + ret;
         where = where + (queries.length > 0 ? " AND " + queries.join(" AND ") : '');
 
 
