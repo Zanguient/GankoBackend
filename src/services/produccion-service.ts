@@ -2,6 +2,7 @@ import { Produccion, TYPE_PROD_LECHE } from "./models/produccion";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { toDate } from "../util/date-util";
 
 
 export class ProduccionService {
@@ -21,10 +22,12 @@ export class ProduccionService {
     }
 
     insert(produccion: Produccion) {
+        toDate(produccion, 'fecha');
         return this.db.insert(produccion);
     }
 
     update(id: string, produccion: Produccion) {
+        toDate(produccion, 'fecha');
         return this.db.replace(id, produccion);
     }
 

@@ -2,6 +2,7 @@ import { Leche,TYPE_LECHE } from "./models/venta";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { toDate } from "../util/date-util";
 
 
 export class VentaService {
@@ -21,10 +22,12 @@ export class VentaService {
     }
 
     insert(salidaLeche: Leche) {
+        toDate(salidaLeche, 'fecha');
         return this.db.insert(salidaLeche);
     }
 
     update(id: string, salidaLeche: Leche) {
+        toDate(salidaLeche, 'fecha');
         return this.db.replace(id, salidaLeche);
     }
 

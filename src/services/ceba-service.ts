@@ -2,6 +2,7 @@ import {TYPE_CEBA,Meat } from "./models/ceba";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { toDate } from "../util/date-util";
 
 
 export class CebaService {
@@ -25,10 +26,12 @@ export class CebaService {
     }
 
     insert(ceba: Meat) {
+        toDate(ceba, 'fecha');
         return this.db.insert(ceba);
     }
 
     update(id: string, ceba: Meat) {
+        toDate(ceba, 'fecha');
         return this.db.replace(id, ceba);
     }
 

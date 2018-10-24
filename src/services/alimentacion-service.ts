@@ -2,6 +2,7 @@ import { TYPE_ALIMENTACION, Alimentacion } from "./models/alimentacion"
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { toDate } from "../util/date-util";
 
 
 export class AlimentacionService {
@@ -29,10 +30,12 @@ export class AlimentacionService {
         return this.db.ListByType<Alimentacion>(TYPE_ALIMENTACION,"idFinca = $1",[idFinca] );
     }
     insert(alimentacion: Alimentacion) {
+        toDate(alimentacion, 'fecha');
         return this.db.insert(alimentacion);
     }
 
     update(id: string, alimentacion: Alimentacion) {
+        toDate(alimentacion, 'fecha');
         return this.db.replace(id, alimentacion);
     }
 

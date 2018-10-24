@@ -3,7 +3,8 @@ import { Produccion } from "../../services/models/produccion";
 import { Response, Request } from 'express';
 import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { Leche } from '../../services/models/leche';
+import { toDate } from '../../util/date-util';
+
 
 
 class ResponseLeche extends ResponseBody {
@@ -13,7 +14,7 @@ class ResponseLeche extends ResponseBody {
 }
 
 export function addLeche(req, res: Response, next) {
-    let leche:Leche = req.body;
+    let leche:Produccion = req.body;
     LecheService.instance.insert(leche)
         .then(data => {
             res.send(new ResponseLeche(data ? true : false, data, null));

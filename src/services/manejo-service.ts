@@ -2,6 +2,7 @@ import { Manejo, TYPE_MANEJO } from "./models/manejo";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { toDate } from "../util/date-util";
 
 
 export class ManejoService {
@@ -25,10 +26,12 @@ export class ManejoService {
     }
 
     insert(manejo: Manejo) {
+        toDate(manejo, 'fecha', 'fechaProxima');
         return this.db.insert(manejo);
     }
 
     update(id: string, manejo: Manejo) {
+        toDate(manejo, 'fecha', 'fechaProxima');
         return this.db.replace(id, manejo);
     }
 

@@ -2,6 +2,7 @@ import { TYPE_VACUNA,Vacuna } from "./models/vacunas";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { toDate } from "../util/date-util";
 
 
 export class VacunaService {
@@ -25,10 +26,12 @@ export class VacunaService {
     }
 
     insert(registroVacunas: Vacuna) {
+        toDate(registroVacunas, 'fecha', 'fechaProxima');
         return this.db.insert(registroVacunas);
     }
 
     update(id: string, registroVacunas: Vacuna) {
+        toDate(registroVacunas, 'fecha', 'fechaProxima');
         return this.db.replace(id, registroVacunas);
     }
 

@@ -13,6 +13,7 @@ class ResponseProduccion extends ResponseBody {
 
 export function addProduccion(req, res: Response, next) {
     let produccion = req.body as Produccion;
+    
     ProduccionService.instance.insert(produccion)
         .then(data => {
             res.send(new ResponseProduccion(data ? true : false, data, null));

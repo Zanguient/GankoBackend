@@ -2,6 +2,7 @@ import { Sanidad,TYPE_SANIDAD } from "./models/sanidad";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { toDate } from "../util/date-util";
 
 
 export class SanidadService {
@@ -25,10 +26,12 @@ export class SanidadService {
     }
 
     insert(registroSanidad: Sanidad) {
+        toDate(registroSanidad, 'fecha', 'fechaProxima');
         return this.db.insert(registroSanidad);
     }
 
     update(id: string, registroSanidad: Sanidad) {
+        toDate(registroSanidad, 'fecha', 'fechaProxima');
         return this.db.replace(id, registroSanidad);
     }
 

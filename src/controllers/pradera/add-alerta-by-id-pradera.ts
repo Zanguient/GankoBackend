@@ -2,6 +2,7 @@ import { Response, Request } from 'express';
 import { ResponseBody } from '../response-body';
 import { PraderaService } from '../../services/pradera-service';
 import { AlarmaPradera } from '../../services/models/alarma-pradera';
+import { toDate } from '../../util/date-util';
 
 
 class ResponsePradera extends ResponseBody {

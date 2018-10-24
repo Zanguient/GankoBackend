@@ -4,6 +4,7 @@ import { PraderaService } from '../../services/pradera-service';
 import { AlarmaPradera } from '../../services/models/alarma-pradera';
 import { Movimiento } from '../../services/models/movimientos';
 import { MovimientoService } from '../../services/movimiento-service';
+import { toDate } from '../../util/date-util';
 
 
 class ResponsePradera extends ResponseBody {

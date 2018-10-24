@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/mergeMap';
 import { DBConnection } from './db-connection';
 import { TYPE_MOVIMIENTO,Movimiento } from './models/movimientos';
+import { toDate } from '../util/date-util';
 
 
 export class MovimientoService {
@@ -20,10 +21,12 @@ export class MovimientoService {
     }
 
     insert(produccion: Movimiento) {
+        toDate(produccion, 'transactionDate');
         return this.db.insert(produccion);
     }
 
     update(id: string, produccion: Movimiento) {
+        toDate(produccion, 'transactionDate');
         return this.db.replace(id, produccion);
     }
 
