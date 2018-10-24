@@ -6,17 +6,14 @@ import { ResponseBody } from '../response-body';
 
 
 class ResponseBovino extends ResponseBody {
-    constructor(success: boolean, public data, err: string) {
-        super(success, err);
+    constructor(success: boolean, public data, error: string) {
+        super(success, error);
     }
 }
 
 export function addBovino(req, res: Response, next) {
     let bovino = req.body as Bovino;
     BovinoService.instance.addBovino(bovino)
-        .then(data => {
-            res.send(new ResponseBovino(data ? true : false, data, null));
-        }, err => {
-            res.status(500).send(new ResponseBovino(null, null, err));
-        })
+        .then(data => res.send(new ResponseBovino(data ? true : false, data, data ? null : 'El codigo ya se encuentra registrado'))
+            , err => res.status(500).send(new ResponseBovino(null, null, err)))
 }

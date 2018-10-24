@@ -69,7 +69,8 @@ export class BovinoService {
     }
     //permite insertar un nuevo bovino
     addBovino(bovino: Bovino) {
-        return this.db.insert(bovino)
+        return this.db.typedOne(TYPE_BOVINO, "codigo = $1", [bovino.codigo])
+            .then(x => x ? undefined : this.db.insert(bovino));
     }
 
     //permite editar un bovino

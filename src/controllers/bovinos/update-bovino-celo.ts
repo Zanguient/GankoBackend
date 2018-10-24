@@ -18,7 +18,12 @@ export function updateBovinoCelo(req, res: Response, next) {
     BovinoService.instance.findById(idbovino)
         .then(result => {
             bovino = result.doc as Bovino;
-            bovino.celos.unshift(date);
+            if(!bovino.celos){
+                bovino.celos = [date];
+            }else{
+                bovino.celos.unshift(date);
+            }
+            
             return bovino;
         })
         .then(bov => {
