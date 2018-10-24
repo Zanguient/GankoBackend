@@ -48,7 +48,10 @@ app.use('/api/v1/vacunas', vacuna);
 app.use('/api/v1/venta', venta);
 app.use('/api/v1/praderas',pradera);
 app.use('/api/v1/movimientos',movimiento);
-
+app.get( /.*/ ,function (req, res, next) {
+  res.setHeader('Content-Type', 'text/html');
+  res.sendFile(__dirname + '\\public\\index.html');
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
