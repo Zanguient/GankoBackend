@@ -26,6 +26,7 @@ export class ZealBvnComponent {
   constructor(private service: BovinesService, private snack: MatSnackBar, private router: Router, private route: ActivatedRoute) {
     service.selected('').pipe(
       tap(x => this.bvn = x),
+      tap(() => this.bvn.celos = this.bvn.celos ? this.bvn.celos : []),
       mergeMap(x => from(x.servicios ? x.servicios : [])),
       filter(x => !x.finalizado),
       toArray()

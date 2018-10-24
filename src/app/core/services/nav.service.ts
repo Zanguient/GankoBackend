@@ -32,10 +32,10 @@ export class NavService {
     const value = this.filters[filter];
     this.filters[filter] = !value;
 
-    if (filter === 'destete' && value) { this.filters.noDestete = false; }
-    if (filter === 'noDestete' && value) { this.filters.destete = false; }
-    if (filter === 'macho' && value) { this.filters.hembra = false; }
-    if (filter === 'hembra' && value) { this.filters.macho = false; }
+    if (filter === 'destete' && !value) { this.filters.noDestete = false; }
+    if (filter === 'noDestete' && !value) { this.filters.destete = false; }
+    if (filter === 'macho' && !value) { this.filters.hembra = false; }
+    if (filter === 'hembra' && !value) { this.filters.macho = false; }
 
     this.filter.next(this.makeQuery());
   }
