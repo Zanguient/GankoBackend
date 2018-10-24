@@ -27,6 +27,7 @@ export class ZealBvnComponent {
     service.selected('').pipe(
       tap(x => this.bvn = x),
       tap(() => this.bvn.celos = this.bvn.celos ? this.bvn.celos : []),
+      tap(() => this.bvn.celos = this.bvn.celos.map(x => new Date(x))),
       mergeMap(x => from(x.servicios ? x.servicios : [])),
       filter(x => !x.finalizado),
       toArray()
