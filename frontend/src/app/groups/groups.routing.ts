@@ -13,7 +13,8 @@ export const groupRoutes: Routes = [
             { path: 'seleccionar', component: SelectBovineComponent },
             { path: 'agregar', component: AddGroupComponent },
             { path: ':id', component: DetailGroupComponent },
-            { path: ':id/bovinos', component: SelectedBovinesComponent }
+            { path: ':id/bovinos', component: SelectedBovinesComponent },
+            { path: ':id/editar', component: AddGroupComponent }
         ]
     }
 ];

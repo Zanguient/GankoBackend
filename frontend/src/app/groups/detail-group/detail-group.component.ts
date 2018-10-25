@@ -28,6 +28,11 @@ export class DetailGroupComponent implements OnInit {
     this.router.navigate(['bovinos'], { relativeTo: this.route });
   }
 
+  goToEdit() {
+    this.selected.selecteds = this.item.bovines;
+    this.router.navigate(['editar'], { relativeTo: this.route });
+  }
+
   ngOnInit() {
     this.loading = true;
     this.route.paramMap.pipe(

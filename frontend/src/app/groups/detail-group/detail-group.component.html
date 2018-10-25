@@ -9,7 +9,7 @@
     <app-card [title]="item.nombre">
 
       <app-card-corner>
-        <button mat-icon-button><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button (click)="goToEdit()"><mat-icon>edit</mat-icon></button>
       </app-card-corner>
 
       <app-bovine-selected [editable]="false" [selecteds]="item.bovines" (clickView)="goToBovines()"></app-bovine-selected>
