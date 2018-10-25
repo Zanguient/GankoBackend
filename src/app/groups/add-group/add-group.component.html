@@ -1,11 +1,18 @@
 <div class="container mat-typography">
-  <div class="breadcrumb">
+  <div class="breadcrumb" *ngIf="edit; else noEdit">
     <button mat-button routerLink="../">Grupos</button> >
     <span>Agregar Grupo</span>
   </div>
+  <ng-template #noEdit>
+    <div class="breadcrumb">
+      <button mat-button routerLink="../../">Grupos</button> >
+      <button mat-button routerLink="../">{{item.nombre}}</button> >
+      <span>Editar Grupo</span>
+    </div>
+  </ng-template>
 
-  <mat-card>
-    <h1>Agregar Grupo</h1>
+  <mat-card *ngIf="!loadingEdit; else loaderEdit">
+    <h1 *ngIf="edit">Editar Grupo</h1>
 
     <form #formAdd="ngForm" autocomplete="off">
       <div fxLayout="row wrap" fxLayoutGap="16px">
@@ -25,10 +32,10 @@
 
 
         <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row">
-          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button color="accent"
-            (click)="goToBack()">Cancelar</button>
-          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent" (click)="add()"
-            [disabled]="formAdd.invalid">Agregar</button>
+          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button
+            color="accent" (click)="goToBack()">Cancelar</button>
+          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent"
+            (click)="add()" [disabled]="formAdd.invalid">{{edit? 'Editar' : 'Agregar'}}</button>
         </div>
 
         <ng-template #loader>
@@ -37,5 +44,7 @@
       </div>
     </form>
   </mat-card>
-
+  <ng-template #loaderEdit>
+    <app-loader [align]="'center'" [big]="true"></app-loader>
+  </ng-template>
 </div>

@@ -25,10 +25,23 @@ export class AddGroupComponent implements OnInit {
   };
   color = '#000000';
 
-
+  edit = false;
+  loadingEdit = false;
 
   constructor(private router: Router, private route: ActivatedRoute, public selected: SelectedBvnService,
-    private service: GroupsService, private snack: MatSnackBar) { }
+    private service: GroupsService, private snack: MatSnackBar) {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.edit = id ? true : false;
+    if (this.edit) {
+      this.loadingEdit = true;
+      this.service.selected(id).pipe(
+        finalize(() => this.loadingEdit = false)
+      ).subscribe(x => {
+        this.item = x;
+        this.color = this.getHexColor();
+      }, err => snackError(this.snack, err));
+    }
+  }
 
   ngOnInit() {
   }
@@ -46,13 +59,19 @@ export class AddGroupComponent implements OnInit {
     this.item.color = c;
     this.item.bovines = this.selected.selecteds;
 
-    this.service.add(this.item).pipe(
+    (this.edit ? this.service.update(this.item) : this.service.add(this.item)).pipe(
       finalize(() => this.loading = false)
     ).subscribe(() => {
-      snackOk(this.snack, 'Grupo Creado');
+      snackOk(this.snack, this.edit ? 'Grupo Actualizado' : 'Grupo Creado');
       this.router.navigate(['../'], { relativeTo: this.route });
     }, err => snackError(this.snack, err));
 
+  }
+
+  getHexColor() {
+    const bbggrr = ('000000' + this.item.color.toString(16)).slice(-6);
+    const rrggbb = bbggrr.substr(4, 2) + bbggrr.substr(2, 2) + bbggrr.substr(0, 2);
+    return '#' + rrggbb;
   }
 
 }
