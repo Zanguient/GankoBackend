@@ -21,23 +21,15 @@ export class ListGroupComponent extends BaseListComponent<Group> {
   }
 
   getHexColor(number) {
-    console.log('=================================');
-    console.log('VALOR=>' + number);
-    const color = this.VBColorToHEX(number); // '#' + number.toString(16).slice(-6);
-    console.log('COLOR=>' + color);
-    return color;
+    const bbggrr = ('000000' + number.toString(16)).slice(-6);
+    const rrggbb = bbggrr.substr(4, 2) + bbggrr.substr(2, 2) + bbggrr.substr(0, 2);
+    return '#' + rrggbb;
   }
 
   goToAdd() {
     this.nav.breadcrumb = [{ path: '../', title: 'Grupos' }];
     this.nav.nextNavigation = ['..', 'agregar'];
     this.router.navigate(['seleccionar'], { relativeTo: this.route });
-  }
-
-  VBColorToHEX(i) {
-    const bbggrr = ('000000' + i.toString(16)).slice(-6);
-    const rrggbb = bbggrr.substr(4, 2) + bbggrr.substr(2, 2) + bbggrr.substr(0, 2);
-    return '#' + rrggbb;
   }
 
 }
