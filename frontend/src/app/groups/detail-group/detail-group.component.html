@@ -12,7 +12,7 @@
         <button mat-icon-button><mat-icon>edit</mat-icon></button>
       </app-card-corner>
 
-      <app-bovine-selected [editable]="false" [selecteds]="item.bovines"></app-bovine-selected>
+      <app-bovine-selected [editable]="false" [selecteds]="item.bovines" (clickView)="goToBovines()"></app-bovine-selected>
 
       <h3>Color</h3>
       <div class="group-color" [style.background-color]="getHexColor()"></div>

@@ -24,6 +24,9 @@ export class SelectedBvnService {
 
   editable = false;
 
+  path: string[] = [];
+  lastPath: string;
+
   constructor(private nav: NavService, private session: SessionService, private http: HttpClient) { }
 
   listSelecteds() {
@@ -94,6 +97,16 @@ export class SelectedBvnService {
         'Authorization': token
       }
     };
+  }
+
+  makeBack(index: number) {
+    const pathSize = this.path.length - index;
+    const backPath = '../';
+    let back = '';
+    for (let i = 0; i < pathSize; i++) {
+      back += backPath;
+    }
+    return back;
   }
 
 }

@@ -26,6 +26,11 @@ export class BovineSelectedComponent implements OnInit {
 
   goToView() {
     this.service.editable = this.editable;
+    switch (this.type) {
+      case 0: this.service.selecteds = this.selecteds; break;
+      case 1: this.service.group = this.group; break;
+      case 2: this.service.selecteds = this.selecteds; break;
+    }
     this.clickView.emit(0);
   }
 

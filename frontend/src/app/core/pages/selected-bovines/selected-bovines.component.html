@@ -1,5 +1,12 @@
 <div class="mat-typography ">
-  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay bovinos registrados'" [addonable]="false">
+  
+  <div class="breadcrumb container" *ngIf="service.path.length > 0">
+    <div *ngFor="let p of service.path; index as i">
+        <button  mat-button [routerLink]="service.makeBack(i)">{{p}}</button> >
+    </div>    
+    <span>{{service.lastPath}}</span>
+  </div>
+  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay bovinos registrados'" [addonable]="false" [section]="!service.path.length > 0">
     <div fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
       <div fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" *ngFor="let d of data; index as i">
 
@@ -26,8 +33,8 @@
 
 <div class="bottom-container-selected" *ngIf="service.editable">
   <div class="bottom-selected">
-      <button color="accent" mat-raised-button (click)="cancel()">Cancelar</button>
-      <button color="accent" mat-raised-button [disabled]="changes == 0" (click)="next()">Aceptar</button>
+    <button color="accent" mat-raised-button (click)="cancel()">Cancelar</button>
+    <button color="accent" mat-raised-button [disabled]="changes == 0" (click)="next()">Aceptar</button>
   </div>
-  
+
 </div>
