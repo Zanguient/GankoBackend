@@ -37,7 +37,7 @@ export class Bovino {
 
     servicios?: Servicio[];
     channels?: string[];
-    files: any;
+    files?: any;
 }
 
 export class Servicio {
