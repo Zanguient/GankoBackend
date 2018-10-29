@@ -1,8 +1,5 @@
-import { BovinoService } from '../../services/bovino-service';
-import { Bovino } from "../../services/models/bovinos";
-import { Response, Request } from 'express';
-import { Observable } from 'rxjs/Observable';
-import { LecheService } from '../../services/leche-service';
+import { Response } from 'express';
+import { ProduccionService } from '../../services/produccion-service';
 
 
 class ResponseBody {
@@ -13,10 +10,10 @@ class ResponseBody {
 
 export function getMilkByIdBovino(req, res: Response, next) {
 
-    let idBovino:string = req.params.idBovino;
-    LecheService.instance.getByIdBovino(idBovino)
+    let idBovino: string = req.params.idBovino;
+    ProduccionService.instance.getByIdBovino(idBovino)
         .then(data => {
-                res.send(new ResponseBody(true, data, null));
+            res.send(new ResponseBody(true, data, null));
         }, err => {
             res.status(500).send(new ResponseBody(null, null, err));
         })

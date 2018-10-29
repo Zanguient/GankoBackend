@@ -1,8 +1,7 @@
 import { Response } from 'express';
 import { LecheService } from '../../services/leche-service';
-import { Produccion } from "../../services/models/produccion";
 import { ResponseBody } from '../response-body';
-import { toDate } from '../../util/date-util';
+import { Leche } from '../../services/models/leche';
 
 
 class ResponseLeche extends ResponseBody {
@@ -12,9 +11,9 @@ class ResponseLeche extends ResponseBody {
 }
 
 export function updateLeche(req, res: Response, next) {
-    let produccion: Produccion = req.body;
+    let leche: Leche = req.body;
     let idProduccion = req.params.idProduccion;
-    LecheService.instance.update(idProduccion, produccion)
+    LecheService.instance.update(idProduccion, leche)
         .then(data => {
             res.send(new ResponseLeche(data ? true : false, data, null));
         }, err => {

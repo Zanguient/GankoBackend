@@ -1,7 +1,5 @@
+import { Response } from 'express';
 import { LecheService } from '../../services/leche-service';
-import { Produccion } from "../../services/models/produccion";
-import { Response, Request } from 'express';
-import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
 
 
@@ -10,7 +8,6 @@ class ResponseLeche extends ResponseBody {
         super(success, err);
     }
 }
-
 
 export function getLecheByIdFinca(req, res: Response, next) {
     let idFinca = req.params.idFinca;

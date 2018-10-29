@@ -1,9 +1,7 @@
+import { Response } from 'express';
 import { LecheService } from '../../services/leche-service';
-import { Produccion } from "../../services/models/produccion";
-import { Response, Request } from 'express';
-import { Observable } from 'rxjs/Observable';
 import { ResponseBody } from '../response-body';
-import { toDate } from '../../util/date-util';
+import { Leche } from '../../services/models/leche';
 
 
 
@@ -14,7 +12,7 @@ class ResponseLeche extends ResponseBody {
 }
 
 export function addLeche(req, res: Response, next) {
-    let leche:Produccion = req.body;
+    let leche:Leche = req.body;
     LecheService.instance.insert(leche)
         .then(data => {
             res.send(new ResponseLeche(data ? true : false, data, null));

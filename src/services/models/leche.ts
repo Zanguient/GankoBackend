@@ -11,11 +11,13 @@ export const TYPE_PROD_LECHE = 'Produccion';
  * @apiParam {number} Produccion.numeroLitros numero de Produccion
  * @apiParam {number} Produccion.totalLitros total de Produccion
  */
-export class Produccion {
+export class Leche {
     id?: string;
     type?: string;
-    bovino: string;
-    jornada: string;
-    litros: string;
-    fecha: Date;
+    idFarm?: string;
+    fecha?: Date;
+    operacion: string;
+    valorLitro: number;
+    numeroLitros: number;
+    totalLitros: number;
 }

@@ -1,8 +1,7 @@
-import { Produccion, TYPE_PROD_LECHE } from "./models/produccion";
 import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
 import { toDate } from "../util/date-util";
+import { DBConnection } from './db-connection';
+import { Produccion, TYPE_PROD_LECHE } from "./models/produccion";
 
 
 export class ProduccionService {
@@ -16,6 +15,10 @@ export class ProduccionService {
     }
 
     constructor(private db: DBConnection) { }
+
+    getByIdBovino(idBovino: string) {
+        return this.db.ListByType(TYPE_PROD_LECHE,"bovino = $1",[idBovino]);
+    }
 
     getAll() {
         return this.db.ListByType(TYPE_PROD_LECHE);

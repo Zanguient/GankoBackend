@@ -13,7 +13,6 @@ import pajilla from './routes/pajilla';
 import produccion from './routes/produccion';
 import sanidad from './routes/sanidad';
 import vacuna from './routes/vacuna';
-import venta from './routes/venta';
 import grupo from './routes/grupo';
 import pradera from './routes/praderas';
 import movimiento from './routes/movimiento';
@@ -45,7 +44,6 @@ app.use('/api/v1/pajillas', pajilla);
 app.use('/api/v1/grupos',grupo);
 app.use('/api/v1/produccion', produccion);
 app.use('/api/v1/vacunas', vacuna);
-app.use('/api/v1/venta', venta);
 app.use('/api/v1/praderas',pradera);
 app.use('/api/v1/movimientos',movimiento);
 app.get( /.*/ ,function (req, res, next) {

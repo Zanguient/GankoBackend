@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { getLecheByIdFinca, addLeche, deleteLeche, updateLeche} from '../controllers/index';
-import { ValidateToken } from '../middlewares/token-validation';
+import { addLeche, getLecheByIdFinca } from '../controllers/index';
 import { getLecheById } from '../controllers/leche/get-leche-by-id';
+import { ValidateToken } from '../middlewares/token-validation';
 
 const leche: Router = Router();
 
