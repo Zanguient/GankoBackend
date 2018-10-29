@@ -216,6 +216,12 @@ export class BovinesService extends BaseService<Bovino> {
     );
   }
 
+  img(bvn: Bovino, name: string): string {
+    const digest = '_sync:att:' + bvn.files[name].digest;
+    const dig = encodeURI(digest).replace(/\//g, '%2F');
+    return this.makeUrl('bovinos', 'img', dig);
+  }
+
 }
 
 
