@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
 import { Bovino, TYPE_BOVINO } from '../../shared/models/bovine.model';
 import { BovinesService } from '../services/bovines.service';
 import { snackError, snackOk } from '../../util/snackbar-util';
 import { MatSnackBar } from '@angular/material';
-import { finalize } from 'rxjs/operators';
+import { finalize, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-bvn',
@@ -59,6 +59,7 @@ export class AddBvnComponent implements OnInit {
     if (this.buyDate) { this.item.fechaNacimiento = this.buyDate; }
     this.loading = true;
     this.service.add(this.item).pipe(
+      mergeMap(x => this.img ? this.service.uploadImg(x, this.img) : of(this.img)),
       finalize(() => this.loading = false)
     ).subscribe(() => {
       snackOk(this.snack, 'Bovino Agregado');

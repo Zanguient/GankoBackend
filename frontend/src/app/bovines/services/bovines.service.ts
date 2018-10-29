@@ -216,6 +216,18 @@ export class BovinesService extends BaseService<Bovino> {
     );
   }
 
+  uploadImg(id: string, base64: string): Observable<string> {
+    return this.http.post<Rspn<string>>(this.makeUrl('bovinos', 'img', id), { base64 }, this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x))
+    );
+  }
+
+  img(bvn: Bovino, name: string): string {
+    const digest = '_sync:att:' + bvn.files[name].digest;
+    const dig = encodeURI(digest).replace(/\//g, '%2F');
+    return this.makeUrl('bovinos', 'img', dig);
+  }
+
 }
 
 

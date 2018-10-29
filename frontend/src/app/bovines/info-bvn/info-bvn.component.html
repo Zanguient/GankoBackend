@@ -2,7 +2,7 @@
   <mat-card *ngIf="item">
 
     <div fxLayout="row wrap" fxLayoutGap="20px">
-      <img class="img-bovine" src="{{item.imagen ? item.imagen : 'assets/images/bovine.jpg'}}" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
+      <img class="img-bovine" src="{{item.imagen ? service.img(item.imagen) : 'assets/images/bovine.jpg'}}" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50%-20px)"
         fxFlex.gt-md="0 0 calc(30%-20px)">
       <div fxFlex="0 0 100%" fxFlex.gt-sm="0 0 50%" fxFlex.gt-md="0 0 70%">
         <h1 appNmBottom>{{item.nombre}}</h1>
