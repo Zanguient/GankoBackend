@@ -41,9 +41,4 @@ export class BaseService {
         return this.db.insert(doc);
     }
 
-    img(id: string): Promise<Buffer> {
-        return this.db.byId(id)
-            .then((x: any) => x.value);
-    }
-
 }

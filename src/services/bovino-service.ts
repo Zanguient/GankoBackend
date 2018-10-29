@@ -89,4 +89,9 @@ export class BovinoService {
         return this.db.remove(idbovino)
     }
 
+    img(id: string): Promise<Buffer> {
+        return this.db.byId(id)
+            .then((x: any) => x.value);
+    }
+
 }

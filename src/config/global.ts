@@ -6,6 +6,10 @@ const CONFIG_DEV: ConfigI = {
         bucket: "ganko",
         username: "ganko",
         password: "123456"
+    },
+    syncgateway: {
+        host: "http://localhost:4985",
+        db: "ganko"
     }
 };
 
@@ -15,6 +19,10 @@ const CONFIG_PROD: ConfigI = {
         bucket: "ganko",
         username: "ganko",
         password: "123456"
+    },
+    syncgateway: {
+        host: "http://localhost:4985",
+        db: "ganko"
     }
 };
 export const secret = "g4nk0B0v1no5";

@@ -37,6 +37,8 @@
     "@types/node": "^7.0.10",
     "@types/power-assert": "^1.4.29",
     "@types/serve-favicon": "^2.2.28",
+    "@types/request": "^2.47.0",
+    "@types/request-promise": "^4.1.41",
     "body-parser": "~1.13.2",
     "bluebird": "^3.5.1",
     "browser-sync": "^2.18.8",
@@ -69,6 +71,8 @@
     "serve-favicon": "~2.3.0",
     "typescript": "^2.2.1",
     "couchbase": "^2.4.6",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",    
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2"
   }
 }
