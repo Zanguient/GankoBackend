@@ -1,8 +1,7 @@
-import { Bovino, TYPE_BOVINO } from "./models/bovinos"
 import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
+import { toDate } from "../util/date-util";
 import { DBConnection } from './db-connection';
-import { updateFinca } from "../controllers";
+import { Bovino, TYPE_BOVINO } from "./models/bovinos";
 
 export class BovinoService {
 
@@ -70,6 +69,7 @@ export class BovinoService {
     }
     //permite insertar un nuevo bovino
     addBovino(bovino: Bovino) {
+        toDate(bovino, 'fechaNacimiento', 'fechaIngreso', 'fechaDestete');
         return this.db.typedOne(TYPE_BOVINO, "codigo = $1", [bovino.codigo])
             .then(x => x ? undefined : this.db.insert(bovino));
     }

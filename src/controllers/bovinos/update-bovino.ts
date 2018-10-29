@@ -1,7 +1,7 @@
+import { Response } from 'express';
 import { BovinoService } from '../../services/bovino-service';
 import { Bovino } from "../../services/models/bovinos";
-import { Response, Request } from 'express';
-import { Observable } from 'rxjs/Observable';
+import { toDate } from '../../util/date-util';
 import { ResponseBody } from '../response-body';
 
 
@@ -14,6 +14,33 @@ class ResponseBovino extends ResponseBody {
 export function updateBovino(req, res: Response, next) {
     let bovino: Bovino = req.body;
     let idbovino = req.params.idbovino;
+
+    toDate(bovino, 'fechaNacimiento', 'fechaIngreso',
+        'fechaSalida', 'fechaDestete',
+        'fechaProximoCelo');
+
+    if (bovino.celos) {
+        bovino.celos = bovino.celos.map(x => new Date(x));
+    }
+
+    if (bovino.servicios) {
+        bovino.servicios = bovino.servicios.map(x => {
+            toDate(x, 'fecha', 'fechaUltimoCelo', 'posFechaParto');
+            if(x.diagnostico){
+                toDate(x.diagnostico, 'fecha')
+            }
+        
+            if(x.parto){
+                toDate(x.parto, 'fecha')
+            }
+        
+            if(x.novedad){
+                toDate(x.novedad, 'fecha')
+            }
+            return x;
+        });
+    }
+
     BovinoService.instance.updateBovino(idbovino, bovino)
         .then(data => {
             res.send(new ResponseBovino(data ? true : false, data, null));

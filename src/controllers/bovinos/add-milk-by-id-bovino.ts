@@ -1,10 +1,7 @@
-import { BovinoService } from '../../services/bovino-service';
-import { Bovino } from "../../services/models/bovinos";
-import { Response, Request } from 'express';
-import { Observable } from 'rxjs/Observable';
+import { Request, Response } from 'express';
 import { LecheService } from '../../services/leche-service';
 import { Produccion } from '../../services/models/produccion';
-import { Leche } from '../../services/models/leche';
+
 
 
 class ResponseBody {
@@ -14,7 +11,7 @@ class ResponseBody {
 }
 
 export function addMilkByIdBovino(req: Request, res: Response, next) {
-    let leche: Leche = req.body;
+    let leche: Produccion = req.body;
 
     let idBovino = req.params.idBovino;
     LecheService.instance.insert(leche)

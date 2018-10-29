@@ -1,7 +1,7 @@
+import { Response } from 'express';
 import { BovinoService } from '../../services/bovino-service';
 import { Bovino, Servicio } from "../../services/models/bovinos";
-import { Response, Request } from 'express';
-import { Observable } from 'rxjs/Observable';
+import { toDate } from '../../util/date-util';
 import { ResponseBody } from '../response-body';
 
 
@@ -14,7 +14,10 @@ class ResponseBovino extends ResponseBody {
 export function updateBovinoServicio(req, res: Response, next) {
     let servicio: Servicio = req.body;
     let idbovino = req.params.idbovino;
-    let bovino = new Bovino;
+    let bovino:Bovino;
+
+    toDate(servicio, 'fecha', 'fechaUltimoCelo', 'posFechaParto');
+
     BovinoService.instance.findById(idbovino)
         .then(result => {
             bovino = result.doc as Bovino;
