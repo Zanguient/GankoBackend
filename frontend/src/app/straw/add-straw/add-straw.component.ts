@@ -41,7 +41,7 @@ export class AddStrawComponent implements OnInit {
     this.service.add(this.item).pipe(
       finalize(() => this.loading = false)
     ).subscribe(() => {
-      snackOk(this.snack, 'Vacuna Agregada');
+      snackOk(this.snack, 'Pajilla Agregada');
       this.router.navigate(['../'], { relativeTo: this.route });
     }, err => snackError(this.snack, err));
   }
