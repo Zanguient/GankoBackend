@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/mergeMap';
 import { toDate } from "../util/date-util";
 import { DBConnection } from './db-connection';
-import { Leche, TYPE_PROD_LECHE } from "./models/leche";
+import { Leche, TYPE_LECHE } from "./models/leche";
 
 
 export class LecheService {
@@ -17,11 +17,11 @@ export class LecheService {
     constructor(private db: DBConnection) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_PROD_LECHE);
+        return this.db.ListByType(TYPE_LECHE);
     }
 
     getAllByIdFInca(idFinca:string) {
-        return this.db.ListByType(TYPE_PROD_LECHE,"idFarm = $1",[idFinca]);
+        return this.db.ListByType(TYPE_LECHE,"idFarm = $1",[idFinca]);
     }
 
     insert(produccion: Leche) {

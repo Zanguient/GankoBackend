@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getAlimentacion, addAlimentacion, deleteAlimentacion, updateAlimentacion} from '../controllers/index';
-import { ValidateToken } from '../middlewares/token-validation';
 import { getAlimentacionById } from '../controllers/alimentacion/get-alimentacion';
 import { getAlimentacionByIdFinca } from '../controllers/alimentacion/get-alimentacion-by-id-finca';
+import { addAlimentacion } from '../controllers/index';
+import { ValidateToken } from '../middlewares/token-validation';
 
 const alimentacion: Router = Router();
 

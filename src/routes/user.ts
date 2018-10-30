@@ -1,6 +1,5 @@
 import { Router } from 'express';
-import { login, resetPassword, insert, newPassword } from '../controllers/index';
-import { ValidateToken } from '../middlewares/token-validation';
+import { insert, login } from '../controllers/index';
 
 const user: Router = Router();
 user.post('/login', login);

@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { getVacuna, addVacuna, deleteVacuna, updateVacuna} from '../controllers/index';
-import { ValidateToken } from '../middlewares/token-validation';
+import { addVacuna } from '../controllers/index';
 import { getVacunaByID } from '../controllers/vacuna/get-vacuna';
 import { getVacunaByParam } from '../controllers/vacuna/get-vacuna-by-param';
+import { ValidateToken } from '../middlewares/token-validation';
 
 const vacuna: Router = Router();
 
-ValidateToken;
+vacuna.use(ValidateToken);
 vacuna.get('/:idVacuna',getVacunaByID);
 vacuna.post('/',addVacuna);
 vacuna.get('/finca/:idFinca',getVacunaByParam);

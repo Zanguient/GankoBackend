@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getManejo, addManejo, deleteManejo, updateManejo} from '../controllers/index';
-import { ValidateToken } from '../middlewares/token-validation';
+import { addManejo } from '../controllers/index';
 import { getManejoById } from '../controllers/manejo/get-manejo';
 import { getManejoByParam } from '../controllers/manejo/get-manejo-by-param';
+import { ValidateToken } from '../middlewares/token-validation';
 
 const manejo: Router = Router();
 

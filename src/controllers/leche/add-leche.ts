@@ -3,11 +3,9 @@ import { LecheService } from '../../services/leche-service';
 import { ResponseBody } from '../response-body';
 import { Leche } from '../../services/models/leche';
 
-
-
 class ResponseLeche extends ResponseBody {
-    constructor(success: boolean, public data, err: string) {
-        super(success, err);
+    constructor(success: boolean, public data, error: string) {
+        super(success, error);
     }
 }
 

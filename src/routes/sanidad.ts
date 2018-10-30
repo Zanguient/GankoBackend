@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { getSanidad, addSanidad, deleteSanidad, updateSanidad} from '../controllers/index';
-import { ValidateToken } from '../middlewares/token-validation';
+import { addSanidad } from '../controllers/index';
 import { getSanidadById } from '../controllers/sanidad/get-sanidad';
 import { getSanidadByParam } from '../controllers/sanidad/get-sanidad-by-param';
+import { ValidateToken } from '../middlewares/token-validation';
 
 const sanidad: Router = Router();
 sanidad.use(ValidateToken);

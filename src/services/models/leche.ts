@@ -1,4 +1,4 @@
-export const TYPE_PROD_LECHE = 'Produccion';
+export const TYPE_LECHE = 'SalidaLeche';
 /**
  * @apiDefine Produccion
  * @apiParam {object} Produccion

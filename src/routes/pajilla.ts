@@ -4,7 +4,7 @@ import { ValidateToken } from '../middlewares/token-validation';
 import { getPajillasyIdFinca } from '../controllers/pajilla/get-pajilla';
 
 const pajilla: Router = Router();
-ValidateToken;
+pajilla.use(ValidateToken);
 
 pajilla.get('/:idFinca',getPajillasyIdFinca);
 
