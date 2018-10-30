@@ -22,8 +22,6 @@ import { uploadImage } from '../controllers/common/upload-img';
 const bovino: Router = Router();
 
 bovino.use(ValidateToken);
-bovino.get('/img/:digest', getImg);
-bovino.post('/img/:id', uploadImage)
 bovino.get('/finca/:idFinca', getBovinos);
 bovino.delete('/:idBovino', deleteBovino);
 bovino.post('/', addBovino);
