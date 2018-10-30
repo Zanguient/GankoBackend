@@ -1,14 +1,12 @@
-import { Injectable } from '@angular/core';
-import { BaseService } from '../../util/base-service';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { SessionService } from '../../core/services/session.service';
-import { timer, Observable } from 'rxjs';
-import { Rspn, Doc } from '../../shared/models/response.model';
-import { map, tap, mergeMap } from 'rxjs/operators';
-import { validate, toDoc, listToDoc } from '../../util/http-util';
 import { Leche, TYPE_LECHE } from '../../shared/models/milk.model';
-import { milks, milk } from './milk.mock';
-import { environment } from '../../../environments/environment';
+import { Doc, Rspn } from '../../shared/models/response.model';
+import { BaseService } from '../../util/base-service';
+import { listToDoc, toDoc, validate } from '../../util/http-util';
 
 @Injectable()
 export class MilkService extends BaseService<Leche> {
@@ -23,7 +21,7 @@ export class MilkService extends BaseService<Leche> {
     item.type = TYPE_LECHE;
     item.idFarm = this.session.farmId;
     item.channels = [this.session.id];
-    return this.http.post<Rspn<string>>(this.makeUrl('leche'), this.makeAuth(this.session.token)).pipe(
+    return this.http.post<Rspn<string>>(this.makeUrl('leche'), item,  this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item))
     );
