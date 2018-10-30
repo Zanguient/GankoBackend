@@ -12,8 +12,9 @@ export const feedRoutes: Routes = [
             { path: '', component: ListFeedComponent },
             { path: 'agregar', component: AddFeedComponent },
             { path: 'agregar/editar', component: SelectedBovinesComponent },
-            { path: 'grupos', component: SelectGroupComponent},
-            { path: 'bovinos', component: SelectBovineComponent}
+            { path: 'grupos', component: SelectGroupComponent },
+            { path: 'bovinos', component: SelectBovineComponent },
+            { path: ':id', component: SelectedBovinesComponent }
         ]
     }
 ];

@@ -31,6 +31,7 @@ export class AddManageComponent implements OnInit {
     aplicacion: 1,
     bovinos: [],
     noBovinos: [],
+    estadoProximo: 0,
     type: TYPE_MANEJO
   };
 
@@ -52,7 +53,7 @@ export class AddManageComponent implements OnInit {
   add() {
     if (this.date) {
       this.item.fecha = new Date(this.date);
-      this.item.fechaProxima = this.fechaProx(this.date, this.item.numeroAplicaciones, this.item.frecuencia);
+      this.item.fechaProxima = this.fechaProx(this.item.fecha, this.item.numeroAplicaciones, this.item.frecuencia);
     }
     this.loading = true;
 

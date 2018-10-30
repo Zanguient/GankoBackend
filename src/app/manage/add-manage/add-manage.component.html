@@ -76,7 +76,7 @@
 
                 <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
                     <mat-label>Observaciones</mat-label>
-                    <input matInput type="text" [(ngModel)]="item.observaciones" name="obs" required>
+                    <input matInput type="text" [(ngModel)]="item.observaciones" name="obs">
                 </mat-form-field>
 
                 <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">

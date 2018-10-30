@@ -33,6 +33,7 @@ export class AddHealthComponent implements OnInit {
     aplicacion: 1,
     bovinos: [],
     noBovinos: [],
+    estadoProximo: 0,
     type: TYPE_SANIDAD
   };
 
