@@ -6,6 +6,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { NavService } from '../../core/services/nav.service';
+import { SelectedBvnService } from 'src/app/core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-list-manage',
@@ -17,7 +18,7 @@ export class ListManageComponent extends BaseListComponent<Manejo> {
   filter = 0;
 
   constructor(private srv: ManageService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute, public nav: NavService) {
+    router: Router, route: ActivatedRoute, public nav: NavService, private selected: SelectedBvnService) {
     super(srv, dialog, router, route, snack);
   }
 
@@ -45,5 +46,14 @@ export class ListManageComponent extends BaseListComponent<Manejo> {
     this.service.select(item);
     this.router.navigate([item.id, 'aplicar'], { relativeTo: this.route });
   }
+
+  goToBovines(item: Manejo) {
+    this.selected.path = ['Manejo'];
+    this.selected.lastPath = item.tratamiento;
+    this.selected.editable = false;
+    this.selected.selecteds = item.bovinos;
+    this.router.navigate([item.id], { relativeTo: this.route });
+  }
+
 
 }

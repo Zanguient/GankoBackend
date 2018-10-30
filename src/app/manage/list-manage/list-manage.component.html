@@ -12,7 +12,7 @@
       <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
 
         <app-card [title]="d.tipo === 'Otro' ? d.otro : d.tipo" subtitle="{{ (filter === 0 ? d.fecha : d.fechaProxima) | date}}"
-          [subAccent]="true" [clickable]="true">
+          [subAccent]="true" [clickable]="true" (clickCard)="goToBovines(d)">
           <app-card-content>
             <app-card-field [title]="'Tratamiento'">{{d.tratamiento}}</app-card-field>
             <app-card-field [title]="'Producto'">{{d.producto}}</app-card-field>

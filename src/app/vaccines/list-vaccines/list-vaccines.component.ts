@@ -6,6 +6,7 @@ import { VaccinesService } from '../services/vaccines.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { NavService } from '../../core/services/nav.service';
+import { SelectedBvnService } from 'src/app/core/services/selected-bvn.service';
 
 @Component({
   selector: 'app-list-vaccines',
@@ -17,7 +18,7 @@ export class ListVaccinesComponent extends BaseListComponent<Vacuna> {
   filter = 0;
 
   constructor(private srv: VaccinesService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute, public nav: NavService) {
+    router: Router, route: ActivatedRoute, public nav: NavService, private selected: SelectedBvnService) {
     super(srv, dialog, router, route, snack);
   }
 
@@ -41,9 +42,17 @@ export class ListVaccinesComponent extends BaseListComponent<Vacuna> {
     this.nav.nextNavigation = ['..', 'agregar'];
   }
 
-  goToApply(item:Vacuna){
+  goToApply(item: Vacuna) {
     this.service.select(item);
-    this.router.navigate([item.id, 'aplicar'], {relativeTo: this.route});
+    this.router.navigate([item.id, 'aplicar'], { relativeTo: this.route });
+  }
+
+  goToBovines(item: Vacuna) {
+    this.selected.path = ['Vacunas'];
+    this.selected.lastPath = item.descripcion;
+    this.selected.editable = false;
+    this.selected.selecteds = item.bovinos;
+    this.router.navigate([item.id], { relativeTo: this.route });
   }
 
 }
