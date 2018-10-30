@@ -45,9 +45,9 @@ export class SanidadService {
         return this.db.ListByType(TYPE_SANIDAD, "idFinca = $1 ORDER BY fecha DESC", [idFinca])
     }
     getByIdFincaProximos(idFinca: string){
-        return this.db.ListByType(TYPE_SANIDAD, "idFinca = $1 AND  SUBSTR(fechaProxima,0,10) > SUBSTR(NOWS_STR(),0,10) AND estadoProximo = 0", [idFinca])
+        return this.db.ListByType(TYPE_SANIDAD, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) >= SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0 ORDER BY fechaProxima ASC", [idFinca])
     }
     getByIdFincaPendientes(idFinca: string){
-        return this.db.ListByType(TYPE_SANIDAD, "idFinca = $1 AND  SUBSTR(fechaProxima,0,10) < SUBSTR(NOWS_STR(),0,10) AND estadoProximo = 0", [idFinca])
+        return this.db.ListByType(TYPE_SANIDAD, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) < SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0 ORDER BY fechaProxima ASC", [idFinca])
     }
 }
