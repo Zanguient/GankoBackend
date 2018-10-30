@@ -26,6 +26,7 @@ export class AddVaccinesComponent implements OnInit {
     valor: 0,
     bovinos: [],
     noBovinos: [],
+    estadoProximo: 0,
     type: TYPE_VACUNA
   };
 
@@ -66,7 +67,7 @@ export class AddVaccinesComponent implements OnInit {
     } else {
       this.item.bovinos = this.selected.selecteds;
     }
-    
+
     this.service.add(this.item).pipe(
       finalize(() => {
         this.loading = false;

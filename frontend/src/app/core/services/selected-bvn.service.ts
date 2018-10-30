@@ -73,7 +73,7 @@ export class SelectedBvnService {
   listGroup(): Observable<Group[]> {
     this.clear();
     this.loading.next(true);
-    return this.http.get<Rspn<Doc<Group>[]>>(this.makeUrl('grupos'), this.makeAuth(this.session.token)).pipe(
+    return this.http.get<Rspn<Doc<Group>[]>>(this.makeUrl('grupos', 'finca', this.session.farmId), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       mergeMap(x => listToDoc(x)),
       tap(() => this.loading.next(false), () => this.loading.next(false))

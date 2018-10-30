@@ -3,7 +3,7 @@
         <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
             <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
 
-                <app-card [title]="d.tipoAlimento" [subtitle]="d.peso + ' Kilogramos'" [subAccent]="true" [index]="i" [clickable]="true">
+                <app-card [title]="d.tipoAlimento" [subtitle]="d.peso + ' Kilogramos'" [subAccent]="true" [index]="i" [clickable]="true" (clickCard)="goToBovines(d)">
                     <app-card-corner>{{d.fecha | date}}</app-card-corner>
                     <app-card-content>
                         <app-card-field [title]="'Peso'">{{d.peso}}</app-card-field>
