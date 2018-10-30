@@ -22,7 +22,7 @@ export class VacunaService {
     }
 
     getByIdBovino(idBovino:string){
-        return this.db.ListByType(TYPE_VACUNA,"ANY bovino in bovinos SATISFIES bovino = $1 END",[idBovino])
+        return this.db.ListByType(TYPE_VACUNA,'ARRAY_CONTAINS(bovinos, $1)',[idBovino]);
     }
 
     insert(registroVacunas: Vacuna) {

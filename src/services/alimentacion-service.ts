@@ -21,7 +21,7 @@ export class AlimentacionService {
         return this.db.ListByType(TYPE_ALIMENTACION);
     }
     getAllByIdBovino(idBovino: string) {
-        return this.db.ListByType(TYPE_ALIMENTACION, "bovinos.id = $1", [idBovino]);
+        return this.db.ListByType(TYPE_ALIMENTACION, 'ARRAY_CONTAINS(bovinos, $1)', [idBovino]);
     }
     getById(idAlimentacion: string) {
         return this.db.getById<Alimentacion>(idAlimentacion);

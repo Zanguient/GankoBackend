@@ -22,7 +22,7 @@ export class ManejoService {
     }
 
     getAllByIdBovino(idBovino: string) {
-        return this.db.ListByType(TYPE_MANEJO, "bovinos.id = $1", [idBovino]);
+        return this.db.ListByType(TYPE_MANEJO, 'ARRAY_CONTAINS(bovinos, $1)', [idBovino]);
     }
 
     insert(manejo: Manejo) {

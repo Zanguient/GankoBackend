@@ -22,7 +22,7 @@ export class SanidadService {
     }
 
     getAllByIdBovino(idBovino:string){
-        return this.db.ListByType(TYPE_SANIDAD,"bovinos.id = $1",[idBovino]);
+        return this.db.ListByType(TYPE_SANIDAD,"ARRAY_CONTAINS(bovinos, $1)",[idBovino]);
     }
 
     insert(registroSanidad: Sanidad) {
