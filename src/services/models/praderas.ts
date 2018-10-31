@@ -24,8 +24,8 @@ export class Pradera {
     type: string;
     identificador: number;
     idFinca: string;
-    isEmptyMeadow: boolean;
-    isUsedMeadow: boolean;
+    emptyMeadow: boolean;
+    usedMeadow: boolean;
     tamano: number;
     tamanoEnHectareas: boolean;
     tipoGraminea: string;
@@ -36,11 +36,12 @@ export class Pradera {
     group: string;
     available: boolean;
     bovinos: string[];
+    orderValue:number;
 
     constructor(idFinca:string){
         this.idFinca = idFinca;
-        this.isUsedMeadow = false;
-        this.isEmptyMeadow = true;
+        this.usedMeadow = false;
+        this.emptyMeadow = true;
         this.type = TYPE_PRADERA;
     }
 

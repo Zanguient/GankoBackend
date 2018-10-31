@@ -28,7 +28,7 @@ function createPraderasIfNotExists(idFinca: string, res: Response) {
     let pradera = new Pradera(idFinca);
     let count = 0;
     for (let _i = 0; _i < 100; _i++) {
-        PraderaService.instance.insert(pradera)
+        PraderaService.instance.insert(pradera,_i)
             .then(data => {
                 count += 1;
                 if (count == 99) {
