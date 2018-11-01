@@ -1,3 +1,34 @@
-<p>
-  movement-bvn works!
-</p>
+<div class="mat-typography ">
+  <app-list-loader [section]="false" [size]="data.length" [loading]="loading" [noData]="'No hay registros de movimientos'" [addonable]="false">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="20px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 20px)" fxFlex.gt-md="0 0 calc(33% -20px)" *ngFor="let d of data; index as i">
+
+        <div *ngIf="dataL.length > 0 ;else noMovements">
+          <mat-table #tableL [dataSource]="data" class="mat-elevation-z8">
+            <!-- identificador -->
+            <ng-container matColumnDef="id">
+              <mat-header-cell *matHeaderCellDef> Pradera </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{"Pradera " + element.idPradera}} </mat-cell>
+            </ng-container>
+
+            <!-- libre desde -->
+            <ng-container matColumnDef="transactionDate">
+              <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.transactionDate | date:'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="columnasPradL"></mat-header-row>
+            <mat-row class="selection-row" *matRowDef="let row; columns: columnasPradL;" (click)="addGroupDialog(row)"></mat-row>
+          </mat-table>
+        </div>
+
+      </div>
+    </div>
+  </app-list-loader>
+</div>
+
+<ng-template #noMovements>
+  <div class="section">
+    <p>No existen movimientos</p>
+  </div>
+</ng-template>
