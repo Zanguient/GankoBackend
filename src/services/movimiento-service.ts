@@ -21,7 +21,7 @@ export class MovimientoService {
     }
 
     getAllByIdBovino(idBovino:string) {
-        return this.db.ListByType(TYPE_MOVIMIENTO,"'ARRAY_CONTAINS(bovinos, $1)",[idBovino]);
+        return this.db.ListByType(TYPE_MOVIMIENTO,"ARRAY_CONTAINS(bovinos, $1)",[idBovino]);
     }
 
     insert(produccion: Movimiento) {
