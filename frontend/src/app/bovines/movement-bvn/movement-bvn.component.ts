@@ -16,6 +16,7 @@ import { snackError } from 'src/app/util/snackbar-util';
 })
 export class MovementBvnComponent {
 
+  columnas = ['id', 'transactionDate'];
   data: Movimiento[] = [];
   loading = false;
 
