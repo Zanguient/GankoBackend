@@ -59,6 +59,7 @@ export class BovinoService {
         return this.db.ListByType<Bovino>(TYPE_BOVINO, "META(ganko).id IN $1", [ids]);
     }
 
+
     //permite encontrar un bovino por medio de su identificador asignado
     findByIdBovino(idbovino: string) {
         return this.db.typedOne<Bovino>(TYPE_BOVINO, "codigo = $1", [idbovino]);

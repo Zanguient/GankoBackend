@@ -37,12 +37,14 @@ export class Pradera {
     available: boolean;
     bovinos: string[];
     orderValue:number;
+    channels?: string[];
 
-    constructor(idFinca:string){
+    constructor(idFinca:string,idUser:string[]){
         this.idFinca = idFinca;
         this.usedMeadow = false;
         this.emptyMeadow = true;
         this.type = TYPE_PRADERA;
+        this.channels = idUser;
     }
 
 }

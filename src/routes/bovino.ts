@@ -17,6 +17,7 @@ import { addBovino, deleteBovino, getBovino, getBovinos } from '../controllers/i
 import { ValidateToken } from '../middlewares/token-validation';
 import { getImg } from '../controllers/common/get-img';
 import { uploadImage } from '../controllers/common/upload-img';
+import { getMovimientoByIdBovino } from '../controllers/bovinos/get-movimiento-by-id-bovino';
 
 
 const bovino: Router = Router();
@@ -28,6 +29,7 @@ bovino.post('/', addBovino);
 bovino.post('/ids', getBovinosByIds);
 bovino.get('/:idBovino', getBovino);
 bovino.get('/:idBovino/alimentacion', getAlimentacionByIdBovino);
+bovino.get('/:idBovino/movimientos', getMovimientoByIdBovino);
 bovino.get('/:idBovino/sanidad', getSanidadByIdBovino);
 bovino.get("/:idBovino/manejo", getManejoByIdBovino);
 bovino.get("/:idBovino/ceba", getCebaByIdBovino);

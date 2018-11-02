@@ -9,7 +9,7 @@ import { addAlertaByIdPradera } from '../controllers/pradera/add-alerta-by-id-pr
 const pradera: Router = Router();
 
 pradera.use(ValidateToken);
-pradera.get('/:idFinca',getPraderaByIdFarm);
+pradera.get('/:idFinca/:idUser',getPraderaByIdFarm);
 pradera.get('/:idPradera/pradera',getPraderaById);
 pradera.put('/:idPradera',updatePraderaById);
 
