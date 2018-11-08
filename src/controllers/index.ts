@@ -43,8 +43,5 @@ export * from "./vacuna/get-vacuna";
 export { updateVacuna } from "./vacuna/update-vacuna";
 export { addVacuna } from "./vacuna/add-vacuna";
 export { deleteVacuna } from "./vacuna/delete-vacuna";
-export { getVenta } from "./venta/get-venta";
-export { addVenta } from "./venta/add-venta";
-export { deleteVenta } from "./venta/delete-venta";
-export { updateVenta } from "./venta/update-venta";
+
 
