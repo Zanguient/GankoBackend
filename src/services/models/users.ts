@@ -17,12 +17,16 @@ export const TYPE_USER = "usuario";
 export class Usuario {
     id?:string
     type:string; //usuario
+    registro?:Date;
     nombre: string;
     apellido: string;
+    celular?: string;
     email: string;
     pass: string;
     dni: string;
     estado: string;
     rol: string;
-    plan: string;
+    plan?: string;
+    inicioPlan?:Date;
+    ultimoPago?: Date;
 }

@@ -2,26 +2,26 @@ import { ConfigI } from "./cfg";
 
 const CONFIG_DEV: ConfigI = {
     database: {
-        host: "localhost",
+        host: "104.209.144.166",
         bucket: "ganko",
         username: "ganko",
         password: "123456"
     },
     syncgateway: {
-        host: "http://localhost:4985",
+        host: "http://104.209.144.166:4985",
         db: "ganko"
     }
 };
 
 const CONFIG_PROD: ConfigI = {
     database: {
-        host: "localhost",
+        host: "104.209.144.166",
         bucket: "ganko",
         username: "ganko",
         password: "123456"
     },
     syncgateway: {
-        host: "http://localhost:4985",
+        host: "http://104.209.144.166:4985",
         db: "ganko"
     }
 };

@@ -25,3 +25,14 @@ export function toDateEmb(obj: any, ...fields: string[]) {
     }
 
 }
+
+export function nowDifference(lessYear: number = 0, lessMonth: number = 0, lessDay: number = 0) {
+    const date = new Date();
+    return (date.getFullYear() - lessYear) + '-' + numberFormat(date.getMonth() + 1 - lessMonth)
+        + '-' + numberFormat(date.getDate() - lessDay);
+}
+
+function numberFormat(num: Number): string {
+    return num < 10 ? '0' + num : '' + num;
+}
+

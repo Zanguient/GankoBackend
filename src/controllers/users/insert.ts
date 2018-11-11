@@ -14,19 +14,18 @@ class ResponseLogin extends ResponseBody {
 export function insert(req, res, next) {
     let user: Usuario = req.body;
     user.estado = "activo";
-    user.pass = md5(user.pass);
     UserService.instance.getOneByEmail(user.email)
         .then(data => {
             if (!data) {
                 UserService.instance.insert(user)
                     .then(result => {
-                        res.send(new ResponseLogin(true, data, null));
+                        res.send(new ResponseLogin(true, result, null));
                     }, err => {
                         res.status(500).send(new ResponseLogin(false, null, err));
                     })
             }
             else {
-                res.send(new ResponseLogin(false, "El email ingresado ya existe.", null));
+                res.send(new ResponseLogin(false, null, "El email ingresado ya existe."));
             }
         }, err => {
             res.status(500).send(new ResponseLogin(false, null, err));

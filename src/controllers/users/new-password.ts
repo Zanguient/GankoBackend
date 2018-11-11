@@ -1,4 +1,3 @@
-import { Router } from "express";
 import { UserService } from "./../../services/user-service";
 import { ResponseBody } from "./../response-body";
 let md5 = require('md5');

@@ -1,7 +1,8 @@
-import { Usuario, TYPE_USER } from "./models/users"
 import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
 import { DBConnection } from './db-connection';
+import { TYPE_USER, Usuario } from "./models/users";
+import { nowDifference } from '../util/date-util';
+let md5 = require('md5');
 
 export class UserService {
 
@@ -21,11 +22,72 @@ export class UserService {
     }
 
     insert(usuario: Usuario) {
+        if (usuario.rol == 'ganadero') {
+            usuario.registro = new Date();
+            usuario.inicioPlan = new Date();
+            usuario.ultimoPago = new Date();
+        }
+
+        usuario.pass = md5(usuario.pass);
+
         return this.db.insert(usuario);
     }
 
     update(idUsuario: string, usuario: Usuario) {
-        return this.db.replace(idUsuario, usuario);
+        return this.db.getById<Usuario>(idUsuario)
+            .then(x => {
+                const { id, doc } = x;
+                doc.nombre = usuario.nombre;
+                doc.apellido = usuario.apellido;
+                doc.celular = usuario.celular;
+                doc.email = usuario.email;
+                doc.dni = usuario.dni;
+
+                if (usuario.plan) {
+                    doc.plan = usuario.plan;
+                    doc.inicioPlan = new Date();
+                    doc.ultimoPago = new Date();
+                }
+
+                if (usuario.pass) {
+                    doc.pass = md5(usuario.pass);
+                }
+
+                return this.db.replace(id, doc);
+            });
+    }
+
+    updatePay(id: string) {
+        return this.db.getById<Usuario>(id)
+            .then(x => {
+                const { id, doc } = x;
+                doc.ultimoPago = new Date();
+                return this.db.replace(id, doc);
+            });
+    }
+
+    list(limit: number = undefined, skip: number = undefined) {
+        return this.db.ListByType(TYPE_USER, "rol = $1 OR rol = $2", ['admin', 'assistant'], limit, skip);
+    }
+
+    listRanchers(q: string = undefined, limit: number = undefined, skip: number = undefined) {
+        let query = '';
+        if (q && q != '') {
+            query = ' AND dni LIKE "' + q + '%"';
+        }
+        return this.db.ListByType(TYPE_USER, "rol = $1" + query, ['ganadero'], limit, skip);
+    }
+
+    listRanchersByPayment(q: string = undefined, limit: number = undefined, skip: number = undefined) {
+        let query = '';
+        if (q && q != '') {
+            query = ' AND dni LIKE "' + q + '%"';
+        }
+        return this.db.ListByType(TYPE_USER, "rol = $1 AND plan != $2 AND ultimoPago IS NOT MISSING AND ultimoPago >= $3" + query, ['ganadero', 'gratuito', nowDifference()], limit, skip, ['ultimoPago', 'DESC']);
+    }
+
+    remove(id: string) {
+        return this.db.remove(id);
     }
 
     getOneByEmail(email: string) {

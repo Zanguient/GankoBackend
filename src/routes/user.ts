@@ -1,7 +1,21 @@
 import { Router } from 'express';
 import { insert, login } from '../controllers/index';
+import { updateUser } from '../controllers/users/update';
+import { deleteUsers } from '../controllers/users/delete';
+import { listUsers } from '../controllers/users/list';
+import { listRanchers } from '../controllers/users/list-rancher';
+import { byId } from '../controllers/common/by-id';
+import { listPay } from '../controllers/users/list-pay';
+import { updatePay } from '../controllers/users/update-pay';
 
 const user: Router = Router();
 user.post('/login', login);
 user.post('/',insert);
+user.put('/:id',updateUser);
+user.delete('/:id', deleteUsers);
+user.get('/', listUsers);
+user.get('/ganaderos', listRanchers);
+user.get('/pagos', listPay);
+user.put('/pagos/:id', updatePay);
+user.get('/:id', byId);
 export default user;

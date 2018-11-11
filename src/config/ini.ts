@@ -4,11 +4,11 @@ let md5 = require('md5');
 export const initialAdmin: Usuario = {
     type: "usuario",
     dni: "dni",
-    rol: "usuario",
-    plan: "basico",
+    rol: "admin",
     nombre: "Administrador",
-    email: TYPE_USER,
+    email: 'admin',
     pass: md5("admin"),
     apellido: "admin",
-    estado:"activo"
+    estado:"activo",
+    registro: new Date()
 };
