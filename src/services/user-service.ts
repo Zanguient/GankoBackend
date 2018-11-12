@@ -75,7 +75,7 @@ export class UserService {
         if (q && q != '') {
             query = ' AND dni LIKE "' + q + '%"';
         }
-        return this.db.ListByType(TYPE_USER, "rol = $1" + query, ['ganadero'], limit, skip);
+        return this.db.ListByType(TYPE_USER, "rol = $1 OR rol = $2" + query, ['ganadero', 'usuario'], limit, skip);
     }
 
     listRanchersByPayment(q: string = undefined, limit: number = undefined, skip: number = undefined) {
@@ -83,7 +83,7 @@ export class UserService {
         if (q && q != '') {
             query = ' AND dni LIKE "' + q + '%"';
         }
-        return this.db.ListByType(TYPE_USER, "rol = $1 AND plan != $2 AND ultimoPago IS NOT MISSING AND ultimoPago >= $3" + query, ['ganadero', 'gratuito', nowDifference()], limit, skip, ['ultimoPago', 'DESC']);
+        return this.db.ListByType(TYPE_USER, "(rol = $1 OR rol = $2) AND plan != $3 AND ultimoPago IS NOT MISSING AND ultimoPago >= $4" + query, ['ganadero', 'usuario', 'gratuito', nowDifference()], limit, skip, ['ultimoPago', 'DESC']);
     }
 
     remove(id: string) {
