@@ -14,6 +14,7 @@ export class User {
     plan?: string;
     inicioPlan?: Date;
     ultimoPago?: Date;
+    channels?: string[];
 }
 export const ROL_ADMIN = 'admin';
 export const ROL_RANCHER = 'ganadero';

@@ -8,6 +8,8 @@ import { BovinesService } from '../services/bovines.service';
 import { DeleteDialogComponent } from '../../shared/components/delete-dialog/delete-dialog.component';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { SessionService } from 'src/app/core/services/session.service';
+import { snackError } from 'src/app/util/snackbar-util';
 
 @Component({
   selector: 'app-list-bvn',
@@ -20,7 +22,7 @@ export class ListBvnComponent extends BaseListComponent<Bovino> implements OnDes
   subsLoading: Subscription;
 
   constructor(private nav: NavService, public srv: BovinesService, snack: MatSnackBar, dialog: MatDialog,
-    router: Router, route: ActivatedRoute) {
+    router: Router, route: ActivatedRoute, private session: SessionService) {
     super(srv, dialog, router, route, snack);
 
     nav.title = 'Bovinos';
@@ -49,5 +51,12 @@ export class ListBvnComponent extends BaseListComponent<Bovino> implements OnDes
     });
   }
 
+  goToAdd() {
+    if (this.session.validatePlan(this.data.length)) {
+      super.goToAdd();
+    } else {
+      snackError(this.snackbar, 'Supero el Limite de bovinos, Contactanos');
+    }
+  }
 
 }
