@@ -15,6 +15,7 @@ import { Straw } from '../../shared/models/straw.model';
 import { Vacuna } from '../../shared/models/vaccine.model';
 import { BaseService } from '../../util/base-service';
 import { listToDoc, toDoc, validate } from '../../util/http-util';
+import { Movimiento } from 'src/app/shared/models/movement.model';
 
 @Injectable()
 export class BovinesService extends BaseService<Bovino> {
@@ -149,6 +150,13 @@ export class BovinesService extends BaseService<Bovino> {
 
   listHealth(id: string): Observable<Sanidad[]> {
     return this.http.get<Rspn<Doc<Sanidad>[]>>(this.makeUrl('bovinos', id, 'sanidad'), this.makeAuth(this.session.token)).pipe(
+      map(x => validate(x)),
+      mergeMap(x => listToDoc(x))
+    );
+  }
+
+  listMovements(id: string){
+    return this.http.get<Rspn<Doc<Movimiento>[]>>(this.makeUrl('bovinos', id, 'movimientos'), this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       mergeMap(x => listToDoc(x))
     );

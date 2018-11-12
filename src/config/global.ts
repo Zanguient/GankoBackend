@@ -15,13 +15,14 @@ const CONFIG_DEV: ConfigI = {
 
 const CONFIG_PROD: ConfigI = {
     database: {
-        host: "104.209.144.166",
+        host: "localhost",
+        // host: "http://104.209.144.166:8091",
         bucket: "ganko",
         username: "ganko",
         password: "123456"
     },
     syncgateway: {
-        host: "http://104.209.144.166:4985",
+        host: "http://localhost:4985",
         db: "ganko"
     }
 };

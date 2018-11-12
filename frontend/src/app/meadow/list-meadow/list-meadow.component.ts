@@ -55,7 +55,7 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
   }
 
   openDialog(pradera: Pradera, index?: number) {
-    if (!pradera.isUsedMeadow) {
+    if (!pradera.usedMeadow) {
       const dialogRef = this.d.open(AddMeadowDialogComponent, {
         data: { item: pradera },
         autoFocus: false
@@ -66,8 +66,8 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
           const praderaOld: Pradera = pradera;
           pradera.tamanoEnHectareas = rsp.tamanoEnHectareas;
           pradera.tamano = rsp.tamano;
-          pradera.isUsedMeadow = !pradera.isUsedMeadow;
-          pradera.isEmptyMeadow = !pradera.isEmptyMeadow;
+          pradera.usedMeadow = !pradera.usedMeadow;
+          pradera.emptyMeadow = !pradera.emptyMeadow;
           pradera.available = true;
           pradera.fechaSalida = new Date();
           pradera.identificador = this.getIdentificador();
@@ -131,8 +131,8 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
     if (data.group !== undefined) {
       snackOk(this.snackB, 'La pardera tiene un grupo asociado');
     } else {
-      data.isUsedMeadow = !data.isUsedMeadow;
-      data.isEmptyMeadow = !data.isEmptyMeadow;
+      data.usedMeadow = !data.usedMeadow;
+      data.emptyMeadow = !data.emptyMeadow;
       delete data.available;
       delete data.identificador;
       delete data.aforo;

@@ -12,23 +12,24 @@ class ResponsePradera extends ResponseBody {
 
 export function getPraderaByIdFarm(req, res: Response, next) {
     let idFarm: string = req.params.idFinca;
+    let idUser: string = req.params.idUser;
     PraderaService.instance.getAllByIdFarm(idFarm)
         .then(data => {
             if (data.length > 0) {
                 res.send(new ResponsePradera(true, data, null));
             } else {
-                createPraderasIfNotExists(idFarm, res);
+                createPraderasIfNotExists(idFarm, res,idUser);
             }
         }, err => {
             res.status(500).send(new ResponsePradera(null, null, err));
         })
 }
 
-function createPraderasIfNotExists(idFinca: string, res: Response) {
-    let pradera = new Pradera(idFinca);
+function createPraderasIfNotExists(idFinca: string, res: Response,idUser:string) {
+    let pradera = new Pradera(idFinca,[idUser]); 
     let count = 0;
     for (let _i = 0; _i < 100; _i++) {
-        PraderaService.instance.insert(pradera)
+        PraderaService.instance.insert(pradera,_i)
             .then(data => {
                 count += 1;
                 if (count == 99) {

@@ -39,11 +39,12 @@ export class ListMovementsComponent extends BaseListComponent<Pradera> {
       x => {
         this.dataL = [];
         this.dataO = [];
+        console.log(Object.values(x));
         for (const pradera of x) {
-          if (pradera.available && pradera.available !== undefined) {
+          if (pradera.available && pradera.available !== undefined && pradera.available !== null) {
             this.dataL.push(pradera);
           }
-          if (!pradera.available && pradera.available !== undefined) {
+          if (!pradera.available && pradera.available !== undefined && pradera.available !== null) {
             this.dataO.push(pradera);
           }
         }

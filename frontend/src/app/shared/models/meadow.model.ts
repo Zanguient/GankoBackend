@@ -4,8 +4,8 @@ export class Pradera {
     type?: string;
     identificador?: number;
     idFinca?: string;
-    isEmptyMeadow?: boolean;
-    isUsedMeadow?: boolean;
+    emptyMeadow?: boolean;
+    usedMeadow?: boolean;
     tamano?: number;
     tamanoEnHectareas?: boolean;
     tipoGraminea?: string;
@@ -19,7 +19,7 @@ export class Pradera {
     channels?: string[];
 
     constructor(isUsedMeadow?: boolean) {
-        this.isUsedMeadow = isUsedMeadow;
+        this.usedMeadow = isUsedMeadow;
     }
 }
 

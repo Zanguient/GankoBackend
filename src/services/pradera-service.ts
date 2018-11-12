@@ -45,11 +45,12 @@ export class PraderaService {
     }
 
     getAllByIdFarm(idFarm: string) {
-        return this.db.ListByType(TYPE_PRADERA, "idFinca = $1", [idFarm]);
+        return this.db.ListByType(TYPE_PRADERA, "idFinca = $1", [idFarm],100,undefined,["orderValue","ASC"]);
     }
 
-    insert(pradera: Pradera) {
+    insert(pradera: Pradera,orderValue:number) {
         this.preparePradera(pradera);
+        pradera.orderValue = orderValue
         return this.db.insert(pradera);
     }
 

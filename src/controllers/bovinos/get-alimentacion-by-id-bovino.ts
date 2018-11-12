@@ -12,7 +12,6 @@ class ResponseAlimentacion extends ResponseBody {
     }
 }
 export function getAlimentacionByIdBovino(req, res: Response, next) {
-    
     AlimentacionService.instance.getAllByIdBovino(req.params.idBovino)
         .then(data => {
                 res.send(new ResponseAlimentacion(true, data, null));

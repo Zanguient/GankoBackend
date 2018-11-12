@@ -20,6 +20,10 @@ export class MovimientoService {
         return this.db.ListByType(TYPE_MOVIMIENTO,"idFarm = $1",[idFinca]);
     }
 
+    getAllByIdBovino(idBovino:string) {
+        return this.db.ListByType(TYPE_MOVIMIENTO,"ARRAY_CONTAINS(bovinos, $1)",[idBovino]);
+    }
+
     insert(produccion: Movimiento) {
         toDate(produccion, 'transactionDate');
         return this.db.insert(produccion);
