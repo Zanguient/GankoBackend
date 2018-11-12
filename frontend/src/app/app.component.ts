@@ -24,7 +24,11 @@ export class AppComponent {
       .addSvgIcon('feed', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/feed.svg'))
       .addSvgIcon('bovine', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/bovine.svg'))
       .addSvgIcon('ceba', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/ceba.svg'))
-      .addSvgIcon('reproductive', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/reproductive.svg'));
+      .addSvgIcon('reproductive', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/reproductive.svg'))
+      .addSvgIcon('farmer', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/farmer.svg'))
+      .addSvgIcon('users', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/users.svg'))
+      .addSvgIcon('settings', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/settings.svg'))
+      .addSvgIcon('coins', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/coin.svg'));
   }
 
 }

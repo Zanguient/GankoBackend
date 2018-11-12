@@ -37,6 +37,7 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
     this.service.list().subscribe(x => {
       this.praderas = x;
       this.addIdArray();
+      console.log(Object.values(x));
     }, err => snackError(this.snackB, err));
     this.loading = false;
   }
@@ -72,7 +73,11 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
           pradera.identificador = this.getIdentificador();
           pradera.mantenimiento = [];
           pradera.aforo = [];
-          this.service.update(pradera).subscribe(() => snackOk(this.snackB, 'Se guardo correctamente'),
+          this.service.update(pradera).subscribe(
+            () => {
+              snackOk(this.snackB, 'Se guardo correctamente');
+              this.loadPraderas();
+            },
             err => {
               snackError(this.snackB, err);
               this.loadPraderas();
@@ -138,6 +143,7 @@ export class ListMeadowComponent extends BaseListComponent<Pradera> {
       delete data.fechaSalida;
       this.service.update(data).subscribe(rsp => {
         snackOk(this.snackB, 'Se removio la pradera');
+        this.loadPraderas();
         this.addIdArray();
       }, err => {
         snackError(this.snackB, err);

@@ -17,7 +17,10 @@
             <mat-label>Contraseña</mat-label>
             <input matInput type="password" required name="pass" [(ngModel)]="password">
           </mat-form-field>
-          <button (click)="login()" [disabled]="formLogin.invalid" fxFlex="0 0 80%" fxFlexOffset="10%" mat-raised-button color="accent">Entrar</button>
+          <button *ngIf="!loading; else loader" (click)="login()" [disabled]="formLogin.invalid" fxFlex="0 0 80%" fxFlexOffset="10%" mat-raised-button color="accent">Entrar</button>
+          <ng-template #loader>
+            <app-loader [align]="'center'"></app-loader>
+          </ng-template>
         </div>
       </form>
     </mat-card>

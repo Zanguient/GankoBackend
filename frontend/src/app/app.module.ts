@@ -21,6 +21,9 @@ import { VaccinesModule } from './vaccines/vaccines.module';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { UsersModule } from './users/users.module';
+import { RanchersModule } from './ranchers/ranchers.module';
+import { PaymentsModule } from './payments/payments.module';
 
 export const MY_FORMATS = {
   parse: {
@@ -58,6 +61,9 @@ export const MY_FORMATS = {
     GroupsModule,
     NotificationsModule,
     ReportsModule,
+    UsersModule,
+    RanchersModule,
+    PaymentsModule,
     AppRouting
   ],
   providers: [

@@ -45,6 +45,30 @@ export class SessionService {
     sessionStorage.setItem('farmId', farmId);
   }
 
+  get role(): string {
+    return sessionStorage.getItem('role');
+  }
+
+  set role(role: string) {
+    sessionStorage.setItem('role', role);
+  }
+
+  get plan(): string {
+    return sessionStorage.getItem('plan');
+  }
+
+  set plan(plan: string) {
+    sessionStorage.setItem('plan', plan);
+  }
+
+  get planDate(): Date {
+    return new Date(sessionStorage.getItem('planDate'));
+  }
+
+  set planDate(date: Date) {
+    sessionStorage.setItem('planDate', date + '');
+  }
+
   clear() {
     this.id = null;
     this.token = null;
