@@ -18,8 +18,9 @@ export class PaymentsComponent {
 
   constructor(nav: NavService, private service: PaymentsService, private dialog: MatDialog, private snack: MatSnackBar) {
     nav.title = 'Pagos';
+    this.loading = true;
     service.list().pipe(
-      finalize(() => this.loading = true)
+      finalize(() => this.loading = false)
     ).subscribe(x => this.data = x, err => snackError(this.snack, err));
   }
 
