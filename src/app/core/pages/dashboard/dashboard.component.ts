@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { NavService } from '../../services/nav.service';
 import { Router } from '@angular/router';
 import { SessionService } from '../../services/session.service';
+import { ROL_ADMIN, ROL_ASSISTANT, ROL_RANCHER } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,8 +19,13 @@ export class DashboardComponent {
       map(result => result.matches)
     );
 
+  role: string;
+  roles = [ROL_ADMIN, ROL_ASSISTANT, ROL_RANCHER];
+
   constructor(private breakpointObserver: BreakpointObserver, public nav: NavService, private router: Router,
-    public session: SessionService) { }
+    public session: SessionService) {
+    this.role = session.role;
+  }
 
   goToFarm() {
     this.router.navigate(['fincas']);

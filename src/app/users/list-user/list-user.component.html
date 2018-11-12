@@ -1,0 +1,18 @@
+<div class="mat-typography ">
+  <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay usuarios registrados'" (add)="goToAdd()">
+    <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
+      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
+
+        <app-card subtitle="{{d.rol | titlecase}}" [subAccent]="true" [index]="i" title="{{d.nombre + d.apellido}}"
+          [removable]="true" [clickable]="false" (removeCard)="removeItem(i)">
+          <app-card-content>
+              <app-card-field [title]="'Documento'">{{d.dni}}</app-card-field>
+            <app-card-field [title]="'Celular'">{{d.celular}}</app-card-field>
+            <app-card-field [title]="'Email'">{{d.email}}</app-card-field>
+          </app-card-content>
+        </app-card>
+
+      </div>
+    </div>
+  </app-list-loader>
+</div>

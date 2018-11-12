@@ -1,0 +1,72 @@
+<div class="container mat-typography">
+  <div class="breadcrumb">
+    <button mat-button routerLink="../">Ganaderos</button> >
+    <span *ngIf="edit">Editar</span>
+    <span *ngIf="!edit">Agregar</span>
+  </div>
+
+  <mat-card *ngIf="!loadingSelected; else loaderSelected">
+    <h1 *ngIf="edit">Editar Ganadero</h1>
+    <h1 *ngIf="!edit">Agregar Ganadero</h1>
+    <form #formAdd="ngForm" autocomplete="off">
+      <div fxLayout="row wrap" fxLayoutGap="16px">
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput type="text" [(ngModel)]="item.nombre" name="nom" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput type="text" [(ngModel)]="item.apellido" name="ape" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Documento</mat-label>
+          <input matInput type="text" [(ngModel)]="item.dni" name="doc" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" [(ngModel)]="item.email" name="em" required>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+          <mat-label>Celular</mat-label>
+          <input matInput type="tel" [(ngModel)]="item.celular" name="cel" required>
+        </mat-form-field>
+
+        <mat-checkbox *ngIf="edit" [(ngModel)]="editPass"> Modificar Contraseña </mat-checkbox>
+
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="!edit || (edit && editPass)">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="text" [(ngModel)]="item.pass" name="pass" required>
+        </mat-form-field>
+
+        <mat-checkbox *ngIf="edit" [(ngModel)]="editPlan"> Modificar Plan </mat-checkbox>
+
+        <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(100% - 16px)" *ngIf="rol == rolAdmin && (!edit || (edit && editPlan))">
+          <mat-select placeholder="Plan" [(ngModel)]="item.plan" name="pla" required>
+            <mat-option value="{{p.name}}" *ngFor="let p of plans"> {{p.name | titlecase}} - max. {{p.limit}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
+          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button
+            color="accent" (click)="goToBack()">Cancelar</button>
+          <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent"
+            (click)="add()" [disabled]="formAdd.invalid">Agregar</button>
+        </div>
+
+        <ng-template #loader>
+          <app-loader></app-loader>
+        </ng-template>
+      </div>
+    </form>
+
+  </mat-card>
+  <ng-template #loaderSelected>
+    <app-loader [align]="'center'" [big]="true" ></app-loader>
+  </ng-template>
+</div>

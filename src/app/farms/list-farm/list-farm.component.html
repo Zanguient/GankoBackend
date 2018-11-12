@@ -2,7 +2,7 @@
   <app-list-loader [size]="data.length" [loading]="loading" [noData]="'No hay fincas registrados'" (add)="goToAdd()">
 
     <div fxLayout="row wrap" fxLayoutGap.gt-sm="24px">
-      <div fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
+      <div class="m-bottom" fxFlex="100" fxFlex.md="0 0 calc(50% - 24px)" fxFlex.gt-md="0 0 calc(33% -24px)" *ngFor="let d of data; index as i">
 
         <mat-card class="bottom-space" (click)="goToDash(d)" class="hoverable">
 

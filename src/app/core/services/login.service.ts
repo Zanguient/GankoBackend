@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Rspn } from '../../shared/models/response.model';
-import { validate } from '../../util/http-util';
+import { Rspn, Doc } from '../../shared/models/response.model';
+import { validate, toDoc } from '../../util/http-util';
 import { SessionService } from './session.service';
+import { User } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,13 @@ export class LoginService {
     }, {}).pipe(
       map(x => validate(x)),
       map(x => {
-        this.session.id = x.user;
+        const { id, doc } = x.user;
+
+        this.session.id = id;
         this.session.token = x.token;
+        this.session.plan = doc.plan;
+        this.session.role = doc.rol;
+        this.session.planDate = new Date(doc.inicioPlan);
         return x;
       })
     );
@@ -32,6 +38,6 @@ export class LoginService {
 }
 
 export class LoginResponse {
-  user: string;
+  user: Doc<User>;
   token: string;
 }

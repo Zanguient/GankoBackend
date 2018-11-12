@@ -1,0 +1,64 @@
+<div class="container mat-typography">
+    <div class="breadcrumb">
+      <button mat-button routerLink="../">Usuarios</button> >
+      <span>Agregar</span>
+    </div>
+  
+    <mat-card>
+      <h1>Agregar Usuario</h1>
+      <form #formAdd="ngForm" autocomplete="off">
+        <div fxLayout="row wrap" fxLayoutGap="16px">
+  
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput type="text" [(ngModel)]="item.nombre" name="nom" required>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+            <mat-label>Apellido</mat-label>
+            <input matInput type="text" [(ngModel)]="item.apellido" name="ape" required >
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+            <mat-label>Documento</mat-label>
+            <input matInput type="text" [(ngModel)]="item.dni" name="doc" required>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" [(ngModel)]="item.email" name="em" required>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+            <mat-label>Celular</mat-label>
+            <input matInput type="tel" [(ngModel)]="item.celular" name="cel" required>
+          </mat-form-field>
+  
+          <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="text" [(ngModel)]="item.pass" name="pass" required>
+          </mat-form-field>
+  
+          <mat-form-field appearance="outline" fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(100% - 16px)">
+            <mat-select placeholder="Rol" [(ngModel)]="item.rol" name="rol" required>
+              <mat-option value="{{rolAdmin}}" > {{rolAdmin | titlecase}} </mat-option>
+              <mat-option value="{{rolAssistant}}" > {{rolAssistant | titlecase}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
+            <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%" mat-button
+              color="accent" (click)="goToBack()">Cancelar</button>
+            <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent"
+              (click)="add()" [disabled]="formAdd.invalid">Agregar</button>
+          </div>
+  
+          <ng-template #loader>
+            <app-loader></app-loader>
+          </ng-template>
+        </div>
+      </form>
+  
+    </mat-card>
+  
+  </div>

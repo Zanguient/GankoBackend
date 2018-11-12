@@ -16,6 +16,9 @@ import { notificationsRoutes } from './notifications/notifications.routing';
 import { reportsRoutes } from './reports/reports.routing';
 import { strawRoutes } from './straw/straw.routing';
 import { vaccinesRoutes } from './vaccines/vaccines.routing';
+import { ranchersRoutes } from './ranchers/ranchers.routing';
+import { usersRoutes } from './users/users.routing';
+import { paymentRoutes } from './payments/payments.routing';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -35,6 +38,9 @@ const appRoutes: Routes = [
             ...reportsRoutes,
             ...strawRoutes,
             ...vaccinesRoutes,
+            ...ranchersRoutes,
+            ...usersRoutes,
+            ...paymentRoutes,
             { path: '', redirectTo: 'bovinos', pathMatch: 'full' }
         ]
     },
