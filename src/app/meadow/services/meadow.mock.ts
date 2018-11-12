@@ -29,7 +29,7 @@ function makeItem(item: number): Pradera {
         aforo: [],
         group: item % 2 ? '' : 'Grupo ' + item,
         available: item % 2 ? true : false,
-        isUsedMeadow: item % 2 ? false : true,
+        usedMeadow: item % 2 ? false : true,
         tamano: 10 * item,
         tamanoEnHectareas: item % 2 ? false : true
     };
