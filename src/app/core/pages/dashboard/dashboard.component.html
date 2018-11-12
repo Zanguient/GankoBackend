@@ -50,21 +50,21 @@
       </div>
 
       <div *ngIf="role == roles[0] || role == roles[1]">
-        <a mat-list-item routerLink="reportes" routerLinkActive="active">
+        <a mat-list-item routerLink="ganaderos" routerLinkActive="active">
           <mat-icon matListIcon svgIcon='farmer'></mat-icon> Ganaderos
         </a>
 
-        <a mat-list-item routerLink="reportes" routerLinkActive="active">
+        <a mat-list-item routerLink="pagos" routerLinkActive="active">
           <mat-icon matListIcon svgIcon='coins'></mat-icon> Cobros
         </a>
       </div>
       <div *ngIf="role == roles[0]">
-        <a mat-list-item routerLink="reportes" routerLinkActive="active">
+        <a mat-list-item routerLink="usuarios" routerLinkActive="active">
           <mat-icon matListIcon svgIcon='users'></mat-icon> Usuarios
         </a>
-        <a mat-list-item routerLink="reportes" routerLinkActive="active">
+        <!-- <a mat-list-item routerLink="reportes" routerLinkActive="active">
           <mat-icon matListIcon svgIcon='settings'></mat-icon> Planes
-        </a>
+        </a> -->
       </div>
 
       <mat-divider></mat-divider>
