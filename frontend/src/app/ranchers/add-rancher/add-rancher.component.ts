@@ -75,12 +75,12 @@ export class AddRancherComponent {
       finalize(() => this.loading = false)
     ).subscribe(() => {
       snackOk(this.snack, this.edit ? 'Ganadero actualizado' : 'Ganadero registrado');
-      this.router.navigate(['../']);
+      this.router.navigate(['../'], {relativeTo: this.route});
     });
   }
 
   goToBack() {
-    this.router.navigate(['../']);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 }

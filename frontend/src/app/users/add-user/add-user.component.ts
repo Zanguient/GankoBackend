@@ -30,7 +30,7 @@ export class AddUserComponent implements OnInit {
   rolAssistant = ROL_ASSISTANT;
 
   constructor(private service: UsersService, private snack: MatSnackBar, private router: Router, private route: ActivatedRoute) {
-    
+
   }
 
   ngOnInit() {
@@ -42,12 +42,12 @@ export class AddUserComponent implements OnInit {
       finalize(() => this.loading = false)
     ).subscribe(() => {
       snackOk(this.snack, 'Usuario registrado');
-      this.router.navigate(['../']);
+      this.router.navigate(['../'], { relativeTo: this.route });
     });
   }
 
   goToBack() {
-    this.router.navigate(['../']);
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }
