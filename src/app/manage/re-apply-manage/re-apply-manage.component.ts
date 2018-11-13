@@ -15,6 +15,8 @@ import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 })
 export class ReApplyManageComponent implements OnInit {
 
+  prev: Manejo;
+
   item: Manejo;
   loading = false;
 
@@ -26,7 +28,12 @@ export class ReApplyManageComponent implements OnInit {
       map(x => x.get('id')),
       mergeMap(x => this.service.selected(x)),
       tap(x => this.selecteds.selecteds = x.bovinos)
-    ).subscribe(x => this.item = x, err => snackError(this.snack, err));
+    ).subscribe(x => {
+      this.prev = x;
+      this.item = JSON.parse(JSON.stringify(x));
+      this.item.fecha = new Date(this.item.fecha);
+      this.item.fechaProxima = new Date(this.item.fechaProxima);
+    }, err => snackError(this.snack, err));
   }
 
   goToBack() {
@@ -39,6 +46,9 @@ export class ReApplyManageComponent implements OnInit {
 
   apply() {
     this.item.aplicacion = this.item.aplicacion + 1;
+
+    this.item.idAplicacionUno = this.item.idAplicacionUno ? this.item.idAplicacionUno : this.item.id;
+    this.item.fechaProxima = new Date(this.item.fechaProxima);
     this.item.fecha = this.item.fechaProxima;
     this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.aplicacion,
       this.item.numeroAplicaciones, this.item.frecuencia);
@@ -48,7 +58,10 @@ export class ReApplyManageComponent implements OnInit {
     this.item.bovinos = this.selecteds.selecteds;
     this.item.noBovinos = this.selecteds.removeds;
 
+    this.prev.estadoProximo = 1;
+
     this.service.add(this.item).pipe(
+      mergeMap(() => this.service.update(this.prev)),
       finalize(() => this.loading = false)
     ).subscribe(() => {
       snackOk(this.snack, 'Aplicacion de manejo Agregada');

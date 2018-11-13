@@ -22,6 +22,7 @@ export class ManageService extends BaseService<Manejo> {
     item.type = TYPE_MANEJO;
     item.idFinca = this.session.farmId;
     item.channels = [this.session.id];
+    delete item.id;
     return this.http.post<Rspn<string>>(this.makeUrl('manejo'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item)),

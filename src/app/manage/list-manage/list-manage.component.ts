@@ -4,9 +4,11 @@ import { Manejo } from '../../shared/models/manage.model';
 import { ManageService } from '../services/manage.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize, filter as flt, mergeMap } from 'rxjs/operators';
 import { NavService } from '../../core/services/nav.service';
 import { SelectedBvnService } from 'src/app/core/services/selected-bvn.service';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { snackOk, snackError } from 'src/app/util/snackbar-util';
 
 @Component({
   selector: 'app-list-manage',
@@ -53,6 +55,24 @@ export class ListManageComponent extends BaseListComponent<Manejo> {
     this.selected.editable = false;
     this.selected.selecteds = item.bovinos;
     this.router.navigate([item.id], { relativeTo: this.route });
+  }
+
+  omit(item: Manejo, index: number) {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Descartar Manejo',
+        msg: '¿ Desea descartar el manejo ?'
+      }
+    }).afterClosed().pipe(
+      flt(x => x !== undefined),
+      mergeMap(x => {
+        item.estadoProximo = 2;
+        return this.service.update(item);
+      })
+    ).subscribe(() => {
+      this.data.splice(index, 1);
+      snackOk(this.snackbar, 'Manejo Descartado');
+    }, () => snackError(this.snackbar, 'Error al descartar manejo'));
   }
 
 

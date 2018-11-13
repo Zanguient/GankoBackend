@@ -15,6 +15,8 @@ import { SelectedBvnService } from '../../core/services/selected-bvn.service';
 })
 export class ReApplyVaccinesComponent implements OnInit {
 
+  prev: Vacuna;
+
   item: Vacuna;
   loading = false;
   reApp1: boolean;
@@ -27,7 +29,12 @@ export class ReApplyVaccinesComponent implements OnInit {
       map(x => x.get('id')),
       mergeMap(x => this.service.selected(x)),
       tap(x => this.selecteds.selecteds = x.bovinos)
-    ).subscribe(x => this.item = x, err => snackError(this.snack, err));
+    ).subscribe(x => {
+      this.prev = x;
+      this.item = JSON.parse(JSON.stringify(x));
+      this.item.fecha = new Date(this.item.fecha);
+      this.item.fechaProxima = new Date(this.item.fechaProxima);
+    }, err => snackError(this.snack, err));
   }
 
   goToEditSelected() {
@@ -39,12 +46,19 @@ export class ReApplyVaccinesComponent implements OnInit {
   }
 
   apply() {
+    this.item.fechaProxima = new Date(this.item.fechaProxima);
+
+    this.item.idAplicacionUno = this.item.idAplicacionUno ? this.item.idAplicacionUno : this.item.id;
     this.item.fecha = this.item.fechaProxima;
     this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.frecuencia);
     this.loading = true;
     this.item.bovinos = this.selecteds.selecteds;
     this.item.noBovinos = this.selecteds.removeds;
+
+    this.prev.estadoProximo = 1;
+
     this.service.add(this.item).pipe(
+      mergeMap(() => this.service.update(this.prev)),
       finalize(() => {
         this.loading = false;
       })

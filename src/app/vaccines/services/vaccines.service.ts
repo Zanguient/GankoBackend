@@ -23,6 +23,7 @@ export class VaccinesService extends BaseService<Vacuna> {
     item.type = TYPE_VACUNA;
     item.idFinca = this.session.farmId;
     item.channels = [this.session.id];
+    delete item.id;
     return this.http.post<Rspn<string>>(this.makeUrl('vacunas'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
       tap(() => this.data.push(item)),

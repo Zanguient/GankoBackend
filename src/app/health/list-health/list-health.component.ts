@@ -4,9 +4,11 @@ import { Sanidad } from '../../shared/models/health.model';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { HealthService } from '../services/health.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize, mergeMap, filter as flt } from 'rxjs/operators';
 import { NavService } from '../../core/services/nav.service';
 import { SelectedBvnService } from 'src/app/core/services/selected-bvn.service';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { snackOk, snackError } from 'src/app/util/snackbar-util';
 
 @Component({
   selector: 'app-list-health',
@@ -52,5 +54,23 @@ export class ListHealthComponent extends BaseListComponent<Sanidad> {
     this.selected.editable = false;
     this.selected.selecteds = item.bovinos;
     this.router.navigate([item.id], { relativeTo: this.route });
+  }
+
+  omit(item: Sanidad, index: number) {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Descartar Sanidad',
+        msg: '¿ Desea descartar el registro de sanidad ?'
+      }
+    }).afterClosed().pipe(
+      flt(x => x !== undefined),
+      mergeMap(x => {
+        item.estadoProximo = 2;
+        return this.service.update(item);
+      })
+    ).subscribe(() => {
+      this.data.splice(index, 1);
+      snackOk(this.snackbar, 'Registro Descartado');
+    }, () => snackError(this.snackbar, 'Error al descartar registro'));
   }
 }

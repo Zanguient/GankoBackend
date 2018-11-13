@@ -22,6 +22,7 @@ import { NmBottomDirective } from './directives/nm-bottom.directive';
 import { SingleLoaderComponent } from './components/single-loader/single-loader.component';
 import { NoSpaceDirective } from './directives/no-space.directive';
 import { CardFieldLgComponent } from './components/card/card-field-lg/card-field-lg.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 
 
@@ -37,9 +38,10 @@ import { CardFieldLgComponent } from './components/card/card-field-lg/card-field
     CardObsComponent, CardContentComponent, CardFieldComponent, CardFooterComponent,
     CardActionsComponent, AccentDirective, WarnDirective, NmBottomDirective, SingleLoaderComponent,
     NoSpaceDirective,
-    CardFieldLgComponent],
+    CardFieldLgComponent,
+    ConfirmDialogComponent],
 
-  entryComponents: [DeleteDialogComponent],
+  entryComponents: [DeleteDialogComponent, ConfirmDialogComponent],
 
   exports: [RouterModule, MatModule, FlexLayoutModule, FormsModule,
     ListLoaderComponent, LoaderComponent, DeleteDialogComponent, FilterComponent, BovineSelectedComponent,
