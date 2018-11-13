@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { PLANS } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -6,67 +7,75 @@ import { Injectable } from '@angular/core';
 export class SessionService {
 
   get id(): string {
-    return sessionStorage.getItem('id');
+    return this.get('id');
   }
 
   set id(id: string) {
-    sessionStorage.setItem('id', id);
+    this.save('id', id);
   }
 
   get token(): string {
-    return sessionStorage.getItem('token');
+    return this.get('token');
   }
 
   set token(token: string) {
-    sessionStorage.setItem('token', token);
+    this.save('token', token);
   }
 
   get logged(): boolean {
-    return sessionStorage.getItem('logged') === 'true';
+    return this.get('logged') === 'true';
   }
 
   set logged(logged: boolean) {
-    sessionStorage.setItem('logged', '' + logged);
+    this.save('logged', '' + logged);
   }
 
   get farmName(): string {
-    return sessionStorage.getItem('farmName');
+    return this.get('farmName');
   }
 
   set farmName(farmName: string) {
-    sessionStorage.setItem('farmName', farmName);
+    this.save('farmName', farmName);
   }
 
   get farmId(): string {
-    return sessionStorage.getItem('farmId');
+    return this.get('farmId');
   }
 
   set farmId(farmId: string) {
-    sessionStorage.setItem('farmId', farmId);
+    this.save('farmId', farmId);
   }
 
   get role(): string {
-    return sessionStorage.getItem('role');
+    return this.get('role');
   }
 
   set role(role: string) {
-    sessionStorage.setItem('role', role);
+    this.save('role', role);
   }
 
   get plan(): string {
-    return sessionStorage.getItem('plan');
+    return this.get('plan');
   }
 
   set plan(plan: string) {
-    sessionStorage.setItem('plan', plan);
+    this.save('plan', plan);
   }
 
   get planDate(): Date {
-    return new Date(sessionStorage.getItem('planDate'));
+    return new Date(this.get('planDate'));
   }
 
   set planDate(date: Date) {
-    sessionStorage.setItem('planDate', date + '');
+    this.save('planDate', date + '');
+  }
+
+  private save(key: string, value: string) {
+    sessionStorage.setItem(key, value);
+  }
+
+  private get(key: string): string {
+    return sessionStorage.getItem(key);
   }
 
   clear() {
@@ -75,5 +84,15 @@ export class SessionService {
     this.logged = false;
     this.farmId = null;
     this.farmName = null;
+    this.plan = null;
+    this.planDate = null;
   }
+
+  validatePlan(size: number): boolean {
+    const pl = this.plan;
+    const limit = PLANS.find(x => x.name === pl).limit;
+    return size < limit;
+  }
+
+
 }
