@@ -18,7 +18,7 @@ export class FileService {
         this.url = config.syncgateway.host + "/" + config.syncgateway.db + "/";
     }
 
-    saveFile(id: string, name: string, type: string, body: string) {
+    saveFile(id: string, name: string, type: string, body: string, field?:string) {
         return request(this.url + "_raw/" + id)
             .then(x => {
                 const obj = JSON.parse(x);
@@ -40,6 +40,9 @@ export class FileService {
                         "digest": attachment.digest,
                         "length": attachment.length
                     };
+                    if(field){
+                        doc[field] = name;
+                    }
                     return this.db.replace(id, doc);
                 })
             );
