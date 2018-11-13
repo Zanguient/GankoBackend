@@ -30,7 +30,7 @@ export class ReApplyHealthComponent implements OnInit {
   }
 
   goToBack() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 
   goToEditSelected() {
@@ -39,6 +39,7 @@ export class ReApplyHealthComponent implements OnInit {
 
   apply() {
     this.item.aplicacion = this.item.aplicacion + 1;
+    this.item.fecha = this.item.fechaProxima;
     this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.aplicacion,
       this.item.numeroAplicaciones, this.item.frecuencia);
     this.loading = true;
@@ -50,7 +51,7 @@ export class ReApplyHealthComponent implements OnInit {
       finalize(() => this.loading = false)
     ).subscribe(() => {
       snackOk(this.snack, 'Aplicacion de sanidad Agregada');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../../'], { relativeTo: this.route });
     }, err => snackError(this.snack, err));
   }
 
