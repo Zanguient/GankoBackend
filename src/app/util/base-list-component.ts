@@ -17,6 +17,7 @@ export abstract class BaseListComponent<T> implements OnInit, OnDestroy {
         protected router: Router, protected route: ActivatedRoute, protected snackbar: MatSnackBar) { }
 
     ngOnInit() {
+        console.log('EECD');
         this.loading = true;
         this.subs = this.getServiceList()
             .pipe(
