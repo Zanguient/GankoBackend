@@ -71,7 +71,7 @@ export class BovinoService {
     //permite insertar un nuevo bovino
     addBovino(bovino: Bovino) {
         toDate(bovino, 'fechaNacimiento', 'fechaIngreso', 'fechaDestete');
-        return this.db.typedOne(TYPE_BOVINO, "codigo = $1", [bovino.codigo])
+        return this.db.typedOne(TYPE_BOVINO, "codigo = $1 AND finca = $2", [bovino.codigo, bovino.finca])
             .then(x => x ? undefined : this.db.insert(bovino));
     }
 

@@ -42,13 +42,14 @@ app.use('/api/v1/manejo', manejo);
 app.use('/api/v1/ceba', ceba);
 app.use('/api/v1/leche', leche);
 app.use('/api/v1/pajillas', pajilla);
-app.use('/api/v1/grupos',grupo);
+app.use('/api/v1/grupos', grupo);
 app.use('/api/v1/produccion', produccion);
 app.use('/api/v1/vacunas', vacuna);
-app.use('/api/v1/praderas',pradera);
-app.use('/api/v1/movimientos',movimiento);
-app.use('/api/v1/img',img);
-app.get( /.*/ ,function (req, res, next) {
+app.use('/api/v1/praderas', pradera);
+app.use('/api/v1/movimientos', movimiento);
+app.use('/api/v1/img', img);
+app.get(/.*/, function (req, res, next) {
+  console.log('DIR=>' + __dirname + '\\public\\index.html');
   res.setHeader('Content-Type', 'text/html');
   res.sendFile(__dirname + '\\public\\index.html');
 });
