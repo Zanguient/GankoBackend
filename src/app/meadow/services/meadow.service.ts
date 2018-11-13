@@ -34,11 +34,12 @@ export class MeadowService extends BaseService<Pradera> {
   }
 
   list(): Observable<Pradera[]> {
-    return this.http.get<Rspn<Doc<Pradera>[]>>(this.makeUrl('praderas', this.session.farmId,this.session.id), this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x)),
-      mergeMap(x => listToDoc(x)),
-      tap(x => this.data = x)
-    );
+    return this.http.get<Rspn<Doc<Pradera>[]>>(this.makeUrl('praderas', this.session.farmId, this.session.id),
+      this.makeAuth(this.session.token)).pipe(
+        map(x => validate(x)),
+        mergeMap(x => listToDoc(x)),
+        tap(x => this.data = x)
+      );
   }
 
   update(item: Pradera): Observable<string> {

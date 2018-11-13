@@ -30,7 +30,7 @@ export class ReApplyManageComponent implements OnInit {
   }
 
   goToBack() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 
   goToEditSelected() {
@@ -39,6 +39,7 @@ export class ReApplyManageComponent implements OnInit {
 
   apply() {
     this.item.aplicacion = this.item.aplicacion + 1;
+    this.item.fecha = this.item.fechaProxima;
     this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.aplicacion,
       this.item.numeroAplicaciones, this.item.frecuencia);
 
@@ -51,7 +52,7 @@ export class ReApplyManageComponent implements OnInit {
       finalize(() => this.loading = false)
     ).subscribe(() => {
       snackOk(this.snack, 'Aplicacion de manejo Agregada');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../../'], { relativeTo: this.route });
     }, err => snackError(this.snack, err));
   }
 

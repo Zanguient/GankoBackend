@@ -35,10 +35,11 @@ export class ReApplyVaccinesComponent implements OnInit {
   }
 
   goToBack() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 
   apply() {
+    this.item.fecha = this.item.fechaProxima;
     this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.frecuencia);
     this.loading = true;
     this.item.bovinos = this.selecteds.selecteds;
@@ -49,7 +50,7 @@ export class ReApplyVaccinesComponent implements OnInit {
       })
     ).subscribe(() => {
       snackOk(this.snack, 'Aplicacion de vacuna Agregada');
-      this.router.navigate(['../'], { relativeTo: this.route });
+      this.router.navigate(['../../'], { relativeTo: this.route });
     }, err => snackError(this.snack, err));
 
   }
