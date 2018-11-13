@@ -6,7 +6,7 @@ import { SessionService } from '../../core/services/session.service';
 import { timer, Observable } from 'rxjs';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
-import { validate, listToDoc, toDoc } from '../../util/http-util';
+import { validate, listToDoc, toDoc, delayRes } from '../../util/http-util';
 import { feeds, feed } from './feed.mock';
 
 @Injectable()
@@ -24,7 +24,8 @@ export class FeedService extends BaseService<Alimentacion> {
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('alimentacion'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      tap(() => this.data.push(item))
+      tap(() => this.data.push(item)),
+      mergeMap(x => delayRes(x))
     );
   }
 

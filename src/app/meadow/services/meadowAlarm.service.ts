@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseService } from '../../util/base-service';
 import { Observable, timer } from 'rxjs';
 import { map, tap, mergeMap } from 'rxjs/operators';
-import { validate, listToDoc } from '../../util/http-util';
+import { validate, listToDoc, delayRes } from '../../util/http-util';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
@@ -27,7 +27,8 @@ export class MeadowAlarmService extends BaseService<MeadowAlarm> {
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('praderas', 'alertas'), item,
       this.makeAuth(this.session.token)).pipe(
-        map(x => validate(x))
+        map(x => validate(x)),
+        mergeMap(x => delayRes(x))
       );
   }
 

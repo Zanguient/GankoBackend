@@ -5,7 +5,7 @@ import { SessionService } from '../../core/services/session.service';
 import { timer, Observable } from 'rxjs';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
-import { validate, listToDoc, toDoc } from '../../util/http-util';
+import { validate, listToDoc, toDoc, delayRes } from '../../util/http-util';
 import { Manejo, TYPE_MANEJO } from '../../shared/models/manage.model';
 import { manages, manage } from './manage.mock';
 
@@ -24,7 +24,8 @@ export class ManageService extends BaseService<Manejo> {
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('manejo'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      tap(() => this.data.push(item))
+      tap(() => this.data.push(item)),
+      mergeMap(x => delayRes(x))
     );
   }
 

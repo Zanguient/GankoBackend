@@ -5,7 +5,7 @@ import { SessionService } from '../../core/services/session.service';
 import { timer, Observable } from 'rxjs';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
-import { validate, toDoc, listToDoc } from '../../util/http-util';
+import { validate, toDoc, listToDoc, delayRes } from '../../util/http-util';
 import { Sanidad, TYPE_SANIDAD } from '../../shared/models/health.model';
 import { healths, health } from './health.mock';
 
@@ -24,7 +24,8 @@ export class HealthService extends BaseService<Sanidad> {
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('sanidad'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      tap(() => this.data.push(item))
+      tap(() => this.data.push(item)),
+      mergeMap(x => delayRes(x))
     );
   }
   list(): Observable<Sanidad[]> {

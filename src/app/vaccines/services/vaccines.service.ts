@@ -5,7 +5,7 @@ import { SessionService } from '../../core/services/session.service';
 import { timer, Observable } from 'rxjs';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
-import { validate, toDoc, listToDoc } from '../../util/http-util';
+import { validate, toDoc, listToDoc, delayRes } from '../../util/http-util';
 import { Vacuna, TYPE_VACUNA } from '../../shared/models/vaccine.model';
 import { vaccines, vaccine } from './vaccines.mock';
 import { Manejo } from '../../shared/models/manage.model';
@@ -25,7 +25,8 @@ export class VaccinesService extends BaseService<Vacuna> {
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('vacunas'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      tap(() => this.data.push(item))
+      tap(() => this.data.push(item)),
+      mergeMap(x => delayRes(x))
     );
   }
 

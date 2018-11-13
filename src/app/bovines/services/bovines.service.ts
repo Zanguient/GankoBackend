@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, from, Observable } from 'rxjs';
-import { map, mergeMap, startWith, tap, toArray } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, from, Observable, of } from 'rxjs';
+import { map, mergeMap, startWith, tap, toArray, delay } from 'rxjs/operators';
 import { NavService } from '../../core/services/nav.service';
 import { SessionService } from '../../core/services/session.service';
 import { Bovino, Diagnostico, Novedad, Parto, Servicio } from '../../shared/models/bovine.model';
@@ -14,7 +14,8 @@ import { Doc, Rspn } from '../../shared/models/response.model';
 import { Straw } from '../../shared/models/straw.model';
 import { Vacuna } from '../../shared/models/vaccine.model';
 import { BaseService } from '../../util/base-service';
-import { listToDoc, toDoc, validate } from '../../util/http-util';
+import { listToDoc, toDoc, validate, delayRes } from '../../util/http-util';
+
 
 @Injectable()
 export class BovinesService extends BaseService<Bovino> {
@@ -30,7 +31,8 @@ export class BovinesService extends BaseService<Bovino> {
     item.finca = this.session.farmId;
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('bovinos'), item, this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x))
+      map(x => validate(x)),
+      mergeMap(x => delayRes(x))
     );
   }
 

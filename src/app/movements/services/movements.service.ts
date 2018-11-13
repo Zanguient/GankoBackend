@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Movimiento } from '../../shared/models/movement.model';
 import { BaseService } from '../../util/base-service';
 import { Rspn, Doc } from '../../shared/models/response.model';
-import { validate, listToDoc } from '../../util/http-util';
+import { validate, listToDoc, delayRes } from '../../util/http-util';
 import { map, tap, mergeMap } from '../../../../node_modules/rxjs/operators';
 import { timer, Observable } from '../../../../node_modules/rxjs';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
@@ -25,7 +25,8 @@ export class MovementsService extends BaseService<Movimiento> {
     item.idFarm = this.session.farmId;
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('movimientos'), item, this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x))
+      map(x => validate(x)),
+      mergeMap(x => delayRes(x))
     );
   }
 
