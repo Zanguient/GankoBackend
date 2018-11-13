@@ -21,7 +21,7 @@ export class LecheService {
     }
 
     getAllByIdFInca(idFinca:string) {
-        return this.db.ListByType(TYPE_LECHE,"idFarm = $1",[idFinca]);
+        return this.db.ListByType(TYPE_LECHE,"idFarm = $1",[idFinca], undefined, undefined, ['fecha', 'DESC']);
     }
 
     insert(produccion: Leche) {
