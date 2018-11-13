@@ -62,7 +62,7 @@ export class HealthService extends BaseService<Sanidad> {
   update(item: Sanidad): Observable<string> {
     const id = item.id;
     delete item.id;
-    return this.http.put<Rspn<string>>(this.makeUrl('sanidad'), item, this.makeAuth(this.session.token)).pipe(
+    return this.http.put<Rspn<string>>(this.makeUrl('sanidad', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
