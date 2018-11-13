@@ -23,7 +23,7 @@ export class AddMilkComponent implements OnInit {
     numeroLitros: 0,
     totalLitros: 0,
     type: TYPE_LECHE
-  }
+  };
 
   constructor(private router: Router, private route: ActivatedRoute, private service: MilkService, private snack: MatSnackBar) { }
 
@@ -35,6 +35,7 @@ export class AddMilkComponent implements OnInit {
   }
 
   add() {
+    this.item.totalLitros = this.item.valorLitro * this.item.numeroLitros;
     if (this.date) { this.item.fecha = new Date(this.date); }
     this.loading = true;
     this.service.add(this.item).pipe(

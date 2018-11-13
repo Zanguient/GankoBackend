@@ -43,6 +43,7 @@ export class AddFeedComponent implements OnInit {
   }
 
   add() {
+    this.item.valorTotal = this.item.valorkg * this.item.peso;
     if (this.date) { this.item.fecha = new Date(this.date); }
 
     if (this.selected.group) {
