@@ -54,9 +54,9 @@ export class AddBvnComponent implements OnInit {
   }
 
   add() {
-    if (this.birthDate) { this.item.fechaNacimiento = this.birthDate; }
-    if (this.desteteDate) { this.item.fechaNacimiento = this.desteteDate; }
-    if (this.buyDate) { this.item.fechaNacimiento = this.buyDate; }
+    if (this.birthDate) { this.item.fechaNacimiento = new Date(this.birthDate); }
+    if (this.desteteDate) { this.item.fechaNacimiento = new Date(this.desteteDate); }
+    if (this.buyDate) { this.item.fechaNacimiento = new Date(this.buyDate); }
     this.loading = true;
     this.service.add(this.item).pipe(
       mergeMap(x => this.img ? this.service.uploadImg(x, this.img) : of(this.img)),

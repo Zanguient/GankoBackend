@@ -225,7 +225,7 @@ export class BovinesService extends BaseService<Bovino> {
   }
 
   uploadImg(id: string, base64: string): Observable<string> {
-    return this.http.post<Rspn<string>>(this.makeUrl('bovinos', 'img', id), { base64 }, this.makeAuth(this.session.token)).pipe(
+    return this.http.post<Rspn<string>>(this.makeUrl('img', id), { base64 }, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }

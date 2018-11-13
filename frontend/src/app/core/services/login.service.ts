@@ -29,7 +29,7 @@ export class LoginService {
         this.session.token = x.token;
         this.session.plan = doc.plan;
         this.session.role = doc.rol;
-        this.session.planDate = new Date(doc.inicioPlan);
+        this.session.planDate = doc.ultimoPago ? new Date(doc.ultimoPago) : new Date();
         return x;
       })
     );

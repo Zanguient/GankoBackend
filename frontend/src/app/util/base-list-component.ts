@@ -14,7 +14,7 @@ export abstract class BaseListComponent<T> implements OnInit, OnDestroy {
     subs: Subscription;
 
     constructor(protected service: BaseService<T>, private dialog: MatDialog,
-        protected router: Router, protected route: ActivatedRoute, private snackbar: MatSnackBar) { }
+        protected router: Router, protected route: ActivatedRoute, protected snackbar: MatSnackBar) { }
 
     ngOnInit() {
         this.loading = true;
