@@ -29,4 +29,5 @@ export class Usuario {
     plan?: string;
     inicioPlan?:Date;
     ultimoPago?: Date;
+    channels?:string[];
 }

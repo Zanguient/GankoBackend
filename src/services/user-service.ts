@@ -3,6 +3,7 @@ import { DBConnection } from './db-connection';
 import { TYPE_USER, Usuario } from "./models/users";
 import { nowDifference } from '../util/date-util';
 let md5 = require('md5');
+const uuid = require("uuid/v4");
 
 export class UserService {
 
@@ -22,15 +23,17 @@ export class UserService {
     }
 
     insert(usuario: Usuario) {
+        usuario.pass = md5(usuario.pass);
         if (usuario.rol == 'ganadero') {
             usuario.registro = new Date();
             usuario.inicioPlan = new Date();
             usuario.ultimoPago = new Date();
+            const id = uuid();
+            usuario.channels = ['account_' + id];
+            this.db.insertId(id, usuario);
+        } else {
+            return this.db.insert(usuario);
         }
-
-        usuario.pass = md5(usuario.pass);
-
-        return this.db.insert(usuario);
     }
 
     update(idUsuario: string, usuario: Usuario) {
