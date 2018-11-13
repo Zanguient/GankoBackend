@@ -1,6 +1,6 @@
 import { Doc, Rspn } from '../shared/models/response.model';
-import { from, Observable } from 'rxjs';
-import { map, toArray } from 'rxjs/operators';
+import { from, Observable, of } from 'rxjs';
+import { map, toArray, delay } from 'rxjs/operators';
 
 export function validate<T>(rspn: Rspn<T>): T {
     if (rspn.success) {
@@ -26,6 +26,12 @@ export function toDoc<T>(value: Doc<T>): T {
     const doc: any = value.doc;
     doc.id = value.id;
     return doc;
+}
+
+export function delayRes<T>(value: T): Observable<T> {
+    return of(value).pipe(
+        delay(1000)
+    );
 }
 
 /*export function validate<T>() {

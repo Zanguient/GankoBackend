@@ -4,7 +4,7 @@ import { User, ROL_RANCHER } from 'src/app/shared/models/user.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from 'src/app/core/services/session.service';
-import { validate, listToDoc, toDoc } from 'src/app/util/http-util';
+import { validate, listToDoc, toDoc, delayRes } from 'src/app/util/http-util';
 import { map, mergeMap } from 'rxjs/operators';
 import { Rspn, Doc } from 'src/app/shared/models/response.model';
 
@@ -18,7 +18,8 @@ export class RanchersService extends BaseService<User> {
   add(item: User): Observable<string> {
     item.rol = ROL_RANCHER;
     return this.http.post<Rspn<string>>(this.makeUrl('user'), item, this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x))
+      map(x => validate(x)),
+      mergeMap(x => delayRes(x))
     );
   }
 

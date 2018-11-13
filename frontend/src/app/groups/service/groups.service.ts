@@ -5,7 +5,7 @@ import { SessionService } from '../../core/services/session.service';
 import { timer, Observable, of } from 'rxjs';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { map, tap, mergeMap } from 'rxjs/operators';
-import { validate, listToDoc, toDoc } from '../../util/http-util';
+import { validate, listToDoc, toDoc, delayRes } from '../../util/http-util';
 import { Group, TYPE_GRUPO } from '../../shared/models/group.model';
 import { groups } from './group.mock';
 
@@ -26,7 +26,8 @@ export class GroupsService extends BaseService<Group> {
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('grupos'), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      tap(() => this.data.push(item))
+      tap(() => this.data.push(item)),
+      mergeMap(x => delayRes(x))
     );
   }
 

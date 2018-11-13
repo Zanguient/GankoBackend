@@ -3,7 +3,7 @@ import { BaseService } from '../../util/base-service';
 import { Pradera } from '../../shared/models/meadow.model';
 import { Observable, timer } from '../../../../node_modules/rxjs';
 import { map, tap, mergeMap } from '../../../../node_modules/rxjs/operators';
-import { validate, listToDoc, toDoc } from '../../util/http-util';
+import { validate, listToDoc, toDoc, delayRes } from '../../util/http-util';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { HttpClient } from '../../../../node_modules/@angular/common/http';
 import { SessionService } from '../../core/services/session.service';
@@ -28,7 +28,8 @@ export class MeadowService extends BaseService<Pradera> {
     return timer(500).pipe(
       map(() => new Rspn(true, '')), // simular respuesta
       map(x => validate(x)),
-      tap(() => this.data.push(item))
+      tap(() => this.data.push(item)),
+      mergeMap(x => delayRes(x))
     );
   }
 

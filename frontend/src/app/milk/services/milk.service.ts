@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, mergeMap, tap, delay } from 'rxjs/operators';
 import { SessionService } from '../../core/services/session.service';
 import { Leche, TYPE_LECHE } from '../../shared/models/milk.model';
 import { Doc, Rspn } from '../../shared/models/response.model';
 import { BaseService } from '../../util/base-service';
-import { listToDoc, toDoc, validate } from '../../util/http-util';
+import { listToDoc, toDoc, validate, delayRes } from '../../util/http-util';
 
 @Injectable()
 export class MilkService extends BaseService<Leche> {
@@ -23,7 +23,8 @@ export class MilkService extends BaseService<Leche> {
     item.channels = [this.session.id];
     return this.http.post<Rspn<string>>(this.makeUrl('leche'), item,  this.makeAuth(this.session.token)).pipe(
       map(x => validate(x)),
-      tap(() => this.data.push(item))
+      tap(() => this.data.push(item)),
+      mergeMap(x => delayRes(x))
     );
   }
 
