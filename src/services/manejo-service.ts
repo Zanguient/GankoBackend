@@ -43,10 +43,10 @@ export class ManejoService {
         return this.db.ListByType(TYPE_MANEJO, "idFinca = $1 ORDER BY fecha DESC", [idFinca])
     }
     getByIdFincaProximos(idFinca: string){
-        return this.db.ListByType(TYPE_MANEJO, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) >= SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0 ORDER BY fechaProxima ASC", [idFinca])
+        return this.db.ListByType(TYPE_MANEJO, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) >= SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0 AND aplicacion < numeroAplicaciones ORDER BY fechaProxima ASC", [idFinca])
     }
     getByIdFincaPendientes(idFinca: string){
-        return this.db.ListByType(TYPE_MANEJO, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) < SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0 ORDER BY fechaProxima ASC", [idFinca])
+        return this.db.ListByType(TYPE_MANEJO, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) < SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0  AND aplicacion < numeroAplicaciones ORDER BY fechaProxima ASC", [idFinca])
     }
 
     delete(id: string) {
