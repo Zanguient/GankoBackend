@@ -65,7 +65,7 @@ export class AddManageComponent implements OnInit {
       this.item.bovinos = this.selected.selecteds;
     }
 
-
+    this.item.tipo = this.item.titulo;
 
     this.service.add(this.item).pipe(
       finalize(() => {

@@ -58,6 +58,7 @@ export class AddHealthComponent implements OnInit {
       this.item.fechaProxima = this.fechaProx(this.item.fecha, this.item.numeroAplicaciones, this.item.frecuencia);
     }
     this.loading = true;
+    this.item.titulo = this.item.evento;
 
     if (this.selected.group) {
       const gr = this.selected.group;

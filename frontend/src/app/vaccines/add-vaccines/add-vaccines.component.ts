@@ -58,6 +58,8 @@ export class AddVaccinesComponent implements OnInit {
       this.item.dosisMl = this.dosis;
     }
 
+    this.item.titulo = this.item.nombre;
+
     this.loading = true;
 
     if (this.selected.group) {
