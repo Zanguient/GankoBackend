@@ -14,7 +14,7 @@ class ResponseManejo extends ResponseBody {
 
 export function updateManejo(req, res: Response, next) {
     let manejo: Manejo = req.body;
-    let idManejo = req.params.idProduccion;
+    let idManejo = req.params.idManejo;
     ManejoService.instance.update(idManejo, manejo)
         .then(data => {
             res.send(new ResponseManejo(data ? true : false, data, null));
