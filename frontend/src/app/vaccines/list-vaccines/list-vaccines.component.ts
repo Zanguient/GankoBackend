@@ -4,9 +4,11 @@ import { Vacuna } from '../../shared/models/vaccine.model';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { VaccinesService } from '../services/vaccines.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize, filter as flt, mergeMap } from 'rxjs/operators';
 import { NavService } from '../../core/services/nav.service';
 import { SelectedBvnService } from 'src/app/core/services/selected-bvn.service';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { snackOk, snackError } from 'src/app/util/snackbar-util';
 
 @Component({
   selector: 'app-list-vaccines',
@@ -53,6 +55,24 @@ export class ListVaccinesComponent extends BaseListComponent<Vacuna> {
     this.selected.editable = false;
     this.selected.selecteds = item.bovinos;
     this.router.navigate([item.id], { relativeTo: this.route });
+  }
+
+  omit(item: Vacuna, index: number) {
+    this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Descartar Vacuna',
+        msg: '¿ Desea descartar la vacuna ?'
+      }
+    }).afterClosed().pipe(
+      flt(x => x !== undefined),
+      mergeMap(x => {
+        item.estadoProximo = 2;
+        return this.service.update(item);
+      })
+    ).subscribe(() => {
+      this.data.splice(index, 1);
+      snackOk(this.snackbar, 'Vacuna Descartada');
+    }, () => snackError(this.snackbar, 'Error al descartar vacuna'));
   }
 
 }

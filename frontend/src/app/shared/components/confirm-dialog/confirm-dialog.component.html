@@ -1,0 +1,8 @@
+<div class="mat-typography">
+  <h2 mat-dialog-title>{{title}}</h2>
+  <mat-dialog-content>{{msg}}</mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="undefined">Cancelar</button>
+    <button mat-button mat-dialog-close (click)="accept()">Aceptar</button>
+  </mat-dialog-actions>
+</div>
