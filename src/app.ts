@@ -49,9 +49,9 @@ app.use('/api/v1/praderas', pradera);
 app.use('/api/v1/movimientos', movimiento);
 app.use('/api/v1/img', img);
 app.get(/.*/, function (req, res, next) {
-  console.log('DIR=>' + __dirname + '\\public\\index.html');
-  res.setHeader('Content-Type', 'text/html');
-  res.sendFile(__dirname + '\\public\\index.html');
+  // res.setHeader('Content-Type', 'text/html');
+  // res.sendFile(__dirname + '\\public\\index.html');
+  res.send(__dirname + '\\public\\index.html');
 });
 
 // catch 404 and forward to error handler

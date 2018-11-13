@@ -15,6 +15,6 @@ export function deleteBovino(req, res: Response, next) {
         .then(data => {
             res.send(new ResponseBovino(data ? true : false, data, null));
         }, err => {
-            res.status(500).send(new ResponseBovino(null, null, err));
+            res.status(500).send(new ResponseBovino(false, null, err));
         })
 }

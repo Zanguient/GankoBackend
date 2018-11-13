@@ -13,7 +13,7 @@ class ResponseBovino extends ResponseBody {
 
 export function updateBovino(req, res: Response, next) {
     let bovino: Bovino = req.body;
-    let idbovino = req.params.idbovino;
+    let idbovino = req.params.idBovino;
 
     toDate(bovino, 'fechaNacimiento', 'fechaIngreso',
         'fechaSalida', 'fechaDestete',

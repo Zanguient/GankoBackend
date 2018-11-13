@@ -13,7 +13,7 @@ import { updateBovinoCelo } from '../controllers/bovinos/update-bovino-celo';
 import { updateBovinoDestete } from '../controllers/bovinos/update-bovino-destete';
 import { updateBovinoNovedad } from '../controllers/bovinos/update-bovino-novedad';
 import { updateBovinoServicio } from '../controllers/bovinos/update-bovino-servicio';
-import { addBovino, deleteBovino, getBovino, getBovinos } from '../controllers/index';
+import { addBovino, deleteBovino, getBovino, getBovinos, updateBovino } from '../controllers/index';
 import { ValidateToken } from '../middlewares/token-validation';
 import { getImg } from '../controllers/common/get-img';
 import { uploadImage } from '../controllers/common/upload-img';
@@ -27,6 +27,7 @@ bovino.get('/finca/:idFinca', getBovinos);
 bovino.delete('/:idBovino', deleteBovino);
 bovino.post('/', addBovino);
 bovino.post('/ids', getBovinosByIds);
+bovino.put('/:idBovino', updateBovino);
 bovino.get('/:idBovino', getBovino);
 bovino.get('/:idBovino/alimentacion', getAlimentacionByIdBovino);
 bovino.get('/:idBovino/movimientos', getMovimientoByIdBovino);
@@ -42,6 +43,7 @@ bovino.put("/:idBovino/celo", updateBovinoCelo);
 bovino.put("/:idBovino/servicio", updateBovinoServicio);
 bovino.put("/:idBovino/novedad", updateBovinoNovedad);
 bovino.get("/:idBovino/vacunas", getVacunaByIdBovino);
+
 
 
 
