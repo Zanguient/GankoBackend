@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SessionService } from 'src/app/core/services/session.service';
 import { Rspn, Doc } from 'src/app/shared/models/response.model';
-import { validate, listToDoc, toDoc } from 'src/app/util/http-util';
+import { validate, listToDoc, toDoc, delayRes } from 'src/app/util/http-util';
 import { map, mergeMap } from 'rxjs/operators';
 
 @Injectable()
@@ -17,7 +17,8 @@ export class UsersService extends BaseService<User> {
 
   add(item: User): Observable<string> {
     return this.http.post<Rspn<string>>(this.makeUrl('user'), item, this.makeAuth(this.session.token)).pipe(
-      map(x => validate(x))
+      map(x => validate(x)),
+      mergeMap(x => delayRes(x))
     );
   }
 
