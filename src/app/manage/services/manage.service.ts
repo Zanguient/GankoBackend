@@ -63,7 +63,7 @@ export class ManageService extends BaseService<Manejo> {
   update(item: Manejo): Observable<string> {
     const id = item.id;
     delete item.id;
-    return this.http.put<Rspn<string>>(this.makeUrl('manejo'), item, this.makeAuth(this.session.token)).pipe(
+    return this.http.put<Rspn<string>>(this.makeUrl('manejo', id), item, this.makeAuth(this.session.token)).pipe(
       map(x => validate(x))
     );
   }
