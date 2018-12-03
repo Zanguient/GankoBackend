@@ -1,6 +1,7 @@
-import { DBHandler } from "./db-handler";
+import { DBHandler, Document } from "./db-handler";
 import { DESK_PORT } from "../../config/global";
 import * as request from "request-promise";
+import { QueryBuilder } from "./query-builder";
 
 
 export class DBDesk implements DBHandler {
@@ -15,16 +16,16 @@ export class DBDesk implements DBHandler {
     insert(body: any): Promise<any> {
         throw new Error("Method not implemented.");
     }
-    list<T>(query?: import("c:/Proyectos/Ganko/ganko-backend/src/services/database/query-builder").QueryBuilder): Promise<import("c:/Proyectos/Ganko/ganko-backend/src/services/database/db-handler").Document<T>[]> {
+    list<T>(query?: QueryBuilder): Promise<Document<T>[]> {
         throw new Error("Method not implemented.");
     }
-    listByType<T>(type: string, query?: import("c:/Proyectos/Ganko/ganko-backend/src/services/database/query-builder").QueryBuilder): Promise<import("c:/Proyectos/Ganko/ganko-backend/src/services/database/db-handler").Document<T>> {
+    listByType<T>(type: string, query?: QueryBuilder): Promise<Document<T>> {
         throw new Error("Method not implemented.");
     }
-    typedOne<T>(type: string, query?: import("c:/Proyectos/Ganko/ganko-backend/src/services/database/query-builder").QueryBuilder): Promise<import("c:/Proyectos/Ganko/ganko-backend/src/services/database/db-handler").Document<T>> {
+    typedOne<T>(type: string, query?: QueryBuilder): Promise<Document<T>> {
         throw new Error("Method not implemented.");
     }
-    byId<T>(id: string): Promise<import("c:/Proyectos/Ganko/ganko-backend/src/services/database/db-handler").Document<T>> {
+    byId<T>(id: string): Promise<Document<T>> {
         throw new Error("Method not implemented.");
     }
     remove(id: string): Promise<string> {
@@ -33,7 +34,7 @@ export class DBDesk implements DBHandler {
     replace(id: string, body: any): Promise<string> {
         throw new Error("Method not implemented.");
     }
-    deleteByQuery<T>(query: import("c:/Proyectos/Ganko/ganko-backend/src/services/database/query-builder").QueryBuilder): Promise<import("c:/Proyectos/Ganko/ganko-backend/src/services/database/db-handler").Document<T>> {
+    deleteByQuery<T>(query: QueryBuilder): Promise<Document<T>> {
         throw new Error("Method not implemented.");
     }
 

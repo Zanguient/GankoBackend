@@ -48,6 +48,7 @@ app.use('/api/v1/produccion', produccion);
 app.use('/api/v1/vacunas', vacuna);
 app.use('/api/v1/praderas', pradera);
 app.use('/api/v1/movimientos', movimiento);
+app.use('/api/v1/reportes', reportes);
 app.use('/api/v1/img', img);
 app.use('/api/v1/test', test);
 app.get(/.*/, function (req, res, next) {

@@ -359,7 +359,6 @@ export class QueryBuilder {
             case LTE_TODAY: return `SUBSTR(${item.field},0,10) <= SUBSTR(NOW_STR(),0,10)`;
             case GT_TODAY: return `SUBSTR(${item.field},0,10) > SUBSTR(NOW_STR(),0,10)`;
             case GTE_TODAY: return `SUBSTR(${item.field},0,10) >= SUBSTR(NOW_STR(),0,10)`;
-
         }
     }
 
