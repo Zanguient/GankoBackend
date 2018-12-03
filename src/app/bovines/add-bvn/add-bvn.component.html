@@ -103,8 +103,6 @@
         <h5 fxFlex="0 0 100%">Imagen</h5>
         <img class="add-image clickable" src="{{img? img : ''}}" (click)="this.input.nativeElement.click()">
 
-
-
         <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
           <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%"  mat-button color="accent" (click)="goToBack()">Cancelar</button>
           <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" mat-raised-button color="accent" (click)="add()" [disabled]="formAdd.invalid">Agregar</button>
