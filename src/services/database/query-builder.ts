@@ -10,165 +10,165 @@ export class QueryBuilder {
 
     // =
 
-    equalInt(field: string, value: number): QueryBuilder {
+    equalInt(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(EQUAL, field, value, INT);
     }
 
-    equalLong(field: string, value: number): QueryBuilder {
+    equalLong(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(EQUAL, field, value, LONG);
     }
 
-    equalFloat(field: string, value: number): QueryBuilder {
+    equalFloat(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(EQUAL, field, value, FLOAT);
     }
 
-    equalBool(field: string, value: boolean): QueryBuilder {
+    equalBool(field: string | [string, number], value: boolean): QueryBuilder {
         return this.operationValue(EQUAL, field, value, BOOL);
     }
 
-    equalDate(field: string, value: Date): QueryBuilder {
+    equalDate(field: string | [string, number], value: Date): QueryBuilder {
         return this.operationValue(EQUAL, field, value, DATE);
     }
 
-    equalStr(field: string, value: string): QueryBuilder {
+    equalStr(field: string | [string, number], value: string): QueryBuilder {
         return this.operationValue(EQUAL, field, value, STRING);
     }
 
-    equalField(f1: string, f2: string): QueryBuilder {
+    equalField(f1: string | [string, number], f2: string): QueryBuilder {
         return this.operationValue(EQUAL_FIELD, f1, f2, FIELD);
     }
 
     // <
 
-    ltInt(field: string, value: number): QueryBuilder {
+    ltInt(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(LT, field, value, INT);
     }
 
-    ltLong(field: string, value: number): QueryBuilder {
+    ltLong(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(LT, field, value, LONG);
     }
 
-    ltFloat(field: string, value: number): QueryBuilder {
+    ltFloat(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(LT, field, value, FLOAT);
     }
 
-    ltBool(field: string, value: boolean): QueryBuilder {
+    ltBool(field: string | [string, number], value: boolean): QueryBuilder {
         return this.operationValue(LT, field, value, BOOL);
     }
 
-    ltDate(field: string, value: Date): QueryBuilder {
+    ltDate(field: string | [string, number], value: Date): QueryBuilder {
         return this.operationValue(LT, field, value, DATE);
     }
 
-    ltStr(field: string, value: string): QueryBuilder {
+    ltStr(field: string | [string, number], value: string): QueryBuilder {
         return this.operationValue(LT, field, value, STRING);
     }
 
-    ltField(f1: string, f2: string): QueryBuilder {
+    ltField(f1: string | [string, number], f2: string): QueryBuilder {
         return this.operationValue(LT_FIELD, f1, f2, FIELD);
     }
 
     // <=
 
-    lteInt(field: string, value: number): QueryBuilder {
+    lteInt(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(LTE, field, value, INT);
     }
 
-    lteLong(field: string, value: number): QueryBuilder {
+    lteLong(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(LTE, field, value, LONG);
     }
 
-    lteFloat(field: string, value: number): QueryBuilder {
+    lteFloat(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(LTE, field, value, FLOAT);
     }
 
-    lteBool(field: string, value: boolean): QueryBuilder {
+    lteBool(field: string | [string, number], value: boolean): QueryBuilder {
         return this.operationValue(LTE, field, value, BOOL);
     }
 
-    lteDate(field: string, value: Date): QueryBuilder {
+    lteDate(field: string | [string, number], value: Date): QueryBuilder {
         return this.operationValue(LTE, field, value, DATE);
     }
 
-    lteStr(field: string, value: string): QueryBuilder {
+    lteStr(field: string | [string, number], value: string): QueryBuilder {
         return this.operationValue(LTE, field, value, STRING);
     }
 
-    lteField(f1: string, f2: string): QueryBuilder {
+    lteField(f1: string | [string, number], f2: string): QueryBuilder {
         return this.operationValue(LTE_FIELD, f1, f2, FIELD);
     }
 
     // >
 
-    gtInt(field: string, value: number): QueryBuilder {
+    gtInt(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(GT, field, value, INT);
     }
 
-    gtLong(field: string, value: number): QueryBuilder {
+    gtLong(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(GT, field, value, LONG);
     }
 
-    gtFloat(field: string, value: number): QueryBuilder {
+    gtFloat(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(GT, field, value, FLOAT);
     }
 
-    gtBool(field: string, value: boolean): QueryBuilder {
+    gtBool(field: string | [string, number], value: boolean): QueryBuilder {
         return this.operationValue(GT, field, value, BOOL);
     }
 
-    gtDate(field: string, value: Date): QueryBuilder {
+    gtDate(field: string | [string, number], value: Date): QueryBuilder {
         return this.operationValue(GT, field, value, DATE);
     }
 
-    gtStr(field: string, value: string): QueryBuilder {
+    gtStr(field: string | [string, number], value: string): QueryBuilder {
         return this.operationValue(GT, field, value, STRING);
     }
 
-    gtField(f1: string, f2: string): QueryBuilder {
+    gtField(f1: string | [string, number], f2: string): QueryBuilder {
         return this.operationValue(GT_FIELD, f1, f2, FIELD);
     }
 
     // <=
 
-    gteInt(field: string, value: number): QueryBuilder {
+    gteInt(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(GTE, field, value, INT);
     }
 
-    gteLong(field: string, value: number): QueryBuilder {
+    gteLong(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(GTE, field, value, LONG);
     }
 
-    gteFloat(field: string, value: number): QueryBuilder {
+    gteFloat(field: string | [string, number], value: number): QueryBuilder {
         return this.operationValue(GTE, field, value, FLOAT);
     }
 
-    gteBool(field: string, value: boolean): QueryBuilder {
+    gteBool(field: string | [string, number], value: boolean): QueryBuilder {
         return this.operationValue(GTE, field, value, BOOL);
     }
 
-    gteDate(field: string, value: Date): QueryBuilder {
+    gteDate(field: string | [string, number], value: Date): QueryBuilder {
         return this.operationValue(GTE, field, value, DATE);
     }
 
-    gteStr(field: string, value: string): QueryBuilder {
+    gteStr(field: string | [string, number], value: string): QueryBuilder {
         return this.operationValue(GTE, field, value, STRING);
     }
 
-    gteField(f1: string, f2: string): QueryBuilder {
+    gteField(f1: string | [string, number], f2: string): QueryBuilder {
         return this.operationValue(GTE_FIELD, f1, f2, FIELD);
     }
 
     // LIKE
 
-    likeStart(field: string, value: string): QueryBuilder {
+    likeStart(field: string | [string, number], value: string): QueryBuilder {
         return this.operationValue(LIKE_START, field, value, STRING);
     }
 
-    likeCenter(field: string, value: string): QueryBuilder {
+    likeCenter(field: string | [string, number], value: string): QueryBuilder {
         return this.operationValue(LIKE_CENTER, field, value, STRING);
     }
 
-    likeEnd(field: string, value: string): QueryBuilder {
+    likeEnd(field: string | [string, number], value: string): QueryBuilder {
         return this.operationValue(LIKE_END, field, value, STRING);
     }
 
@@ -242,8 +242,14 @@ export class QueryBuilder {
         return this;
     }
 
-    private operationValue(type: number, field: string, value: any, valueType: number): QueryBuilder {
-        const nextQ: QueryItem = { type, field, value, valueType };
+    private operationValue(type: number, field: string | [string, number], value: any, valueType: number): QueryBuilder {
+        let nextQ: QueryItem;
+        if (typeof field === "string") {
+            nextQ = { type, field, value, valueType };
+        } else {
+            nextQ = { type, field: field[0], fieldFunction: field[1], value, valueType };
+        }
+
         return this.operation(nextQ);
     }
 
@@ -264,6 +270,13 @@ export class QueryBuilder {
     lteToday(field: string): QueryBuilder {
         return this.operation({ type: LTE_TODAY, field });
     }
+
+    // SATISFIES
+
+    satisfies(any: string, field: string, condition: QueryBuilder): QueryBuilder {
+        return this.operation({ type: SATISFIES, field, value: any, child: condition.getExpression() });
+    }
+
     //LIMIT
 
     page(limit: number, skip: number): QueryBuilder {
@@ -323,16 +336,16 @@ export class QueryBuilder {
 
     private procesOperation(item: QueryItem): string {
         switch (item.type) {
-            case EQUAL: return `${item.field} = ${this.processValue(item)}`;
-            case EQUAL_FIELD: return `${item.field} = ${this.processValue(item)}`;
-            case LT: return `${item.field} < ${this.processValue(item)}`;
-            case LT_FIELD: return `${item.field} < ${this.processValue(item)}`;
-            case LTE: return `${item.field} <= ${this.processValue(item)}`;
-            case LTE_FIELD: return `${item.field} <= ${this.processValue(item)}`;
-            case GT: return `${item.field} > ${this.processValue(item)}`;
-            case GT_FIELD: return `${item.field} > ${this.processValue(item)}`;
-            case GTE: return `${item.field} >= ${this.processValue(item)}`;
-            case GTE_FIELD: return `${item.field} >= ${this.processValue(item)}`;
+            case EQUAL: return `${this.processFunctionField(item)} = ${this.processValue(item)}`;
+            case EQUAL_FIELD: return `${this.processFunctionField(item)} = ${this.processValue(item)}`;
+            case LT: return `${this.processFunctionField(item)} < ${this.processValue(item)}`;
+            case LT_FIELD: return `${this.processFunctionField(item)} < ${this.processValue(item)}`;
+            case LTE: return `${this.processFunctionField(item)} <= ${this.processValue(item)}`;
+            case LTE_FIELD: return `${this.processFunctionField(item)} <= ${this.processValue(item)}`;
+            case GT: return `${this.processFunctionField(item)} > ${this.processValue(item)}`;
+            case GT_FIELD: return `${this.processFunctionField(item)} > ${this.processValue(item)}`;
+            case GTE: return `${this.processFunctionField(item)} >= ${this.processValue(item)}`;
+            case GTE_FIELD: return `${this.processFunctionField(item)} >= ${this.processValue(item)}`;
             case LIKE_START: return `LOWER(${item.field}) LIKE '%${item.value}'`;
             case LIKE_CENTER: return `LOWER(${item.field}) LIKE '%${item.value}%'`;
             case LIKE_END: return `LOWER(${item.field}) LIKE '${item.value}%'`;
@@ -359,12 +372,23 @@ export class QueryBuilder {
             case LTE_TODAY: return `SUBSTR(${item.field},0,10) <= SUBSTR(NOW_STR(),0,10)`;
             case GT_TODAY: return `SUBSTR(${item.field},0,10) > SUBSTR(NOW_STR(),0,10)`;
             case GTE_TODAY: return `SUBSTR(${item.field},0,10) >= SUBSTR(NOW_STR(),0,10)`;
-
+            case SATISFIES:
+                const subQ = this.process(item.child);
+                return `ANY ${item.value} IN ${item.field} SATISFIES ${subQ} END`;
         }
     }
 
     private processValue(item: QueryItem): string {
         return item.valueType === STRING || item.valueType === DATE ? `'${item.value}'` : `${item.value}`;
+    }
+
+    private processFunctionField(item: QueryItem): string {
+        switch (item.fieldFunction) {
+            case FUN_LOWER: return `LOWER(${item.field})`;
+            case FUN_ARRAY_LENGTH: return `ARRAY_LENGTH(${item.field})`;
+            default: return item.field;
+        }
+
     }
 
     buildJson(): { query: QueryItem, limit: number, skip: number, orderBy: string, orderMode: string } {
@@ -382,6 +406,7 @@ class QueryItem {
     field?: string;
     value?: any;
     valueType?: number;
+    fieldFunction?: number;
     next?: QueryItem;
     child?: QueryItem;
 }
@@ -413,6 +438,8 @@ const GT_TODAY = 21;
 const GTE_TODAY = 22;
 const LT_TODAY = 23;
 const LTE_TODAY = 24;
+const EQUAL_ID = 25;
+const SATISFIES = 26;
 
 const STRING = 0;
 const BOOL = 1;
@@ -421,4 +448,14 @@ const LONG = 3;
 const FLOAT = 4;
 const DATE = 5;
 const FIELD = 6;
-const DAY = 6;
+
+const FUN_LOWER = 0;
+export function lower(field: string): [string, number] {
+    return [field, FUN_LOWER];
+}
+
+const FUN_ARRAY_LENGTH = 1;
+export function arrayLength(field: string): [string, number] {
+    return [field, FUN_ARRAY_LENGTH];
+}
+
