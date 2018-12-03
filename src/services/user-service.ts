@@ -1,7 +1,8 @@
 import 'rxjs/add/operator/mergeMap';
-import { DBConnection } from './db-connection';
 import { TYPE_USER, Usuario } from "./models/users";
 import { nowDifference } from '../util/date-util';
+import { DBConnection, DBHandler } from './database/db-handler';
+import { Q } from './database/query-builder';
 let md5 = require('md5');
 const uuid = require("uuid/v4");
 
@@ -15,11 +16,11 @@ export class UserService {
         return UserService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     //permite recuperar los bovinos pertenecientes a un usuario o finca
     login(email: string, pass: string) {
-        return this.db.typedOne(TYPE_USER, "email = $1 and pass = $2", [email, pass]);
+        return this.db.typedOne(TYPE_USER, Q().equalStr("email", email).and().equalStr("pass", pass));
     }
 
     insert(usuario: Usuario) {
@@ -37,7 +38,7 @@ export class UserService {
     }
 
     update(idUsuario: string, usuario: Usuario) {
-        return this.db.getById<Usuario>(idUsuario)
+        return this.db.byId<Usuario>(idUsuario)
             .then(x => {
                 const { id, doc } = x;
                 doc.nombre = usuario.nombre;
@@ -61,7 +62,7 @@ export class UserService {
     }
 
     updatePay(id: string) {
-        return this.db.getById<Usuario>(id)
+        return this.db.byId<Usuario>(id)
             .then(x => {
                 const { id, doc } = x;
                 doc.ultimoPago = new Date();
@@ -70,23 +71,25 @@ export class UserService {
     }
 
     list(limit: number = undefined, skip: number = undefined) {
-        return this.db.ListByType(TYPE_USER, "rol = $1 OR rol = $2", ['admin', 'assistant'], limit, skip);
+        return this.db.listByType(TYPE_USER, Q().equalStr("rol", "admin").or().equalStr("rol", "assistant").page(limit, skip));
     }
 
     listRanchers(q: string = undefined, limit: number = undefined, skip: number = undefined) {
-        let query = '';
+        let query = Q().equalStr("rol", "ganadero").or().equalStr("rol", "usuario");
+
         if (q && q != '') {
-            query = ' AND dni LIKE "' + q + '%"';
+            query = Q().likeEnd("dni", q).andExp(query);
         }
-        return this.db.ListByType(TYPE_USER, "rol = $1 OR rol = $2" + query, ['ganadero', 'usuario'], limit, skip);
+        return this.db.listByType(TYPE_USER, query.page(limit, skip));
     }
 
     listRanchersByPayment(q: string = undefined, limit: number = undefined, skip: number = undefined) {
-        let query = '';
+        let query = Q().equalStr("plan", "gratuito").andExp(Q().equalStr("rol", "ganadero").or().equalStr("rol", "usuario"))
+            .and().isNotMissing("ultimoPago").and().gteStr("ultimoPago", nowDifference());
         if (q && q != '') {
-            query = ' AND dni LIKE "' + q + '%"';
+            query = query.and().likeEnd("dni", q);
         }
-        return this.db.ListByType(TYPE_USER, "(rol = $1 OR rol = $2) AND plan != $3 AND ultimoPago IS NOT MISSING AND ultimoPago >= $4" + query, ['ganadero', 'usuario', 'gratuito', nowDifference()], limit, skip, ['ultimoPago', 'DESC']);
+        return this.db.listByType(TYPE_USER, query.orderDesc("ultimoPago").page(limit, skip));
     }
 
     remove(id: string) {
@@ -94,11 +97,11 @@ export class UserService {
     }
 
     getOneByEmail(email: string) {
-        return this.db.typedOne<Usuario>(TYPE_USER, "email = $1", [email]);
+        return this.db.typedOne<Usuario>(TYPE_USER, Q().equalStr("email", email));
     }
 
     getById(id: string) {
-        return this.db.getById<Usuario>(id);
+        return this.db.byId<Usuario>(id);
     }
 
 }

@@ -1,9 +1,9 @@
 import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
-import { TYPE_PRADERA, Pradera } from "./models/praderas";
-import { TYPE_ALARMA_PRADERA, AlarmaPradera } from './models/alarma-pradera';
 import { toDate } from '../util/date-util';
+import { DBConnection, DBHandler } from './database/db-handler';
+import { Q } from './database/query-builder';
+import { AlarmaPradera, TYPE_ALARMA_PRADERA } from './models/alarma-pradera';
+import { Pradera, TYPE_PRADERA } from "./models/praderas";
 
 
 export class PraderaService {
@@ -16,7 +16,7 @@ export class PraderaService {
         return PraderaService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     private preparePradera(pradera: Pradera) {
         toDate(pradera, 'fechaOcupacion', 'fechaSalida');
@@ -41,11 +41,11 @@ export class PraderaService {
     }
 
     getAll() {
-        return this.db.ListByType(TYPE_PRADERA);
+        return this.db.listByType(TYPE_PRADERA);
     }
 
     getAllByIdFarm(idFarm: string) {
-        return this.db.ListByType(TYPE_PRADERA, "idFinca = $1", [idFarm],100,undefined,["orderValue","ASC"]);
+        return this.db.listByType(TYPE_PRADERA,Q().equalStr("idFinca", idFarm).size(100).orderAsc("orderValue"));
     }
 
     insert(pradera: Pradera,orderValue:number) {
@@ -60,14 +60,14 @@ export class PraderaService {
     }
 
     getById(id: string) {
-        return this.db.getById<Pradera>(id);
+        return this.db.byId<Pradera>(id);
     }
     delete(id: string) {
         return this.db.remove(id);
     }
 
     getAlertByIdPradera(idPradera: string) {
-        return this.db.ListByType(TYPE_ALARMA_PRADERA, "meadow = $1", [idPradera]);
+        return this.db.listByType(TYPE_ALARMA_PRADERA, Q().equalStr("meadow", idPradera));
     }
 
     addAlert(alerta: AlarmaPradera) {

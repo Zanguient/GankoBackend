@@ -1,7 +1,8 @@
 import 'rxjs/add/operator/mergeMap';
-import { DBConnection } from './db-connection';
-import { TYPE_MOVIMIENTO,Movimiento } from './models/movimientos';
+import { TYPE_MOVIMIENTO, Movimiento } from './models/movimientos';
 import { toDate } from '../util/date-util';
+import { DBConnection, DBHandler } from './database/db-handler';
+import { Q } from './database/query-builder';
 
 
 export class MovimientoService {
@@ -14,14 +15,14 @@ export class MovimientoService {
         return MovimientoService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
-    getAllByIdFInca(idFinca:string) {
-        return this.db.ListByType(TYPE_MOVIMIENTO,"idFarm = $1",[idFinca]);
+    getAllByIdFInca(idFinca: string) {
+        return this.db.listByType(TYPE_MOVIMIENTO, Q().equalStr("idFarm", idFinca));
     }
 
-    getAllByIdBovino(idBovino:string) {
-        return this.db.ListByType(TYPE_MOVIMIENTO,"ARRAY_CONTAINS(bovinos, $1)",[idBovino]);
+    getAllByIdBovino(idBovino: string) {
+        return this.db.listByType(TYPE_MOVIMIENTO, Q().containsStr("bovinos", idBovino));
     }
 
     insert(produccion: Movimiento) {
@@ -35,10 +36,10 @@ export class MovimientoService {
     }
 
     getById(id: string) {
-        return this.db.getById<Movimiento>(id);
+        return this.db.byId<Movimiento>(id);
     }
-    
-    delete(id:string){
+
+    delete(id: string) {
         return this.db.remove(id);
     }
 

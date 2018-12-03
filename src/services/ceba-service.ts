@@ -1,8 +1,9 @@
 import {TYPE_CEBA,Meat } from "./models/ceba";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
 import { toDate } from "../util/date-util";
+import { DBConnection, DBHandler } from "./database/db-handler";
+import { Q } from "./database/query-builder";
 
 
 export class CebaService {
@@ -15,14 +16,14 @@ export class CebaService {
         return CebaService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getAll(){
-        return this.db.ListByType(TYPE_CEBA);
+        return this.db.listByType(TYPE_CEBA);
     }
 
     getAllByIdBovino(idBovino:string){
-        return this.db.ListByType(TYPE_CEBA,"bovino = $1",[idBovino]);
+        return this.db.listByType(TYPE_CEBA, Q().equalStr("bovino", idBovino));
     }
 
     insert(ceba: Meat) {
@@ -36,13 +37,13 @@ export class CebaService {
     }
 
     getById(id: string) {
-        return this.db.getById<Meat>(id);
+        return this.db.byId<Meat>(id);
     }
     delete(id:string){
         return this.db.remove(id);
     }
     deleteByIdBovinoAndCeba(idBovino:string,idCeba:string){
-        return this.db.deleteByQuery("type = $1 AND id = $2 AND bovino = $3",[TYPE_CEBA,idCeba,idBovino])
+        return this.db.deleteByQuery( Q().equalStr("type", TYPE_CEBA).and().equalStr("id", idCeba).and().equalStr("bovino", idBovino))
     }
 
 }

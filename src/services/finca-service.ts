@@ -1,7 +1,8 @@
 import { Finca, TYPE_FINCA } from "./models/finca";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
+import { Q } from "./database/query-builder";
+import { DBHandler, DBConnection } from "./database/db-handler";
 
 
 export class FincaService {
@@ -14,10 +15,10 @@ export class FincaService {
         return FincaService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getAll(user: string) {
-        return this.db.ListByType(TYPE_FINCA, "usuarioId = $1", [user]);
+        return this.db.listByType(TYPE_FINCA, Q().equalStr("usuarioId", user));
     }
 
     insert(finca: Finca) {
@@ -29,7 +30,7 @@ export class FincaService {
     }
 
     getById(id: string) {
-        return this.db.getById<Finca>(id);
+        return this.db.byId<Finca>(id);
     }
     delete(id: string) {
         return this.db.remove(id);

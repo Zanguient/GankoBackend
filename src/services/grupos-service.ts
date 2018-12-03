@@ -1,8 +1,8 @@
-import { Produccion,TYPE_PROD_LECHE } from "./models/produccion";
 import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
 import { Group, TYPE_GRUPO } from "./models/grupos";
+import { TYPE_PROD_LECHE } from "./models/produccion";
+import { DBConnection, DBHandler } from './database/db-handler';
+import { Q } from './database/query-builder';
 
 
 export class GruposService {
@@ -15,14 +15,14 @@ export class GruposService {
         return GruposService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_PROD_LECHE);
+        return this.db.listByType(TYPE_PROD_LECHE);
     }
 
     getById(idGroup:string){
-        return this.db.ListByType(TYPE_GRUPO,"id = $1",[idGroup]);
+        return this.db.listByType(TYPE_GRUPO,Q().equalStr("id", idGroup));
     }
 
     insert(grupo: Group) {
@@ -34,11 +34,7 @@ export class GruposService {
     }
 
     getByIdFinca(idFinca: string) {
-        return this.db.ListByType(TYPE_GRUPO,"finca = $1",[idFinca]);
-    }
-
-    getByIdBovino(idBovino: string) {
-        return this.db.ListByType<Group>(TYPE_PROD_LECHE,"ANY bovino in Produccion.bovinos SATISFIES bovino = $1",[idBovino]);
+        return this.db.listByType(TYPE_GRUPO,Q().equalStr("finca", idFinca));
     }
 
     delete(id:string){

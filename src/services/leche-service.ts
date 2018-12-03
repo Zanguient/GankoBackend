@@ -1,7 +1,8 @@
 import 'rxjs/add/operator/mergeMap';
 import { toDate } from "../util/date-util";
-import { DBConnection } from './db-connection';
 import { Leche, TYPE_LECHE } from "./models/leche";
+import { DBHandler, DBConnection } from './database/db-handler';
+import { Q } from './database/query-builder';
 
 
 export class LecheService {
@@ -14,14 +15,14 @@ export class LecheService {
         return LecheService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_LECHE);
+        return this.db.listByType(TYPE_LECHE);
     }
 
     getAllByIdFInca(idFinca:string) {
-        return this.db.ListByType(TYPE_LECHE,"idFarm = $1",[idFinca], undefined, undefined, ['fecha', 'DESC']);
+        return this.db.listByType(TYPE_LECHE, Q().equalStr("idFarm", idFinca).orderDesc("fecha"));
     }
 
     insert(produccion: Leche) {
@@ -35,7 +36,7 @@ export class LecheService {
     }
 
     getById(id: string) {
-        return this.db.getById<Leche>(id);
+        return this.db.byId<Leche>(id);
     }
 
     delete(id:string){

@@ -1,8 +1,8 @@
-import { Sanidad,TYPE_SANIDAD } from "./models/sanidad";
 import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
 import { toDate } from "../util/date-util";
+import { Sanidad, TYPE_SANIDAD } from "./models/sanidad";
+import { DBConnection, DBHandler } from './database/db-handler';
+import { Q } from './database/query-builder';
 
 
 export class SanidadService {
@@ -15,14 +15,14 @@ export class SanidadService {
         return SanidadService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_SANIDAD);
+        return this.db.listByType(TYPE_SANIDAD);
     }
 
-    getAllByIdBovino(idBovino:string){
-        return this.db.ListByType(TYPE_SANIDAD,"ARRAY_CONTAINS(bovinos, $1)",[idBovino]);
+    getAllByIdBovino(idBovino: string) {
+        return this.db.listByType(TYPE_SANIDAD, Q().containsStr("bovinos", idBovino));
     }
 
     insert(registroSanidad: Sanidad) {
@@ -36,18 +36,18 @@ export class SanidadService {
     }
 
     getById(id: string) {
-        return this.db.getById<Sanidad>(id);
+        return this.db.byId<Sanidad>(id);
     }
-    delete(id:string){
+    delete(id: string) {
         return this.db.remove(id);
     }
     getByIdFincaReciente(idFinca: string) {
-        return this.db.ListByType(TYPE_SANIDAD, "idFinca = $1 ORDER BY fecha DESC", [idFinca])
+        return this.db.listByType(TYPE_SANIDAD, Q().equalStr("idFinca", idFinca).orderDesc("fecha"));
     }
-    getByIdFincaProximos(idFinca: string){
-        return this.db.ListByType(TYPE_SANIDAD, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) >= SUBSTR(NOW_STR(),0,10)AND estadoProximo = 0  AND aplicacion < numeroAplicaciones ORDER BY fechaProxima ASC", [idFinca])
+    getByIdFincaProximos(idFinca: string) {
+        return this.db.listByType(TYPE_SANIDAD, Q().equalStr("idFinca", idFinca).and().isNotNull("fechaProxima").and().isNotMissing("fechaProxima").gteToday("fechaProxima").and().equalInt("estadoProximo", 0).and().ltField("aplicacion", "numeroAplicaciones").orderAsc("fechaProxima"));
     }
-    getByIdFincaPendientes(idFinca: string){
-        return this.db.ListByType(TYPE_SANIDAD, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) < SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0 AND aplicacion < numeroAplicaciones ORDER BY fechaProxima ASC", [idFinca])
+    getByIdFincaPendientes(idFinca: string) {
+        return this.db.listByType(TYPE_SANIDAD, Q().equalStr("idFinca", idFinca).and().isNotNull("fechaProxima").and().isNotMissing("fechaProxima").ltToday("fechaProxima").and().equalInt("estadoProximo", 0).and().ltField("aplicacion", "numeroAplicaciones").orderAsc("fechaProxima"));
     }
 }

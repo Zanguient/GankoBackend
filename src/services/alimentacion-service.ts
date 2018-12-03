@@ -1,8 +1,9 @@
-import { TYPE_ALIMENTACION, Alimentacion } from "./models/alimentacion"
 import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
 import { toDate } from "../util/date-util";
+import { DBConnection, DBHandler } from "./database/db-handler";
+import { Alimentacion, TYPE_ALIMENTACION } from "./models/alimentacion";
+import { Q } from './database/query-builder';
+
 
 
 export class AlimentacionService {
@@ -15,19 +16,19 @@ export class AlimentacionService {
         return AlimentacionService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_ALIMENTACION);
+        return this.db.listByType(TYPE_ALIMENTACION);
     }
     getAllByIdBovino(idBovino: string) {
-        return this.db.ListByType(TYPE_ALIMENTACION, 'ARRAY_CONTAINS(bovinos, $1)', [idBovino]);
+        return this.db.listByType(TYPE_ALIMENTACION, Q().containsStr("bovinos", idBovino));
     }
     getById(idAlimentacion: string) {
-        return this.db.getById<Alimentacion>(idAlimentacion);
+        return this.db.byId<Alimentacion>(idAlimentacion);
     }
     getByIdFinca(idFinca: string) {
-        return this.db.ListByType<Alimentacion>(TYPE_ALIMENTACION,"idFinca = $1",[idFinca] );
+        return this.db.listByType<Alimentacion>(TYPE_ALIMENTACION,Q().equalStr("idFinca", idFinca));
     }
     insert(alimentacion: Alimentacion) {
         toDate(alimentacion, 'fecha');

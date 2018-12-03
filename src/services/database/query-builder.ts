@@ -2,11 +2,11 @@ export class QueryBuilder {
 
     private q: QueryItem = { type: BEGIN };
     private next: QueryItem = this.q;
-    private limit = -1;
-    private skip = -1;
+    limit = -1;
+    skip = -1;
 
-    private orderBy: string = null;
-    private orderMode: string = null;
+    orderBy: string = null;
+    orderMode: string = null;
 
     // =
 
@@ -30,6 +30,9 @@ export class QueryBuilder {
         return this.operationValue(EQUAL, field, value, DATE);
     }
 
+    equalStr(field: string, value: string): QueryBuilder {
+        return this.operationValue(EQUAL, field, value, STRING);
+    }
 
     equalField(f1: string, f2: string): QueryBuilder {
         return this.operationValue(EQUAL_FIELD, f1, f2, FIELD);
@@ -55,6 +58,10 @@ export class QueryBuilder {
 
     ltDate(field: string, value: Date): QueryBuilder {
         return this.operationValue(LT, field, value, DATE);
+    }
+
+    ltStr(field: string, value: string): QueryBuilder {
+        return this.operationValue(LT, field, value, STRING);
     }
 
     ltField(f1: string, f2: string): QueryBuilder {
@@ -83,6 +90,10 @@ export class QueryBuilder {
         return this.operationValue(LTE, field, value, DATE);
     }
 
+    lteStr(field: string, value: string): QueryBuilder {
+        return this.operationValue(LTE, field, value, STRING);
+    }
+
     lteField(f1: string, f2: string): QueryBuilder {
         return this.operationValue(LTE_FIELD, f1, f2, FIELD);
     }
@@ -107,6 +118,10 @@ export class QueryBuilder {
 
     gtDate(field: string, value: Date): QueryBuilder {
         return this.operationValue(GT, field, value, DATE);
+    }
+
+    gtStr(field: string, value: string): QueryBuilder {
+        return this.operationValue(GT, field, value, STRING);
     }
 
     gtField(f1: string, f2: string): QueryBuilder {
@@ -135,22 +150,26 @@ export class QueryBuilder {
         return this.operationValue(GTE, field, value, DATE);
     }
 
+    gteStr(field: string, value: string): QueryBuilder {
+        return this.operationValue(GTE, field, value, STRING);
+    }
+
     gteField(f1: string, f2: string): QueryBuilder {
         return this.operationValue(GTE_FIELD, f1, f2, FIELD);
     }
 
     // LIKE
 
-    startLike(field: string, value: string): QueryBuilder {
-        return this.operationValue(START_LIKE, field, value, STRING);
+    likeStart(field: string, value: string): QueryBuilder {
+        return this.operationValue(LIKE_START, field, value, STRING);
     }
 
-    centerLike(field: string, value: string): QueryBuilder {
-        return this.operationValue(CENTER_LIKE, field, value, STRING);
+    likeCenter(field: string, value: string): QueryBuilder {
+        return this.operationValue(LIKE_CENTER, field, value, STRING);
     }
 
-    endLike(field: string, value: string): QueryBuilder {
-        return this.operationValue(END_LIKE, field, value, STRING);
+    likeEnd(field: string, value: string): QueryBuilder {
+        return this.operationValue(LIKE_END, field, value, STRING);
     }
 
     // IS NOT
@@ -213,7 +232,7 @@ export class QueryBuilder {
         return this.operationValue(CONTAINS, field, value, BOOL);
     }
 
-    containsString(field: string, value: string): QueryBuilder {
+    containsStr(field: string, value: string): QueryBuilder {
         return this.operationValue(CONTAINS, field, value, STRING);
     }
 
@@ -228,6 +247,23 @@ export class QueryBuilder {
         return this.operation(nextQ);
     }
 
+    // DATE
+
+    gtToday(field: string): QueryBuilder {
+        return this.operation({ type: GT_TODAY, field });
+    }
+
+    gteToday(field: string): QueryBuilder {
+        return this.operation({ type: GTE_TODAY, field });
+    }
+
+    ltToday(field: string): QueryBuilder {
+        return this.operation({ type: LT_TODAY, field });
+    }
+
+    lteToday(field: string): QueryBuilder {
+        return this.operation({ type: LTE_TODAY, field });
+    }
     //LIMIT
 
     page(limit: number, skip: number): QueryBuilder {
@@ -235,6 +271,13 @@ export class QueryBuilder {
         this.skip = skip;
         return this;
     }
+
+    size(limit: number): QueryBuilder {
+        this.limit = limit;
+        return this;
+    }
+
+    //Order
 
     orderAsc(field: string): QueryBuilder {
         this.orderBy = field;
@@ -255,7 +298,7 @@ export class QueryBuilder {
     }
 
     build(): Promise<{ query: string, params: any[] }> {
-        return new Promise((resolve) => resolve(this.process(this.q.next)));
+        return new Promise((resolve) => this.q.next ? resolve(this.process(this.q.next)) : resolve({ query: '', params: [] }));
     }
 
     private process(query: QueryItem): { query: string, params: any[] } {
@@ -290,9 +333,9 @@ export class QueryBuilder {
             case GT_FIELD: return `${item.field} > ${this.processValue(item)}`;
             case GTE: return `${item.field} >= ${this.processValue(item)}`;
             case GTE_FIELD: return `${item.field} >= ${this.processValue(item)}`;
-            case START_LIKE: return `LOWER(${item.field}) LIKE '%${item.value}'`;
-            case CENTER_LIKE: return `LOWER(${item.field}) LIKE '%${item.value}%'`;
-            case END_LIKE: return `LOWER(${item.field}) LIKE '${item.value}%'`;
+            case LIKE_START: return `LOWER(${item.field}) LIKE '%${item.value}'`;
+            case LIKE_CENTER: return `LOWER(${item.field}) LIKE '%${item.value}%'`;
+            case LIKE_END: return `LOWER(${item.field}) LIKE '${item.value}%'`;
             case IS_MISSING: return `${item.field} IS MISSING`;
             case IS_NULL: return `${item.field} IS NULL`;
             case IS_NOT_MISSING: `${item.field} IS NOT MISSING`;
@@ -310,8 +353,12 @@ export class QueryBuilder {
             } else {
                 return "OR";
             }
-            case IN: return `IN ['${item.value.join("','")}']`;
+            case IN: return `${item.field} IN ['${item.value.join("','")}']`;
             case CONTAINS: return `ARRAY_CONTAINS(${item.field}, '${item.value}')`;
+            case LT_TODAY: return `SUBSTR(${item.field},0,10) < SUBSTR(NOW_STR(),0,10)`;
+            case LTE_TODAY: return `SUBSTR(${item.field},0,10) <= SUBSTR(NOW_STR(),0,10)`;
+            case GT_TODAY: return `SUBSTR(${item.field},0,10) > SUBSTR(NOW_STR(),0,10)`;
+            case GTE_TODAY: return `SUBSTR(${item.field},0,10) >= SUBSTR(NOW_STR(),0,10)`;
 
         }
     }
@@ -351,9 +398,9 @@ const GT = 6;
 const GT_FIELD = 7;
 const GTE = 8;
 const GTE_FIELD = 9;
-const START_LIKE = 10;
-const CENTER_LIKE = 11;
-const END_LIKE = 12;
+const LIKE_START = 10;
+const LIKE_CENTER = 11;
+const LIKE_END = 12;
 const IS_NOT_NULL = 13;
 const IS_NOT_MISSING = 14;
 const IS_NULL = 15;
@@ -362,6 +409,10 @@ const AND = 17;
 const OR = 18;
 const IN = 19;
 const CONTAINS = 20;
+const GT_TODAY = 21;
+const GTE_TODAY = 22;
+const LT_TODAY = 23;
+const LTE_TODAY = 24;
 
 const STRING = 0;
 const BOOL = 1;
@@ -370,3 +421,4 @@ const LONG = 3;
 const FLOAT = 4;
 const DATE = 5;
 const FIELD = 6;
+const DAY = 6;

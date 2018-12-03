@@ -17,6 +17,7 @@ import grupo from './routes/grupo';
 import pradera from './routes/praderas';
 import movimiento from './routes/movimiento';
 import img from './routes/img';
+import test from './routes/test';
 import cookieParser = require('cookie-parser'); // this module doesn't use the ES6 default export yet
 import cors = require('cors');
 
@@ -48,6 +49,7 @@ app.use('/api/v1/vacunas', vacuna);
 app.use('/api/v1/praderas', pradera);
 app.use('/api/v1/movimientos', movimiento);
 app.use('/api/v1/img', img);
+app.use('/api/v1/test', test);
 app.get(/.*/, function (req, res, next) {
   res.setHeader('Content-Type', 'text/html');
   res.sendFile(__dirname + '/public/index.html');

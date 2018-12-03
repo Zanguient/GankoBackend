@@ -1,7 +1,7 @@
-import { Straw, TYPE_PAJILLA } from "./models/pajilla";
 import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
+import { Straw, TYPE_PAJILLA } from "./models/pajilla";
+import { DBConnection, DBHandler } from './database/db-handler';
+import { Q } from './database/query-builder';
 
 
 export class PajillaService {
@@ -14,19 +14,20 @@ export class PajillaService {
         return PajillaService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_PAJILLA);
+        return this.db.listByType(TYPE_PAJILLA);
     }
 
     getAllByIdFinca(idFinca: string, q: string) {
-        let where = '';
+
+        let where = Q().equalStr("idFarm", idFinca);
         if (q) {
             const qy = q.toLowerCase();
-            where += ' AND ( LOWER(breed) LIKE "' + qy + '%" OR LOWER(idStraw) LIKE "' + qy + '%")';
+            where = where.andExp(Q().likeEnd("bread", qy).or().likeEnd("idStraw", qy))            
         }
-        return this.db.ListByType(TYPE_PAJILLA, 'idFarm = $1' + where, [idFinca]);
+        return this.db.listByType(TYPE_PAJILLA, where);
     }
 
     insert(pajilla: Straw) {
@@ -38,7 +39,7 @@ export class PajillaService {
     }
 
     getById(id: string) {
-        return this.db.getById<Straw>(id);
+        return this.db.byId<Straw>(id);
     }
     delete(id: string) {
         return this.db.remove(id);

@@ -1,7 +1,8 @@
 import 'rxjs/add/operator/mergeMap';
 import { toDate } from "../util/date-util";
-import { DBConnection } from './db-connection';
 import { Produccion, TYPE_PROD_LECHE } from "./models/produccion";
+import { DBConnection, DBHandler } from './database/db-handler';
+import { Q } from './database/query-builder';
 
 
 export class ProduccionService {
@@ -14,14 +15,14 @@ export class ProduccionService {
         return ProduccionService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getByIdBovino(idBovino: string) {
-        return this.db.ListByType(TYPE_PROD_LECHE,"bovino = $1",[idBovino]);
+        return this.db.listByType(TYPE_PROD_LECHE,Q().equalStr("bovino", idBovino));
     }
 
     getAll() {
-        return this.db.ListByType(TYPE_PROD_LECHE);
+        return this.db.listByType(TYPE_PROD_LECHE);
     }
 
     insert(produccion: Produccion) {
@@ -35,7 +36,7 @@ export class ProduccionService {
     }
 
     getById(id: string) {
-        return this.db.getById<Produccion>(id);
+        return this.db.byId<Produccion>(id);
     }
     delete(id:string){
         return this.db.remove(id);

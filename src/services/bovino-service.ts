@@ -1,7 +1,8 @@
 import 'rxjs/add/operator/mergeMap';
 import { toDate } from "../util/date-util";
-import { DBConnection } from './db-connection';
 import { Bovino, TYPE_BOVINO } from "./models/bovinos";
+import { DBConnection, DBHandler } from './database/db-handler';
+import { Q } from './database/query-builder';
 
 export class BovinoService {
 
@@ -13,15 +14,19 @@ export class BovinoService {
         return BovinoService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     //permite recuperar los bovinos pertenecientes a un usuario o finca
     findBovinos(idFinca: string, q: string, leche: boolean, ceba: boolean, ambos: boolean, celo: boolean, servicio: boolean, diagnostico: boolean, destete: boolean, retirados: boolean, sexo: string) {
+
+        const ret = retirados === true ? true : false;
+        let where = Q().equalStr("finca", idFinca).and().equalBool("retirado", ret)
+
         const queries = [];
 
         if (q && q != "") {
             const qy = q.toLowerCase();
-            queries.push('(LOWER(nombre) LIKE "' + qy + '%" OR LOWER(codigo) LIKE "' + qy + '%")');
+            where = where.andExp(Q().likeEnd("nombre", qy).or().likeEnd("codigo", qy));
         }
 
         const prop = [];
@@ -29,49 +34,50 @@ export class BovinoService {
         if (ceba) { prop.push('"Ceba"'); }
         if (ambos) { prop.push('"Ambos"'); }
 
-        if (prop.length > 0) { queries.push('proposito IN [' + prop.join(',') + ']'); }
+        if (prop.length > 0) {
+            where = where.and().in("proposito", prop);
+        }
 
         if (celo) {
             const date = (new Date()).getTime() - 10800000;
-            queries.push('celo[0] <= "' + date + '"');
+            where = where.and().lteStr("celo[0]", date + "");            
         }
         if (servicio || diagnostico) {
-            queries.push('servicio[0].finalizado = false')
+            where = where.and().equalBool("servicio[0].finalizado", false);
             if (diagnostico) {
-                queries.push('servicio[0].diagnostico.confirmacion = true')
+                where = where.and().equalBool("servicio[0].diagnostico.confirmacion", true);                
             }
         }
 
 
-        if (destete != undefined) { queries.push("destete = " + destete); }
+        if (destete != undefined) { 
+            where = where.and().equalBool("destete", destete);
+        }
 
-        if (sexo) { queries.push('genero = "' + sexo + '"'); }
+        if (sexo) { 
+            where = where.and().equalStr("genero", sexo);            
+        }
 
-        const ret = retirados === true ? true : false;
-        let where = "finca = $1 AND retirado = " + ret;
-        where = where + (queries.length > 0 ? " AND " + queries.join(" AND ") : '');
-
-
-        return this.db.ListByType<Bovino>(TYPE_BOVINO, where, [idFinca]);
+        return this.db.listByType<Bovino>(TYPE_BOVINO, where);
     }
 
     findBovinosByIds(ids: string[]) {
-        return this.db.ListByType<Bovino>(TYPE_BOVINO, "META(ganko).id IN $1", [ids]);
+        return this.db.listByType<Bovino>(TYPE_BOVINO, Q().in("META(ganko).id", ids));
     }
 
 
     //permite encontrar un bovino por medio de su identificador asignado
     findByIdBovino(idbovino: string) {
-        return this.db.typedOne<Bovino>(TYPE_BOVINO, "codigo = $1", [idbovino]);
+        return this.db.typedOne<Bovino>(TYPE_BOVINO, Q().equalStr("codigo", idbovino));
     }
     //permite buscar el bovino por id de BD
     findById(idbovino: string) {
-        return this.db.getById(idbovino)
+        return this.db.byId(idbovino)
     }
     //permite insertar un nuevo bovino
     addBovino(bovino: Bovino) {
         toDate(bovino, 'fechaNacimiento', 'fechaIngreso', 'fechaDestete');
-        return this.db.typedOne(TYPE_BOVINO, "codigo = $1 AND finca = $2", [bovino.codigo, bovino.finca])
+        return this.db.typedOne(TYPE_BOVINO, Q().equalStr("codigo", bovino.codigo).and().equalStr("finca", bovino.finca))
             .then(x => x ? undefined : this.db.insert(bovino));
     }
 

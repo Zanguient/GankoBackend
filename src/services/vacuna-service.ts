@@ -1,8 +1,7 @@
-import { TYPE_VACUNA,Vacuna } from "./models/vacunas";
-import 'rxjs/add/operator/mergeMap';
-import { Observable } from 'rxjs/Observable';
-import { DBConnection } from './db-connection';
 import { toDate } from "../util/date-util";
+import { TYPE_VACUNA, Vacuna } from "./models/vacunas";
+import { DBConnection, DBHandler } from "./database/db-handler";
+import { Q } from "./database/query-builder";
 
 
 export class VacunaService {
@@ -15,14 +14,14 @@ export class VacunaService {
         return VacunaService._instance;
     }
 
-    constructor(private db: DBConnection) { }
+    constructor(private db: DBHandler) { }
 
     getAll() {
-        return this.db.ListByType(TYPE_VACUNA);
+        return this.db.listByType(TYPE_VACUNA);
     }
 
-    getByIdBovino(idBovino:string){
-        return this.db.ListByType(TYPE_VACUNA,'ARRAY_CONTAINS(bovinos, $1)',[idBovino]);
+    getByIdBovino(idBovino: string) {
+        return this.db.listByType(TYPE_VACUNA, Q().containsStr("bovinos", idBovino));
     }
 
     insert(registroVacunas: Vacuna) {
@@ -36,18 +35,21 @@ export class VacunaService {
     }
 
     getById(id: string) {
-        return this.db.getById<Vacuna>(id);
+        return this.db.byId<Vacuna>(id);
     }
-    delete(id:string){
+    delete(id: string) {
         return this.db.remove(id);
     }
     getByIdFincaReciente(idFinca: string) {
-        return this.db.ListByType(TYPE_VACUNA, "idFinca = $1 ORDER BY fecha DESC", [idFinca])
+        return this.db.listByType(TYPE_VACUNA, Q().equalStr("idFinca", idFinca).orderDesc("fecha"));
     }
-    getByIdFincaProximos(idFinca: string){
-        return this.db.ListByType(TYPE_VACUNA, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) >= SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0", [idFinca])
+    getByIdFincaProximos(idFinca: string) {
+        return this.db.listByType(TYPE_VACUNA, Q().equalStr("idFinca", idFinca).and().isNotNull("fechaProxima").and().isNotMissing("fechaProxima")
+            .and().gteToday("fechaProxima").and().equalInt("estadoProximo", 0));
+            
     }
-    getByIdFincaPendientes(idFinca: string){
-        return this.db.ListByType(TYPE_VACUNA, "idFinca = $1 AND fechaProxima IS NOT NULL AND fechaProxima IS NOT MISSING AND SUBSTR(fechaProxima,0,10) < SUBSTR(NOW_STR(),0,10) AND estadoProximo = 0", [idFinca])
+    getByIdFincaPendientes(idFinca: string) {
+        return this.db.listByType(TYPE_VACUNA, Q().equalStr("idFinca", idFinca).and().isNotNull("fechaProxima").and().isNotMissing("fechaProxima")
+            .and().ltToday("fechaProxima").and().equalInt("estadoProximo", 0));
     }
 }
