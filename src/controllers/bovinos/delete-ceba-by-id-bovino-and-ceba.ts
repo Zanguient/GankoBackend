@@ -14,7 +14,7 @@ class ResponseBovino extends ResponseBody {
 export function deleteCebaByIdBovinoAndCeba(req, res: Response, next) {
     CebaService.instance.deleteByIdBovinoAndCeba(req.params.idBovino, req.params.idCeba)
         .then(data => {
-            res.send(new ResponseBovino(data ? true : false, data, null));
+            res.send(new ResponseBovino( true , data, null));
         }, err => {
             res.status(500).send(new ResponseBovino(null, null, err));
         })

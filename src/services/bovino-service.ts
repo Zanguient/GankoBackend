@@ -2,7 +2,7 @@ import 'rxjs/add/operator/mergeMap';
 import { toDate } from "../util/date-util";
 import { Bovino, TYPE_BOVINO } from "./models/bovinos";
 import { DBConnection, DBHandler } from './database/db-handler';
-import { Q } from './database/query-builder';
+import { Q, arrayLength, lower } from './database/query-builder';
 
 export class BovinoService {
 
@@ -26,7 +26,7 @@ export class BovinoService {
 
         if (q && q != "") {
             const qy = q.toLowerCase();
-            where = where.andExp(Q().likeEnd("nombre", qy).or().likeEnd("codigo", qy));
+            where = where.andExp(Q().likeEnd(lower("nombre"), qy).or().likeEnd(lower("codigo"), qy));
         }
 
         const prop = [];
@@ -40,29 +40,29 @@ export class BovinoService {
 
         if (celo) {
             const date = (new Date()).getTime() - 10800000;
-            where = where.and().lteStr("celo[0]", date + "");            
+            where = where.and().lteStr("celo[0]", date + "");
         }
         if (servicio || diagnostico) {
             where = where.and().equalBool("servicio[0].finalizado", false);
             if (diagnostico) {
-                where = where.and().equalBool("servicio[0].diagnostico.confirmacion", true);                
+                where = where.and().equalBool("servicio[0].diagnostico.confirmacion", true);
             }
         }
 
 
-        if (destete != undefined) { 
+        if (destete != undefined) {
             where = where.and().equalBool("destete", destete);
         }
 
-        if (sexo) { 
-            where = where.and().equalStr("genero", sexo);            
+        if (sexo) {
+            where = where.and().equalStr("genero", sexo);
         }
 
         return this.db.listByType<Bovino>(TYPE_BOVINO, where);
     }
 
     findBovinosByIds(ids: string[]) {
-        return this.db.listByType<Bovino>(TYPE_BOVINO, Q().in("META(ganko).id", ids));
+        return this.db.listByType<Bovino>(TYPE_BOVINO, Q().inID(ids));
     }
 
 

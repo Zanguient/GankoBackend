@@ -38,6 +38,7 @@
     "@types/power-assert": "^1.4.29",
     "@types/request": "^2.47.0",
     "@types/request-promise": "^4.1.41",
+    "@types/request-promise-native": "^1.0.15",
     "@types/serve-favicon": "^2.2.28",
     "bluebird": "^3.5.1",
     "body-parser": "~1.13.2",

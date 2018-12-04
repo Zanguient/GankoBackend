@@ -22,7 +22,7 @@ export class GruposService {
     }
 
     getById(idGroup:string){
-        return this.db.listByType(TYPE_GRUPO,Q().equalStr("id", idGroup));
+        return this.db.listByType(TYPE_GRUPO,Q().equalID(idGroup));
     }
 
     insert(grupo: Group) {

@@ -1,4 +1,4 @@
-import {TYPE_CEBA,Meat } from "./models/ceba";
+import { TYPE_CEBA, Meat } from "./models/ceba";
 import 'rxjs/add/operator/mergeMap';
 import { Observable } from 'rxjs/Observable';
 import { toDate } from "../util/date-util";
@@ -18,11 +18,11 @@ export class CebaService {
 
     constructor(private db: DBHandler) { }
 
-    getAll(){
+    getAll() {
         return this.db.listByType(TYPE_CEBA);
     }
 
-    getAllByIdBovino(idBovino:string){
+    getAllByIdBovino(idBovino: string) {
         return this.db.listByType(TYPE_CEBA, Q().equalStr("bovino", idBovino));
     }
 
@@ -39,11 +39,12 @@ export class CebaService {
     getById(id: string) {
         return this.db.byId<Meat>(id);
     }
-    delete(id:string){
+    delete(id: string) {
         return this.db.remove(id);
     }
-    deleteByIdBovinoAndCeba(idBovino:string,idCeba:string){
-        return this.db.deleteByQuery( Q().equalStr("type", TYPE_CEBA).and().equalStr("id", idCeba).and().equalStr("bovino", idBovino))
+    deleteByIdBovinoAndCeba(idBovino: string, idCeba: string) {
+        return this.db.deleteByQuery(Q().equalStr("type", TYPE_CEBA).and().equalStr("id", idCeba).and().equalStr("bovino", idBovino))
+            .then(() => idCeba);
     }
 
 }

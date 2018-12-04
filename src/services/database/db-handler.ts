@@ -14,12 +14,12 @@ export abstract class DBHandler {
     abstract insertId(id: string, body: any): Promise<string>;
     abstract insert(body: any): Promise<any>;
     abstract list<T>(query?: QueryBuilder): Promise<Document<T>[]>;
-    abstract listByType<T>(type: string, query?: QueryBuilder): Promise<Document<T>>;
+    abstract listByType<T>(type: string, query?: QueryBuilder): Promise<Document<T>[]>;
     abstract typedOne<T>(type: string, query?: QueryBuilder): Promise<Document<T>>;
     abstract byId<T>(id: string): Promise<Document<T>>;
     abstract remove(id: string): Promise<string>;
     abstract replace(id: string, body: any): Promise<string>;
-    abstract deleteByQuery<T>(query: QueryBuilder): Promise<Document<T>>;
+    abstract deleteByQuery(query: QueryBuilder): Promise<string>;
 }
 
 export class DBConnection {
