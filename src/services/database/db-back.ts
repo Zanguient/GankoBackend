@@ -57,7 +57,7 @@ export class DBBack implements DBHandler {
         return this.getByQuery(query);
     }
 
-    listByType<T>(type: string, query?: QueryBuilder): Promise<Document<T>> {
+    listByType<T>(type: string, query?: QueryBuilder): Promise<Document<T>[]> {
         let q = Q().equalStr("type", type);
         if (query) q = q.andExp(query);
         return this.getByQuery(q);
@@ -86,16 +86,13 @@ export class DBBack implements DBHandler {
         return this.bucket.replaceAsync(id, body)
             .then((x: any) => id);
     }
-    deleteByQuery<T>(query: QueryBuilder): Promise<Document<T>> {
+    deleteByQuery(query: QueryBuilder): Promise<string> {
         let q = "DELETE FROM `" + this.bucketName + "`";
         return query.build()
             .then(x => q += " WHERE " + x.query + " LIMIT 1")
             .then(() => N1qlQuery.fromString(q))
             .then(x => this.bucket.queryAsync(x, []))
-            .then((x: any[]) => {
-                return x.map(y => { return { id: y.id, doc: y[this.bucketName] }; });
-            })
-            .then((x: any[]) => x.length > 0 ? x[0] : undefined);
+            .then(() => "");
     }
 
     private getOneByQuery<T>(query?: QueryBuilder): Promise<Document<T>> {
