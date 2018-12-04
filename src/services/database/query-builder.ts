@@ -182,6 +182,10 @@ export class QueryBuilder {
         return this.operation({ type: IS_NOT_MISSING, field });
     }
 
+    isNotNullOrMissing(field: string):QueryBuilder{
+        return this.operation({type: IS_NOT_NULL_OR_MISSING, field })
+    }
+
     // IS
 
     isNull(field: string): QueryBuilder {
@@ -353,6 +357,7 @@ export class QueryBuilder {
             case IS_NULL: return `${item.field} IS NULL`;
             case IS_NOT_MISSING: `${item.field} IS NOT MISSING`;
             case IS_NOT_NULL: `${item.field} IS NOT NULL`;
+            case IS_NOT_NULL_OR_MISSING: `${item.field} IS NOT NULL OR ${item.field} IS NOT MISSING`;
             case AND: if (item.child) {
                 const subQ = this.process(item.child);
                 return `AND (${subQ.query})`;
@@ -440,6 +445,7 @@ const LT_TODAY = 23;
 const LTE_TODAY = 24;
 const EQUAL_ID = 25;
 const SATISFIES = 26;
+const IS_NOT_NULL_OR_MISSING = 27;
 
 const STRING = 0;
 const BOOL = 1;

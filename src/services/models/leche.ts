@@ -1,15 +1,15 @@
 export const TYPE_LECHE = 'SalidaLeche';
 /**
- * @apiDefine Produccion
- * @apiParam {object} Produccion
- * @apiParam {string} Produccion.id id de la Produccion
- * @apiParam {string} Produccion.type type de la Produccion
- * @apiParam {string} Produccion.idFarm id de la finca a la que pertenece la Produccion
- * @apiParam {date} Produccion.fecha fecha de la Produccion
- * @apiParam {string} Produccion.operacion operacion realizada
- * @apiParam {number} Produccion.valorLitro valor del litro de Produccion
- * @apiParam {number} Produccion.numeroLitros numero de Produccion
- * @apiParam {number} Produccion.totalLitros total de Produccion
+ * @apiDefine Leche
+ * @apiParam {object} Leche
+ * @apiParam {string} Leche.id id de la Produccion
+ * @apiParam {string} Leche.type type de la Produccion
+ * @apiParam {string} Leche.idFarm id de la finca a la que pertenece la Produccion
+ * @apiParam {date} Leche.fecha fecha de la Produccion
+ * @apiParam {string} Leche.operacion operacion realizada
+ * @apiParam {number} Leche.valorLitro valor del litro de Produccion
+ * @apiParam {number} Leche.numeroLitros numero de Produccion
+ * @apiParam {number} Leche.totalLitros total de Produccion
  */
 export class Leche {
     id?: string;

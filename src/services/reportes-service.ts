@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/mergeMap';
 import { toDate } from "../util/date-util";
 import { DBConnection, DBHandler } from './database/db-handler';
-import { Q } from './database/query-builder';
+import { Q, arrayLength } from './database/query-builder';
 import { TYPE_FINCA } from './models/finca';
 import { TYPE_BOVINO, Bovino } from './models/bovinos';
 import { TYPE_LECHE } from './models/leche';
@@ -31,67 +31,65 @@ export class ReportesService {
     getReporteFuturosPartos(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
-            Q().equalStr("finca", idFinca)
-                .and()
-                .equalBool("servicios[0].finalizado", false)
-                .and()
-                .isNotNull("servicios[0].posFechaParto")
-                .or()
-                .isMissing("servicios[0].posFechaParto"));
+            Q().equalStr("finca", idFinca).and().equalBool("servicios[0].finalizado", false)
+            .and().isNotMissing("servicios[0].posFechaParto"));
     }
+
+
+
     getReporteSecado(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and()
-                .equalBool("servicios[0].finalizado", false)
-                .and()
-                .isNotNull("servicios[0].posFechaParto")
-                .or()
-                .isMissing("servicios[0].posFechaParto"));
+                .and().equalBool("servicios[0].finalizado", false)
+                .and().isNotNull("servicios[0].posFechaParto")
+                .or().isMissing("servicios[0].posFechaParto"));
     }
     getReportePreparacion(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and()
-                .equalBool("servicios[0].finalizado", false)
-                .and()
-                .isNotNull("servicios[0].posFechaParto")
-                .or()
-                .isMissing("servicios[0].posFechaParto"));
+                .and().equalBool("servicios[0].finalizado", false)
+                .and().isNotNull("servicios[0].posFechaParto")
+                .or().isMissing("servicios[0].posFechaParto"));
     }
     getReporteDiasVacios(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and()
-                .containsStr("servicios", "Monta Natural"));
+                .and().equalStr("genero","Hembra")
+                .and().gtInt(arrayLength("servicios"),0)
+                .containsStr("servicios", "Monta Natural")
+                .and().satisfies("servicio","servicios",Q().isNotNull("servicio.parto")));
     }
     getReportePartosAtendidos(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and()
-        )
+                .and().equalStr("genero","Hembra")
+                .and().satisfies("servicio","servicios",Q().isNotNull("servicio.parto")))
     }
-    getReporteAbortos(idFinca: string) { }
+    getReporteAbortos(idFinca: string) { 
+        return this.db.listByType(
+            TYPE_BOVINO,
+            Q().equalStr("finca", idFinca)
+                .and().equalStr("genero","Hembra")
+                .and().satisfies("servicio","servicios",Q().equalStr("servicio.novedad.novedad","Aborto")))
+    }
     
     getReporteTresServicios(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and()
-                .equalStr("genero", "Hembra")
-                .gteInt("ARRAY_LENGTH(servicios)", 3)
+                .and().equalStr("genero", "Hembra")
+                .and().gteInt(arrayLength("servicios"), 3)
         )
     }
     getReporteCelos(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and()
-                .gteInt("ARRAY_LENGTH(celos)", 1)
+                .and().gteInt(arrayLength("servicios"),  1)
         )
     }
     getReporteConsolidado(idFinca: string) {

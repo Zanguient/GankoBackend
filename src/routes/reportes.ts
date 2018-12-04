@@ -4,6 +4,6 @@ import { getReportes } from '../controllers/reportes/reportes';
 
 const reportes: Router = Router();
 reportes.use(ValidateToken);
-reportes.get('/:idReporte',ValidateToken, getReportes);
+reportes.get('/:idReporte', getReportes);
 
 export default reportes;

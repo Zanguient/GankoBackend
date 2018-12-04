@@ -12,7 +12,8 @@ export const TYPE_PAJILLA = 'Straw';
  * @apiParam {} Straw.bull id del toro
  * @apiParam {} Straw.origin origen de la pajilla
  * @apiParam {} Straw.value costo de la pajilla
- * @apiParam {} Straw.state stado de la pajilla
+ * @apiParam {} Straw.state estado de la pajilla
+ * @apiParam {} Straw.fecha fecha de la pajilla
  */
 export class Straw {
     id?: string;
@@ -26,4 +27,5 @@ export class Straw {
     origin: string;
     value: string;
     state?: number;
+    fecha:Date;
 }

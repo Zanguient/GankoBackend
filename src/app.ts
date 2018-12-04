@@ -20,6 +20,7 @@ import img from './routes/img';
 import test from './routes/test';
 import cookieParser = require('cookie-parser'); // this module doesn't use the ES6 default export yet
 import cors = require('cors');
+import reportes from './routes/reportes';
 
 const app: express.Express = express();
 

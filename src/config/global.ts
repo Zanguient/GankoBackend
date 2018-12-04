@@ -3,6 +3,7 @@ import { ConfigI } from "./cfg";
 const CONFIG_DEV: ConfigI = {
     database: {
         host: "104.209.144.166",
+        // host: "http://104.209.144.166:8091",
         bucket: "ganko",
         username: "ganko",
         password: "123456"
@@ -15,7 +16,8 @@ const CONFIG_DEV: ConfigI = {
 
 const CONFIG_PROD: ConfigI = {
     database: {
-        host: "localhost",
+        host: "104.209.144.166",
+        // host: "localhost",
         // host: "http://104.209.144.166:8091",
         bucket: "ganko",
         username: "ganko",
