@@ -1,3 +1,5 @@
+import { Query } from "../../controllers/util/query";
+
 export class QueryBuilder {
 
     private q: QueryItem = { type: BEGIN };
@@ -38,6 +40,9 @@ export class QueryBuilder {
         return this.operationValue(EQUAL_FIELD, f1, f2, FIELD);
     }
 
+    equalID(value: string): QueryBuilder {
+        return this.operation({ type: EQUAL_ID, value, valueType: STRING });
+    }
     // <
 
     ltInt(field: string | [string, number], value: number): QueryBuilder {
@@ -216,6 +221,10 @@ export class QueryBuilder {
         return this.operationValue(IN, field, values, STRING);
     }
 
+    inID(values: string[]): QueryBuilder {
+        return this.operation({ type: IN_ID, value: values, valueType: STRING });
+    }
+
     containsInt(field: string, value: number): QueryBuilder {
         return this.operationValue(CONTAINS, field, value, INT);
     }
@@ -338,6 +347,7 @@ export class QueryBuilder {
         switch (item.type) {
             case EQUAL: return `${this.processFunctionField(item)} = ${this.processValue(item)}`;
             case EQUAL_FIELD: return `${this.processFunctionField(item)} = ${this.processValue(item)}`;
+            case EQUAL_ID: return `META(ganko).id = '${item.value}'`;
             case LT: return `${this.processFunctionField(item)} < ${this.processValue(item)}`;
             case LT_FIELD: return `${this.processFunctionField(item)} < ${this.processValue(item)}`;
             case LTE: return `${this.processFunctionField(item)} <= ${this.processValue(item)}`;
@@ -346,9 +356,9 @@ export class QueryBuilder {
             case GT_FIELD: return `${this.processFunctionField(item)} > ${this.processValue(item)}`;
             case GTE: return `${this.processFunctionField(item)} >= ${this.processValue(item)}`;
             case GTE_FIELD: return `${this.processFunctionField(item)} >= ${this.processValue(item)}`;
-            case LIKE_START: return `LOWER(${item.field}) LIKE '%${item.value}'`;
-            case LIKE_CENTER: return `LOWER(${item.field}) LIKE '%${item.value}%'`;
-            case LIKE_END: return `LOWER(${item.field}) LIKE '${item.value}%'`;
+            case LIKE_START: return `${this.processFunctionField(item)} LIKE '%${item.value}'`;
+            case LIKE_CENTER: return `${this.processFunctionField(item)} LIKE '%${item.value}%'`;
+            case LIKE_END: return `${this.processFunctionField(item)} LIKE '${item.value}%'`;
             case IS_MISSING: return `${item.field} IS MISSING`;
             case IS_NULL: return `${item.field} IS NULL`;
             case IS_NOT_MISSING: `${item.field} IS NOT MISSING`;
@@ -367,6 +377,7 @@ export class QueryBuilder {
                 return "OR";
             }
             case IN: return `${item.field} IN ['${item.value.join("','")}']`;
+            case IN_ID: return `META(ganko).id IN ['${item.value.join("','")}']`;
             case CONTAINS: return `ARRAY_CONTAINS(${item.field}, '${item.value}')`;
             case LT_TODAY: return `SUBSTR(${item.field},0,10) < SUBSTR(NOW_STR(),0,10)`;
             case LTE_TODAY: return `SUBSTR(${item.field},0,10) <= SUBSTR(NOW_STR(),0,10)`;
@@ -439,7 +450,8 @@ const GTE_TODAY = 22;
 const LT_TODAY = 23;
 const LTE_TODAY = 24;
 const EQUAL_ID = 25;
-const SATISFIES = 26;
+const IN_ID = 26;
+const SATISFIES = 27;
 
 const STRING = 0;
 const BOOL = 1;

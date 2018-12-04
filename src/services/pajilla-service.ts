@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/mergeMap';
 import { Straw, TYPE_PAJILLA } from "./models/pajilla";
 import { DBConnection, DBHandler } from './database/db-handler';
-import { Q } from './database/query-builder';
+import { Q, lower } from './database/query-builder';
 
 
 export class PajillaService {
@@ -25,7 +25,7 @@ export class PajillaService {
         let where = Q().equalStr("idFarm", idFinca);
         if (q) {
             const qy = q.toLowerCase();
-            where = where.andExp(Q().likeEnd("bread", qy).or().likeEnd("idStraw", qy))            
+            where = where.andExp(Q().likeEnd(lower("bread"), qy).or().likeEnd(lower("idStraw"), qy))            
         }
         return this.db.listByType(TYPE_PAJILLA, where);
     }
