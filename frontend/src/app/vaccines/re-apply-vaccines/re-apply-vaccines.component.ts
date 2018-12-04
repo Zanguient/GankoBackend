@@ -32,8 +32,9 @@ export class ReApplyVaccinesComponent implements OnInit {
     ).subscribe(x => {
       this.prev = x;
       this.item = JSON.parse(JSON.stringify(x));
-      this.item.fecha = new Date(this.item.fecha);
-      this.item.fechaProxima = new Date(this.item.fechaProxima);
+      this.item.fecha = new Date(this.item.fechaProxima);
+      this.item.frecuencia = null;
+      this.item.fechaProxima = null;
     }, err => snackError(this.snack, err));
   }
 
@@ -46,11 +47,10 @@ export class ReApplyVaccinesComponent implements OnInit {
   }
 
   apply() {
-    this.item.fechaProxima = new Date(this.item.fechaProxima);
-
     this.item.idAplicacionUno = this.item.idAplicacionUno ? this.item.idAplicacionUno : this.item.id;
-    this.item.fecha = this.item.fechaProxima;
-    this.item.fechaProxima = this.fechaProx(this.item.fechaProxima, this.item.frecuencia);
+    if (this.item.frecuencia != null) {
+      this.item.fechaProxima = this.fechaProx(this.item.fecha, this.item.frecuencia);
+    }
     this.loading = true;
     this.item.bovinos = this.selecteds.selecteds;
     this.item.noBovinos = this.selecteds.removeds;

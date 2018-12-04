@@ -21,7 +21,7 @@
           </app-card-footer>
           <app-card-footer [align]="'end'" *ngIf="!d.grupo">
             <mat-icon class="small" svgIcon="bovine"></mat-icon> {{d.bovinos.length}}</app-card-footer>
-          <app-card-actions [align]="'flex-end'" *ngIf="filter === 1">
+          <app-card-actions [align]="'flex-end'" *ngIf="filter !== 0">
             <button mat-button color="accent" (mousedown)="omit(d, i)">Omitir</button>
             <button mat-button color="accent" (mousedown)="goToApply(d)">Aplicar</button>
           </app-card-actions>

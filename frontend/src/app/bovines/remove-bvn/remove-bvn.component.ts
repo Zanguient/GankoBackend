@@ -38,7 +38,7 @@ export class RemoveBvnComponent implements OnInit {
   }
 
   goToBack() {
-    this.router.navigate(['../../']);
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 
   remove() {
@@ -50,7 +50,7 @@ export class RemoveBvnComponent implements OnInit {
       finalize(() => this.loading = false)
     ).subscribe(() => {
       snackOk(this.snack, 'Bovino retirado');
-      this.router.navigate(['../../']);
+      this.router.navigate(['../../'], { relativeTo: this.route });
     }, err => snackError(this.snack, err));
 
   }
