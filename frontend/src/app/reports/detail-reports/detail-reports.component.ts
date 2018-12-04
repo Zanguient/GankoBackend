@@ -3,7 +3,7 @@ import { ReportsService } from '../service/reports.service';
 import { BovinesService } from '../../bovines/services/bovines.service';
 import { Bovino } from '../../shared/models/bovine.model';
 import { snackError } from '../../util/snackbar-util';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatRadioChange } from '@angular/material';
 
 @Component({
   selector: 'app-detail-reports',
@@ -16,7 +16,7 @@ export class DetailReportsComponent implements OnInit {
   catSelect: number;
   reportSelect: number;
   typeReportSelect: string;
-  monthSelect: string;
+  monthSelect: number;
   dateInitSelect: Date;
   dateFinalSelect: Date;
   selectedTab = 0;
@@ -26,6 +26,7 @@ export class DetailReportsComponent implements OnInit {
   lstBovine: Bovino[];
   viewAverage: boolean;
   average: number;
+  dataList: String[];
 
 
   constructor(public service: ReportsService, private serviceBovine: BovinesService, private snack: MatSnackBar) {
@@ -93,7 +94,22 @@ export class DetailReportsComponent implements OnInit {
   }
 
   downloadReport() {
-    // descargar reporte
+    this.loading = true;    
+    this.service.list(this.reportSelect, this.monthSelect, new Date().getFullYear(), new Date(this.dateInitSelect).getTime(), new Date(this.dateFinalSelect).getTime()).subscribe(
+      x => {
+        this.dataList = x;
+        this.loading = false;
+      }, err => {
+        snackError(this.snack, err);
+        this.loading = false;
+      }
+    );
+  }
+
+  changeRadio(event: MatRadioChange) {
+    this.monthSelect = null;
+    this.dateFinalSelect = null;
+    this.dateInitSelect = null;
   }
 
 }
