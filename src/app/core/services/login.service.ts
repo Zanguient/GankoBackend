@@ -5,14 +5,14 @@ import { map } from 'rxjs/operators';
 import { Rspn, Doc } from '../../shared/models/response.model';
 import { validate, toDoc } from '../../util/http-util';
 import { SessionService } from './session.service';
-import { User } from 'src/app/shared/models/user.model';
+import { User, ROL_ADMIN } from 'src/app/shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  url = `${environment.urlBase}/user/login`;
+  url = `${environment.urlLogin}/user/login`;
 
   constructor(private http: HttpClient, private session: SessionService) { }
 
@@ -24,6 +24,10 @@ export class LoginService {
       map(x => validate(x)),
       map(x => {
         const { id, doc } = x.user;
+        const rol = doc.rol;
+        if (rol === ROL_ADMIN && !environment.consoleAdmin) {
+          throw new Error('Email o contraseña erroneos');
+        }
 
         this.session.id = id;
         this.session.token = x.token;
