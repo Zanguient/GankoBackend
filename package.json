@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "set NODE_ENV=production&& node ./out/www.js",
+    "start:desk": "set NODE_ENV=desktop&& node ./out/www.js",
     "test-start": "set NODE_ENV=test&& node ./out/www.js",
     "test": "npm run compiletests && set NODE_ENV=test&& mocha ./tests/out/tests/**/test*.js",
     "compile": "node ./node_modules/typescript/bin/tsc -p ./src",

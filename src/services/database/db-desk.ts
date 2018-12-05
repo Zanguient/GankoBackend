@@ -54,8 +54,10 @@ export class DBDesk implements DBHandler {
     }
 
     private validate<T>(data: any, msg: string): T {
-        if (data.success) {
-            return data.data as T;
+        const js = JSON.parse(data);
+        
+        if (js.success) {
+            return js.data as T;
         } else {
             throw Error(msg);
         }
