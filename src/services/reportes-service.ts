@@ -31,9 +31,10 @@ export class ReportesService {
     getReporteFuturosPartos(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
-            Q().equalStr("finca", idFinca).and().equalBool("servicios[0].finalizado", false)
+            Q().equalStr("finca", idFinca)
+                .and().equalBool("servicios[0].finalizado", false)
                 .and().isNotNull("servicios[0].posFechaParto")
-                .or().isMissing("servicios[0].posFechaParto"));
+                .or().isNotMissing("servicios[0].posFechaParto"));
     }
 
     getReporteSecado(idFinca: string) {
@@ -42,7 +43,7 @@ export class ReportesService {
             Q().equalStr("finca", idFinca)
                 .and().equalBool("servicios[0].finalizado", false)
                 .and().isNotNull("servicios[0].posFechaParto")
-                .or().isMissing("servicios[0].posFechaParto"));
+                .or().isNotMissing("servicios[0].posFechaParto"));
     }
     getReportePreparacion(idFinca: string) {
         return this.db.listByType(
@@ -50,7 +51,7 @@ export class ReportesService {
             Q().equalStr("finca", idFinca)
                 .and().equalBool("servicios[0].finalizado", false)
                 .and().isNotNull("servicios[0].posFechaParto")
-                .or().isMissing("servicios[0].posFechaParto"));
+                .or().isNotMissing("servicios[0].posFechaParto"));
     }
     getReporteDiasVacios(idFinca: string) {
         return this.db.listByType(
