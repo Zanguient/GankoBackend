@@ -32,10 +32,9 @@ export class ReportesService {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca).and().equalBool("servicios[0].finalizado", false)
-            .and().isNotMissing("servicios[0].posFechaParto"));
+                .and().isNotNull("servicios[0].posFechaParto")
+                .or().isMissing("servicios[0].posFechaParto"));
     }
-
-
 
     getReporteSecado(idFinca: string) {
         return this.db.listByType(
@@ -57,26 +56,26 @@ export class ReportesService {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and().equalStr("genero","Hembra")
-                .and().gtInt(arrayLength("servicios"),0)
+                .and().equalStr("genero", "Hembra")
+                .and().gtInt(arrayLength("servicios"), 0)
                 .containsStr("servicios", "Monta Natural")
-                .and().satisfies("servicio","servicios",Q().isNotNull("servicio.parto")));
+                .and().satisfies("servicio", "servicios", Q().isNotNull("servicio.parto")));
     }
     getReportePartosAtendidos(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and().equalStr("genero","Hembra")
-                .and().satisfies("servicio","servicios",Q().isNotNull("servicio.parto")))
+                .and().equalStr("genero", "Hembra")
+                .and().satisfies("servicio", "servicios", Q().isNotNull("servicio.parto")))
     }
-    getReporteAbortos(idFinca: string) { 
+    getReporteAbortos(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and().equalStr("genero","Hembra")
-                .and().satisfies("servicio","servicios",Q().equalStr("servicio.novedad.novedad","Aborto")))
+                .and().equalStr("genero", "Hembra")
+                .and().satisfies("servicio", "servicios", Q().equalStr("servicio.novedad.novedad", "Aborto")))
     }
-    
+
     getReporteTresServicios(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
@@ -89,7 +88,7 @@ export class ReportesService {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
-                .and().gteInt(arrayLength("servicios"),  1)
+                .and().gteInt(arrayLength("servicios"), 1)
         )
     }
     getReporteConsolidado(idFinca: string) {
@@ -98,130 +97,130 @@ export class ReportesService {
             Q().equalStr("finca", idFinca)
         )
     }
-    getReporteDeLeche(idFinca:string){
+    getReporteDeLeche(idFinca: string) {
         return this.db.listByType(
             TYPE_PROD_LECHE,
             Q().equalStr("finca", idFinca)
         )
     }
-    getReporteDestete(idFinca:string){
+    getReporteDestete(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
         )
     }
-    getBovinos(idFinca){
+    getBovinos(idFinca) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("finca", idFinca)
         )
     }
-    getReporteGananciaDePeso(idBovino:string){
+    getReporteGananciaDePeso(idBovino: string) {
         return this.db.listByType(
             TYPE_CEBA,
             Q().equalStr("bovino", idBovino)
         )
     }
-    getReportePraderas(idFinca:string){
+    getReportePraderas(idFinca: string) {
         return this.db.listByType(
             TYPE_PRADERA,
             Q().equalStr("idFinca", idFinca)
         )
     }
-    getReporteOcupacionPraderas(idFinca:string){
+    getReporteOcupacionPraderas(idFinca: string) {
         return this.db.listByType(
             TYPE_PRADERA,
             Q().equalStr("idFinca", idFinca)
-            .and()
-            .equalBool("available",false)
+                .and()
+                .equalBool("available", false)
         )
     }
-    getReporteMovimientos(idFinca:string){
+    getReporteMovimientos(idFinca: string) {
         return this.db.listByType(
             TYPE_MOVIMIENTO,
             Q().equalStr("idFinca", idFinca)
         )
     }
-    getReporteAlimentacion(idFinca:string){
+    getReporteAlimentacion(idFinca: string) {
         return this.db.listByType(
             TYPE_ALIMENTACION,
             Q().equalStr("idFinca", idFinca)
         )
     }
-    getReporteInventario(idFinca:string){
+    getReporteInventario(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("idFinca", idFinca)
         )
     }
-    getReporteTernerasenEstaca(idFinca:string){
+    getReporteTernerasenEstaca(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("idFinca", idFinca)
-            .and()
-            .equalStr("genero","Hembra")
+                .and()
+                .equalStr("genero", "Hembra")
         )
     }
-    getReporteTerneraDestetas(idFinca:string){
+    getReporteTerneraDestetas(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("idFinca", idFinca)
-            .and()
-            .equalStr("genero","Hembra")
+                .and()
+                .equalStr("genero", "Hembra")
         )
     }
-    getReporteTernerasLevante(idFinca:string){
+    getReporteTernerasLevante(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("idFinca", idFinca)
-            .and()
-            .equalStr("genero","Hembra")
+                .and()
+                .equalStr("genero", "Hembra")
         )
     }
-    getReporteNovillasVientre(idFinca:string){
+    getReporteNovillasVientre(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("idFinca", idFinca)
-            .and()
-            .equalStr("genero","Hembra")
+                .and()
+                .equalStr("genero", "Hembra")
         )
     }
-    getReporteVacas(idFinca:string){
+    getReporteVacas(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("idFinca", idFinca)
-            .and()
-            .equalStr("genero","Hembra")
+                .and()
+                .equalStr("genero", "Hembra")
         )
     }
-    getReporteSalida(idFinca:string){
+    getReporteSalida(idFinca: string) {
         return this.db.listByType(
             TYPE_BOVINO,
             Q().equalStr("idFinca", idFinca)
         )
     }
-    getReporteVacunas(idFinca:string){
+    getReporteVacunas(idFinca: string) {
         return this.db.listByType(
             TYPE_VACUNA,
             Q().equalStr("idFinca", idFinca)
-            .orderDesc("fecha")
+                .orderDesc("fecha")
         )
     }
-    getReporteSanidad(idFinca:string){
+    getReporteSanidad(idFinca: string) {
         return this.db.listByType(
             TYPE_SANIDAD,
             Q().equalStr("idFinca", idFinca)
-            .orderDesc("fecha")
+                .orderDesc("fecha")
         )
     }
-    getReporteManejo(idFinca:string){
+    getReporteManejo(idFinca: string) {
         return this.db.listByType(
             TYPE_MANEJO,
             Q().equalStr("idFinca", idFinca)
-            .orderDesc("fecha")
+                .orderDesc("fecha")
         )
     }
-    getReportePajillas(idFinca:string){
+    getReportePajillas(idFinca: string) {
         return this.db.listByType(
             TYPE_PAJILLA,
             Q().equalStr("idFinca", idFinca)

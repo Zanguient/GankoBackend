@@ -168,7 +168,7 @@ function reportePreparacion(res: Response, idFinca: string, month: number, year:
 
 function reporteDiasVacios(res: Response, idFinca: string, month: number, year: number, initialDate: number, finalDate: number) {
     ReportesService.instance.getReporteDiasVacios(idFinca)
-        .then(bovineList => res.send(new ResponseBody(true, bovineList.doc, null))
+        .then(bovineList => res.send(new ResponseBody(true, bovineList, null))
             , err => res.send(new ResponseBody(false, null, err)))
         .catch(err => res.status(500).send(new ResponseBody(false, null, err)))
 }
