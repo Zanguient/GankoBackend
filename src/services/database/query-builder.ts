@@ -361,8 +361,8 @@ export class QueryBuilder {
             case LIKE_END: return `${this.processFunctionField(item)} LIKE '${item.value}%'`;
             case IS_MISSING: return `${item.field} IS MISSING`;
             case IS_NULL: return `${item.field} IS NULL`;
-            case IS_NOT_MISSING: `${item.field} IS NOT MISSING`;
-            case IS_NOT_NULL: `${item.field} IS NOT NULL`;
+            case IS_NOT_MISSING: return `${item.field} IS NOT MISSING`;
+            case IS_NOT_NULL: return `${item.field} IS NOT NULL`;
             case AND: if (item.child) {
                 const subQ = this.process(item.child);
                 return `AND (${subQ.query})`;
