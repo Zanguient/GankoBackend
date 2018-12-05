@@ -74,7 +74,7 @@
         <h5 fxFlex="0 0 100%">Proposito</h5>
         <mat-radio-group class="m-bottom" fxFlex="0 0 100%" [selected]="p1"  [(ngModel)]="item.proposito" name="prop" required>
           <mat-radio-button value="Lecheria" #p1>Leche</mat-radio-button>
-          <mat-radio-button value="Ceba" #p1>Ceba</mat-radio-button>
+          <mat-radio-button value="Ceba" #p2>Ceba</mat-radio-button>
           <mat-radio-button value="Ambos" #p3>Ambos</mat-radio-button>
         </mat-radio-group>
 
@@ -91,19 +91,17 @@
           <input matInput type="number"  [(ngModel)]="item.precioCompra" name="prec" required>
         </mat-form-field>
 
-        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Nacimiento'">
           <mat-label>ID Padre</mat-label>
           <input matInput type="text"  [(ngModel)]="item.codigoPadre" name="codP" >
         </mat-form-field>
-        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline">
+        <mat-form-field fxFlex="0 0 100%" fxFlex.gt-sm="0 0 calc(50% - 16px)" appearance="outline" *ngIf="origin.value === 'Nacimiento'">
           <mat-label>ID Madre</mat-label>
           <input matInput type="text"  [(ngModel)]="item.codigoMadre" name="codM">
         </mat-form-field>
 
         <h5 fxFlex="0 0 100%">Imagen</h5>
         <img class="add-image clickable" src="{{img? img : ''}}" (click)="this.input.nativeElement.click()">
-
-
 
         <div *ngIf="!loading; else loader" fxFlex="0 0 100%" fxLayout="row" fxLayoutGap="15px">
           <button fxFlex="0 0 calc(50% - 15px)" fxFlex.gt-sm="0 0 calc(20% - 15px)" fxFlexOffset.gt-sm="60%"  mat-button color="accent" (click)="goToBack()">Cancelar</button>
